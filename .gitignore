@@ -1,0 +1,14 @@
+/*/target/
+/*/.settings
+/*/.project
+/*/.classpath
+*.jsfdia
+*.metadata
+**/.idea
+*.iml
+*.swp
+*.swo
+npm-debug.log
+**/unit-result.report.html
+/*/node_modules/
+
