@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     angular
         .module('studio')
@@ -12,7 +12,7 @@
                 'hue-1': '200'
             }).accentPalette('blue-grey', {
                 'default': '900',
-                'hue-1': '200'
+                'hue-1': '50'
             }).warnPalette('red');
 
 
