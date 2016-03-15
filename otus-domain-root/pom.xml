@@ -3,7 +3,7 @@
 
     <groupId>br.org.otus.domain</groupId>
     <artifactId>otus-domain-root</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
