@@ -5,14 +5,18 @@
     <packaging>war</packaging>
 
     <parent>
-        <groupId>br.org.studio</groupId>
+        <groupId>br.org.otus.domain</groupId>
         <artifactId>otus-domain-root</artifactId>
-        <version>0.17.19-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
         <relativePath>../otus-domain-root/pom.xml</relativePath>
     </parent>
 
-    <build>
+    <scm>
+	<connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
+        <developerConnection>scm:git:git@github.com:ccem-dev/otus-domain.git</developerConnection>
+    </scm>
 
+    <build>
 	<finalName>otus-domain</finalName>
         <plugins>
             <plugin>

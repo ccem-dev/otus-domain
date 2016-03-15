@@ -7,15 +7,20 @@
 	<packaging>ejb</packaging>
 
 	<parent>
-		<groupId>br.org.studio</groupId>
+		<groupId>br.org.otus.domain</groupId>
 		<artifactId>otus-domain-root</artifactId>
-		<version>0.17.19-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../otus-domain-root/pom.xml</relativePath>
 	</parent>
 
 	<properties>
 		<database.action>validate</database.action>
 	</properties>
+
+	<scm>
+		<connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
+		<developerConnection>scm:git:git@github.com:ccem-dev/otus-domain.git</developerConnection>
+	</scm>
 
 	<dependencies>
 		<dependency>
