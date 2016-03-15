@@ -1,7 +1,6 @@
 package br.org.studio.rest.dtos;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import br.org.studio.security.EncryptorResources;
 import br.org.tutty.Equalization;
@@ -10,9 +9,6 @@ public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = -5851680952577534837L;
 
-	@Equalization(name = "uuid")
-	private UUID uuid;
-	
 	@Equalization(name = "name")
 	private String name;
 
@@ -71,14 +67,6 @@ public class UserDto implements Serializable {
 		this.password = password;
 	}
 	
-	public UUID getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
-	}
-
 	public void encrypt() {
 		this.password = EncryptorResources.encrypt(password);
 	}

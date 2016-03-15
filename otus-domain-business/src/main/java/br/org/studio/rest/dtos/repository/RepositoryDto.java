@@ -1,14 +1,9 @@
 package br.org.studio.rest.dtos.repository;
 
-import java.util.UUID;
-
 import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.tutty.Equalization;
 
 public class RepositoryDto implements RepositoryDescriptor {
-
-	@Equalization(name = "uuid")
-	private UUID uuid;
 
 	@Equalization(name = "name")
 	private String name;
@@ -68,14 +63,6 @@ public class RepositoryDto implements RepositoryDescriptor {
 	@Override
 	public String getDescription() {
 		return description;
-	}
-
-	public UUID getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(UUID uuid) {
-		this.uuid = uuid;
 	}
 
 }

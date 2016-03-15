@@ -13,6 +13,7 @@ import br.org.studio.entities.system.User;
 public class UserTest {
 
 	private User user;
+	private User user2;
 
 	@Before
 	public void setup() {
@@ -22,6 +23,8 @@ public class UserTest {
 		String email = "emailTest";
 		String password = "passwordTeste";
 		user = new User(name, lastName, password, email, phone);
+		user2 = new User();
+		
 	}
 
 	@Test
@@ -53,6 +56,7 @@ public class UserTest {
 
 	@Test
 	public void a_new_instance_of_USER_must_contains_a_uuid() {
+		Assert.assertNotNull("UUID should not be null", user2.getUuid());
 		Assert.assertNotNull("UUID should not be null", user.getUuid());
 	}
 }

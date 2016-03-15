@@ -57,13 +57,13 @@ public class User implements Serializable {
     private Boolean enable;
 
 	public User() {
+		this.uuid = UUID.randomUUID();
 		this.adm = Boolean.FALSE;
         this.enable = Boolean.FALSE;
 	}
 
 	public User(String name, String surname, String password, String email, String phone) {
 		this();
-		this.uuid = UUID.randomUUID();
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
