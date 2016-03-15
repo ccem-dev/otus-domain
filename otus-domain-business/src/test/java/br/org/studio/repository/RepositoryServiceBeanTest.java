@@ -1,25 +1,24 @@
 package br.org.studio.repository;
 
-import br.org.studio.dao.RepositoryDaoBean;
-import br.org.studio.entities.repository.Repository;
-import br.org.studio.exception.RepositoryAlreadyExistException;
-import br.org.studio.exception.RepositoryOfflineException;
-import br.org.studio.rest.dtos.repository.RepositoryDto;
-import br.org.studio.tool.RepositoryManagerFacade;
-import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
-import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
+import java.sql.SQLException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.SQLException;
+import br.org.studio.dao.RepositoryDaoBean;
+import br.org.studio.entities.repository.Repository;
+import br.org.studio.exception.RepositoryAlreadyExistException;
+import br.org.studio.exception.RepositoryOfflineException;
+import br.org.studio.rest.dtos.repository.RepositoryDto;
+import br.org.studio.tool.RepositoryManagerFacade;
+import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MongoRepositoryConfiguration.class)

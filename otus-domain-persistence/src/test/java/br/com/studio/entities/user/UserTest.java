@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,6 @@ import br.org.studio.entities.system.User;
 
 public class UserTest {
 
-	@Inject
 	private User user;
 
 	@Before
@@ -46,11 +43,16 @@ public class UserTest {
 		assertEquals("nameTest1", listUsers.get(1).getName());
 	}
 
-    @Test
-    public void init_user_disable_and_without_adm_flag(){
-        User user = new User();
+	@Test
+	public void init_user_disable_and_without_adm_flag() {
+		User user = new User();
 
-        Assert.assertFalse(user.getAdm());
-        Assert.assertFalse(user.isEnable());
-    }
+		Assert.assertFalse(user.getAdm());
+		Assert.assertFalse(user.isEnable());
+	}
+
+	@Test
+	public void a_new_instance_of_USER_must_contains_a_uuid() {
+		Assert.assertNotNull("UUID should not be null", user.getUuid());
+	}
 }

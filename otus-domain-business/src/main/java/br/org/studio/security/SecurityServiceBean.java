@@ -17,7 +17,6 @@ import br.org.studio.exception.SessionNotFoundException;
 import br.org.studio.exception.UserDisabledException;
 import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.LoginAuthenticationDto;
-import br.org.studio.rest.dtos.UserDto;
 
 @Stateless
 @Local(SecurityService.class)
