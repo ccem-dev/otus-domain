@@ -1,0 +1,37 @@
+package br.org.studio.utils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
+import org.junit.Test;
+
+import br.org.studio.entities.repository.Repository;
+import br.org.studio.entities.system.User;
+
+public class SurveyUUIDTest {
+
+	private static final String SURVEY_UUID = "c010c008-d8b2-4a92-b1df-e84d1f4fe54a";
+	
+	private User user;
+	private Repository repository;
+	private SurveyUUID surveyUUID;
+
+	@Before
+	public void setUp() {
+		user = new User();
+		repository = new Repository();
+		surveyUUID = new SurveyUUID(user.getUuid(), repository.getUuid(), SURVEY_UUID);
+	}
+	
+	@Test
+	public void a_new_instance_of_SurveyUUID_should_contains_a_final_key() {
+		assertNotNull(surveyUUID.getEncodedSurveyfinalKey());
+	}
+
+	@Test
+	public void decrypt_method_should_decrypt_correctly() {
+		assertEquals(surveyUUID.toString(), surveyUUID.decrypt(surveyUUID.getEncodedSurveyfinalKey()));
+	}
+	
+	
+}

@@ -4,11 +4,9 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.owail.sender.email.Sender;
 import br.org.studio.configuration.factories.ConfigFactory;
 import br.org.studio.dao.SystemConfigDao;
 import br.org.studio.email.EmailNotifierService;
-import br.org.studio.email.WelcomeNotificationEmail;
 import br.org.studio.entities.system.SystemConfig;
 import br.org.studio.entities.system.User;
 import br.org.studio.exception.EmailNotificationException;

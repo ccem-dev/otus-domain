@@ -16,7 +16,7 @@
     "url": "https://github.com/ccem-dev/studio"
   },
   "scripts": {
-    "test": "karma start karma.conf.js --auto-watch",
+    "test": "karma start karma.conf.js",
     "bsync": "browser-sync start --server --files=\"*.html, *.js, *.css\"",
     "gulp": "gulp",
     "start": "concurrent \"npm run bsync\" ",
@@ -44,6 +44,7 @@
     "karma-htmlfile-reporter": "^0.2.2",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.3",
+    "phantomjs": ">=1.9",
     "phantomjs-prebuilt": "^2.1.2"
   }
 }

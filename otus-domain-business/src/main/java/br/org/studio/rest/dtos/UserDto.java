@@ -1,9 +1,9 @@
 package br.org.studio.rest.dtos;
 
+import java.io.Serializable;
+
 import br.org.studio.security.EncryptorResources;
 import br.org.tutty.Equalization;
-
-import java.io.Serializable;
 
 public class UserDto implements Serializable {
 
@@ -66,7 +66,7 @@ public class UserDto implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	public void encrypt() {
 		this.password = EncryptorResources.encrypt(password);
 	}

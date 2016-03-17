@@ -1,17 +1,17 @@
 package br.org.studio.rest;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.org.studio.email.EmailNotifierService;
-import br.org.studio.email.WelcomeNotificationEmail;
-import br.org.studio.exception.DataNotFoundException;
-import br.org.studio.exception.EmailNotificationException;
-import br.org.studio.rest.dtos.EmailSenderDto;
 import com.google.gson.Gson;
 
 import br.org.studio.configuration.SystemConfigService;
+import br.org.studio.exception.EmailNotificationException;
 import br.org.studio.rest.dtos.SystemConfigDto;
 
 @Path("/system")
