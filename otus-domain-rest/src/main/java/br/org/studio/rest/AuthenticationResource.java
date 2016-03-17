@@ -1,5 +1,7 @@
 package br.org.studio.rest;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
@@ -28,14 +30,14 @@ public class AuthenticationResource {
         LoginAuthenticationDto loginDto = gson.fromJson(loginData, LoginAuthenticationDto.class);
         loginDto.setHttpSession(httpSession);
         loginDto.encryptPassword();
-
+        
+        Response response = new Response();
         try {
-            securityService.authenticate(loginDto);
-
-            return gson.toJson(Boolean.TRUE);
-
+            UUID userUUID = securityService.authenticate(loginDto);
+            return response.setData(userUUID.toString()).toJson();
         } catch (Exception e) {
-            return gson.toJson(Boolean.FALSE);
+        	response.setHasErrors(Boolean.TRUE);
+        	return response.setError(new String("Falha na autenticação.")).toJson();            
         }
     }
 

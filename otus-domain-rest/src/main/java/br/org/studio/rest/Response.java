@@ -6,25 +6,36 @@ public class Response {
 
     private Object data;
     private Object error;
+    private Boolean hasErrors = Boolean.FALSE;
 
     public Object getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public Response setData(Object data) {
         this.data = data;
+        return this;
     }
-
-    public void setError(Object error) {
+      
+    public Response setError(Object error) {
         this.error = error;
+        return this;
     }
 
     public Object getError() {
         return error;
     }
-
+    
     public String toJson() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
+
+	public boolean hasErrors() {
+		return hasErrors;
+	}
+
+	public void setHasErrors(boolean hasErrors) {
+		this.hasErrors = hasErrors;
+	}
 }

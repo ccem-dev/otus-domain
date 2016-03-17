@@ -1,6 +1,7 @@
 package br.org.studio.security;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -34,7 +35,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     private ContextService contextService;
 
 	@Override
-	public void authenticate(LoginAuthenticationDto loginDto) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException {
+	public UUID authenticate(LoginAuthenticationDto loginDto) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException {
 		try {
 			User user = userDao.fetchByEmail(loginDto.getEmail());
 			HttpSession httpSession = loginDto.getHttpSession();
@@ -42,6 +43,7 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 			if(user.getPassword().equals(loginDto.getPassword())){
                 if(user.isEnable()){
                     userDataContext.login(httpSession, user);
+                    return user.getUuid();
                 }else {
                     throw new UserDisabledException();
                 }
