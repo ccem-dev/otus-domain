@@ -1,12 +1,11 @@
 package br.org.studio.rest;
 
-import br.org.studio.exception.EmailNotFoundException;
-import br.org.studio.exception.InvalidPasswordException;
-import br.org.studio.exception.UserDisabledException;
-import br.org.studio.rest.dtos.LoginAuthenticationDto;
-import br.org.studio.security.SecurityServiceBean;
-import com.google.gson.Gson;
+import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -15,7 +14,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import javax.servlet.http.HttpSession;
+import com.google.gson.Gson;
+
+import br.org.studio.exception.EmailNotFoundException;
+import br.org.studio.exception.InvalidPasswordException;
+import br.org.studio.exception.UserDisabledException;
+import br.org.studio.rest.dtos.LoginAuthenticationDto;
+import br.org.studio.security.SecurityServiceBean;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AuthenticationUsersResourceTest {
@@ -24,9 +29,16 @@ public class AuthenticationUsersResourceTest {
 
     @InjectMocks
     private AuthenticationResource authenticationResource;
-
+    
     @Mock
     private SecurityServiceBean securityServiceBean;
+
+	private UUID uuid;
+    
+    @Before
+    public void setUp(){
+    	uuid = UUID.randomUUID();
+    }
 
     @Test
     public void userLogin_shold_return_FALSE_when_throw_any_exception() throws EmailNotFoundException, InvalidPasswordException, UserDisabledException {
@@ -39,21 +51,29 @@ public class AuthenticationUsersResourceTest {
         loginAuthenticationDto.encryptPassword();
 
         String result = authenticationResource.userLogin(new Gson().toJson(loginAuthenticationDto));
+        
+        Response response = new Gson().fromJson(result, Response.class);
 
-        Assert.assertEquals(Boolean.FALSE, new Gson().fromJson(result, Boolean.class));
+        Assert.assertEquals(Boolean.TRUE, response.hasErrors());
+        Assert.assertEquals("Falha na autenticação.", response.getError());
     }
 
     @Test
-    public void userLogin_should_return_TRUE_when_dont_throw_any_exception(){
+    public void userLogin_should_return_a_UUID_when_dont_throw_any_exception() throws InvalidPasswordException, EmailNotFoundException, UserDisabledException {
         LoginAuthenticationDto loginAuthenticationDto = new LoginAuthenticationDto();
         loginAuthenticationDto.setEmail(EMAIL_INVALID);
         loginAuthenticationDto.setPassword(PASSWORD_INVALID);
 
+        Mockito.when(securityServiceBean.authenticate(Matchers.any())).thenReturn(uuid);
+        
         loginAuthenticationDto.encryptPassword();
 
         String result = authenticationResource.userLogin(new Gson().toJson(loginAuthenticationDto));
-
-        Assert.assertEquals(Boolean.TRUE, new Gson().fromJson(result, Boolean.class));
+        Response response = new Gson().fromJson(result, Response.class);
+        
+        Assert.assertNotNull(response.getData());
+        Assert.assertEquals(null, response.getError());
+        
     }
 
     @Test

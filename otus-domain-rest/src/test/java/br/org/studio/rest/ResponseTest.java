@@ -3,15 +3,12 @@ package br.org.studio.rest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import com.google.gson.JsonSerializer;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.rest.dtos.UserDto;
-
 import com.google.gson.Gson;
 
-import javax.json.JsonObject;
+import br.org.studio.rest.dtos.UserDto;
 
 public class ResponseTest {
 

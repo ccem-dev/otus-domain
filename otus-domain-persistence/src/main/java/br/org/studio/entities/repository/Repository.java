@@ -1,10 +1,17 @@
 package br.org.studio.entities.repository;
 
-import br.org.tutty.Equalization;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import br.org.tutty.Equalization;
 
 @Entity
 @Table(name = "repository", catalog = "studio", schema = "public")
@@ -16,6 +23,10 @@ public class Repository implements Serializable {
 	@Id
     @GeneratedValue(generator = "repositorySequence", strategy = GenerationType.SEQUENCE)
     private Long id;
+	
+	@Equalization(name = "uuid")
+	@NotNull
+	private UUID uuid;
 
     @Equalization(name = "name")
     @NotNull
@@ -43,4 +54,13 @@ public class Repository implements Serializable {
 
     @Equalization(name = "description")
     private String description;
+    
+	public Repository() {
+		this.uuid = UUID.randomUUID();
+	}
+    
+	public UUID getUuid() {
+		return uuid;
+	}
+	
 }

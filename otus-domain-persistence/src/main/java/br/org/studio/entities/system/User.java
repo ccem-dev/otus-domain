@@ -1,6 +1,7 @@
 package br.org.studio.entities.system;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,10 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(generator = "UserSequence", strategy = GenerationType.SEQUENCE)
 	private Integer id;
+	
+	@Equalization(name = "uuid")
+	@NotNull
+	private UUID uuid;
 
 	@Equalization(name = "name")
 	@NotNull
@@ -52,11 +57,13 @@ public class User implements Serializable {
     private Boolean enable;
 
 	public User() {
+		this.uuid = UUID.randomUUID();
 		this.adm = Boolean.FALSE;
         this.enable = Boolean.FALSE;
 	}
 
 	public User(String name, String surname, String password, String email, String phone) {
+		this();
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
@@ -108,4 +115,9 @@ public class User implements Serializable {
     public Boolean isEnable() {
         return enable;
     }
+
+	public UUID getUuid() {
+		return uuid;
+	}
+    
 }

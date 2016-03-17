@@ -1,10 +1,7 @@
 package br.org.studio.rest;
 
-import br.org.studio.administration.AdministrationUserServiceBean;
-import br.org.studio.rest.dtos.UserDto;
-import br.org.studio.rest.dtos.administration.AdministrationUser;
-
-import com.google.gson.Gson;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,8 +12,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.gson.Gson;
+
+import br.org.studio.administration.AdministrationUserServiceBean;
+import br.org.studio.rest.dtos.UserDto;
+import br.org.studio.rest.dtos.administration.AdministrationUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AdministrationUsersResourceTest {
