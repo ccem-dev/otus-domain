@@ -8,7 +8,7 @@
 
                     var self = this;
 
-                    const $HTTP_POST_URL_CREATE = window.location.origin + '/otus-domain-rest/session/rest/register/user';
+                    var $HTTP_POST_URL_CREATE = window.location.origin + '/otus-domain-rest/session/rest/register/user';
 
                     /* Public interface */
                     self.register = register;
@@ -25,23 +25,25 @@
                         $mdDialog
                             .show(alert)
                             .finally(function() {
-                                $window.location.href = window.location.origin + '/otus-domain/public/login.html'
+                                $window.location.href = window.location.origin + '/otus-domain/app/public/login.html';
                             });
                     }
                 }
-            ]).config(['$mdThemingProvider', function($mdThemingProvider){
+            ]).config(['$mdThemingProvider',
+            function($mdThemingProvider) {
 
-            	$mdThemingProvider.theme('layoutTheme')
-            		.primaryPalette('blue', {
-            		'default' : 'A200',
-            		'hue-1' : '200'
-            	}).accentPalette('blue-grey', {
-            		'default' : '900'
-            	}).warnPalette('red');
+                $mdThemingProvider.theme('layoutTheme')
+                    .primaryPalette('blue', {
+                        'default': 'A200',
+                        'hue-1': '200'
+                    }).accentPalette('blue-grey', {
+                        'default': '900'
+                    }).warnPalette('red');
 
 
-            	$mdThemingProvider.theme('layoutTheme');
-            }]);
+                $mdThemingProvider.theme('layoutTheme');
+            }
+        ]);
 
     angular
         .module('register.user')
@@ -49,7 +51,7 @@
             'unique', ['$http', '$q',
                 function($http, $q) {
 
-                    const $HTTP_POST_URL_VALIDATE = window.location.origin + '/otus-domain-rest/session/rest/register/user/email/exists';
+                    var $HTTP_POST_URL_VALIDATE = window.location.origin + '/otus-domain-rest/session/rest/register/user/email/exists';
 
                     return {
                         restrict: 'A',
