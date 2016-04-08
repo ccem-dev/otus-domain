@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>br.org.otus.domain</groupId>
 		<artifactId>otus-domain-root</artifactId>
-		<version>1.3.10-SNAPSHOT</version>
+		<version>1.3.11-SNAPSHOT</version>
 		<relativePath>../otus-domain-root/pom.xml</relativePath>
 	</parent>
 
