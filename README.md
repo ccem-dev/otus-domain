@@ -5,7 +5,9 @@ Para desenvolvimento de aplicações front-end é possivel utilizar a ferramenta
 > $ cd otus-domain
 
 > $ npm start
+
 > ou
+
 > $ npm run gulp browser-sync
 
 
