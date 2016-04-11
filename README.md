@@ -1,8 +1,22 @@
+### Browser Sync Front-End
+
+Para desenvolvimento de aplicações front-end é possivel utilizar a ferramenta Browser Sync.
+
+> $ cd otus-domain
+
+> $ npm start
+> ou
+> $ npm run gulp browser-sync
+
+
+O serviço de front-end será acessivel através da url: **localhost:3000/otus-domain**
+
+
 ### Inicializar Jboss Porta 80
 
 Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na porta 80.
 
-```xml
+``` xml
  <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
         <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
         <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
