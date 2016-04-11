@@ -1,3 +1,23 @@
+### Inicializar Jboss Porta 80
+
+Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na porta 80.
+
+```xml
+ <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+        <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
+        <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
+        <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
+        <socket-binding name="http" port="${jboss.http.port:80}"/>
+        <socket-binding name="https" port="${jboss.https.port:8443}"/>
+        <socket-binding name="txn-recovery-environment" port="4712"/>
+        <socket-binding name="txn-status-manager" port="4713"/>
+        <outbound-socket-binding name="mail-smtp">
+            <remote-destination host="localhost" port="25"/>
+        </outbound-socket-binding>
+    </socket-binding-group>
+```
+
+
 ### Habilitar CORS (Cross-origin resource sharing) 
 
 Para tornar possivel a acesso do projeto Domain (back-end) via java script é necessaria habilitar o recurso CORS.
