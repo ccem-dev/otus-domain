@@ -15,6 +15,9 @@
     function DashboardStateService($location, $http, $window, APP_STATE) {
         var self = this;
 
+        var HOSTNAME_NAV = 'http://' + window.location.hostname + ':' + window.location.port;
+        var HOSTNAME_REST = 'http://' + window.location.hostname;
+
         /* Public interface */
         self.goToHome = goToHome;
         self.goToCreateRepository = goToCreateRepository;
@@ -48,9 +51,9 @@
         }
 
         function logout() {
-            $http.post(APP_STATE.LOGOUT).then(function(response) {
+            $http.post(HOSTNAME_REST + APP_STATE.LOGOUT).then(function(response) {
                 if (response.data.data) {
-                    $window.location.href = window.location.origin + '/otus-domain/app/public/login.html';
+                    $window.location.href = HOSTNAME_NAV + '/otus-domain/app/public/login.html';
                 }
             });
         }
