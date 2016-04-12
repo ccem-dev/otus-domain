@@ -13,9 +13,15 @@
     gulp.task('browser-sync', function() {
         browserSync.init({
             server: {
-                baseDir: "../"
+                open: 'external',
+                baseDir: '../',
+                middleware: function(req, res, next) {
+                    res.setHeader('Access-Control-Allow-Origin', '*');
+                    res.setHeader('Access-Control-Allow-Headers', '*');
+                    next();
+                }
             },
-            startPath: "/otus-domain"
+            startPath: '/otus-domain'
         });
 
         gulp.watch([

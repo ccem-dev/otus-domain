@@ -1,14 +1,16 @@
 (function() {
+    var HOSTNAME_NAV = 'http://' + window.location.hostname + ':' + window.location.port;
+    var HOSTNAME_REST = 'http://' + window.location.hostname;
 
     angular
         .module('register.user', ['ngMessages', 'ngMaterial', 'ui.mask', 'passwordControl'])
         .controller(
             'RegisterUserCtrl', ['$scope', '$http', '$mdDialog', '$window',
                 function($scope, $http, $mdDialog, $window) {
-
                     var self = this;
 
-                    var $HTTP_POST_URL_CREATE = window.location.origin + '/otus-domain-rest/session/rest/register/user';
+
+                    var $HTTP_POST_URL_CREATE = HOSTNAME_REST + '/otus-domain-rest/session/rest/register/user';
 
                     /* Public interface */
                     self.register = register;
@@ -25,7 +27,7 @@
                         $mdDialog
                             .show(alert)
                             .finally(function() {
-                                $window.location.href = window.location.origin + '/otus-domain/app/public/login.html';
+                                $window.location.href = HOSTNAME_NAV + '/otus-domain/app/public/login.html';
                             });
                     }
                 }
@@ -51,7 +53,7 @@
             'unique', ['$http', '$q',
                 function($http, $q) {
 
-                    var $HTTP_POST_URL_VALIDATE = window.location.origin + '/otus-domain-rest/session/rest/register/user/email/exists';
+                    var $HTTP_POST_URL_VALIDATE = HOSTNAME_REST + '/otus-domain-rest/session/rest/register/user/email/exists';
 
                     return {
                         restrict: 'A',
