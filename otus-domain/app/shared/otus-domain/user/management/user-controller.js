@@ -11,18 +11,32 @@
         $scope.users.disabledUsers = [];
         $scope.users.activedUsers = [];
 
+        var HOSTNAME_REST = 'http://' + window.location.hostname;
+
+        var NEW_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/create';
         var URL_GET_USERS = window.location.origin + '/otus-domain-rest/session/rest/administration/users/fetch';
         var URL_DISABLE_USERS = window.location.origin + '/otus-domain-rest/session/rest/administration/users/disable';
         var URL_ENABLE_USERS = window.location.origin + '/otus-domain-rest/session/rest/administration/users/enable';
 
+        var REPOSITORY_CREATE_ACTION = 'NEW';
+
         $scope.loadUsers = fetchUsers();
+
 
         $scope.enableUsers = function() {
             var disabledUserForActivation = filterSelected($scope.users.disabledUsers);
+            var repository = {name:'sadsa'};
 
             if (disabledUserForActivation.length > 0) {
                 $http.post(URL_ENABLE_USERS, disabledUserForActivation).then(function(response) {
                     fetchUsers();
+                });
+
+                $http.post(NEW_REPOSITORY, repository).then(function(response) {
+                    if(response.data.data) {
+                        getRepositories();
+                        sucessMessage();
+                    }
                 });
             }
         };

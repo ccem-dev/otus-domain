@@ -46,14 +46,14 @@
             });
         }
 
-        function createRepository(repository) {
+       /* function createRepository(repository) {
             $http.post(NEW_REPOSITORY, repository).then(function(response) {
                 if (response.data.data) {
                     getRepositories();
                     successMessage();
                 }
             });
-        }
+        }*/
 
         function connected() {
             return RepositoryService.connectedRepository;
