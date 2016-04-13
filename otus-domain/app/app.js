@@ -9,7 +9,6 @@
             /* Otus platform modules */
             'repository',
             'user',
-            'ui.components',
             'utils'
         ])
         .run(function(DashboardStateService) {
