@@ -1,67 +1,116 @@
 (function() {
 
     angular
-        .module('studio')
-        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
+        .module('otusDomain')
+        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
         .constant('APP_STATE', {
+            'LOGIN': 'login',
+            'USER_REGISTER': 'user/register',
+            'INSTALLER': 'installer',
             'HOME': 'home',
             'SURVEY_FORMS': 'survey-forms',
-            'EDITOR': 'editor',
-            'USER_MANAGEMENT': 'user-management',
+            'USER_ACTIVATION': 'user/activation',
             'CREATE_REPOSITORY': 'repository?actionType=NEW',
             'CONNECT_REPOSITORY': 'repository?actionType=CONNECT',
             'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
         });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider) {
+    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
 
-        var dashboardMenu = 'app/private/dashboard/menu/dashboard-menu.html';
+        var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
+        var mainDashBoardTemplate = 'app/dashboard/template/main-dashboard-template.html';
 
         $stateProvider
-            .state('home', {
-                url: '/home',
+            .state('installer', {
+                url: '/installer',
                 views: {
-                    'dashboard-menu': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content': {
-                        templateUrl: 'app/private/dashboard/template/dashboard-content-template.html'
-                    },
-                    'section-info@home': {
-                        templateUrl: 'app/private/dashboard/home/home-info-section.html'
-                    },
-                    'section-view@home': {
-                        templateUrl: 'app/private/dashboard/home/home-view-section.html'
-                    },
-                    'section-commands@home': {
-                        templateUrl: 'app/private/dashboard/home/home-commands-section.html'
+                    'system-wrap': {
+                        templateUrl: 'app/installer/initial/initial-config.html',
+                        controller: 'InitialConfigController',
+                        controllerAs: 'initialConfigController'
                     }
                 }
             })
-            .state('user-management', {
-                url: '/user-management',
+            .state('login', {
+                url: '/login',
                 views: {
-                    'dashboard-menu': {
+                    'system-wrap': {
+                        templateUrl: 'app/authenticator/login/login.html',
+                        controller: 'LoginController',
+                        controllerAs: 'loginController'
+                    }
+                }
+            })
+            .state('user-register', {
+                url: '/user/register',
+                views: {
+                    'system-wrap': {
+                        templateUrl: 'app/user/management/registry/user-register.html',
+                        controller: 'UserRegisterController',
+                        controllerAs: 'userRegisterController'
+                    }
+                }
+            })
+            .state('user-activation', {
+                url: '/user/activation',
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@user-activation': {
+                        templateUrl: dashboardMenu
+
+                    },
+                    'system-content@user-activation': {
+                        templateUrl: 'app/user/management/activation/user-activation.html',
+                        controller: 'UserActivationController',
+                        controllerAs: 'userActivationController'
+                    }
+                }
+            })
+            .state('home', {
+                url: '/home',
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@home': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content': {
-                        templateUrl: 'app/shared/otus-domain/user/management/users.html'
+                    'system-content@home': {
+                        templateUrl: 'app/dashboard/template/dashboard-content-template.html'
+                    },
+                    'section-info@home': {
+                        templateUrl: 'app/dashboard/home/home-info-section.html'
+                    },
+                    'section-view@home': {
+                        templateUrl: 'app/dashboard/home/home-view-section.html'
+                    },
+                    'section-commands@home': {
+                        templateUrl: 'app/dashboard/home/home-commands-section.html'
                     }
                 }
             })
             .state('repository', {
                 url: '/repository',
                 views: {
-                    'dashboard-menu': {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@repository': {
                         templateUrl: dashboardMenu
                     },
-                    'system-content': {
-                        templateUrl: 'app/shared/otus-domain/survey-repository/repository.html'
+                    'system-content@repository': {
+                        templateUrl: 'app/survey-repository/repository.html'
                     }
                 }
             });
 
         /* Default state (route) */
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/login');
+        $locationProvider.html5Mode(true);
     }
 }());

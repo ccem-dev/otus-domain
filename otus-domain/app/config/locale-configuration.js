@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('studio')
+        .module('otusDomain')
         .config(['$mdDateLocaleProvider', localeConfiguration]);
 
     function localeConfiguration($mdDateLocaleProvider) {

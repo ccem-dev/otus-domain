@@ -1,18 +1,17 @@
 (function() {
 
     angular
-        .module('studio', [
+        .module('otusDomain', [
             /* External modules */
             'dependencies',
             /* Application modules */
-            'studio.dashboard',
-            /* Otus platform modules */
-            'repository',
+            'otusDomain.dashboard',
+            'otusDomain.authenticator',
+            'otusDomain.installer',
+            'otusDomain.repository',
+            /* Possibly shared modules */
             'user',
             'utils'
-        ])
-        .run(function(DashboardStateService) {
-            DashboardStateService.goToHome();
-        });
+        ]);
 
 }());
