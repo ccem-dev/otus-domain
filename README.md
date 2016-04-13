@@ -110,7 +110,7 @@ Acessar Url http://servidor:9990/console (Painel Administrativo Servidor).
 Dados para Datasource:
 ```
 Nome: otus-domain
-JNDI: java:/jboss/datasource/otus-domain
+JNDI: java:/jboss/datasources/otus-domain
 ```
 **Deve existir uma base de dados previamente criada com o respectivo nome otus-domain.**
 
