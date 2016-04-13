@@ -13,31 +13,31 @@ import javax.validation.constraints.NotNull;
 import br.org.tutty.Equalization;
 
 @Entity
-@Table(name = "email_sender", catalog = "studio", schema = "public")
+@Table(name = "email_sender", schema = "public")
 @SequenceGenerator(name = "senderSequence", sequenceName = "sender_seq", initialValue = 1, allocationSize = 1)
 public class EmailSender implements Serializable {
-	
+
 	private static final long serialVersionUID = -2231961499270874947L;
-	
+
 	@Id
-    @GeneratedValue(generator = "senderSequence", strategy = GenerationType.SEQUENCE)
-    private Long id;
-	
+	@GeneratedValue(generator = "senderSequence", strategy = GenerationType.SEQUENCE)
+	private Long id;
+
 	@Equalization(name = "name")
-	@NotNull
-	private String name;
-	
+		@NotNull
+		private String name;
+
 	@Equalization(name = "email")
-	@NotNull
-	private String emailAddress;
-	
+		@NotNull
+		private String emailAddress;
+
 	@Equalization(name = "password")
-	@NotNull
-	private String password;
+		@NotNull
+		private String password;
 
 	public EmailSender() {
 	}
-	
+
 	public EmailSender(String name, String emailAddress, String password) {
 		super();
 		this.name = name;
@@ -56,5 +56,5 @@ public class EmailSender implements Serializable {
 	public String getPassword() {
 		return password;
 	}
-	
+
 }

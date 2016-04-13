@@ -18,7 +18,7 @@ import br.org.studio.exceptions.DataNotFoundException;
 
 public abstract class GenericDaoBean implements GenericDao {
 
-	@PersistenceContext(unitName = "StudioPool")
+	@PersistenceContext(unitName = "DomainPool")
 	protected EntityManager entityManager;
 
 	@Override
