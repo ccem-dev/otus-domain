@@ -71,3 +71,51 @@ Essa configuração é aplicada diretamente ao Servidor de Aplicação Wildfly 9
             </filters>
         </subsystem>
 ```
+
+### Configuração Datasource Wildfly
+
+Passos para realizar configuração da base de dados do projeto.
+
+## Artefatos para download:
+
+- Servidor: [Wildfly 9.0.1.Final](http://wildfly.org/downloads/)
+- JDBC: [Postgres 9.4 Build 1203](https://jdbc.postgresql.org/download.html)
+
+## Adição de Management User
+
+Para tornar possivel o acesso ao painel administrativo do servidor é necessario existir um usuario com as respectivas permissões. Adicione um usuario Management. [Tutorial](https://docs.jboss.org/author/display/WFLY8/add-user+utility)
+
+## Deploy JDBC
+
+Acessar Url http://servidor:9990/console (Painel Administrativo Servidor). 
+
+1. Opção Deployments
+2. Adicionar
+3. Upload novo Deploy
+4. Selecionar arquivo JDBC
+5. Habilitar
+6. Finalizar
+
+
+## Configurar Datasource
+
+Acessar Url http://servidor:9990/console (Painel Administrativo Servidor). 
+
+1. Configurações
+2. Subsystems
+3. Datasources
+4. View
+5. Adicionar
+
+Dados para Datasource:
+```
+Nome: otus-domain
+JNDI: java:/jboss/datasource/otus-domain
+```
+**Deve existir uma base de dados previamente criada com o respectivo nome otus-domain.**
+
+Selecionar **Detected Driver** : *postgresql-9.4-1203.jdbc.jar*
+
+**Test Connection - Success**
+
+
