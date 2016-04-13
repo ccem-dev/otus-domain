@@ -31,7 +31,7 @@
         "node-uuid": "^1.4.7"
     },
     "devDependencies": {
-        "browser-sync": "2.x",
+        "browser-sync": "2.11.2",
         "angular-mocks": "^1.4.9",
         "concurrently": "^1.0.0",
         "gulp": "3.9.1",
