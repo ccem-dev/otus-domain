@@ -5,16 +5,17 @@
 	.module('repository')
 	.controller('RepositoryController', ['$scope', '$http', '$location', '$mdDialog', '$rootScope', 'RepositoryService', RepositoryController]);
 
-	function RepositoryController($scope, $http, $location, $mdDialog, $rootScope, RepositoryService) {
-		var REST_PREFIX = window.location.origin + '/otus-domain-rest/session/rest/';
+    function RepositoryController($scope, $http, $location, $mdDialog, $rootScope, RepositoryService) {
+        var HOSTNAME_NAV = 'http://' + window.location.hostname + ':' + window.location.port;
+        var HOSTNAME_REST = 'http://' + window.location.hostname;
 
-		var NEW_REPOSITORY = REST_PREFIX + 'repository/create';
-		var CONNECT_REPOSITORY = REST_PREFIX + 'repository/connect';
-		var GET_REPOSITORY = REST_PREFIX + 'repository/get';
-		var CHECK_CONNECTION_REPOSITORY = REST_PREFIX + 'repository/validate/connection';
-		var VALIDATE_CREDENTIALS = REST_PREFIX + 'repository/validate/credentials';
-		var CHECK_NAME_DATABASE = REST_PREFIX + 'repository/validate/database';
-		var REPOSITORIES = REST_PREFIX + 'repository';
+        var NEW_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/create';
+        var CONNECT_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/connect';
+        var GET_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/get';
+        var CHECK_CONNECTION_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/validate/connection';
+        var VALIDATE_CREDENTIALS = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/validate/credentials';
+        var CHECK_NAME_DATABASE = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/validate/database';
+        var REPOSITORIES = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository';
 
 		var SUCCESS_MESSAGE = 'Repositório adicionado com sucesso.';
 		var REPOSITORY_CONNECT_ACTION = 'CONNECT';

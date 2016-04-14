@@ -15,8 +15,8 @@ import javax.validation.constraints.NotNull;
 import br.org.tutty.Equalization;
 
 @Entity
-@Table(name = "user", catalog = "studio", schema = "public")
-@SequenceGenerator(name = "UserSequence", sequenceName = "user_seq", initialValue = 1, allocationSize = 1, catalog = "studio", schema = "public")
+@Table(name = "user", schema = "public")
+@SequenceGenerator(name = "UserSequence", sequenceName = "user_seq", initialValue = 1, allocationSize = 1, schema = "public")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -4681580716925463211L;
@@ -24,42 +24,42 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(generator = "UserSequence", strategy = GenerationType.SEQUENCE)
 	private Integer id;
-	
+
 	@Equalization(name = "uuid")
-	@NotNull
-	private UUID uuid;
+		@NotNull
+		private UUID uuid;
 
 	@Equalization(name = "name")
-	@NotNull
-	private String name;
+		@NotNull
+		private String name;
 
-    @Equalization(name = "admin_flag")
-	private Boolean adm;
+	@Equalization(name = "admin_flag")
+		private Boolean adm;
 
 	@Equalization(name = "surname")
-	@NotNull
-	@Column(name = "surname")
-	private String surname;
+		@NotNull
+		@Column(name = "surname")
+		private String surname;
 
 	@Equalization(name = "phone")
-	@NotNull
-	private String phone;
+		@NotNull
+		private String phone;
 
 	@Equalization(name = "email")
-	@NotNull
-	private String email;
+		@NotNull
+		private String email;
 
 	@Equalization(name = "password")
-	@NotNull
-	private String password;
+		@NotNull
+		private String password;
 
-    @Equalization(name = "enable")
-    private Boolean enable;
+	@Equalization(name = "enable")
+		private Boolean enable;
 
 	public User() {
 		this.uuid = UUID.randomUUID();
 		this.adm = Boolean.FALSE;
-        this.enable = Boolean.FALSE;
+		this.enable = Boolean.FALSE;
 	}
 
 	public User(String name, String surname, String password, String email, String phone) {
@@ -71,17 +71,17 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-    public void enable(){
-        this.enable = Boolean.TRUE;
-    }
+	public void enable(){
+		this.enable = Boolean.TRUE;
+	}
 
-    public void disable(){
-        this.enable = Boolean.FALSE;
-    }
+	public void disable(){
+		this.enable = Boolean.FALSE;
+	}
 
 	public void becomesAdm() {
 		this.adm = Boolean.TRUE;
-        enable();
+		enable();
 	}
 
 	public Integer getId() {
@@ -112,12 +112,12 @@ public class User implements Serializable {
 		return password;
 	}
 
-    public Boolean isEnable() {
-        return enable;
-    }
+	public Boolean isEnable() {
+		return enable;
+	}
 
 	public UUID getUuid() {
 		return uuid;
 	}
-    
+
 }
