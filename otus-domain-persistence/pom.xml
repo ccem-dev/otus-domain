@@ -9,7 +9,7 @@
 	<parent>
 		<groupId>br.org.otus.domain</groupId>
 		<artifactId>otus-domain-root</artifactId>
-		<version>1.5.14-SNAPSHOT</version>
+		<version>1.5.15-SNAPSHOT</version>
 		<relativePath>../otus-domain-root/pom.xml</relativePath>
 	</parent>
 
