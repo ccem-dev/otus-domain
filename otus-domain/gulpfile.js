@@ -2,26 +2,27 @@
 
     var gulp = require('gulp');
     var browserSync = require('browser-sync').create();
+    var browserSyncSpa = require('browser-sync-middleware-spa');
+    var bump = require('gulp-bump');
 
-    /* Task registry */
-    gulp.task('default', defaultTask);
-
-    function defaultTask() {
-        console.log('Do stuff here...');
-    }
+    var baseDir = __dirname + '/app/index.html';
 
     gulp.task('browser-sync', function() {
         browserSync.init({
             server: {
                 open: 'external',
                 baseDir: '../',
-                middleware: function(req, res, next) {
-                    res.setHeader('Access-Control-Allow-Origin', '*');
-                    res.setHeader('Access-Control-Allow-Headers', '*');
-                    next();
-                }
+                middleware: [
+                    browserSyncSpa(/^[^\.]+$/, baseDir),
+
+                    function(req, res, next) {
+                        res.setHeader('Access-Control-Allow-Origin', '*');
+                        res.setHeader('Access-Control-Allow-Headers', '*');
+                        next();
+                    }
+                ]
             },
-            startPath: '/otus-domain'
+            startPath: 'otus-domain/login'
         });
 
         gulp.watch([
@@ -29,6 +30,14 @@
             'app/**/*.js',
             'app/**/*.css'
         ]).on('change', browserSync.reload);
+    });
+
+    gulp.task('upgrade-version', function(value) {
+        gulp.src('./package.json')
+            .pipe(bump({
+                version: process.env.npm_config_value
+            }))
+            .pipe(gulp.dest('./'));
     });
 
 }());

@@ -2,9 +2,8 @@
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
 module.exports = function(config) {
-    var APP_PRIVATE_ROOT_PATH = 'app/private/';
-    var APP_PUBLIC_ROOT_PATH = 'app/public/';
-    var DEPENDENCIES_ROOT_PATH = 'app/shared/';
+    var APP_ROOT_PATH = 'app/';
+    var COMPONENTS_ROOT_PATH = 'app/components/';
     var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
 
@@ -22,28 +21,18 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
-            NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile/angular-bind-html-compile.js',
             NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-            NODE_MODULES_ROOT_PATH + 'angular-ui-mask/angular-ui-mask.min.js',
-            NODE_MODULES_ROOT_PATH + 'angular-ui-router/angular-ui-router.min.js',
-            NODE_MODULES_ROOT_PATH + 'lokijs/lokijs.min.js',
-            NODE_MODULES_ROOT_PATH + 'lokijs/loki-angular.js',
-            NODE_MODULES_ROOT_PATH + 'moment/moment.js',
+            NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-ui-router/build/angular-ui-router.min.js',
             /* Otus platform */
-            DEPENDENCIES_ROOT_PATH + 'st-utils/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'ui-components/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'ui-components/**/*.js',
-            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'otus-domain/**/*.js',
-            DEPENDENCIES_ROOT_PATH + 'otusjs/**/*-module.js',
-            DEPENDENCIES_ROOT_PATH + 'otusjs/**/*.js',
+            COMPONENTS_ROOT_PATH + 'st-utils/**/*-module.js',
             /* Application files */
-            'app/app.js',
-            'app/config/**/*-configuration.js',
-            APP_PRIVATE_ROOT_PATH + '**/*-module.js',
-            APP_PRIVATE_ROOT_PATH + '**/*.js', {
+            APP_ROOT_PATH + 'app.js',
+            APP_ROOT_PATH + 'config/**/*-configuration.js',
+            APP_ROOT_PATH + '**/*-module.js',
+            APP_ROOT_PATH + '**/*.js', {
                 pattern: 'tests/unit/**/*-spec.js',
                 included: true
             }

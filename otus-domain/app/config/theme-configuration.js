@@ -1,7 +1,7 @@
 (function () {
 
     angular
-        .module('studio')
+        .module('otusDomain')
         .config(['$mdThemingProvider', '$mdIconProvider', themeConfiguration]);
 
     function themeConfiguration($mdThemingProvider, $mdIconProvider) {
