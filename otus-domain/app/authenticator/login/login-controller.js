@@ -5,43 +5,37 @@
         .module('otusDomain.authenticator')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$http', 'DashboardStateService'];
+    LoginController.$inject = ['$scope', '$http', 'DashboardStateService', 'AuthenticatorResourceFactory', 'InstallerResourceFactory'];
 
-    function LoginController($scope, $http, DashboardStateService) {
-
+    function LoginController($scope, $http, DashboardStateService, AuthenticatorResourceFactory, InstallerResourceFactory) {
         var HOSTNAME_REST = 'http://' + window.location.hostname;
-
-        var HTTP_POST_URL = HOSTNAME_REST + '/otus-domain-rest/session/rest/authentication/login';
-        var HTTP_GET_SYSTEM_CONFIG_STATUS = HOSTNAME_REST + '/otus-domain-rest/session/rest/system/config/ready';
         var HTTP_GET_IS_LOGGED = HOSTNAME_REST + '/otus-domain-rest/session/rest/authentication/isLogged';
 
-        $http.get(HTTP_GET_SYSTEM_CONFIG_STATUS).then(function(response) {
+        init();
 
-            if (!response.data.data) {
-                DashboardStateService.goToInstaller();
-            } else {
-                $http.get(HTTP_GET_IS_LOGGED).then(function(response) {
-                    if (response.data.data) {
-                        DashboardStateService.goToLogin();
-                    }
-                });
-            }
-        });
+        function init() {
+            verifyInstalation();
+        }
+
+        function verifyInstalation() {
+            var installerResource = InstallerResourceFactory.create();
+            installerResource.ready(function(response) {
+                if (response) {
+                    DashboardStateService.goToLogin();
+                } else {
+                    DashboardStateService.goToInstaller();
+                }
+            });
+        }
 
         $scope.authenticate = function(user) {
-            $scope.invalidLogin = false;
-
-            $http.post(HTTP_POST_URL, user).then(function(response) {
-
-                if (response.data) {
+            var authenticator = AuthenticatorResourceFactory.create();
+            authenticator.authenticate(user, function(response) {
+                if (!response.hasErrors) {
                     DashboardStateService.goToHome();
-                    $scope.invalidLogin = false;
                 } else {
                     $scope.invalidLogin = true;
                 }
-
-            }, function(response) {
-                console.log(response);
             });
         };
 
