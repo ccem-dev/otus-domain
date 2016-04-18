@@ -1,22 +1,32 @@
 package br.org.studio.rest;
 
-import br.org.studio.administration.AdministrationUserService;
-import br.org.studio.rest.dtos.UserDto;
-import br.org.studio.rest.dtos.administration.AdministrationUser;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.lang.reflect.Type;
-import java.util.List;
+import br.org.studio.administration.AdministrationUserService;
+import br.org.studio.repository.RepositoryService;
+import br.org.studio.rest.dtos.UserDto;
+import br.org.studio.rest.dtos.administration.AdministrationUser;
 
 @Path("/administration/users")
 public class AdministrationUsersResource {
 
     @Inject
     private AdministrationUserService administrationUserService;
+    
+    @Inject
+    private RepositoryService repositoryService;
 
     @GET
     @Path("/fetch")
@@ -51,6 +61,8 @@ public class AdministrationUsersResource {
         List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
 
         administrationUserService.enableUsers(convertedUsers);
+        repositoryService.createRepositoryForUsers(convertedUsers);
+        	
         Response response = new Response();
         response.setData(Boolean.TRUE);
         return response.toJson();

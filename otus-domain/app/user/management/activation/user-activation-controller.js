@@ -23,19 +23,14 @@
         $scope.loadUsers = fetchUsers();
 
         $scope.enableUsers = function() {
+            //pega os usuários desabilitados
             var disabledUserForActivation = filterSelected($scope.users.disabledUsers);
-            var repository = {name:'sadsa'};
-
+            // Se exister usuários desabilitados
             if (disabledUserForActivation.length > 0) {
+                // solicita ao servidor que o usuário/usuários seja habilitado, passando como parâmetro o usuário(s)
+                console.log(disabledUserForActivation);
                 $http.post(URL_ENABLE_USERS, disabledUserForActivation).then(function(response) {
                     fetchUsers();
-                });
-
-                $http.post(NEW_REPOSITORY, repository).then(function(response) {
-                    if(response.data.data) {
-                        getRepositories();
-                        sucessMessage();
-                    }
                 });
             }
         };

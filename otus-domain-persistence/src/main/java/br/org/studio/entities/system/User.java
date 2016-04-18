@@ -26,35 +26,35 @@ public class User implements Serializable {
 	private Integer id;
 
 	@Equalization(name = "uuid")
-		@NotNull
-		private UUID uuid;
+	@NotNull
+	private UUID uuid;
 
 	@Equalization(name = "name")
-		@NotNull
-		private String name;
+	@NotNull
+	private String name;
 
 	@Equalization(name = "admin_flag")
-		private Boolean adm;
+	private Boolean adm;
 
 	@Equalization(name = "surname")
-		@NotNull
-		@Column(name = "surname")
-		private String surname;
+	@NotNull
+	@Column(name = "surname")
+	private String surname;
 
 	@Equalization(name = "phone")
-		@NotNull
-		private String phone;
+	@NotNull
+	private String phone;
 
 	@Equalization(name = "email")
-		@NotNull
-		private String email;
+	@NotNull
+	private String email;
 
 	@Equalization(name = "password")
-		@NotNull
-		private String password;
+	@NotNull
+	private String password;
 
 	@Equalization(name = "enable")
-		private Boolean enable;
+	private Boolean enable;
 
 	public User() {
 		this.uuid = UUID.randomUUID();
@@ -71,11 +71,11 @@ public class User implements Serializable {
 		this.phone = phone;
 	}
 
-	public void enable(){
+	public void enable() {
 		this.enable = Boolean.TRUE;
 	}
 
-	public void disable(){
+	public void disable() {
 		this.enable = Boolean.FALSE;
 	}
 
@@ -118,6 +118,10 @@ public class User implements Serializable {
 
 	public UUID getUuid() {
 		return uuid;
+	}
+	
+	public String getFullName() {
+		return this.name + " " + this.surname;
 	}
 
 }

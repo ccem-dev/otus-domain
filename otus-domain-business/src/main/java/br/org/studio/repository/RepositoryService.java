@@ -6,6 +6,8 @@ import java.util.List;
 import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
+import br.org.studio.exceptions.DataNotFoundException;
+import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 
 /**
@@ -25,4 +27,7 @@ public interface RepositoryService {
     Boolean validationConnection(RepositoryDto repositoryDto);
 
 	Boolean checkRepositoryCredentials(RepositoryDto repositoryDto);
+
+	void createRepositoryForUsers(List<UserDto> convertedUsers);
+
 }

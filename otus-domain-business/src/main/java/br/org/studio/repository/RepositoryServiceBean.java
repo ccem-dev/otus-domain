@@ -10,12 +10,15 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.org.studio.dao.RepositoryDao;
+import br.org.studio.dao.UserDao;
 import br.org.studio.entities.repository.Repository;
+import br.org.studio.entities.system.User;
 import br.org.studio.exception.ConvertedDtoException;
 import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
 import br.org.studio.exceptions.DataNotFoundException;
+import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
@@ -29,6 +32,8 @@ public class RepositoryServiceBean implements RepositoryService {
 
 	@Inject
 	private RepositoryDao repositoryDao;
+	@Inject
+	private UserDao userDao;
 	private RepositoryManagerFacade repositoryFacade;
 
 	public RepositoryServiceBean() {
@@ -142,6 +147,60 @@ public class RepositoryServiceBean implements RepositoryService {
 		Boolean validCredentials = MongoConnector.getConnector(configuration.getHostName(), configuration.getPort())
 				.isValidCredentials(configuration.getUser(), configuration.getPassword());
 		return validCredentials;
+	}
+
+	@Override
+	public void createRepositoryForUsers(List<UserDto> convertedUsers) {
+
+		User user = null;
+		for (UserDto userDto : convertedUsers) {
+			// busco o usuário do banco, para poder pegar o UUID
+			try {
+				user = userDao.fetchByEmail(userDto.getEmail());
+			} catch (DataNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			// cria uma instância de repositório para cada usuário
+			Repository repository = new Repository();
+			repository.setUserID(user.getId());
+			repository.setDatabase(user.getUuid().toString());
+			repository.setName(user.getFullName());
+
+			repository.setUsername("teste");
+			repository.setPassword("12345");
+
+			// persistir infomações do repositório do usuário
+
+			// pegar informações do mongo client default
+			repository.setHost("localhost");
+			repository.setPort("27017");
+
+			// pedir ao MongoFacade para criar a base com o usuário.
+
+			RepositoryDto repositoryDto = new RepositoryDto();
+			try {
+				Equalizer.equalize(repository, repositoryDto);
+				RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
+				if (validationConnection(repositoryDto)) {
+
+					if (!validationDatabase(repositoryDto)) {
+						repositoryFacade.createRepository(configuration);
+						connect(repositoryDto);
+					} else {
+						throw new RepositoryAlreadyExistException();
+					}
+
+				} else {
+					throw new RepositoryOfflineException();
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 }
