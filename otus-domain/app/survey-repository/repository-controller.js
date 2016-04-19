@@ -3,30 +3,19 @@
 
     angular
         .module('otusDomain.repository')
-        .controller('RepositoryController', ['$scope', '$http', '$location', '$mdDialog', '$rootScope', 'RepositoryService', RepositoryController]);
+        .controller('RepositoryController', RepositoryController);
 
-    function RepositoryController($scope, $http, $location, $mdDialog, $rootScope, RepositoryService) {
-        var HOSTNAME_NAV = 'http://' + window.location.hostname + ':' + window.location.port;
-        var HOSTNAME_REST = 'http://' + window.location.hostname;
+    RepositoryController.$inject = ['$scope', '$http', '$location', '$mdDialog', '$rootScope', 'RepositoryService', 'RestResourceService'];
 
-        var NEW_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/create';
-        var CONNECT_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/connect';
-        var GET_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/get';
-        var CHECK_CONNECTION_REPOSITORY = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/validate/connection';
-        var VALIDATE_CREDENTIALS = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/validate/credentials';
-        var CHECK_NAME_DATABASE = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository/validate/database';
-        var REPOSITORIES = HOSTNAME_REST + '/otus-domain-rest/session/rest/repository';
-
+    function RepositoryController($scope, $http, $location, $mdDialog, $rootScope, RepositoryService, RestResourceService) {
         var SUCCESS_MESSAGE = 'Repositório adicionado com sucesso.';
         var REPOSITORY_CONNECT_ACTION = 'CONNECT';
-        var REPOSITORY_CREATE_ACTION = 'NEW';
-
-        init();
-
+        var REPOSITORY_CREATE_ACTION = 'CREATE';
         var self = this;
-
         $scope.pageMessage = angular.equals($scope.actionType, REPOSITORY_CREATE_ACTION) ? "Criação de Repositório" : "Adição de Repositório";
         self.connected = connected;
+
+        init();
 
         $scope.actionButton = function(repository) {
             getActionType();
@@ -39,17 +28,20 @@
         };
 
         function connectRepository(repository) {
-            $http.post(CONNECT_REPOSITORY, repository).then(function(response) {
-                if (response.data.data) {
+            var repositoryResource = RestResourceService.getRepositoryResource();
+
+            repositoryResource.connect(repository, function(response) {
+                if (!response.data.hasError) {
                     successMessage();
                 }
             });
         }
 
         function createRepository(repository) {
-            $http.post(NEW_REPOSITORY, repository).then(function(response) {
-                if (response.data.data) {
-                    getRepositories();
+            var repositoryResource = RestResourceService.getRepositoryResource();
+
+            repositoryResource.create(repository, function(response) {
+                if (!response.data.hasError) {
                     successMessage();
                 }
             });
@@ -65,71 +57,51 @@
 
         $scope.validateDatabase = function validateDatabase(repository) {
             if ($scope.repository.database && $scope.repository.host && $scope.repository.port) {
+                var repositoryResource = RestResourceService.getRepositoryResource();
 
-                $http.post(CHECK_CONNECTION_REPOSITORY, repository).then(function(response) {
-                    var validationConnection = response.data.data;
+                repositoryResource.validateConnection(repository, function(response) {
+                    var validationConnection = response.data;
                     validateRepositoryConnection(validationConnection);
 
                     if (validationConnection) {
-                        $http.post(CHECK_NAME_DATABASE, repository).then(function(response) {
-                            validateExistDatabase(!response.data.data);
+                        repositoryResource.getByRepositoryName({
+                            'repositoryName': repository.name
+                        }, function(response) {
+                            validateExistDatabase(!response.data);
                         });
                     }
                 });
-
             }
         };
 
         $scope.validateCredentials = function(repository) {
             if ($scope.repository.username && $scope.repository.password && $scope.repository.host && $scope.repository.port) {
-                $http.get(VALIDATE_CREDENTIALS, {
-                        params: {
-                            repositoryData: repository
-                        }
-                    })
-                    .success(function(data) {
-                        $scope.repositoryForm.username.$setValidity('credentials', data.data);
-                        $scope.repositoryForm.password.$setValidity('credentials', data.data);
-                    })
-                    .error(function(data) {
-                        console.log('Erro + ', data);
-                    });
+                var repositoryResource = RestResourceService.getRepositoryResource();
+
+                repositoryResource.validateCredentials(repository, function(response) {
+                    $scope.repositoryForm.username.$setValidity('credentials', response.data);
+                    $scope.repositoryForm.password.$setValidity('credentials', response.data);
+                });
             }
-        }
+        };
 
         $scope.existRepository = function(repository) {
-            $http.get(GET_REPOSITORY, {
-                params: {
-                    repositoryName: repository.name
-                }
-            }).then(function(response) {
-                if (!response.data.data) {
-                    validateExistRepository(true);
+            var repositoryResource = RestResourceService.getRepositoryResource();
 
-                } else {
-                    validateExistRepository(false);
-                }
+            repositoryResource.getByRepositoryName({
+                'repositoryName': repository.name
+            }, function(response) {
+                validateExistRepository(!response.data);
             });
         };
 
         function init() {
             $scope.connectedRepository = RepositoryService.connectedRepository;
-            getRepositories();
             getActionType();
         }
 
         function getActionType() {
             $scope.actionType = $location.search().actionType;
-        }
-
-        function getRepositories() {
-            $http.get(REPOSITORIES)
-                .success(function(data) {
-                    $rootScope.repositories = data;
-                })
-                .error(function(data) {
-                    console.log('Erro + ', data);
-                });
         }
 
         function validateExistRepository(valid) {
@@ -146,7 +118,6 @@
             $scope.repositoryForm.database.$setValidity('databaseAlreadyExist', valid);
             $scope.repositoryForm.$setValidity('databaseAlreadyExist', valid);
         }
-
 
         function successMessage() {
             alert = $mdDialog.alert()

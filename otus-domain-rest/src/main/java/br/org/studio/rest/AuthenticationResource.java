@@ -12,7 +12,7 @@ import br.org.studio.security.SecurityService;
 
 import com.google.gson.Gson;
 
-@Path("authentication")
+@Path("/authentication")
 public class AuthenticationResource {
 
     @Inject
@@ -40,57 +40,29 @@ public class AuthenticationResource {
         }
     }
 
-    @DELETE
+    @POST
+    @Path("/invalidate")
+    @Produces(MediaType.APPLICATION_JSON)
     public String invalidate() {
-        System.out.println("Invalidate");
-	    return "";
-    }
+        Response response = new Response();
 
-    @Path("/login")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String userLogin(String loginData) {
-	Gson gson = new Gson();
+        try {
+            securityService.logout(httpSession);
+            response.setData(Boolean.TRUE);
+        } catch (Exception e) {
+            response.setData(Boolean.FALSE);
+        }
 
-	LoginAuthenticationDto loginDto = gson.fromJson(loginData, LoginAuthenticationDto.class);
-	loginDto.setHttpSession(httpSession);
-	loginDto.encryptPassword();
-	
-	Response response = new Response();
-	try {
-	    UUID userUUID = securityService.authenticate(loginDto);
-	    return response.setData(userUUID.toString()).toJson();
-	} catch (Exception e) {
-		response.setHasErrors(Boolean.TRUE);
-		return response.setError(new String("Falha na autenticação.")).toJson();            
-	}
-    }
-
-    @Path("/logout")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public String userLogout() {
-	Response response = new Response();
-
-	try {
-	    securityService.logout(httpSession);
-	    response.setData(Boolean.TRUE);
-	} catch (Exception e) {
-	    response.setData(Boolean.FALSE);
-	}
-
-	return response.toJson();
-
+        return response.toJson();
     }
 
     @Path("/isLogged")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String isLogged() {
-	Response response = new Response();
-	response.setData(securityService.isLogged(httpSession));
+        Response response = new Response();
+        response.setData(securityService.isLogged(httpSession));
 
-	return response.toJson();
+        return response.toJson();
     }
 }

@@ -48,11 +48,11 @@ public class RepositoryResource {
         return response.toJson();
     }
 
-    @GET
+    @POST
     @Path("validate/credentials")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String isValidRepositoryCredentials(@QueryParam("repositoryData") String repository) {
+    public String isValidRepositoryCredentials(String repository) {
     	RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
     	Response response = new Response();
     	
@@ -60,7 +60,7 @@ public class RepositoryResource {
     	return response.toJson();
     }
     
-    @POST
+    @GET
     @Path("validate/database")
     @Produces(MediaType.APPLICATION_JSON)
     public String existDatabase(String repository) {
@@ -72,7 +72,7 @@ public class RepositoryResource {
     }
 
     @GET
-    @Path("get")
+    @Path("/get")
     @Produces(MediaType.APPLICATION_JSON)
     public String existRepository(@QueryParam("repositoryName") String repositoryName) {
         Response response = new Response();
@@ -113,8 +113,8 @@ public class RepositoryResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String create(String repository) {
-        Response response = new Response();
         RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
+        Response response = new Response();
 
         try {
             repositoryService.create(convertedRepositoryDto);

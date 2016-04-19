@@ -17,7 +17,6 @@
     },
     "scripts": {
         "test": "karma start karma.conf.js",
-        "bsync": "browser-sync start --server --files=\"**/*.html, **/*.js, **/*.css\"",
         "gulp": "gulp",
         "start": "npm run gulp browser-sync",
         "karma": "karma"
@@ -39,7 +38,7 @@
         "browser-sync": "2.11.2",
         "browser-sync-middleware-spa": "^1.0.0",
         "concurrently": "^1.0.0",
-        "gulp": "3.9.1",
+        "gulp": "^3.9.1",
         "gulp-rename": "^1.2.2",
         "gulp-uglify": "^1.5.1",
         "gulp-useref": "^3.0.4",

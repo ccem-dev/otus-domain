@@ -5,12 +5,9 @@
         .module('otusDomain.authenticator')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', '$http', 'DashboardStateService', 'AuthenticatorResourceFactory', 'InstallerResourceFactory'];
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'RestResourceService'];
 
-    function LoginController($scope, $http, DashboardStateService, AuthenticatorResourceFactory, InstallerResourceFactory) {
-        var HOSTNAME_REST = 'http://' + window.location.hostname;
-        var HTTP_GET_IS_LOGGED = HOSTNAME_REST + '/otus-domain-rest/session/rest/authentication/isLogged';
-
+    function LoginController($scope, DashboardStateService, RestResourceService) {
         init();
 
         function init() {
@@ -18,9 +15,9 @@
         }
 
         function verifyInstalation() {
-            var installerResource = InstallerResourceFactory.create();
+            var installerResource = RestResourceService.getInstallerResource();
             installerResource.ready(function(response) {
-                if (response) {
+                if (response.data) {
                     DashboardStateService.goToLogin();
                 } else {
                     DashboardStateService.goToInstaller();
@@ -29,8 +26,8 @@
         }
 
         $scope.authenticate = function(user) {
-            var authenticator = AuthenticatorResourceFactory.create();
-            authenticator.authenticate(user, function(response) {
+            var authenticatorResource = RestResourceService.getAuthenticatorResource();
+            authenticatorResource.authenticate(user, function(response) {
                 if (!response.hasErrors) {
                     DashboardStateService.goToHome();
                 } else {
