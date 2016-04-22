@@ -5,18 +5,12 @@
         .module('otusDomain.installer')
         .controller('InitialConfigController', InitialConfigController);
 
-    InitialConfigController.$inject = ['$q', '$scope', '$http', '$mdDialog', 'DashboardStateService'];
+    InitialConfigController.$inject = ['$q', '$scope', '$mdDialog', 'DashboardStateService', 'RestResourceService'];
 
-    function InitialConfigController($q, $scope, $http, $mdDialog, DashboardStateService) {
-
+    function InitialConfigController($q, $scope, $mdDialog, DashboardStateService, RestResourceService) {
         $scope.systemConf = {};
         $scope.systemConf.user = {};
         $scope.systemConf.emailSender = {};
-
-        var HOSTNAME_REST = 'http://' + window.location.hostname;
-
-        var REST_CONFIG = HOSTNAME_REST + "/otus-domain-rest/session/rest/system/config";
-        var REST_EMAIL_SERVICE = HOSTNAME_REST + "/otus-domain-rest/session/rest/system/validation/emailService";
 
         function confirmAlertToNavigate() {
             alert = $mdDialog.alert()
@@ -34,15 +28,12 @@
         $scope.register = function(systemConf) {
             $scope.isLoading = true;
             $scope.validateEmailService(systemConf).then(function() {
-                $http.post(REST_CONFIG, systemConf).then(function(response) {
-                        $scope.isLoading = false;
-                        confirmAlertToNavigate();
-                    },
-                    function() {
-                        $scope.isLoading = false;
-                    });
-            }, function() {
-                $scope.isLoading = false;
+
+                var installerResource = RestResourceService.getInstallerResource();
+                installerResource.config(systemConf, function(response) {
+                    $scope.isLoading = false;
+                    confirmAlertToNavigate();
+                });
             });
         };
 
@@ -51,8 +42,9 @@
 
             if (systemConf.emailSender.email && systemConf.emailSender.password && systemConf.emailSender.passwordConfirm) {
 
-                $http.post(REST_EMAIL_SERVICE, systemConf).then(function(response) {
-                    if (response.data.data) {
+                var installerResource = RestResourceService.getInstallerResource();
+                installerResource.validation(systemConf, function(response) {
+                    if (!response.hasError) {
                         $scope.resetValidationEmail();
                         deferred.resolve(true);
 

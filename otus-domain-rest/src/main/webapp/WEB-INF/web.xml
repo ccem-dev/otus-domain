@@ -4,7 +4,7 @@
 
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
-        <param-value>/session/rest</param-value>
+        <param-value>/v01</param-value>
     </context-param>
 
     <servlet>
@@ -16,9 +16,13 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>resteasy-servlet</servlet-name>-->
+        <!--<url-pattern>/session/rest/*</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>resteasy-servlet</servlet-name>
-        <url-pattern>/session/rest/*</url-pattern>
+        <url-pattern>/v01/*</url-pattern>
     </servlet-mapping>
 
     <session-config>

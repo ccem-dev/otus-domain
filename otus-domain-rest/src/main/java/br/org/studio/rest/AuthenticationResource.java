@@ -12,7 +12,7 @@ import br.org.studio.security.SecurityService;
 
 import com.google.gson.Gson;
 
-@Path("authentication")
+@Path("/authentication")
 public class AuthenticationResource {
 
     @Inject
@@ -20,31 +20,30 @@ public class AuthenticationResource {
     @Inject
     private HttpSession httpSession;
 
-    @Path("/login")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String userLogin(String loginData) {
+    public String authenticate(String data) {
         Gson gson = new Gson();
 
-        LoginAuthenticationDto loginDto = gson.fromJson(loginData, LoginAuthenticationDto.class);
+        LoginAuthenticationDto loginDto = gson.fromJson(data, LoginAuthenticationDto.class);
         loginDto.setHttpSession(httpSession);
         loginDto.encryptPassword();
-        
+
         Response response = new Response();
         try {
             UUID userUUID = securityService.authenticate(loginDto);
             return response.setData(userUUID.toString()).toJson();
         } catch (Exception e) {
-        	response.setHasErrors(Boolean.TRUE);
-        	return response.setError(new String("Falha na autenticação.")).toJson();            
+            response.setHasErrors(Boolean.TRUE);
+            return response.setError(new String("Falha na autenticação.")).toJson();
         }
     }
 
-    @Path("/logout")
     @POST
+    @Path("/invalidate")
     @Produces(MediaType.APPLICATION_JSON)
-    public String userLogout() {
+    public String invalidate() {
         Response response = new Response();
 
         try {
@@ -55,7 +54,6 @@ public class AuthenticationResource {
         }
 
         return response.toJson();
-
     }
 
     @Path("/isLogged")

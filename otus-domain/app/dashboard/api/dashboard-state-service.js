@@ -8,10 +8,11 @@
     DashboardStateService.$inject = [
         '$location',
         '$http',
-        'APP_STATE'
+        'APP_STATE',
+        'RestResourceService'
     ];
 
-    function DashboardStateService($location, $http, APP_STATE) {
+    function DashboardStateService($location, $http, APP_STATE, RestResourceService) {
         var self = this;
 
         var HOSTNAME_REST = 'http://' + window.location.hostname;
@@ -68,9 +69,10 @@
         }
 
         function logout() {
-            $http.post(HOSTNAME_REST + APP_STATE.LOGOUT).then(function(response) {
-                if (response.data.data) {
-                  goToLogin();
+            var authenticatorResource = RestResourceService.getAuthenticatorResource();
+            authenticatorResource.invalidate(function(response) {
+                if (response.data) {
+                    goToLogin();
                 }
             });
         }
