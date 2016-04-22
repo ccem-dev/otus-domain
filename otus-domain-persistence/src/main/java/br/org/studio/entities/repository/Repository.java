@@ -3,16 +3,19 @@ package br.org.studio.entities.repository;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.org.studio.entities.system.User;
 import br.org.tutty.Equalization;
 
 @Entity
@@ -57,9 +60,9 @@ public class Repository implements Serializable {
 	@Equalization(name = "description")
 	private String description;
 	
-	@OneToOne
-	@Column(name = "user_id_fk")
-	private Integer userID;
+	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+	@JoinColumn(name="id")
+	private User userFK;
 
 	public Repository() {
 		this.uuid = UUID.randomUUID();
@@ -69,12 +72,12 @@ public class Repository implements Serializable {
 		return uuid;
 	}
 
-	public Integer getUserID() {
-		return userID;
+	public User getUserFK() {
+		return userFK;
 	}
 
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+	public void setUserFK(User userFK) {
+		this.userFK = userFK;
 	}
 
 	public Long getId() {

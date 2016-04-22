@@ -11,13 +11,7 @@ import javax.ws.rs.core.Application;
 public class EndPointsLoader extends Application {
 
     @Inject
-    private UserResouce userResouce;
-
-    @Inject
-    private SystemConfigResource systemConfigResource;
-
-    @Inject
-    private AdministrationUsersResource administrationUsersResource;
+    private UserResource userResource;
 
     @Inject
     private AuthenticationResource authenticationResource;
@@ -25,25 +19,26 @@ public class EndPointsLoader extends Application {
     @Inject
     private RepositoryResource repositoryResource;
 
+    @Inject
+    private InstallerResource installerResource;
+
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new HashSet<Class<?>>();
-        resources.add(UserResouce.class);
-        resources.add(SystemConfigResource.class);
-        resources.add(AdministrationUsersResource.class);
+        resources.add(UserResource.class);
         resources.add(AuthenticationResource.class);
         resources.add(RepositoryResource.class);
+        resources.add(InstallerResource.class);
         return resources;
     }
 
     @Override
     public Set<Object> getSingletons() {
         Set<Object> resources = new HashSet<Object>();
-        resources.add(userResouce);
-        resources.add(systemConfigResource);
-        resources.add(administrationUsersResource);
+        resources.add(userResource);
         resources.add(authenticationResource);
         resources.add(repositoryResource);
+        resources.add(installerResource);
         return resources;
     }
 

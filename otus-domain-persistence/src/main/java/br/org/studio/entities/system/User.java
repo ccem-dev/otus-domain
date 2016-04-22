@@ -23,6 +23,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(generator = "UserSequence", strategy = GenerationType.SEQUENCE)
+	@Equalization(name = "id")
 	private Integer id;
 
 	@Equalization(name = "uuid")

@@ -50,7 +50,7 @@ public class AuthenticationUsersResourceTest {
 
         loginAuthenticationDto.encryptPassword();
 
-        String result = authenticationResource.userLogin(new Gson().toJson(loginAuthenticationDto));
+        String result = authenticationResource.authenticate(new Gson().toJson(loginAuthenticationDto));
         
         Response response = new Gson().fromJson(result, Response.class);
 
@@ -68,7 +68,7 @@ public class AuthenticationUsersResourceTest {
         
         loginAuthenticationDto.encryptPassword();
 
-        String result = authenticationResource.userLogin(new Gson().toJson(loginAuthenticationDto));
+        String result = authenticationResource.authenticate(new Gson().toJson(loginAuthenticationDto));
         Response response = new Gson().fromJson(result, Response.class);
         
         Assert.assertNotNull(response.getData());

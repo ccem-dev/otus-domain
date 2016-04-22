@@ -24,8 +24,11 @@ public class UserDto implements Serializable {
 	@Equalization(name = "password")
 	private String password;
 
-  	@Equalization(name = "admin_flag")
-    	private Boolean admin;
+	@Equalization(name = "admin_flag")
+	private Boolean admin;
+
+	@Equalization(name = "id")
+	private Integer id;
 
 	public String getName() {
 		return name;

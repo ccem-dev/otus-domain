@@ -21,7 +21,7 @@ public class UserResourceTest {
 	private EmailConstraint emailConstraint;
 
 	@InjectMocks
-	private UserResouce resource;
+	private UserResource resource;
 
 	private Response trueResponse;
 	private Response falseResponse;
