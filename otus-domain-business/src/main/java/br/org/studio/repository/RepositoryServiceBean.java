@@ -154,47 +154,17 @@ public class RepositoryServiceBean implements RepositoryService {
 
 		User user = null;
 		for (UserDto userDto : convertedUsers) {
-			// busco o usuário do banco, para poder pegar o UUID
 			try {
 				user = userDao.fetchByEmail(userDto.getEmail());
 			} catch (DataNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			// cria uma instância de repositório para cada usuário
-			Repository repository = new Repository();
-			repository.setUserFK(user);
-			repository.setDatabase(user.getUuid().toString());
-			repository.setName(user.getFullName());
-
-			repository.setUsername("superRoot");
-			repository.setPassword("12345");
-
-			// persistir infomações do repositório do usuário
-
-			// pegar informações do mongo client default
-			repository.setHost("localhost");
-			repository.setPort("27017");
-
-			// pedir ao MongoFacade para criar a base com o usuário.
-
+			Repository repository = buildRepositoryWithUser(user);
 			RepositoryDto repositoryDto = new RepositoryDto();
-			
+
 			try {
 				Equalizer.equalize(repository, repositoryDto);
-				RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
-				if (validationConnection(repositoryDto)) {
-
-					if (!validationDatabase(repositoryDto)) {
-						repositoryFacade.createRepository(configuration);
-						connect(repositoryDto);
-					} else {
-						throw new RepositoryAlreadyExistException();
-					}
-
-				} else {
-					throw new RepositoryOfflineException();
-				}
+				create(repositoryDto);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -204,4 +174,18 @@ public class RepositoryServiceBean implements RepositoryService {
 
 	}
 
+	private Repository buildRepositoryWithUser(User user) {
+		Repository repository = new Repository();
+		repository.setUserFK(user);
+		repository.setDatabase(user.getUuid().toString());
+		repository.setName(user.getFullName());
+
+		repository.setUsername("superRoot");
+		repository.setPassword("12345");
+
+		repository.setHost("localhost");
+		repository.setPort("27017");
+
+		return repository;
+	}
 }
