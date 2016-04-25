@@ -163,11 +163,11 @@ public class RepositoryServiceBean implements RepositoryService {
 			}
 			// cria uma instância de repositório para cada usuário
 			Repository repository = new Repository();
-			repository.setUserID(user.getId());
+			repository.setUserFK(user);
 			repository.setDatabase(user.getUuid().toString());
 			repository.setName(user.getFullName());
 
-			repository.setUsername("teste");
+			repository.setUsername("superRoot");
 			repository.setPassword("12345");
 
 			// persistir infomações do repositório do usuário
@@ -179,6 +179,7 @@ public class RepositoryServiceBean implements RepositoryService {
 			// pedir ao MongoFacade para criar a base com o usuário.
 
 			RepositoryDto repositoryDto = new RepositoryDto();
+			
 			try {
 				Equalizer.equalize(repository, repositoryDto);
 				RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);

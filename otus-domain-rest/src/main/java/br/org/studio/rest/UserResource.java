@@ -1,5 +1,8 @@
 package br.org.studio.rest;
 
+import java.lang.reflect.Type;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -10,21 +13,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import br.org.studio.administration.AdministrationUserService;
 import br.org.studio.context.ContextService;
 import br.org.studio.exception.FillUserException;
 import br.org.studio.exception.SessionNotFoundException;
 import br.org.studio.messages.FillUserExceptionMessage;
 import br.org.studio.registration.RegisterUserService;
+import br.org.studio.repository.RepositoryService;
 import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.administration.AdministrationUser;
 import br.org.studio.validation.EmailConstraint;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
 
 @Path("/user")
 public class UserResource {
@@ -39,6 +40,8 @@ public class UserResource {
     private HttpSession httpSession;
     @Inject
     private AdministrationUserService administrationUserService;
+    @Inject
+    private RepositoryService repositoryService;
 
 
     @POST
@@ -123,6 +126,7 @@ public class UserResource {
         List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
 
         administrationUserService.enableUsers(convertedUsers);
+        repositoryService.createRepositoryForUsers(convertedUsers);
         Response response = new Response();
         response.setData(Boolean.TRUE);
         return response.toJson();
