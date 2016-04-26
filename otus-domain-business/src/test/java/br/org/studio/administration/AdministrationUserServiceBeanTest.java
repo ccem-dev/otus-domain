@@ -1,11 +1,8 @@
 package br.org.studio.administration;
 
-import br.org.studio.dao.UserDaoBean;
-import br.org.studio.email.EmailNotifierServiceBean;
-import br.org.studio.entities.system.User;
-import br.org.studio.exceptions.DataNotFoundException;
-import br.org.studio.rest.dtos.UserDto;
-import br.org.studio.rest.dtos.administration.AdministrationUser;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,107 +11,153 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import br.org.studio.dao.RepositoryDao;
+import br.org.studio.dao.UserDaoBean;
+import br.org.studio.email.EmailNotifierServiceBean;
+import br.org.studio.entities.system.User;
+import br.org.studio.exceptions.DataNotFoundException;
+import br.org.studio.repository.RepositoryService;
+import br.org.studio.rest.dtos.UserDto;
+import br.org.studio.rest.dtos.administration.AdministrationUser;
 
 /**
  * Created by diogoferreira on 03/11/15.
  */
 @RunWith(MockitoJUnitRunner.class)
 public class AdministrationUserServiceBeanTest {
-    private static final String NAME = "User";
-    private static final String SURNAME = "Surname";
-    private static final String PASSWORD = "Password";
-    private static final String EMAIL = "Email";
-    private static final String PHONE = "Phone";
+	private static final String NAME = "User";
+	private static final String SURNAME = "Surname";
+	private static final String PASSWORD = "Password";
+	private static final String EMAIL = "Email";
+	private static final String PHONE = "Phone";
 
-    private static final Integer FIRST = 0;
-    private static final int REPETITIONS_NUMBER = 5;
+	private static final Integer FIRST = 0;
+	private static final int REPETITIONS_NUMBER = 5;
 
-    @InjectMocks
-    private AdministrationUserServiceBean administrationUserServiceBean;
+	@InjectMocks
+	private AdministrationUserServiceBean administrationUserServiceBean;
 
-    @Mock
-    private EmailNotifierServiceBean emailNotifierServiceBean;
+	@Mock
+	private EmailNotifierServiceBean emailNotifierServiceBean;
 
-    @Mock
-    private UserDaoBean userDaoBean;
+	@Mock
+	private UserDaoBean userDaoBean;
 
-    @Mock
-    private UserDto userDto;
+	@Mock
+	private UserDto userDto;
 
-    @Test
-    public void fetchUsers_should_fetch_all_users(){
-        Mockito.when(userDaoBean.fetchAll()).thenReturn(new ArrayList());
+	@Mock
+	private RepositoryDao repositoryDao;
+	
+	@Mock
+	private RepositoryService repositoryService;
 
-        administrationUserServiceBean.fetchUsers();
+	@Test
+	public void fetchUsers_should_fetch_all_users() {
+		Mockito.when(userDaoBean.fetchAll()).thenReturn(new ArrayList<User>());
 
-        Mockito.verify(userDaoBean).fetchAll();
-    }
+		administrationUserServiceBean.fetchUsers();
 
-    @Test
-    public void fetchUsers_should_equalize_dto_When_fetched_user(){
-        List<User> fetchedUsers = new ArrayList<>();
-        User user = new User(NAME, SURNAME, PASSWORD, EMAIL, PHONE);
-        user.enable();
+		Mockito.verify(userDaoBean).fetchAll();
+	}
 
-        Mockito.when(userDaoBean.fetchAll()).thenReturn(fetchedUsers);
+	@Test
+	public void fetchUsers_should_equalize_dto_When_fetched_user() {
+		List<User> fetchedUsers = new ArrayList<>();
+		User user = new User(NAME, SURNAME, PASSWORD, EMAIL, PHONE);
+		user.enable();
 
-        fetchedUsers.add(user);
-        AdministrationUser administrationUser = administrationUserServiceBean.fetchUsers();
-        List<UserDto> activedUsers = administrationUser.getActivedUsers();
+		Mockito.when(userDaoBean.fetchAll()).thenReturn(fetchedUsers);
 
-        Assert.assertEquals(activedUsers.get(FIRST).getEmail(), EMAIL);
-        Assert.assertEquals(activedUsers.get(FIRST).getName(), NAME);
-    }
+		fetchedUsers.add(user);
+		AdministrationUser administrationUser = administrationUserServiceBean.fetchUsers();
+		List<UserDto> activedUsers = administrationUser.getActivedUsers();
 
-    @Test
-    public void fetchUsers_should_return_all_fetched_users(){
-        List<User> fetchedUsers = new ArrayList<>();
-        User user = new User(NAME, SURNAME, PASSWORD, EMAIL, PHONE);
-        user.enable();
+		Assert.assertEquals(activedUsers.get(FIRST).getEmail(), EMAIL);
+		Assert.assertEquals(activedUsers.get(FIRST).getName(), NAME);
+	}
 
-        Mockito.when(userDaoBean.fetchAll()).thenReturn(fetchedUsers);
-        int counter = 0;
+	@Test
+	public void fetchUsers_should_return_all_fetched_users() {
+		List<User> fetchedUsers = new ArrayList<>();
+		User user = new User(NAME, SURNAME, PASSWORD, EMAIL, PHONE);
+		user.enable();
 
-        do{
-            fetchedUsers.add(user);
-            counter ++;
-        }while(counter < REPETITIONS_NUMBER);
+		Mockito.when(userDaoBean.fetchAll()).thenReturn(fetchedUsers);
+		int counter = 0;
 
-        AdministrationUser administrationUser = administrationUserServiceBean.fetchUsers();
-        List<UserDto> activedUsers = administrationUser.getActivedUsers();
+		do {
+			fetchedUsers.add(user);
+			counter++;
+		} while (counter < REPETITIONS_NUMBER);
 
-        Assert.assertEquals(activedUsers.size(), REPETITIONS_NUMBER);
-    }
+		AdministrationUser administrationUser = administrationUserServiceBean.fetchUsers();
+		List<UserDto> activedUsers = administrationUser.getActivedUsers();
 
-    @Test
-    public void disableUsers_should_fetch_user_by_email() throws DataNotFoundException {
-        List<UserDto> userDtos = new ArrayList<>();
-        User user = new User();
+		Assert.assertEquals(activedUsers.size(), REPETITIONS_NUMBER);
+	}
 
-        Mockito.when(userDto.getEmail()).thenReturn(EMAIL);
-        Mockito.when(userDaoBean.fetchByEmail(EMAIL)).thenReturn(user);
+	@Test
+	public void disableUsers_should_fetch_user_by_email() throws DataNotFoundException {
+		List<UserDto> userDtos = new ArrayList<>();
+		User user = new User();
 
-        userDtos.add(userDto);
+		Mockito.when(userDto.getEmail()).thenReturn(EMAIL);
+		Mockito.when(userDaoBean.fetchByEmail(EMAIL)).thenReturn(user);
 
-        administrationUserServiceBean.disableUsers(userDtos);
+		userDtos.add(userDto);
 
-        Mockito.verify(userDaoBean).fetchByEmail(userDtos.get(FIRST).getEmail());
-    }
+		administrationUserServiceBean.disableUsers(userDtos);
 
-    @Test
-    public void enableUsers_should_fetch_user_by_email() throws DataNotFoundException {
-        List<UserDto> userDtos = new ArrayList<>();
-        User user = new User();
+		Mockito.verify(userDaoBean).fetchByEmail(userDtos.get(FIRST).getEmail());
+	}
 
-        Mockito.when(userDto.getEmail()).thenReturn(EMAIL);
-        Mockito.when(userDaoBean.fetchByEmail(EMAIL)).thenReturn(user);
+	@Test
+	public void enableUsers_should_fetch_user_by_email() throws DataNotFoundException {
+		List<UserDto> userDtos = new ArrayList<>();
+		User user = new User();
 
-        userDtos.add(userDto);
+		Mockito.when(userDto.getEmail()).thenReturn(EMAIL);
+		Mockito.when(userDaoBean.fetchByEmail(EMAIL)).thenReturn(user);
+		Mockito.when(repositoryDao.userHasRepository(user)).thenReturn(true);
 
-        administrationUserServiceBean.enableUsers(userDtos);
+		userDtos.add(userDto);
 
-        Mockito.verify(userDaoBean).fetchByEmail(userDtos.get(FIRST).getEmail());
-    }
+		administrationUserServiceBean.enableUsers(userDtos);
+
+		Mockito.verify(userDaoBean).fetchByEmail(userDtos.get(FIRST).getEmail());
+	}
+	
+	@Test
+	public void enableUsers_should_creates_a_repository_to_users_who_does_not_have_repository() throws DataNotFoundException {
+		List<UserDto> userDtos = new ArrayList<>();
+		User user = new User();
+		
+		Mockito.when(userDto.getEmail()).thenReturn(EMAIL);
+		Mockito.when(userDaoBean.fetchByEmail(EMAIL)).thenReturn(user);
+		Mockito.when(repositoryDao.userHasRepository(user)).thenReturn(false);
+		
+		userDtos.add(userDto);
+		
+		administrationUserServiceBean.enableUsers(userDtos);
+		
+		Mockito.verify(repositoryService).createRepositoryTo(user);
+	}
+
+	@Test
+	public void enableUsers_should_NOT_creates_a_repository_to_users_that_hasve_a_repository() throws DataNotFoundException {
+		List<UserDto> userDtos = new ArrayList<>();
+		User user = new User();
+		
+		Mockito.when(userDto.getEmail()).thenReturn(EMAIL);
+		Mockito.when(userDaoBean.fetchByEmail(EMAIL)).thenReturn(user);
+		Mockito.when(repositoryDao.userHasRepository(user)).thenReturn(true);
+		
+		userDtos.add(userDto);
+		
+		administrationUserServiceBean.enableUsers(userDtos);
+		
+		Mockito.verify(repositoryService, Mockito.times(0)).createRepositoryTo(user);
+	}
+	
 }

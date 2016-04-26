@@ -13,6 +13,7 @@ import br.org.studio.exception.EmailNotificationException;
 import br.org.studio.exception.FillEmailSenderException;
 import br.org.studio.exception.FillUserException;
 import br.org.studio.exceptions.DataNotFoundException;
+import br.org.studio.repository.RepositoryService;
 import br.org.studio.rest.dtos.EmailSenderDto;
 import br.org.studio.rest.dtos.SystemConfigDto;
 import br.org.studio.rest.dtos.UserDto;
@@ -30,6 +31,9 @@ public class SystemConfigServiceBean implements SystemConfigService {
 
     @Inject
     private EmailNotifierService emailNotifierService;
+    
+    @Inject
+    private RepositoryService repositoryService;
 
 	@Override
 	public Boolean isReady() {
@@ -45,6 +49,8 @@ public class SystemConfigServiceBean implements SystemConfigService {
 
 			user.becomesAdm();
 			systemConfigDao.persist(user);
+			
+			repositoryService.createRepositoryTo(user);
 
 		} catch (IllegalAccessException | NoSuchFieldException e) {
 			throw new FillUserException();

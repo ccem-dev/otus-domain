@@ -67,7 +67,7 @@ public class RepositoryResource {
         Response response = new Response();
         RepositoryDto repositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
 
-        response.setData(repositoryService.validationDatabase(repositoryDto));
+        response.setData(repositoryService.existsDatabase(repositoryDto));
         return response.toJson();
     }
 
@@ -98,7 +98,7 @@ public class RepositoryResource {
         RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
 
         try {
-            repositoryService.connect(convertedRepositoryDto);
+            repositoryService.persist(convertedRepositoryDto);
             response.setData(Boolean.TRUE);
 
         } catch (Exception e) {

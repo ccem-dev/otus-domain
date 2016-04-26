@@ -73,4 +73,5 @@ public class UserDto implements Serializable {
 	public void encrypt() {
 		this.password = EncryptorResources.encrypt(password);
 	}
+	
 }

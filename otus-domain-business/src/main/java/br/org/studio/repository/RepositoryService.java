@@ -3,10 +3,10 @@ package br.org.studio.repository;
 import java.sql.SQLException;
 import java.util.List;
 
+import br.org.studio.entities.system.User;
 import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
-import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 
@@ -18,16 +18,16 @@ public interface RepositoryService {
 
     List<RepositoryDto> fetchAll() throws RepositoryNotFoundException;
 
-    void connect(RepositoryDto repositoryDto);
+    void persist(RepositoryDto repositoryDto);
 
     void create(RepositoryDto repositoryDto) throws RepositoryOfflineException, SQLException, RepositoryAlreadyExistException;
 
-    Boolean validationDatabase(RepositoryDto repositoryDto);
+    Boolean existsDatabase(RepositoryDto repositoryDto);
 
     Boolean validationConnection(RepositoryDto repositoryDto);
 
 	Boolean checkRepositoryCredentials(RepositoryDto repositoryDto);
 
-	void createRepositoryForUsers(List<UserDto> convertedUsers);
+	void createRepositoryTo(User user);
 
 }

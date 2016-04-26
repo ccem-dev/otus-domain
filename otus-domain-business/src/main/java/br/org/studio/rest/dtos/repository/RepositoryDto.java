@@ -1,5 +1,7 @@
 package br.org.studio.rest.dtos.repository;
 
+import java.util.Base64;
+
 import br.org.studio.entities.system.User;
 import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.tutty.Equalization;
@@ -30,6 +32,8 @@ public class RepositoryDto implements RepositoryDescriptor {
 	@Equalization(name = "userFK")
 	private User userFK;
 
+	private byte[] encode;
+
 	public String getName() {
 		return name;
 	}
@@ -55,7 +59,7 @@ public class RepositoryDto implements RepositoryDescriptor {
 	}
 
 	@Override
-	public String getUser() {
+	public String getUserEmail() {
 		return username;
 	}
 
@@ -67,6 +71,11 @@ public class RepositoryDto implements RepositoryDescriptor {
 	@Override
 	public String getDescription() {
 		return description;
+	}
+
+	public void encrypt() {
+		encode = Base64.getEncoder().encode(this.password.getBytes());
+		this.password = new String(encode);
 	}
 
 }

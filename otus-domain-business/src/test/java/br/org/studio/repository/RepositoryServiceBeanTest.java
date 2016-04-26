@@ -1,8 +1,6 @@
 package br.org.studio.repository;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +19,6 @@ import br.org.studio.entities.repository.Repository;
 import br.org.studio.entities.system.User;
 import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryOfflineException;
-import br.org.studio.exceptions.DataNotFoundException;
-import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
@@ -52,14 +48,14 @@ public class RepositoryServiceBeanTest {
 
 	@Before
 	public void setUp() {
-		user = new User("Test", "Test", "password", "test@test.com", "12345");
+		user = new User();
 	}
 
 	@Test
-	public void connect_should_persist_repository_data() {
+	public void persist_should_persist_repository_data() {
 		RepositoryDto repositoryDto = new RepositoryDto();
 
-		repositoryServiceBean.connect(repositoryDto);
+		repositoryServiceBean.persist(repositoryDto);
 		Mockito.verify(repositoryDaoBean).persist(Matchers.any());
 	}
 
@@ -114,18 +110,19 @@ public class RepositoryServiceBeanTest {
 		Mockito.verify(repositoryDaoBean).persist(Matchers.any(Repository.class));
 	}
 
+
 	@Test
-	public void createRepositoryForUsers_should() throws DataNotFoundException {
-
-		UserDto userDto = new UserDto();
-		userDto.setEmail("Test@Test.com");
-
+	public void createRepositoryTo_should_calls_a_create_method() throws RepositoryOfflineException, SQLException, RepositoryAlreadyExistException {
+		PowerMockito.mockStatic(MongoRepositoryConfiguration.class);
+		PowerMockito.when(MongoRepositoryConfiguration.create(repositoryDto)).thenReturn(repositoryConfiguration);
 		PowerMockito.when(repositoryManagerFacade.isRepositoryAccessible(repositoryConfiguration)).thenReturn(true);
-		PowerMockito.when(userDao.fetchByEmail(userDto.getEmail())).thenReturn(user);
-
-		List<UserDto> convertedUser = new ArrayList<>();
-		convertedUser.add(userDto);
-		repositoryServiceBean.createRepositoryForUsers(convertedUser);
+		PowerMockito.when(repositoryManagerFacade.existRepository(repositoryConfiguration)).thenReturn(false);
+		PowerMockito.when(repositoryServiceBean.validationConnection(Matchers.any(RepositoryDto.class))).thenReturn(true);
+		
+		repositoryServiceBean.createRepositoryTo(user);
+		
+		Mockito.verify(repositoryManagerFacade).createRepository(Matchers.any());
+		
 	}
 
 }

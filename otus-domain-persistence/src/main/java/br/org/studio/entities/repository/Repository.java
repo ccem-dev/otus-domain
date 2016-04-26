@@ -57,9 +57,9 @@ public class Repository implements Serializable {
 
 	@Equalization(name = "description")
 	private String description;
-	
+
 	@Equalization(name = "userFK")
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
 	private User userFK;
 
 	public Repository() {

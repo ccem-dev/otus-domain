@@ -22,7 +22,6 @@ import br.org.studio.exception.FillUserException;
 import br.org.studio.exception.SessionNotFoundException;
 import br.org.studio.messages.FillUserExceptionMessage;
 import br.org.studio.registration.RegisterUserService;
-import br.org.studio.repository.RepositoryService;
 import br.org.studio.rest.dtos.UserDto;
 import br.org.studio.rest.dtos.administration.AdministrationUser;
 import br.org.studio.validation.EmailConstraint;
@@ -40,9 +39,6 @@ public class UserResource {
     private HttpSession httpSession;
     @Inject
     private AdministrationUserService administrationUserService;
-    @Inject
-    private RepositoryService repositoryService;
-
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -121,12 +117,11 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String enableUsers(String users) {
-        Type collectionType = new TypeToken<List<UserDto>>() {
-        }.getType();
+        Type collectionType = new TypeToken<List<UserDto>>(){}.getType();
         List<UserDto> convertedUsers = new Gson().fromJson(users, collectionType);
 
         administrationUserService.enableUsers(convertedUsers);
-        repositoryService.createRepositoryForUsers(convertedUsers);
+		
         Response response = new Response();
         response.setData(Boolean.TRUE);
         return response.toJson();

@@ -6,24 +6,43 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 import br.org.studio.entities.repository.Repository;
+import br.org.studio.entities.system.User;
 import br.org.studio.exceptions.DataNotFoundException;
 
-public class RepositoryDaoBean extends GenericDaoBean implements RepositoryDao{
+public class RepositoryDaoBean extends GenericDaoBean implements RepositoryDao {
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Override
-    public List<Repository> fetch(String name) throws DataNotFoundException {
-        Criteria criteria = createCriteria(Repository.class);
-        criteria.add(Restrictions.eq("name", name));
+	public List<Repository> fetch(String name) throws DataNotFoundException {
+		Criteria criteria = createCriteria(Repository.class);
+		criteria.add(Restrictions.eq("name", name));
 
-        return listNotWaitingEmpty(criteria);
-    }
+		return listNotWaitingEmpty(criteria);
+	}
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	@Override
-    public List<Repository> fetchAll() throws DataNotFoundException {
-    	Criteria criteria = createCriteria(Repository.class);
+	public List<Repository> fetchAll() throws DataNotFoundException {
+		Criteria criteria = createCriteria(Repository.class);
 
-    	return listNotWaitingEmpty(criteria);
-    }
+		return listNotWaitingEmpty(criteria);
+	}
+
+	@Override
+	public Repository fetchRepositoryByUser(String email) throws DataNotFoundException {
+		Criteria criteria = createCriteria(Repository.class);
+		criteria.add(Restrictions.eq("username", email));
+
+		return (Repository) uniqueResultNotWaitingEmpty(criteria);
+	}
+	
+	@Override
+	public boolean userHasRepository(User user) {
+		try {
+			fetchRepositoryByUser(user.getEmail());
+			return true;
+		} catch (DataNotFoundException e) {
+			return false;
+		}
+	}
 }
