@@ -197,7 +197,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.9.4</version>
                 <configuration>
-                    <tag>${version}</tag>
+                    <tag>v${version}</tag>
                 </configuration>
             </plugin>
         </plugins>

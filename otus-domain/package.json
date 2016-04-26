@@ -22,6 +22,7 @@
         "karma": "karma"
     },
     "dependencies": {
+	"otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#v0.0.1-SNAPSHOT",
         "angular": "^1.4.7",
         "angular-animate": "^1.4.7",
         "angular-aria": "^1.4.7",
