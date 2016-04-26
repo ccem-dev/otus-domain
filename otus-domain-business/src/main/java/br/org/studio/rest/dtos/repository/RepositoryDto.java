@@ -1,5 +1,6 @@
 package br.org.studio.rest.dtos.repository;
 
+import br.org.studio.entities.system.User;
 import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.tutty.Equalization;
 
@@ -25,6 +26,9 @@ public class RepositoryDto implements RepositoryDescriptor {
 
 	@Equalization(name = "description")
 	private String description;
+
+	@Equalization(name = "userFK")
+	private User userFK;
 
 	public String getName() {
 		return name;
