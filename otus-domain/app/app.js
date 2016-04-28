@@ -9,8 +9,8 @@
             'otusDomain.authenticator',
             'otusDomain.installer',
             'otusDomain.repository',
-            'otusDomain.restResource',
             /* Possibly shared modules */
+            'otusDomainClient',
             'user',
             'utils'
         ]);

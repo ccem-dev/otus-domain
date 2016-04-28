@@ -3,7 +3,7 @@
 
     <groupId>br.org.otus.domain</groupId>
     <artifactId>otus-domain-root</artifactId>
-    <version>1.5.17-SNAPSHOT</version>
+    <version>1.5.19-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -197,7 +197,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>1.9.4</version>
                 <configuration>
-                    <tag>${version}</tag>
+                    <tag>v${version}</tag>
                 </configuration>
             </plugin>
         </plugins>
