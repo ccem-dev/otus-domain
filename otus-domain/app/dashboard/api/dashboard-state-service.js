@@ -22,8 +22,6 @@
         self.goToHome = goToHome;
         self.goToInstaller = goToInstaller;
         self.goToUserRegister = goToUserRegister;
-        self.goToCreateRepository = goToCreateRepository;
-        self.goToConnectRepository = goToConnectRepository;
         self.goToUserActivation = goToUserActivation;
         self.logout = logout;
 
@@ -51,16 +49,6 @@
         function goToHome() {
             self.currentState = 'Home';
             $location.url(APP_STATE.HOME);
-        }
-
-        function goToCreateRepository() {
-            self.currentState = 'Criação de novo Repositório';
-            $location.url(APP_STATE.CREATE_REPOSITORY);
-        }
-
-        function goToConnectRepository() {
-            self.currentState = 'Adição de Repositório existente';
-            $location.url(APP_STATE.CONNECT_REPOSITORY);
         }
 
         function goToUserActivation() {

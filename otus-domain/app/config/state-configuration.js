@@ -8,10 +8,7 @@
             'USER_REGISTER': 'user/register',
             'INSTALLER': 'installer',
             'HOME': 'home',
-            'SURVEY_FORMS': 'survey-forms',
             'USER_ACTIVATION': 'user/activation',
-            'CREATE_REPOSITORY': 'repository?actionType=NEW',
-            'CONNECT_REPOSITORY': 'repository?actionType=CONNECT',
             'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
         });
 
@@ -28,6 +25,10 @@
                         templateUrl: 'app/installer/initial/initial-config.html',
                         controller: 'InitialConfigController',
                         controllerAs: 'initialConfigController'
+                    },
+                    'repository-config@installer': {
+                        templateUrl: 'app/survey-repository/repository.html',
+                        controller: 'RepositoryController'
                     }
                 }
             })
@@ -90,21 +91,6 @@
                     },
                     'section-commands@home': {
                         templateUrl: 'app/dashboard/home/home-commands-section.html'
-                    }
-                }
-            })
-            .state('repository', {
-                url: '/repository',
-                views: {
-                    'system-wrap': {
-                        templateUrl: mainDashBoardTemplate,
-                        controller: 'DashboardMenuController as dashboardMenu'
-                    },
-                    'dashboard-menu@repository': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content@repository': {
-                        templateUrl: 'app/survey-repository/repository.html'
                     }
                 }
             });

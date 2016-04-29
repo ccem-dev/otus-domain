@@ -6,16 +6,15 @@
 
     <div id="center">
         <div layout="column">
+            <form name="initialConfigSystemForm" novalidate>
+                <md-content layout-padding class="autoScroll">
+                    <md-toolbar class="md-theme-light">
+                        <h2 class="md-toolbar-tools">
+                          <span>Cadastro do Administrador</span>
+                        </h2>
+                    </md-toolbar>
+                    <br/>
 
-            <md-content layout-padding class="autoScroll">
-                <md-toolbar class="md-theme-light">
-                    <h2 class="md-toolbar-tools">
-                    <span>Cadastro do Administrador</span>
-                </h2>
-                </md-toolbar>
-                <br/>
-
-                <form name="initialConfigSystemForm" novalidate>
                     <div layout layout-sm="column">
 
                         <md-input-container flex>
@@ -142,12 +141,27 @@
                             </div>
                         </div>
                     </md-input-container>
-                    <md-button type="submit" class="md-raised md-accent" ng-disabled="initialConfigSystemForm.$invalid || isLoading" ng-click="register(systemConf)">Cadastrar
+
+                    <md-toolbar class="md-theme-light">
+                        <h2 class="md-toolbar-tools">
+                        <span>Configurações do Repositório</span>
+                    </h2>
+                    </md-toolbar>
+
+                    <div ui-view="repository-config"></div>
+
+                    <md-button
+                        type="submit"
+                        class="md-raised md-accent"
+                        ng-disabled="initialConfigSystemForm.$invalid || isLoading"
+                        ng-click="register(systemConf)">
+                        Cadastrar
                     </md-button>
+
                     <div layout="row" layout-sm="column" layout-align="center">
                         <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
                     </div>
-                </form>
+            </form>
             </md-content>
         </div>
     </div>

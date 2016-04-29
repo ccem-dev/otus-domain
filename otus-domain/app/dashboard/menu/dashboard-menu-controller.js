@@ -20,8 +20,6 @@
         self.close = close;
         self.openHome = openHome;
         self.openSurveyForms = openSurveyForms;
-        self.openCreateRepository = openCreateRepository;
-        self.openConnectRepository = openConnectRepository;
         self.openUserActivation = openUserActivation;
         self.logout = logout;
 
@@ -44,16 +42,6 @@
 
         function openSurveyForms() {
             DashboardStateService.goToSurveyForms();
-            close();
-        }
-
-        function openCreateRepository() {
-            DashboardStateService.goToCreateRepository();
-            close();
-        }
-
-        function openConnectRepository() {
-            DashboardStateService.goToConnectRepository();
             close();
         }
 
