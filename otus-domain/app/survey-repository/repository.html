@@ -39,7 +39,7 @@
     </md-input-container>
     <md-input-container class="md-block">
         <label>Senha</label>
-        <input name="repositoryPassword" ng-model="systemConf.repository.password" ng-required="true" type="password" />
+        <input name="repositoryPassword" ng-blur="validateCredentials(systemConf.repository)" ng-model="systemConf.repository.password" ng-required="true" type="password" />
 
         <div ng-messages="initialConfigSystemForm.repositoryPassword.$error">
             <div ng-message="required">Obrigatório</div>

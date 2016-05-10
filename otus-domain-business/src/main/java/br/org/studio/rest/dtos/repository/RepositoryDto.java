@@ -3,13 +3,11 @@ package br.org.studio.rest.dtos.repository;
 import java.util.Base64;
 
 import br.org.studio.entities.system.User;
+import br.org.studio.tool.base.repository.RepositoryConnectionDataDescriptor;
 import br.org.studio.tool.base.repository.RepositoryDescriptor;
 import br.org.tutty.Equalization;
 
 public class RepositoryDto implements RepositoryDescriptor {
-
-	@Equalization(name = "name")
-	private String name;
 
 	@Equalization(name = "database")
 	private String database;
@@ -26,40 +24,28 @@ public class RepositoryDto implements RepositoryDescriptor {
 	@Equalization(name = "password")
 	private String password;
 
-	@Equalization(name = "description")
-	private String description;
-
-	@Equalization(name = "userFK")
-	private User userFK;
+	@Equalization(name = "user")
+	private User user;
+	
+	private RepositoryConnectionDataDescriptor repositoryConnectionDataDescriptor;
 
 	private byte[] encode;
-
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public String getRepositoryName() {
-		return name;
-	}
 
 	@Override
 	public String getDatabaseName() {
 		return database;
 	}
 
-	@Override
 	public String getHostName() {
 		return host;
 	}
 
-	@Override
 	public String getPort() {
 		return port;
 	}
 
 	@Override
-	public String getUserEmail() {
+	public String getUserName() {
 		return username;
 	}
 
@@ -67,10 +53,19 @@ public class RepositoryDto implements RepositoryDescriptor {
 	public String getPassword() {
 		return password;
 	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
-	public String getDescription() {
-		return description;
+	public RepositoryConnectionDataDescriptor getRepositoryConnectionDataDescriptor() {
+		return repositoryConnectionDataDescriptor;
+	}
+
+	public void setRepositoryConnectionDataDescriptor(
+			RepositoryConnectionDataDescriptor repositoryConnectionDataDescriptor) {
+		this.repositoryConnectionDataDescriptor = repositoryConnectionDataDescriptor;
 	}
 
 	public void encrypt() {

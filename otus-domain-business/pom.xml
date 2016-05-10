@@ -42,9 +42,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>br.org.studio</groupId>
+			<groupId>br.org.otus.rep-tool</groupId>
 			<artifactId>studio-repository-tool</artifactId>
-			<version>0.12.8-SNAPSHOT</version>
+			<version>0.12.9-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>

@@ -7,7 +7,8 @@ import br.org.studio.entities.system.User;
 import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
-import br.org.studio.rest.dtos.UserDto;
+import br.org.studio.rest.dtos.SystemConfigDto;
+import br.org.studio.rest.dtos.repository.RepositoryConnectionData;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 
 /**
@@ -24,10 +25,12 @@ public interface RepositoryService {
 
     Boolean existsDatabase(RepositoryDto repositoryDto);
 
-    Boolean validationConnection(RepositoryDto repositoryDto);
+    Boolean validationConnection(RepositoryConnectionData repositoryConnectionData);
 
-	Boolean checkRepositoryCredentials(RepositoryDto repositoryDto);
+	Boolean checkRepositoryCredentials(RepositoryConnectionData repositoryConnectionData);
 
 	void createRepositoryTo(User user);
+
+	void createAdminRepository(User admin, SystemConfigDto systemConfigDto);
 
 }

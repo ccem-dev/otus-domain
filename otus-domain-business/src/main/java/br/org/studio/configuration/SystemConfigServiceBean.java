@@ -16,7 +16,6 @@ import br.org.studio.exceptions.DataNotFoundException;
 import br.org.studio.repository.RepositoryService;
 import br.org.studio.rest.dtos.EmailSenderDto;
 import br.org.studio.rest.dtos.SystemConfigDto;
-import br.org.studio.rest.dtos.UserDto;
 import br.org.tutty.Equalizer;
 
 /**
@@ -41,16 +40,16 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	}
 
 	@Override
-	public void createAdmin(UserDto admDto) throws FillUserException {
+	public void createAdmin(SystemConfigDto systemConfigDto) throws FillUserException {
 		try {
 			User user = new User();
 
-			Equalizer.equalize(admDto, user);
+			Equalizer.equalize(systemConfigDto.getUserDto(), user);
 
 			user.becomesAdm();
 			systemConfigDao.persist(user);
 			
-			repositoryService.createRepositoryTo(user);
+			repositoryService.createAdminRepository(user, systemConfigDto);
 
 		} catch (IllegalAccessException | NoSuchFieldException e) {
 			throw new FillUserException();
@@ -60,8 +59,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	@Override
 	public void createInitialSystemConfig(SystemConfigDto systemConfigDto) throws FillEmailSenderException {
 		try{
-			createAdmin(systemConfigDto.getUserDto());
-
+			createAdmin(systemConfigDto);
 			SystemConfig systemConfig = ConfigFactory.buildConfigEmailSender(systemConfigDto.getEmailSenderDto());
 			systemConfig.finalizeConfiguration();
 

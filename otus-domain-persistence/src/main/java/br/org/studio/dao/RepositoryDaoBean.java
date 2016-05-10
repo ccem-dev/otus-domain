@@ -29,17 +29,17 @@ public class RepositoryDaoBean extends GenericDaoBean implements RepositoryDao {
 	}
 
 	@Override
-	public Repository fetchRepositoryByUser(String email) throws DataNotFoundException {
+	public Repository fetchRepositoryByUser(User user) throws DataNotFoundException {
 		Criteria criteria = createCriteria(Repository.class);
-		criteria.add(Restrictions.eq("username", email));
+		criteria.add(Restrictions.eq("user", user));
 
 		return (Repository) uniqueResultNotWaitingEmpty(criteria);
 	}
-	
+
 	@Override
 	public boolean userHasRepository(User user) {
 		try {
-			fetchRepositoryByUser(user.getEmail());
+			fetchRepositoryByUser(user);
 			return true;
 		} catch (DataNotFoundException e) {
 			return false;

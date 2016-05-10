@@ -24,16 +24,16 @@ public class EmailSender implements Serializable {
 	private Long id;
 
 	@Equalization(name = "name")
-		@NotNull
-		private String name;
+	@NotNull
+	private String name;
 
 	@Equalization(name = "email")
-		@NotNull
-		private String emailAddress;
+	@NotNull
+	private String emailAddress;
 
 	@Equalization(name = "password")
-		@NotNull
-		private String password;
+	@NotNull
+	private String password;
 
 	public EmailSender() {
 	}

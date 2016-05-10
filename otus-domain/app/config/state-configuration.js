@@ -28,7 +28,6 @@
                     },
                     'repository-config@installer': {
                         templateUrl: 'app/survey-repository/repository.html',
-                        controller: 'RepositoryController'
                     }
                 }
             })

@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.org.studio.dao.RepositoryDao;
+import br.org.studio.dao.UserDao;
 import br.org.studio.entities.repository.Repository;
 import br.org.studio.entities.system.User;
 import br.org.studio.exception.ConvertedDtoException;
@@ -17,6 +18,8 @@ import br.org.studio.exception.RepositoryAlreadyExistException;
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.exception.RepositoryOfflineException;
 import br.org.studio.exceptions.DataNotFoundException;
+import br.org.studio.rest.dtos.SystemConfigDto;
+import br.org.studio.rest.dtos.repository.RepositoryConnectionData;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
 import br.org.studio.security.PasswordGenerator;
 import br.org.studio.tool.RepositoryManagerFacade;
@@ -31,6 +34,9 @@ public class RepositoryServiceBean implements RepositoryService {
 
 	@Inject
 	private RepositoryDao repositoryDao;
+
+	@Inject
+	private UserDao userDao;
 
 	private RepositoryManagerFacade repositoryFacade;
 
@@ -92,24 +98,19 @@ public class RepositoryServiceBean implements RepositoryService {
 
 		RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
 
-		if (validationConnection(repositoryDto)){
 			if (!existsDatabase(repositoryDto)) {
 				repositoryFacade.createRepository(configuration);
-				repositoryDto.encrypt();
 				persist(repositoryDto);
 			} else {
 				throw new RepositoryAlreadyExistException();
 			}
-		} else {
-			throw new RepositoryOfflineException();
-		}
-
 	}
 
 	@Override
 	public void persist(RepositoryDto repositoryDto) {
 		Repository repository = new Repository();
 		try {
+			repositoryDto.encrypt();
 			Equalizer.equalize(repositoryDto, repository);
 			repositoryDao.persist(repository);
 
@@ -130,7 +131,10 @@ public class RepositoryServiceBean implements RepositoryService {
 	}
 
 	@Override
-	public Boolean validationConnection(RepositoryDto repositoryDto) {
+	public Boolean validationConnection(RepositoryConnectionData repositoryConnectionData) {
+		RepositoryDto repositoryDto = new RepositoryDto();
+		repositoryDto.setRepositoryConnectionDataDescriptor(repositoryConnectionData);
+		
 		try {
 			RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
 			return repositoryFacade.isRepositoryAccessible(configuration);
@@ -141,11 +145,9 @@ public class RepositoryServiceBean implements RepositoryService {
 	}
 
 	@Override
-	public Boolean checkRepositoryCredentials(RepositoryDto repositoryDto) {
-		RepositoryConfiguration configuration = MongoRepositoryConfiguration.create(repositoryDto);
-		Boolean validCredentials = MongoConnector.getConnector(configuration.getHostName(), configuration.getPort())
-				.isValidCredentials(configuration.getUserEmail(), configuration.getPassword());
-		return validCredentials;
+	public Boolean checkRepositoryCredentials(RepositoryConnectionData repositoryConnectionData) {
+		return MongoConnector.getConnector(repositoryConnectionData.getHost(), repositoryConnectionData.getPort())
+				.isValidCredentials(repositoryConnectionData.getUsername(), repositoryConnectionData.getDatabase(), repositoryConnectionData.getPassword());
 	}
 
 	@Override
@@ -158,7 +160,9 @@ public class RepositoryServiceBean implements RepositoryService {
 		} catch (IllegalAccessException | NoSuchFieldException e) {
 			throw new ConvertedDtoException();
 		}
-		
+
+		repositoryDto.setRepositoryConnectionDataDescriptor(getAdminRepositoryConnectionData());
+
 		try {
 			create(repositoryDto);
 		} catch (RepositoryOfflineException | SQLException | RepositoryAlreadyExistException e) {
@@ -167,22 +171,62 @@ public class RepositoryServiceBean implements RepositoryService {
 
 	}
 
-	private Repository buildRepositoryWithUser(User user) {
+	private RepositoryConnectionData getAdminRepositoryConnectionData() {
+		User admin = null;
+		Repository adminRepository = null;
+		try {
+			admin = userDao.findAdmin();
+		} catch (DataNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			adminRepository = repositoryDao.fetchRepositoryByUser(admin);
+		} catch (DataNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return new RepositoryConnectionData(adminRepository);
+	}
+
+	@Override
+	public void createAdminRepository(User admin, SystemConfigDto systemConfigDto) {
+		Repository repository = buildRepositoryWithUser(admin, systemConfigDto);
+		RepositoryDto repositoryDto = new RepositoryDto();
+		try {
+			Equalizer.equalize(repository, repositoryDto);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+			throw new ConvertedDtoException();
+		}
+		persist(repositoryDto);
+	}
+
+	private Repository buildRepositoryWithUser(User user, SystemConfigDto systemConfigDto) {
 		Repository repository = new Repository();
 
-		repository.setUserFK(user);
-		repository.setName(user.getFullName());
-		repository.setDescription(user.getFullName() + " Repository");
-		
-		// Data necessary to access
+		repository.setUser(user);
+
+		repository.setDatabase(systemConfigDto.getRepositoryDto().getDatabaseName());
+		repository.setPort(systemConfigDto.getRepositoryDto().getPort());
+		repository.setHost(systemConfigDto.getRepositoryDto().getHostName());
+
+		repository.setUsername(systemConfigDto.getRepositoryDto().getUserName());
+		repository.setPassword(systemConfigDto.getRepositoryDto().getPassword());
+
+		return repository;
+	}
+
+	private Repository buildRepositoryWithUser(User user) {
+		Repository repository = new Repository();
+		RepositoryConnectionData adminRepositoryConnectionData = getAdminRepositoryConnectionData();
+
+		repository.setUser(user);
 		repository.setDatabase(user.getUuid().toString());
-		repository.setPort("27017");
-		repository.setHost("localhost");
-		
-		//User Credentials
 		repository.setUsername(user.getEmail());
 		repository.setPassword(PasswordGenerator.generateRandom());
 		
+		repository.setHost(adminRepositoryConnectionData.getHost());
+		repository.setPort(adminRepositoryConnectionData.getPort());
 
 		return repository;
 	}

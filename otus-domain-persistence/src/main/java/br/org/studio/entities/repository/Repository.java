@@ -31,10 +31,6 @@ public class Repository implements Serializable {
 	@NotNull
 	private UUID uuid;
 
-	@Equalization(name = "name")
-	@NotNull
-	private String name;
-
 	@Equalization(name = "database")
 	@NotNull
 	private String database;
@@ -55,12 +51,9 @@ public class Repository implements Serializable {
 	@NotNull
 	private String password;
 
-	@Equalization(name = "description")
-	private String description;
-
-	@Equalization(name = "userFK")
+	@Equalization(name = "user")
 	@OneToOne(cascade = CascadeType.ALL)
-	private User userFK;
+	private User user;
 
 	public Repository() {
 		this.uuid = UUID.randomUUID();
@@ -70,24 +63,16 @@ public class Repository implements Serializable {
 		return uuid;
 	}
 
-	public User getUserFK() {
-		return userFK;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserFK(User userFK) {
-		this.userFK = userFK;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDatabase() {
@@ -128,14 +113,6 @@ public class Repository implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 }

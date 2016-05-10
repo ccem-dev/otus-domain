@@ -12,11 +12,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
+
 import br.org.studio.exception.RepositoryNotFoundException;
 import br.org.studio.repository.RepositoryService;
+import br.org.studio.rest.dtos.repository.RepositoryConnectionData;
 import br.org.studio.rest.dtos.repository.RepositoryDto;
-
-import com.google.gson.Gson;
 
 @Path("repository")
 public class RepositoryResource {
@@ -41,10 +42,10 @@ public class RepositoryResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String getConnectionStatus(String repository) {
-        RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
+    	RepositoryConnectionData repositoryConnectionData = new Gson().fromJson(repository, RepositoryConnectionData.class);
         Response response = new Response();
 
-        response.setData(repositoryService.validationConnection(convertedRepositoryDto));
+        response.setData(repositoryService.validationConnection(repositoryConnectionData));
         return response.toJson();
     }
 
@@ -53,10 +54,10 @@ public class RepositoryResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String isValidRepositoryCredentials(String repository) {
-    	RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
+    	RepositoryConnectionData repositoryConnectionData = new Gson().fromJson(repository, RepositoryConnectionData.class);
     	Response response = new Response();
-    	
-    	response.setData(repositoryService.checkRepositoryCredentials(convertedRepositoryDto));
+    	repositoryConnectionData.encrypt();
+    	response.setData(repositoryService.checkRepositoryCredentials(repositoryConnectionData));
     	return response.toJson();
     }
     
