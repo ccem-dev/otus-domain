@@ -1,23 +1,45 @@
 * {
     box-sizing: border-box;
 }
-#installer-page {
-    padding-top: 2rem;
+
+#installer-page .logo {
+    height: 196px;
+    z-index: 3;
+    position: absolute;
+    left: 48%;
+}
+#installer-page #welcome {
+    height: 200px;
+    position: absolute;
+    left: 20%;
 }
 #installer-page #logo {
-    margin: 0 auto;
-    width: 180px;
-    height: 150px;
-    display: block;
+    content: url(../../assets/img/domainImage.png);
+    top: 3%;
 }
-#installer-page #center {
-    width: 55%;
-    margin: 0 auto;
+
+#installer-page #separatorLine {
+    background-color: #448AFF;
+    color: #ECEFF1;
 }
-#installer-page h1 {
-    text-align: center;
-    padding-top: 1em;
-    padding-bottom: 1rem;
+#installer-page #welcome {
+    height: 200px;
+    position: absolute;
+    left: 20%;
+}
+
+#installer-page #installerLayout {
+    background-color: white;
+}
+#installer-page #headerSize {
+  background-color: #ECEFF1;
+  height: 201px;
+  z-index: 3;
+}
+
+#installer-page #container {
+    height: 600px;
+    z-index: 3;
 }
 
 /** AngularJS **/
