@@ -35,7 +35,8 @@ public class Response {
 		return hasErrors;
 	}
 
-	public void setHasErrors(boolean hasErrors) {
+	public Response setHasErrors(boolean hasErrors) {
 		this.hasErrors = hasErrors;
+		return this;
 	}
 }

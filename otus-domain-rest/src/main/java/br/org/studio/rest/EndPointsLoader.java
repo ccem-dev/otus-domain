@@ -24,6 +24,9 @@ public class EndPointsLoader extends Application {
 
 	@Inject
 	private UrlResource urlResource;
+	
+	@Inject
+	private OtusProjectResource otusProjectResource;
 
 	@Override
 	public Set<Class<?>> getClasses() {
@@ -33,6 +36,7 @@ public class EndPointsLoader extends Application {
 		resources.add(RepositoryResource.class);
 		resources.add(InstallerResource.class);
 		resources.add(UrlResource.class);
+		resources.add(OtusProjectResource.class);
 		return resources;
 	}
 
@@ -44,6 +48,7 @@ public class EndPointsLoader extends Application {
 		resources.add(repositoryResource);
 		resources.add(installerResource);
 		resources.add(urlResource);
+		resources.add(otusProjectResource);
 		return resources;
 	}
 
