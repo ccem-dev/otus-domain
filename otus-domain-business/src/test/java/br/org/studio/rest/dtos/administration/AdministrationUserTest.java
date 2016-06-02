@@ -1,6 +1,7 @@
 package br.org.studio.rest.dtos.administration;
 
-import br.org.studio.rest.dtos.UserDto;
+import br.org.domain.rest.dtos.UserDto;
+import br.org.domain.rest.dtos.administration.AdministrationUser;
 import org.junit.Assert;
 import org.junit.Test;
 

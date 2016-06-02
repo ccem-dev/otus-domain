@@ -2,11 +2,13 @@ package br.org.studio.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import br.org.domain.utils.SurveyUUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.entities.repository.Repository;
-import br.org.studio.entities.system.User;
+import br.org.domain.entities.repository.Repository;
+import br.org.domain.entities.system.User;
 
 public class SurveyUUIDTest {
 

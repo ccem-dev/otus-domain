@@ -3,6 +3,7 @@ package br.org.studio.administration;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.org.domain.administration.AdministrationUserServiceBean;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,14 +12,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.org.studio.dao.RepositoryDao;
-import br.org.studio.dao.UserDaoBean;
-import br.org.studio.email.EmailNotifierServiceBean;
-import br.org.studio.entities.system.User;
-import br.org.studio.exceptions.DataNotFoundException;
-import br.org.studio.repository.RepositoryService;
-import br.org.studio.rest.dtos.UserDto;
-import br.org.studio.rest.dtos.administration.AdministrationUser;
+import br.org.domain.dao.RepositoryDao;
+import br.org.domain.dao.UserDaoBean;
+import br.org.domain.email.EmailNotifierServiceBean;
+import br.org.domain.entities.system.User;
+import br.org.domain.exceptions.DataNotFoundException;
+import br.org.domain.repository.RepositoryService;
+import br.org.domain.rest.dtos.UserDto;
+import br.org.domain.rest.dtos.administration.AdministrationUser;
 
 /**
  * Created by diogoferreira on 03/11/15.

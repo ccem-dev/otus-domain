@@ -1,5 +1,6 @@
 package br.org.studio.configuration;
 
+import br.org.domain.configuration.SystemConfigServiceBean;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -7,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.studio.dao.SystemConfigDao;
+import br.org.domain.dao.SystemConfigDao;
 
 @RunWith(PowerMockRunner.class)
 public class SystemConfigServiceBeanTest {

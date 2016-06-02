@@ -7,6 +7,7 @@
 
     HomeController.$inject = ['$http', '$scope', '$rootScope'];
 
+    // TODO Deve realizar a verificação se o mesmo esta logado utilizando token
     function HomeController($http, $scope, $rootScope) {
         var $HTTP_GET_URL_LOGGED_USER = window.location.origin + '/otus-domain-rest/session/rest/register/loggedUser';
 

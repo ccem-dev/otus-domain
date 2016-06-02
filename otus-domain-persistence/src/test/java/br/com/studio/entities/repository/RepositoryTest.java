@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.entities.repository.Repository;
+import br.org.domain.entities.repository.Repository;
 
 public class RepositoryTest {
 
