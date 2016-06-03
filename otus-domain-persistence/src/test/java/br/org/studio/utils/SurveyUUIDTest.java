@@ -7,8 +7,8 @@ import br.org.domain.utils.SurveyUUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.domain.entities.repository.Repository;
-import br.org.domain.entities.system.User;
+import br.org.domain.repository.Repository;
+import br.org.domain.user.User;
 
 public class SurveyUUIDTest {
 

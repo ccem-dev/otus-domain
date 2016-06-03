@@ -11,11 +11,6 @@
 		<supported-locale>pt_BR</supported-locale>
 		<supported-locale>en_US</supported-locale>
 	</locale-config>
-
-	<resource-bundle>
-		<base-name>labels/home</base-name>
-		<var>genLbl</var>
-	</resource-bundle>
 </application>
 
 </faces-config>

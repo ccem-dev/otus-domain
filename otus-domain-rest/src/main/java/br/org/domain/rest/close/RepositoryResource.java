@@ -16,9 +16,9 @@ import br.org.domain.rest.Response;
 import com.google.gson.Gson;
 
 import br.org.domain.exception.RepositoryNotFoundException;
-import br.org.domain.repository.RepositoryService;
-import br.org.domain.rest.dtos.repository.RepositoryConnectionData;
-import br.org.domain.rest.dtos.repository.RepositoryDto;
+import br.org.domain.repository.service.RepositoryService;
+import br.org.domain.repository.dto.RepositoryConnectionData;
+import br.org.domain.repository.dto.RepositoryDto;
 
 @Path("repository")
 public class RepositoryResource {

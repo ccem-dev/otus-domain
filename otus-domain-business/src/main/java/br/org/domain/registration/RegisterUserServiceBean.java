@@ -4,12 +4,12 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.domain.dao.SystemConfigDao;
-import br.org.domain.dao.UserDao;
-import br.org.domain.rest.dtos.UserDto;
-import br.org.domain.email.EmailNotifierService;
+import br.org.domain.system.dao.SystemConfigDao;
+import br.org.domain.user.dao.UserDao;
+import br.org.domain.administration.dto.UserDto;
+import br.org.domain.email.service.EmailNotifierService;
 import br.org.domain.email.NewUserNotificationEmail;
-import br.org.domain.entities.system.User;
+import br.org.domain.user.User;
 import br.org.domain.exception.EmailNotificationException;
 import br.org.domain.exception.FillUserException;
 import br.org.domain.exceptions.DataNotFoundException;

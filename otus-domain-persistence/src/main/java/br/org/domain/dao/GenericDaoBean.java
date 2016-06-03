@@ -11,10 +11,6 @@ import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 
-/**
- * Created by diogoferreira on 29/09/15.
- */
-
 public abstract class GenericDaoBean implements GenericDao {
 
 	@PersistenceContext(unitName = "DomainPool")

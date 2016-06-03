@@ -1,7 +1,7 @@
 package br.org.domain.security.services;
 
-import br.org.domain.dao.UserDao;
-import br.org.domain.entities.system.User;
+import br.org.domain.user.dao.UserDao;
+import br.org.domain.user.User;
 import br.org.domain.exception.EmailNotFoundException;
 import br.org.domain.exception.InvalidPasswordException;
 import br.org.domain.exception.TokenException;

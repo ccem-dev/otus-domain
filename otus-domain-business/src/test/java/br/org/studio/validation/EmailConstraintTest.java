@@ -5,14 +5,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-import br.org.domain.validation.EmailConstraint;
+import br.org.domain.email.validation.EmailConstraint;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.org.domain.dao.UserDao;
+import br.org.domain.user.dao.UserDao;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmailConstraintTest {

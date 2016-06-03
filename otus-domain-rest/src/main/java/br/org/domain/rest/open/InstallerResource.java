@@ -1,9 +1,9 @@
 package br.org.domain.rest.open;
 
 import br.org.domain.rest.Response;
-import br.org.domain.configuration.SystemConfigService;
+import br.org.domain.configuration.service.SystemConfigService;
 import br.org.domain.exception.EmailNotificationException;
-import br.org.domain.rest.dtos.SystemConfigDto;
+import br.org.domain.configuration.dto.SystemConfigDto;
 import com.google.gson.Gson;
 
 import javax.inject.Inject;

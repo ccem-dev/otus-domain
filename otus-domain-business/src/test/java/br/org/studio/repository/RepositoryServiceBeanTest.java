@@ -2,7 +2,7 @@ package br.org.studio.repository;
 
 import java.sql.SQLException;
 
-import br.org.domain.repository.RepositoryServiceBean;
+import br.org.domain.repository.service.RepositoryServiceBean;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -15,14 +15,14 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import br.org.domain.dao.RepositoryDaoBean;
-import br.org.domain.dao.UserDao;
-import br.org.domain.entities.repository.Repository;
-import br.org.domain.entities.system.User;
+import br.org.domain.repository.dao.RepositoryDaoBean;
+import br.org.domain.user.dao.UserDao;
+import br.org.domain.repository.Repository;
+import br.org.domain.user.User;
 import br.org.domain.exception.RepositoryAlreadyExistException;
 import br.org.domain.exception.RepositoryOfflineException;
-import br.org.domain.rest.dtos.repository.RepositoryConnectionData;
-import br.org.domain.rest.dtos.repository.RepositoryDto;
+import br.org.domain.repository.dto.RepositoryConnectionData;
+import br.org.domain.repository.dto.RepositoryDto;
 import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 

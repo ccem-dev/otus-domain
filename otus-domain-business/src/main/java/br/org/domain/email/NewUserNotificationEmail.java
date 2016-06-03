@@ -5,7 +5,7 @@ import java.util.Map;
 
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
-import br.org.domain.entities.system.User;
+import br.org.domain.user.User;
 
 public class NewUserNotificationEmail extends Email implements StudioEmail {
 

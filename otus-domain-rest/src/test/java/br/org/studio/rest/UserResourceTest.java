@@ -14,7 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.org.domain.validation.EmailConstraint;
+import br.org.domain.email.validation.EmailConstraint;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceTest {

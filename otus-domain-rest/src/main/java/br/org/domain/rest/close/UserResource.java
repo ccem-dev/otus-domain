@@ -18,14 +18,14 @@ import br.org.domain.security.Secured;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import br.org.domain.administration.AdministrationUserService;
+import br.org.domain.administration.service.AdministrationUserService;
 import br.org.domain.security.services.SecurityContextService;
 import br.org.domain.exception.FillUserException;
 import br.org.domain.messages.FillUserExceptionMessage;
 import br.org.domain.registration.RegisterUserService;
-import br.org.domain.rest.dtos.UserDto;
-import br.org.domain.rest.dtos.administration.AdministrationUser;
-import br.org.domain.validation.EmailConstraint;
+import br.org.domain.administration.dto.UserDto;
+import br.org.domain.administration.dto.AdministrationUser;
+import br.org.domain.email.validation.EmailConstraint;
 
 @Path("/user")
 public class UserResource {

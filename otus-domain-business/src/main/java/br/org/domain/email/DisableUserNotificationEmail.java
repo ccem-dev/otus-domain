@@ -2,7 +2,7 @@ package br.org.domain.email;
 
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
-import br.org.domain.entities.system.User;
+import br.org.domain.user.User;
 
 import java.util.HashMap;
 import java.util.Map;
