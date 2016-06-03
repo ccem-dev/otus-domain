@@ -48,8 +48,10 @@ public class AuthenticationResource {
     }
 
     @POST
+    @Path("/invalidate")
     public void invalidate(@Context HttpServletRequest request){
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        System.out.println(token);
         securityService.invalidate(token);
     }
 }

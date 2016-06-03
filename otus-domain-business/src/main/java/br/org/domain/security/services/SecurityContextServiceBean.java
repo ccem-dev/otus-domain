@@ -1,5 +1,6 @@
 package br.org.domain.security.services;
 
+import br.org.domain.exception.DataNotFoundException;
 import br.org.domain.exception.TokenException;
 import br.org.domain.security.context.SecurityContext;
 import br.org.domain.security.dtos.AuthenticationDto;
@@ -49,13 +50,17 @@ public class SecurityContextServiceBean implements SecurityContextService {
 	}
 
 	@Override
-	public void addToken(String jwtSignedAndSerialized, byte[] secretKey) {
-		securityContext.add(jwtSignedAndSerialized, secretKey);
+	public void addToken(String token, byte[] secretKey) {
+		securityContext.add(token, secretKey);
 	}
 
 	@Override
-	public void removeToken(String jwtSignedAndSerialized) {
-		securityContext.remove(jwtSignedAndSerialized);
+	public void removeToken(String token) throws DataNotFoundException {
+		try {
+			securityContext.remove(token);
+		} catch (ParseException e) {
+			throw new DataNotFoundException();
+		}
 	}
 
 	@Override

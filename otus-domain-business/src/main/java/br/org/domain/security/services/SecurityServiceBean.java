@@ -55,6 +55,8 @@ public class SecurityServiceBean implements SecurityService, Serializable {
 
     @Override
     public void invalidate(String token){
-        securityContextService.removeToken(token);
+        try {
+            securityContextService.removeToken(token);
+        } catch (br.org.domain.exception.DataNotFoundException e) {}
     }
 }
