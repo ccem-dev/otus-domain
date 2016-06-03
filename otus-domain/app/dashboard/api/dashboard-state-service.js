@@ -57,9 +57,7 @@
         function logout() {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
             authenticatorResource.invalidate(function(response) {
-                if (response.data) {
-                    goToLogin();
-                }
+                goToLogin();
             });
         }
     }
