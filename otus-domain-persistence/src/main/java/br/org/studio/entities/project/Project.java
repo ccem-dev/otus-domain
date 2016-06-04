@@ -22,9 +22,9 @@ public class Project implements Serializable{
 	@GeneratedValue(generator = "projectSequence", strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	@Equalization(name = "projectUrl")
+	@Equalization(name = "projectRestUrl")
 	@NotNull
-	private String projectUrl;
+	private String projectRestUrl;
 
 	@Equalization(name = "projectName")
 	@NotNull
@@ -36,14 +36,14 @@ public class Project implements Serializable{
 	
 	public Project(){}
 
-	public Project(String projectUrl, String projectName, String token) {
-		this.projectUrl = projectUrl;
+	public Project(String projectRestUrl, String projectName, String token) {
+		this.projectRestUrl = projectRestUrl;
 		this.projectName = projectName;
 		this.token = token;
 	}
 
-	public String getUrl() {
-		return projectUrl;
+	public String getProjectRestUrl() {
+		return projectRestUrl;
 	}
 
 	public String getName() {
