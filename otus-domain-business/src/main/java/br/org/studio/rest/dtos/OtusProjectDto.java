@@ -1,21 +1,26 @@
 package br.org.studio.rest.dtos;
 
+import br.org.tutty.Equalization;
+
 public class OtusProjectDto {
-	
-	private String projectUrl;
-	
+
+	@Equalization(name = "projectRestUrl")
+	private String projectRestUrl;
+
+	@Equalization(name = "projectName")
 	private String projectName;
-	
+
+	@Equalization(name = "token")
 	private String token;
 	
-	public OtusProjectDto(String projectUrl, String projectName, String token){
-		this.projectUrl = projectUrl;
+	public OtusProjectDto(String projectRestUrl, String projectName, String token){
+		this.projectRestUrl = projectRestUrl;
 		this.projectName = projectName;
 		this.token = token;
 	}
 
-	public String getUrl() {
-		return projectUrl;
+	public String getProjectRestUrl() {
+		return projectRestUrl;
 	}
 
 	public String getName() {
