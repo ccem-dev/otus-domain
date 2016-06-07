@@ -27,6 +27,7 @@ public class OtusManagementServiceBeanTest {
 		
 		//TODO 
 		//Mockito.verify();
+
 	}
 	
 }
