@@ -1,4 +1,4 @@
-package br.org.studio.entities.project;
+package br.org.domain.projects;
 
 import java.io.Serializable;
 

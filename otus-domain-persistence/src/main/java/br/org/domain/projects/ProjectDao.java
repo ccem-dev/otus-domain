@@ -1,4 +1,6 @@
-package br.org.studio.dao;
+package br.org.domain.projects;
+
+import br.org.domain.dao.GenericDao;
 
 import javax.ejb.Stateless;
 

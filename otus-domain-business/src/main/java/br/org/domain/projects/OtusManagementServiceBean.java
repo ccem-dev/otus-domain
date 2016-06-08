@@ -1,13 +1,10 @@
-package br.org.studio.otus;
+package br.org.domain.projects;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.studio.dao.ProjectDao;
-import br.org.studio.entities.project.Project;
-import br.org.studio.exception.ConvertedDtoException;
-import br.org.studio.rest.dtos.OtusProjectDto;
+import br.org.domain.exception.ConvertedDtoException;
 import br.org.tutty.Equalizer;
 
 @Stateless

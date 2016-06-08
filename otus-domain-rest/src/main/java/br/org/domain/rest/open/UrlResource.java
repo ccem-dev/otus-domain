@@ -1,4 +1,6 @@
-package br.org.studio.rest;
+package br.org.domain.rest.open;
+
+import br.org.domain.rest.Response;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

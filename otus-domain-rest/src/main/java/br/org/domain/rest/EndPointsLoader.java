@@ -4,6 +4,8 @@ import br.org.domain.rest.close.RepositoryResource;
 import br.org.domain.rest.close.UserResource;
 import br.org.domain.rest.open.AuthenticationResource;
 import br.org.domain.rest.open.InstallerResource;
+import br.org.domain.rest.open.OtusProjectResource;
+import br.org.domain.rest.open.UrlResource;
 
 import java.util.HashSet;
 import java.util.Set;

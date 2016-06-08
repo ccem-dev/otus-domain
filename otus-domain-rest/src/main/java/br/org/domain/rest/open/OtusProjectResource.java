@@ -1,4 +1,4 @@
-package br.org.studio.rest;
+package br.org.domain.rest.open;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -7,8 +7,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.org.studio.otus.OtusManagementService;
-import br.org.studio.rest.dtos.OtusProjectDto;
+import br.org.domain.rest.Response;
+import br.org.domain.projects.OtusManagementService;
+import br.org.domain.projects.OtusProjectDto;
 
 import com.google.gson.Gson;
 

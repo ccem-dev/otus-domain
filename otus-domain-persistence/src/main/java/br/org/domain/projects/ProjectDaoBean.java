@@ -1,8 +1,7 @@
-package br.org.studio.dao;
+package br.org.domain.projects;
 
+import br.org.domain.dao.GenericDaoBean;
 import org.hibernate.Criteria;
-
-import br.org.studio.entities.project.Project;
 
 public class ProjectDaoBean extends GenericDaoBean implements ProjectDao{
 

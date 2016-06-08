@@ -51,8 +51,8 @@
 
 }
 
-#login-page #logo_test {
-	content: url(../../assets/img/DomainImage.png);
+#login-page #logo {
+	content: url(../../assets/img/domainImage.png);
 }
 
 /** This style is to fix float label 'celular'! Do NOT remove**/
