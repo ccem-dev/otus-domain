@@ -10,13 +10,13 @@ public class OtusProjectDto {
 	@Equalization(name = "projectName")
 	private String projectName;
 
-	@Equalization(name = "token")
-	private String token;
+	@Equalization(name = "projectToken")
+	private String projectToken;
 	
-	public OtusProjectDto(String projectRestUrl, String projectName, String token){
+	public OtusProjectDto(String projectRestUrl, String projectName, String projectToken){
 		this.projectRestUrl = projectRestUrl;
 		this.projectName = projectName;
-		this.token = token;
+		this.projectToken = projectToken;
 	}
 
 	public String getProjectRestUrl() {
@@ -27,8 +27,8 @@ public class OtusProjectDto {
 		return projectName;
 	}
 
-	public String getToken() {
-		return token;
+	public String getProjectToken() {
+		return projectToken;
 	}	
 	
 }

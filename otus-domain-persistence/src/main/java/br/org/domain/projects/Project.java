@@ -30,16 +30,16 @@ public class Project implements Serializable{
 	@NotNull
 	private String projectName;
 
-	@Equalization(name = "token")
+	@Equalization(name = "projectToken")
 	@NotNull
-	private String token;
+	private String projectToken;
 	
 	public Project(){}
 
-	public Project(String projectRestUrl, String projectName, String token) {
+	public Project(String projectRestUrl, String projectName, String projectToken) {
 		this.projectRestUrl = projectRestUrl;
 		this.projectName = projectName;
-		this.token = token;
+		this.projectToken = projectToken;
 	}
 
 	public String getProjectRestUrl() {
@@ -50,8 +50,8 @@ public class Project implements Serializable{
 		return projectName;
 	}
 
-	public String getToken() {
-		return token;
+	public String getProjectToken() {
+		return projectToken;
 	}
 
 }
