@@ -3,7 +3,7 @@ package br.com.studio.entities.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.org.studio.entities.system.User;
+import br.org.domain.user.User;
 
 public class UserFixture {
 

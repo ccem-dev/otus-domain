@@ -15,8 +15,6 @@
     function DashboardStateService($location, $http, APP_STATE, RestResourceService) {
         var self = this;
 
-        var HOSTNAME_REST = 'http://' + window.location.hostname;
-
         /* Public interface */
         self.goToLogin = goToLogin;
         self.goToHome = goToHome;
@@ -59,9 +57,7 @@
         function logout() {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
             authenticatorResource.invalidate(function(response) {
-                if (response.data) {
-                    goToLogin();
-                }
+                goToLogin();
             });
         }
     }

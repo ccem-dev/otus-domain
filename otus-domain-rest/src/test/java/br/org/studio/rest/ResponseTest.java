@@ -3,12 +3,13 @@ package br.org.studio.rest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import br.org.domain.rest.Response;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.gson.Gson;
 
-import br.org.studio.rest.dtos.UserDto;
+import br.org.domain.administration.dto.UserDto;
 
 public class ResponseTest {
 

@@ -6,20 +6,20 @@
         <param-name>resteasy.servlet.mapping.prefix</param-name>
         <param-value>/v01</param-value>
     </context-param>
+    <context-param>
+        <param-name>resteasy.providers</param-name>
+        <param-value>br.org.domain.security.AuthenticationFilter</param-value>
+    </context-param>
 
     <servlet>
         <servlet-name>resteasy-servlet</servlet-name>
         <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>br.org.studio.rest.EndPointsLoader</param-value>
+            <param-value>br.org.domain.rest.EndPointsLoader</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>resteasy-servlet</servlet-name>-->
-        <!--<url-pattern>/session/rest/*</url-pattern>-->
-    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>resteasy-servlet</servlet-name>
         <url-pattern>/v01/*</url-pattern>

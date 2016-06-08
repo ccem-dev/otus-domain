@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.security.PasswordGenerator;
+import br.org.domain.security.PasswordGenerator;
 
 public class PasswordGeneratorTest {
 

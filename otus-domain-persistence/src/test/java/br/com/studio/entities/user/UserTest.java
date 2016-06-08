@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.studio.entities.system.User;
+import br.org.domain.user.User;
 
 public class UserTest {
 

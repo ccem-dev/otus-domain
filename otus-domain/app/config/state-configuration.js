@@ -8,8 +8,7 @@
             'USER_REGISTER': 'user/register',
             'INSTALLER': 'installer',
             'HOME': 'home',
-            'USER_ACTIVATION': 'user/activation',
-            'LOGOUT': '/otus-domain-rest/session/rest/authentication/logout'
+            'USER_ACTIVATION': 'user/activation'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {

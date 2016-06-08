@@ -27,7 +27,10 @@
 
         $scope.authenticate = function(user) {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
+
             authenticatorResource.authenticate(user, function(response) {
+            RestResourceService.setSecurityToken(response.data);
+
                 if (!response.hasErrors) {
                     DashboardStateService.goToHome();
                 } else {

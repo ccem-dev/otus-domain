@@ -5,6 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
+import br.org.domain.rest.Response;
+import br.org.domain.rest.close.UserResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.org.studio.validation.EmailConstraint;
+import br.org.domain.email.validation.EmailConstraint;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceTest {

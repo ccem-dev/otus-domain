@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 
-import br.org.studio.entities.email.EmailSender;
-import br.org.studio.entities.system.SystemConfig;
+import br.org.domain.email.EmailSender;
+import br.org.domain.system.SystemConfig;
 
 public class SystemConfigTest {
 
