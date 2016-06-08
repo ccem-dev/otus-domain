@@ -1,13 +1,13 @@
 package br.org.studio.otus;
 
+import br.org.domain.projects.OtusManagementServiceBean;
+import br.org.domain.projects.OtusProjectDto;
+import br.org.domain.projects.ProjectDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import br.org.studio.dao.ProjectDao;
-import br.org.studio.rest.dtos.OtusProjectDto;
 
 @RunWith(PowerMockRunner.class)
 public class OtusManagementServiceBeanTest {
