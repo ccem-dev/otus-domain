@@ -2,7 +2,7 @@ package br.org.domain.projects;
 
 import br.org.tutty.Equalization;
 
-public class OtusProjectDto {
+public class ProjectDto {
 
 	@Equalization(name = "projectRestUrl")
 	private String projectRestUrl;
@@ -13,10 +13,13 @@ public class OtusProjectDto {
 	@Equalization(name = "projectToken")
 	private String projectToken;
 	
-	public OtusProjectDto(String projectRestUrl, String projectName, String projectToken){
+	public ProjectDto(String projectRestUrl, String projectName, String projectToken){
 		this.projectRestUrl = projectRestUrl;
 		this.projectName = projectName;
 		this.projectToken = projectToken;
+	}
+
+	public ProjectDto() {
 	}
 
 	public String getProjectRestUrl() {
