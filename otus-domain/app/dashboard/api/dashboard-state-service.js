@@ -6,13 +6,14 @@
         .service('DashboardStateService', DashboardStateService);
 
     DashboardStateService.$inject = [
-        '$location',
+        '$state',
         '$http',
         'APP_STATE',
-        'RestResourceService'
+        'RestResourceService',
+        '$window'
     ];
 
-    function DashboardStateService($location, $http, APP_STATE, RestResourceService) {
+        function DashboardStateService($state, $http, APP_STATE, RestResourceService, $window) {
         var self = this;
 
         /* Public interface */
@@ -31,32 +32,33 @@
 
         function goToLogin() {
             self.currentState = 'Login';
-            $location.url(APP_STATE.LOGIN);
+            $state.go(APP_STATE.LOGIN);
         }
 
         function goToInstaller() {
             self.currentState = 'Instalador do Sistema';
-            $location.url(APP_STATE.INSTALLER);
+            $state.go(APP_STATE.INSTALLER);
         }
 
         function goToUserRegister() {
             self.currentState = 'Cadastro de Usuário';
-            $location.url(APP_STATE.USER_REGISTER);
+            $state.go(APP_STATE.USER_REGISTER);
         }
 
         function goToHome() {
             self.currentState = 'Home';
-            $location.url(APP_STATE.HOME);
+            $state.go(APP_STATE.HOME);
         }
 
         function goToUserActivation() {
             self.currentState = 'Liberação de Usuários';
-            $location.url(APP_STATE.USER_ACTIVATION);
+            $state.go(APP_STATE.USER_ACTIVATION);
         }
 
         function logout() {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
             authenticatorResource.invalidate(function(response) {
+                $window.sessionStorage.clear();
                 goToLogin();
             });
         }

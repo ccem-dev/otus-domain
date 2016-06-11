@@ -5,10 +5,10 @@
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
         .constant('APP_STATE', {
             'LOGIN': 'login',
-            'USER_REGISTER': 'user/register',
+            'USER_REGISTER': 'user-register',
             'INSTALLER': 'installer',
             'HOME': 'home',
-            'USER_ACTIVATION': 'user/activation'
+            'USER_ACTIVATION': 'user-activation'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -70,6 +70,11 @@
             })
             .state('home', {
                 url: '/home',
+                resolve : {
+                    selectProject : function(ProjectSelectionService){
+                        ProjectSelectionService.initialChoose();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: mainDashBoardTemplate,

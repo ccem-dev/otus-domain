@@ -8,10 +8,12 @@
     DashboardMenuController.$inject = [
         'LogoutDialogService',
         'DashboardStateService',
-        '$mdSidenav'
+        '$mdSidenav',
+        'ProjectSelectionService',
+        'ProjectContext',
     ];
 
-    function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav) {
+    function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav, ProjectSelectionService, ProjectContext) {
         var self = this;
 
         /* Public interface */
@@ -22,6 +24,10 @@
         self.openSurveyForms = openSurveyForms;
         self.openUserActivation = openUserActivation;
         self.logout = logout;
+        self.chooseProject = chooseProject;
+        self.hasSelectedProject = hasSelectedProject;
+        self.getCurrentProject = getCurrentProject;
+
 
         function getSelectedSystemArea() {
             return DashboardStateService.currentState;
@@ -53,6 +59,18 @@
         function logout() {
             LogoutDialogService.showDialog()
                 .onConfirm(DashboardStateService.logout);
+        }
+
+        function hasSelectedProject(){
+            return ProjectContext.hasProject();
+        }
+
+        function getCurrentProject(){
+            return ProjectContext.getCurrentProject();
+        }
+
+        function chooseProject(){
+            ProjectSelectionService.choose();
         }
     }
 

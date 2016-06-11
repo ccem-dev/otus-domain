@@ -40,8 +40,9 @@ public class ProjectResource {
 	@GET
 	@Secured
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProjectDto> fetch(){
+	public String fetch(){
+		Response response = new Response();
 		List<ProjectDto> projects = projectService.fetchAll();
-		return projects;
+		return response.setData(projects).toJson();
 	}
 }

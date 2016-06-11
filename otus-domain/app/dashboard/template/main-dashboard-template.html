@@ -1,25 +1,36 @@
-<md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
+<md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
+ng-cloak style="z-index: 1000 !important">
     <md-content ui-view="dashboard-menu"></md-content>
 </md-sidenav>
 
-<md-content layout="column" flex ng-cloak>
-    <md-toolbar layout="row" id="system-toolbar" class="md-accent md-hue-1">
-        <a class="navbar-brand" rel="home" title="Otus" layout="row" layout-align="center center">
-            <img ng-src="app/assets/img/coruja_neutra.png" class="image-otus-toolbar" />
-        </a>
-        <md-button ng-click="dashboardMenu.open()">
-            <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
-            Otus Domain
-        </md-button>
-        <span flex></span>
-        <md-whiteframe class="md-whiteframe-10dp image-component" layout="row">
-            <a class="navbar-brand" rel="home" title="Profile" layout="row" layout-align="center center">
-                <img ng-src="app/assets/img/user.png" class="image-user-div" />
+<md-content layout="column" flex>
+    <md-toolbar layout="row" class="md-accent md-hue-1">
+        <div class="md-toolbar-tools">
+            <a class="navbar-brand" rel="home" title="Otus" layout="row" layout-align="center center">
+                <img ng-src="app/assets/img/coruja_neutra.png" class="image-otus-toolbar" />
             </a>
-        </md-whiteframe>
-        <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
-            <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
-        </md-button>
+            <md-button class="md-icon-button" ng-click="dashboardMenu.open()">
+                <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+            </md-button>
+            <h1 class="md-title"><span>Otus Domain</span></h1>
+            <span flex></span>
+            <div layout="row" layout-align="center center" ng-show="dashboardMenu.hasSelectedProject()">
+                <h1 class="md-subhead md-primary"><small>{{dashboardMenu.getCurrentProject().projectName}}</small></h1>
+                <md-whiteframe class="image-component md-button" ng-click="dashboardMenu.chooseProject()">
+                    <a class="navbar-brand" rel="home" title="Projeto" layout="row" layout-align="center center">
+                        <img ng-src="app/assets/img/project_research.png" class="image-user-div" />
+                    </a>
+                </md-whiteframe>
+            </div>
+            <md-whiteframe class="md-whiteframe-10dp image-component">
+                <a class="navbar-brand" rel="home" title="Usuário" layout="row" layout-align="center center">
+                    <img ng-src="app/assets/img/user.png" class="image-user-div" />
+                </a>
+            </md-whiteframe>
+            <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
+                <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+            </md-button>
+        </div>
     </md-toolbar>
     <md-content ui-view="system-content" layout="row" flex></md-content>
 </md-content>

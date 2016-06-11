@@ -1,0 +1,37 @@
+<md-dialog>
+    <md-toolbar layout="row">
+        <div class="md-toolbar-tools">
+            <h2>Escolha o Projeto</h2>
+        </div>
+        <md-button ng-click="close()">
+            <md-icon>close</md-icon>
+        </md-button>
+    </md-toolbar>
+    <form>
+        <md-dialog-content>
+            <md-content>
+                <div layout="row" layout-align="center center" layout-wrap>
+                    <md-card class="offline-card disabled" ng-click="select(project)" ng-repeat="project in context.projects">
+                        <md-card-header>
+                            <md-card-avatar>
+                                <img src="app/assets/img/project_research.png" />
+                            </md-card-avatar>
+                            <md-card-header-text>
+                                <span class="md-title">{{project.projectName}}</span>
+                                <span class="md-subhead" ng-show="project.status">Online</span>
+                                <span class="offline md-subhead" ng-hide="project.status">Offline</span>
+                            </md-card-header-text>
+                        </md-card-header>
+                    </md-card>
+                    <div layout-margin layout-padding ng-hide="context.projects.length">
+                        <h2 class="md-display-1">Nenhum Projeto Disponivel</h2>
+                        <div class="md-body-1">
+                            <p>Você não possui nenhum projeto registrado atualmente.</p>
+                            <p>Para ter acesso a todos os recursos da ferramenta você
+                                deve registrar novos projetos</p>
+                        </div>
+                    </div>
+            </md-content>
+        </md-dialog-content>
+    </form>
+</md-dialog>
