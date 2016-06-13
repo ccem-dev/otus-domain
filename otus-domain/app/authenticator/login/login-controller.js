@@ -5,9 +5,11 @@
         .module('otusDomain.authenticator')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', 'DashboardStateService', 'RestResourceService'];
+    LoginController.$inject = ['$scope', 'DashboardStateService', 'RestResourceService', '$mdToast'];
 
-    function LoginController($scope, DashboardStateService, RestResourceService) {
+    function LoginController($scope, DashboardStateService, RestResourceService, $mdToast) {
+        var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
+
         init();
 
         function init() {
@@ -29,12 +31,12 @@
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
 
             authenticatorResource.authenticate(user, function(response) {
-            RestResourceService.setSecurityToken(response.data);
+                RestResourceService.setSecurityToken(response.data);
 
                 if (!response.hasErrors) {
                     DashboardStateService.goToHome();
                 } else {
-                    $scope.invalidLogin = true;
+                    $mdToast.show($mdToast.simple().textContent(LOGIN_ERROR_MESSAGE));
                 }
             });
         };

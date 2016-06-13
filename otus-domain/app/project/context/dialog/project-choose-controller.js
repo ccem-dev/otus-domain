@@ -8,6 +8,7 @@
     ProjectChooseController.$inject = ['$scope', '$mdDialog', 'context', 'ProjectSecurityService', '$mdToast'];
 
     function ProjectChooseController($scope, $mdDialog, context, ProjectSecurityService, $mdToast) {
+        var OFFLINE_MESSAGE = 'Projeto Offline. Verifique o estado do projeto.';
         $scope.close = close;
         $scope.context = context;
         $scope.select = select;
@@ -33,7 +34,7 @@
                 $scope.context.selected(project);
                 close();
             } else {
-                $mdToast.show($mdToast.simple().textContent('Projeto Offline. Verifique o estado do projeto.'));
+                $mdToast.show($mdToast.simple().textContent(OFFLINE_MESSAGE));
             }
         }
     }
