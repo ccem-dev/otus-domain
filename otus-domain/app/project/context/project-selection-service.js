@@ -39,7 +39,7 @@
         function showModal() {
             $mdDialog.show({
                 controller: 'ProjectChooseController',
-                templateUrl: 'app/project/selection/dialog/project-choose-template.html',
+                templateUrl: 'app/project/context/dialog/project-choose-template.html',
                 parent: angular.element(document.body),
                 clickOutsideToClose: true,
                 fullscreen: true,

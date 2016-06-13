@@ -14,8 +14,8 @@ ng-cloak style="z-index: 1000 !important">
             </md-button>
             <h1 class="md-title"><span>Otus Domain</span></h1>
             <span flex></span>
-            <div layout="row" layout-align="center center" ng-show="dashboardMenu.hasSelectedProject()">
-                <h1 class="md-subhead md-primary"><small>{{dashboardMenu.getCurrentProject().projectName}}</small></h1>
+            <div layout="row" layout-align="center center" >
+                <h1 class="md-subhead md-primary" ng-show="dashboardMenu.hasSelectedProject()"><small>{{dashboardMenu.getCurrentProject().projectName}}</small></h1>
                 <md-whiteframe class="image-component md-button" ng-click="dashboardMenu.chooseProject()">
                     <a class="navbar-brand" rel="home" title="Projeto" layout="row" layout-align="center center">
                         <img ng-src="app/assets/img/project_research.png" class="image-user-div" />

@@ -5,35 +5,26 @@
         .module('otusDomain.project')
         .service('ProjectSecurityService', ProjectSecurityService);
 
-    ProjectSecurityService.$inject = ['OtusRestResourceService'];
+    ProjectSecurityService.$inject = ['OtusRestResourceService', '$q'];
 
-    function ProjectSecurityService(OtusRestResourceService) {
+    function ProjectSecurityService(OtusRestResourceService, $q) {
         var self = this;
-        var installerResource;
         self.isOnline = isOnline;
 
-        init();
-
-        function init() {
-            installerResource = OtusRestResourceService.getOtusInstallerResource();
-        }
-
-        function authenticate(project) {
-            // TODO Authenticar apos a seleção de um determinado otus;
-        }
-
         function isOnline(project) {
-            // TODO Utilizar url customizada
-            installerResource.ready(function success(response) {
-                if (response.data) {
-                    project.status = true;
-                } else {
-                    project.status = false;
+            OtusRestResourceService.setUrl(project.projectRestUrl);
+            var installerResource = OtusRestResourceService.getOtusInstallerResource();
 
-                }
-            }, function err(){
+            installerResource.ready(function(response) {
+                    if (response.data) {
+                        project.status = true;
+                    } else {
+                        project.status = false;
+                    }
+                },
+                function(err) {
                     project.status = false;
-            });
+                });
         }
     }
 
