@@ -4,6 +4,9 @@
     var browserSync = require('browser-sync').create();
     var browserSyncSpa = require('browser-sync-middleware-spa');
     var bump = require('gulp-bump');
+    var uglify = require("gulp-uglify");
+    var minify = require('gulp-minify');
+    var concat = require('gulp-concat');
     var sonar = require('gulp-sonar');
     var packageJson = require('./package.json');
     var baseDir = __dirname + '/app/index.html';
@@ -31,6 +34,14 @@
             'app/**/*.js',
             'app/**/*.css'
         ]).on('change', browserSync.reload);
+    });
+
+    gulp.task('compress', function() {
+        gulp.src('app/**/*.js')
+            .pipe(concat('otus-domain.js'))
+            .pipe(uglify())
+            .pipe(minify())
+            .pipe(gulp.dest('dist'));
     });
 
     gulp.task('upgrade-version', function(value) {
