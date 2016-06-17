@@ -5,9 +5,9 @@
 	<packaging>war</packaging>
 
 	<parent>
-		<groupId>br.org.otus.domain</groupId>
+		<groupId>org.ccem.domain</groupId>
 		<artifactId>otus-domain-root</artifactId>
-		<version>1.5.20-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../otus-domain-root/pom.xml</relativePath>
 	</parent>
 
@@ -24,7 +24,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus.domain</groupId>
+			<groupId>org.ccem.domain</groupId>
 			<artifactId>otus-domain-business</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>
@@ -51,7 +51,7 @@
 			<version>2.3.1</version>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus.domain</groupId>
+			<groupId>org.ccem.domain</groupId>
 			<artifactId>otus-domain-persistence</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>test</scope>
