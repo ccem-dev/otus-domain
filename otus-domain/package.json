@@ -37,6 +37,7 @@
         "angular-resource": "1.5.3"
     },
     "devDependencies": {
+        "gulp-minify": "0.0.11",
         "gulp-sonar": "2.1.0",
         "gulp": "^3.9.1",
         "gulp-rename": "^1.2.2",
