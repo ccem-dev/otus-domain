@@ -42,7 +42,7 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus.rep-tool</groupId>
+			<groupId>org.ccem.rep-tool</groupId>
 			<artifactId>studio-repository-tool</artifactId>
 			<version>0.12.9-SNAPSHOT</version>
 			<type>jar</type>
