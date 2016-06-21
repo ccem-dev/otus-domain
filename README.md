@@ -1,43 +1,17 @@
-### Browser Sync Front-End
+# Configuração de Ambiente
+## Download de Dependencias
 
-Para desenvolvimento de aplicações front-end é possivel utilizar a ferramenta Browser Sync.
+- Servidor: [Wildfly 9.0.1.Final](http://wildfly.org/downloads/)
+- JDBC: [Postgres 9.4 Build 1203](https://jdbc.postgresql.org/download.html)
 
-> $ cd otus-domain
+## Configurações Servidor
+Passos para realizar configurações no servidor que recebera a aplicação.
+Os passos seguintes devem ser feitos no arquivo:
 
-> $ npm start
-
-> ou
-
-> $ npm run gulp browser-sync
-
-
-O serviço de front-end será acessivel através da url: **localhost:3000/otus-domain**
-
-
-### Inicializar Jboss Porta 80
-
-Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na porta 80.
-
-``` xml
- <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
-        <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
-        <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
-        <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
-        <socket-binding name="http" port="${jboss.http.port:80}"/>
-        <socket-binding name="https" port="${jboss.https.port:8443}"/>
-        <socket-binding name="txn-recovery-environment" port="4712"/>
-        <socket-binding name="txn-status-manager" port="4713"/>
-        <outbound-socket-binding name="mail-smtp">
-            <remote-destination host="localhost" port="25"/>
-        </outbound-socket-binding>
-    </socket-binding-group>
-```
-
+> servidor/standalone/configuration/standalone.xml
 
 ### Habilitar CORS (Cross-origin resource sharing) 
-
 Para tornar possivel a acesso do projeto Domain (back-end) via java script é necessaria habilitar o recurso CORS.
-Essa configuração é aplicada diretamente ao Servidor de Aplicação Wildfly 9.0.1 :
 
 ``` xml
  <subsystem xmlns="urn:jboss:domain:undertow:2.0">
@@ -72,21 +46,34 @@ Essa configuração é aplicada diretamente ao Servidor de Aplicação Wildfly 9
         </subsystem>
 ```
 
-### Configuração Datasource Wildfly
+### Inicializar Jboss Porta 80
+Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na porta 80.
 
+``` xml
+ <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+        <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
+        <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9993}"/>
+        <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
+        <socket-binding name="http" port="${jboss.http.port:80}"/>
+        <socket-binding name="https" port="${jboss.https.port:8443}"/>
+        <socket-binding name="txn-recovery-environment" port="4712"/>
+        <socket-binding name="txn-status-manager" port="4713"/>
+        <outbound-socket-binding name="mail-smtp">
+            <remote-destination host="localhost" port="25"/>
+        </outbound-socket-binding>
+    </socket-binding-group>
+```
+
+### Configuração Datasource Wildfly
 Passos para realizar configuração da base de dados do projeto.
 
-## Artefatos para download:
+**Deve existir uma base de dados previamente criada com o respectivo nome otus-domain.**
 
-- Servidor: [Wildfly 9.0.1.Final](http://wildfly.org/downloads/)
-- JDBC: [Postgres 9.4 Build 1203](https://jdbc.postgresql.org/download.html)
 
-## Adição de Management User
-
+### Adição de Management User
 Para tornar possivel o acesso ao painel administrativo do servidor é necessario existir um usuario com as respectivas permissões. Adicione um usuario Management. [Tutorial](https://docs.jboss.org/author/display/WFLY8/add-user+utility)
 
-## Deploy JDBC
-
+### Deploy JDBC
 Acessar Url http://servidor:9990/console (Painel Administrativo Servidor). 
 
 1. Opção Deployments
@@ -96,9 +83,7 @@ Acessar Url http://servidor:9990/console (Painel Administrativo Servidor).
 5. Habilitar
 6. Finalizar
 
-
-## Configurar Datasource
-
+### Configurar Datasource
 Acessar Url http://servidor:9990/console (Painel Administrativo Servidor). 
 
 1. Configurações
@@ -109,13 +94,89 @@ Acessar Url http://servidor:9990/console (Painel Administrativo Servidor).
 
 Dados para Datasource:
 ```
-Nome: otus-domain
-JNDI: java:/jboss/datasource/otus-domain
+Nome: domain
+JNDI: java:/jboss/datasources/domain
 ```
-**Deve existir uma base de dados previamente criada com o respectivo nome otus-domain.**
-
 Selecionar **Detected Driver** : *postgresql-9.4-1203.jdbc.jar*
 
-**Test Connection - Success**
+**Test Connection - Success** 
+
+# Construindo do Projeto
+Para construir e realizar o deploy da aplição devem ser utilizadas as ferramentas [Maven](https://maven.apache.org/) e [NPM](https://www.npmjs.com/).
+
+Navegue até a pasta **otus-domain**, e execute:
+
+Para realizar download de dependencias de front-end
+> npm install
+
+Para realizar a remoção de dependencias de desenvolvimento
+> npm prune --production
+
+Navegue até a pasta **otus-domain-root**, e execute:
+
+Para construir a base de dados: <br>
+> mvn clean install -Ddatabase.action=create
+
+Para **não** construir a base de dados: <br>
+> mvn clean install
+
+# Deploy Back-End
+Para realizar o deploy do back-end, tendo previamente realizado a construção do projeto, navegue para a pasta **otus-domain-ear**, e execute:
+
+> mvn wildfly:deploy
+
+Esse recurso considera que o servidor esta inicializado e disponivel no seguinte endereço:
+
+> http://localhost:9990
+
+E existe um usuário para deploy, no respectivo servidor, com os seguintes dados:
+
+> username : admin
+> password : admin
+
+Para customizar os dados de deploy utilize os seguintes parametros:
+
+> wildfly:deploy -Dwildfly-hostname=endereço_servidor -Dwildfly-username=username -Dwildfly-password=password
+
+# Deploy Front-End
+Para realizar o deploy do front-end, tendo previamente realizado a construção do projeto, navegue para a pasta **otus-domain**, e execute:
+
+> mvn wildfly:deploy
+
+Esse recurso considera que o servidor esta inicializado e disponivel no seguinte endereço:
+
+> http://localhost:9990
+
+E existe um usuário para deploy, no respectivo servidor, com os seguintes dados:
+
+> username : admin
+> password : admin
+
+# Inicializando Front-End utilizando Browser-Sync
+Para desenvolvimento de aplicações front-end, em ambiente de desenvolvimento, é possivel utilizar a ferramenta Browser Sync. Navegue para **otus-domain**, execute :
+
+Para realizar download de dependencias de front-end
+> npm install
+
+** Não realize npm prune --production pois a operação utiliza dependencias em escopo de desenvolvimento.**
+
+Inicializando o servidor
+> $ npm start
+
+> ou
+
+> $ npm run gulp browser-sync
+
+O serviço de front-end será acessivel através da url: **localhost:3000/otus-domain**
+
+
+
+
+
+
+
+
+
+
 
 
