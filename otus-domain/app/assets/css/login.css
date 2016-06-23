@@ -1,3 +1,6 @@
+#login-page{
+    position: relative;
+}
 #login-page #center {
 	width: 55%;
 	top: 60%;
@@ -41,18 +44,19 @@
 }
 
 #login-page .logo {
-    height: 45%;
-    display: block;
-    z-index: 3;
+    width: 27%;
     position: absolute;
-    bottom: 68%;
-    left: 38%;
-	min-width: 22%;
-
+    left: 40%;
+    transform: translate(-30%, -30%);
 }
 
-#login-page #logo {
-	content: url(../../assets/img/domainImage.png);
+@media screen and (max-width: 1280px) and (min-width: 800px) {
+    #login-page .logo {
+        width: 47%;
+        position: absolute;
+        left: 45%;
+        transform: translate(-30%, -30%);
+    }
 }
 
 /** This style is to fix float label 'celular'! Do NOT remove**/
