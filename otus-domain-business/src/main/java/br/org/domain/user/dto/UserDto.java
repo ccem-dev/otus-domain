@@ -1,34 +1,35 @@
-package br.org.domain.administration.dto;
-
-import java.io.Serializable;
+package br.org.domain.user.dto;
 
 import br.org.domain.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-public class UserDto implements Serializable {
-
-	private static final long serialVersionUID = -5851680952577534837L;
+public class UserDto {
 
 	@Equalization(name = "name")
-	private String name;
+	public String name;
 
 	@Equalization(name = "surname")
-	private String surname;
+	public String surname;
 
 	@Equalization(name = "phone")
-	private String phone;
+	public String phone;
 
 	@Equalization(name = "email")
-	private String email;
+	public String email;
 
 	@Equalization(name = "password")
-	private String password;
+	public String password;
+
+	public String passwordConfirm;
 
 	@Equalization(name = "admin_flag")
-	private Boolean admin;
+	public Boolean admin;
+
+	@Equalization(name = "enable")
+	public Boolean enable;
 
 	@Equalization(name = "id")
-	private Integer id;
+	public Integer id;
 
 	public String getName() {
 		return name;
@@ -69,9 +70,9 @@ public class UserDto implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public void encrypt() {
 		this.password = EncryptorResources.encrypt(password);
 	}
-	
+
 }

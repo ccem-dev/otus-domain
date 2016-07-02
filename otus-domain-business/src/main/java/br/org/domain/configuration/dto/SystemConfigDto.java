@@ -2,7 +2,7 @@ package br.org.domain.configuration.dto;
 
 import br.org.domain.email.dto.EmailSenderDto;
 import br.org.domain.repository.dto.RepositoryDto;
-import br.org.domain.administration.dto.UserDto;
+import br.org.domain.user.dto.UserDto;
 
 public class SystemConfigDto {
 	private UserDto user;

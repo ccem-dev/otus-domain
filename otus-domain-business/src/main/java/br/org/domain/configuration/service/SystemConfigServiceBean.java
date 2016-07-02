@@ -1,26 +1,23 @@
 package br.org.domain.configuration.service;
 
+import br.org.domain.configuration.dto.SystemConfigDto;
+import br.org.domain.configuration.factories.ConfigFactory;
+import br.org.domain.email.dto.EmailSenderDto;
+import br.org.domain.email.service.EmailNotifierService;
+import br.org.domain.exception.EmailNotificationException;
+import br.org.domain.exception.FillEmailSenderException;
+import br.org.domain.exception.InvalidDtoException;
+import br.org.domain.exceptions.DataNotFoundException;
+import br.org.domain.repository.service.RepositoryService;
+import br.org.domain.system.SystemConfig;
+import br.org.domain.system.dao.SystemConfigDao;
+import br.org.domain.user.User;
+import br.org.tutty.Equalizer;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.domain.configuration.factories.ConfigFactory;
-import br.org.domain.exception.FillEmailSenderException;
-import br.org.domain.repository.service.RepositoryService;
-import br.org.domain.configuration.dto.SystemConfigDto;
-import br.org.domain.system.dao.SystemConfigDao;
-import br.org.domain.email.service.EmailNotifierService;
-import br.org.domain.system.SystemConfig;
-import br.org.domain.user.User;
-import br.org.domain.exception.EmailNotificationException;
-import br.org.domain.exception.FillUserException;
-import br.org.domain.exceptions.DataNotFoundException;
-import br.org.domain.email.dto.EmailSenderDto;
-import br.org.tutty.Equalizer;
-
-/**
- * Created by diogoferreira on 28/09/15.
- */
 @Stateless
 @Local(SystemConfigService.class)
 public class SystemConfigServiceBean implements SystemConfigService {
@@ -40,7 +37,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	}
 
 	@Override
-	public void createAdmin(SystemConfigDto systemConfigDto) throws FillUserException {
+	public void createAdmin(SystemConfigDto systemConfigDto) throws InvalidDtoException {
 		try {
 			User user = new User();
 
@@ -52,7 +49,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 			repositoryService.createAdminRepository(user, systemConfigDto);
 
 		} catch (IllegalAccessException | NoSuchFieldException e) {
-			throw new FillUserException();
+			throw new InvalidDtoException();
 		}
 	}
 
@@ -64,7 +61,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 			systemConfig.finalizeConfiguration();
 
 			systemConfigDao.persist(systemConfig);
-		}catch (IllegalAccessException | NoSuchFieldException | FillUserException e){
+		}catch (IllegalAccessException | NoSuchFieldException | InvalidDtoException e){
 			throw new FillEmailSenderException();
 		}
 	}

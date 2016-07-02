@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
-import br.org.domain.administration.dto.UserDto;
+import br.org.domain.user.dto.UserDto;
 
 public class ResponseTest {
 

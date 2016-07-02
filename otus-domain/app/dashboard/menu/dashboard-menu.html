@@ -1,18 +1,59 @@
-<md-button ng-click="dashboardMenu.open()">
-    <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
-    Otus Domain
-</md-button>
-<md-list>
-    <md-list-item class="md-1-line">
-        <md-button id="home-menu" ng-click="dashboardMenu.openHome()">
-            <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
-            Home
-        </md-button>
-    </md-list-item>
-    <md-list-item class="md-1-line">
-        <md-button id="user-management-menu" ng-click="dashboardMenu.openUserActivation()">
-            <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
-            Usuários
-        </md-button>
-    </md-list-item>
-</md-list>
+<md-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="row">
+            <md-button ng-click="dashboardMenu.open()">
+                <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+                Otus Domain
+            </md-button>
+
+            <span flex></span>
+
+            <md-button aria-label="Logout" ng-click="dashboardMenu.logout()">
+                <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-list>
+        <md-subheader class="md-no-sticky">Domínio</md-subheader>
+
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+                <md-button id="home-menu" ng-click="dashboardMenu.openHome()">
+                    Home
+                </md-button>
+            </div>
+        </md-list-item>
+
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
+                <md-button id="user-management-menu" ng-click="dashboardMenu.openUserActivation()">
+                    Usuários
+                </md-button>
+            </div>
+        </md-list-item>
+
+        <md-divider></md-divider>
+        <md-subheader class="md-no-sticky">Projeto Selecionado</md-subheader>
+
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
+                <md-button id="user-management-menu">
+                    Usuários
+                </md-button>
+            </div>
+        </md-list-item>
+
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon md-font-library="material-icons" aria-label="Centros">place</md-icon>
+                <md-button id="center-management-menu">
+                    Centros
+                </md-button>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-content>

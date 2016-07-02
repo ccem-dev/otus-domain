@@ -1,4 +1,4 @@
-package br.org.domain.messages;
+package br.org.domain.exceptions;
 
 public class FillUserExceptionMessage {
 

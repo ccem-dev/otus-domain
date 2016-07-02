@@ -1,11 +1,11 @@
 package br.org.domain.rest;
 
-import br.org.domain.rest.close.RepositoryResource;
-import br.org.domain.rest.close.UserResource;
-import br.org.domain.rest.open.AuthenticationResource;
-import br.org.domain.rest.open.InstallerResource;
-import br.org.domain.rest.open.ProjectResource;
-import br.org.domain.rest.open.UrlResource;
+import br.org.domain.repository.RepositoryResource;
+import br.org.domain.user.UserResource;
+import br.org.domain.security.AuthenticationResource;
+import br.org.domain.configuration.InstallerResource;
+import br.org.domain.projects.OtusProjectResource;
+import br.org.domain.projects.UrlResource;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +33,7 @@ public class EndPointsLoader extends Application {
 	private UrlResource urlResource;
 	
 	@Inject
-	private ProjectResource projectResource;
+	private OtusProjectResource otusProjectResource;
 
 	@Override
 	public Set<Class<?>> getClasses() {
@@ -43,7 +43,7 @@ public class EndPointsLoader extends Application {
 		resources.add(RepositoryResource.class);
 		resources.add(InstallerResource.class);
 		resources.add(UrlResource.class);
-		resources.add(ProjectResource.class);
+		resources.add(OtusProjectResource.class);
 		return resources;
 	}
 
@@ -55,7 +55,7 @@ public class EndPointsLoader extends Application {
 		resources.add(repositoryResource);
 		resources.add(installerResource);
 		resources.add(urlResource);
-		resources.add(projectResource);
+		resources.add(otusProjectResource);
 		return resources;
 	}
 

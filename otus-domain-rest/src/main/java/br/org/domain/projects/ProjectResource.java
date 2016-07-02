@@ -1,6 +1,4 @@
-package br.org.domain.rest.close;
-
-import br.org.domain.projects.ProjectService;
+package br.org.domain.projects;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

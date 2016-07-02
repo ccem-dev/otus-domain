@@ -17,7 +17,7 @@ describe('the first time when the user tries access the login page', function() 
         expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/');
         loginPage.getRegisterButton().click();
 
-        expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/resources/otus-studio-app/administration/register/user/register-user.html');
+        expect(browser.getCurrentUrl()).toBe('http://localhost:8080/studio/resources/otus-studio-app/user/register/user/register-user.html');
         browser.sleep(5000);
     });
 

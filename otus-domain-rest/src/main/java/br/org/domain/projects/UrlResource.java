@@ -1,4 +1,4 @@
-package br.org.domain.rest.open;
+package br.org.domain.projects;
 
 import br.org.domain.rest.Response;
 

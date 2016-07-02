@@ -1,12 +1,13 @@
-package br.org.domain.rest.open;
+package br.org.domain.projects;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import br.org.domain.exception.ConvertedDtoException;
 import br.org.domain.rest.Response;
 import br.org.domain.projects.ProjectService;
-import br.org.domain.projects.ProjectDto;
+import br.org.domain.projects.dto.ProjectDto;
 
 import br.org.domain.security.Secured;
 import com.google.gson.Gson;
@@ -15,7 +16,7 @@ import java.util.List;
 
 
 @Path("/otus")
-public class ProjectResource {
+public class OtusProjectResource {
 	
 	@Inject
 	private ProjectService projectService;
@@ -32,8 +33,8 @@ public class ProjectResource {
 			projectService.register(projectDto);
 			
 			return response.setData(Boolean.TRUE).toJson();	
-		}catch (Exception e){
-			return response.setHasErrors(Boolean.TRUE).toJson();
+		}catch (ConvertedDtoException e){
+			return response.buildError(e).toJson();
 		}
 	}
 

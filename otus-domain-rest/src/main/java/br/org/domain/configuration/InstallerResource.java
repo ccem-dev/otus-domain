@@ -1,4 +1,4 @@
-package br.org.domain.rest.open;
+package br.org.domain.configuration;
 
 import br.org.domain.rest.Response;
 import br.org.domain.configuration.service.SystemConfigService;

@@ -1,4 +1,4 @@
-package br.org.domain.rest.close;
+package br.org.domain.repository;
 
 import java.util.ArrayList;
 import java.util.List;

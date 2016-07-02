@@ -6,7 +6,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 import br.org.domain.rest.Response;
-import br.org.domain.rest.close.UserResource;
+import br.org.domain.user.UserResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

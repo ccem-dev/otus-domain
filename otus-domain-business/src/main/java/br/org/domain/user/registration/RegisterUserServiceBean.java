@@ -1,17 +1,17 @@
-package br.org.domain.registration;
+package br.org.domain.user.registration;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import br.org.domain.exception.InvalidDtoException;
 import br.org.domain.system.dao.SystemConfigDao;
 import br.org.domain.user.dao.UserDao;
-import br.org.domain.administration.dto.UserDto;
+import br.org.domain.user.dto.UserDto;
 import br.org.domain.email.service.EmailNotifierService;
 import br.org.domain.email.NewUserNotificationEmail;
 import br.org.domain.user.User;
 import br.org.domain.exception.EmailNotificationException;
-import br.org.domain.exception.FillUserException;
 import br.org.domain.exceptions.DataNotFoundException;
 import br.org.tutty.Equalizer;
 
@@ -29,7 +29,7 @@ public class RegisterUserServiceBean implements RegisterUserService {
     private EmailNotifierService emailNotifierService;
 
 	@Override
-	public void createUser(UserDto userDto) throws FillUserException {
+	public void createUser(UserDto userDto) throws InvalidDtoException {
 		try {
 			User user = new User();
 			Equalizer.equalize(userDto, user);
@@ -38,7 +38,7 @@ public class RegisterUserServiceBean implements RegisterUserService {
 			notifyAdm(user);
 
 		} catch (IllegalAccessException | NoSuchFieldException e) {
-			throw new FillUserException();
+			throw new InvalidDtoException();
 		}
 	}
 

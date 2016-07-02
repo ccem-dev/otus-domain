@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import br.org.domain.exception.ConvertedDtoException;
 import br.org.domain.exceptions.DataNotFoundException;
+import br.org.domain.projects.dto.ProjectDto;
 import br.org.tutty.Equalizer;
 
 import java.util.ArrayList;

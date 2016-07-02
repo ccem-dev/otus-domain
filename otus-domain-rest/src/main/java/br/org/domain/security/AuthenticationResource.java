@@ -1,4 +1,4 @@
-package br.org.domain.rest.open;
+package br.org.domain.security;
 
 import br.org.domain.rest.Response;
 import br.org.domain.exception.EmailNotFoundException;
@@ -38,12 +38,11 @@ public class AuthenticationResource {
         try {
             String jwt = securityService.authenticate(authenticationDto);
             response.setData(jwt);
-            response.setHasErrors(Boolean.FALSE);
-            return response.toJson();
+
+            return response.buildSuccess().toJson();
 
         } catch (InvalidPasswordException | EmailNotFoundException | UserDisabledException | TokenException e) {
-            response.setHasErrors(Boolean.TRUE);
-            return response.setError(e).toJson();
+            return response.buildError(e).toJson();
         }
     }
 

@@ -1,7 +1,14 @@
 package br.org.domain.exception;
 
-public class InvalidPasswordException extends Exception {
+public class InvalidPasswordException extends Exception implements ResponseError{
+    @Override
+    public Object getObjectError() {
+        return new ErrorData();
+    }
 
-	private static final long serialVersionUID = 3557131302022729752L;
+    class ErrorData{
+        private String message = "Invalid Password";
+        private ErrorType errorType = ErrorType.INVALID_PASSWORD;
+    }
 
 }

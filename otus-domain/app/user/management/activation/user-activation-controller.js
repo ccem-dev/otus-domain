@@ -5,48 +5,69 @@
         .module('user.management')
         .controller('UserActivationController', UserActivationController);
 
-    UserActivationController.$inject = ['$http', '$scope', '$filter', 'RestResourceService'];
+    UserActivationController.$inject = ['$http', '$scope', '$filter', 'RestResourceService', '$mdDialog', '$mdToast'];
 
-    function UserActivationController($http, $scope, $filter, RestResourceService) {
+    function UserActivationController($http, $scope, $filter, RestResourceService, $mdDialog, $mdToast) {
+        var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário ?';
+        var DIALOG_TITLE = 'Mudança de Estatus';
+        var DIALOG_ARIA = 'Mudança de Status';
 
         $scope.users = [];
-        $scope.users.disabledUsers = [];
-        $scope.users.activedUsers = [];
-        $scope.loadUsers = fetchUsers();
+        $scope.loadUsers = loadUsers();
+        $scope.changeStatus = changeStatus;
+        $scope.confirmDialog = confirmDialog;
 
-        $scope.enableUsers = function() {
-            var disabledUserForActivation = filterSelected($scope.users.disabledUsers);
-
-            if (disabledUserForActivation.length > 0) {
-                var userResource = RestResourceService.getUserResource();
-                userResource.enable(disabledUserForActivation, function(response) {
-                    fetchUsers();
-                });
+        function changeStatus(user) {
+            if (!user.enable) {
+                disable(user);
+            } else {
+                enable(user);
             }
-        };
-
-        $scope.disableUsers = function() {
-            var enableUserForDisable = filterSelected($scope.users.activedUsers);
-
-            if (enableUserForDisable.length > 0) {
-                var userResource = RestResourceService.getUserResource();
-                userResource.disable(enableUserForDisable, function(response) {
-                    fetchUsers();
-                });
-            }
-        };
-
-        function filterSelected(users) {
-            return ($filter('filter')(users, {
-                selected: true
-            }));
         }
 
-        function fetchUsers() {
+        function confirmDialog(user) {
+            var dialog = $mdDialog.confirm()
+                .title(DIALOG_TITLE)
+                .textContent(DIALOG_TEXT_CONTENT)
+                .ariaLabel(DIALOG_ARIA)
+                .ok('Sim')
+                .cancel('Cancelar');
+
+            $mdDialog.show(dialog).then(function(result) {
+                changeStatus(user);
+            }, function() {
+                user.enable = !user.enable;
+            });
+        }
+
+        function enable(user) {
+            var userResource = RestResourceService.getUserResource();
+            userResource.enable(user, function(response) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Usuário habilitado.')
+                );
+
+                loadUsers();
+            });
+        }
+
+        function disable(user) {
+            var userResource = RestResourceService.getUserResource();
+            userResource.disable(user, function(response) {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent('Usuário desabilitado.')
+                );
+
+                loadUsers();
+            });
+        }
+
+        function loadUsers() {
             var userResource = RestResourceService.getUserResource();
             userResource.fetch(function(response) {
-                $scope.users.disabledUsers = response.data.disabledUsers;
-                $scope.users.activedUsers = response.data.activedUsers;
+                $scope.users = response.data;
             });
         }
     }

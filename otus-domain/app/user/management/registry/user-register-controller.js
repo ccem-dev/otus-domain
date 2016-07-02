@@ -1,6 +1,4 @@
 (function() {
-    var HOSTNAME_REST = 'http://' + window.location.hostname;
-
     angular
         .module('user.management')
         .controller('UserRegisterController', UserRegisterController);

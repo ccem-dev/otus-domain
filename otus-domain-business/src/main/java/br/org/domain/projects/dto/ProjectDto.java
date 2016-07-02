@@ -1,4 +1,4 @@
-package br.org.domain.projects;
+package br.org.domain.projects.dto;
 
 import br.org.tutty.Equalization;
 
