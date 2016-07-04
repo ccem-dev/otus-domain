@@ -43,6 +43,8 @@ public class ProjectServiceBean implements ProjectService {
 				ProjectDto projectDto = new ProjectDto();
 
 				Equalizer.equalize(project, projectDto);
+				projectDto.setProjectToken(project.getProjectToken().toString());
+
 				projectDtos.add(projectDto);
 			}
 
@@ -52,6 +54,4 @@ public class ProjectServiceBean implements ProjectService {
 
 		return projectDtos;
 	}
-
-
 }

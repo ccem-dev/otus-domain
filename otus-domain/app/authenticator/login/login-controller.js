@@ -45,5 +45,4 @@
             DashboardStateService.goToUserRegister();
         };
     }
-
 })();

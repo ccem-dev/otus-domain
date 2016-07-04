@@ -5,18 +5,24 @@
         .module('otusDomain.project')
         .controller('ProjectChooseController', ProjectChooseController);
 
-    ProjectChooseController.$inject = ['$scope', '$mdDialog', 'context', 'ProjectSecurityService', '$mdToast'];
+    ProjectChooseController.$inject = ['$scope', '$mdDialog', 'projects', 'ProjectSecurityService', '$mdToast'];
 
-    function ProjectChooseController($scope, $mdDialog, context, ProjectSecurityService, $mdToast) {
+    function ProjectChooseController($scope, $mdDialog, projects, ProjectSecurityService, $mdToast) {
         var OFFLINE_MESSAGE = 'Projeto Offline. Verifique o estado do projeto.';
-        $scope.close = close;
-        $scope.context = context;
-        $scope.select = select;
+
+        self = this;
+        self.projects = projects;
+        self.close = close;
+        self.select = select;
 
         init();
 
         function init() {
-            validateConnection($scope.context.projects);
+            validateConnection(self.projects);
+        }
+
+        function close() {
+            $mdDialog.cancel();
         }
 
         function validateConnection(projects) {
@@ -25,18 +31,18 @@
             });
         }
 
-        function close() {
-            $mdDialog.cancel();
-        }
-
         function select(project) {
             if (project.status) {
-                $scope.context.selected(project);
-                close();
+                ProjectSecurityService.authenticate(project, function() {
+                    close();
+                });
             } else {
-                $mdToast.show($mdToast.simple().textContent(OFFLINE_MESSAGE));
+                showOfflineMessage();
             }
         }
-    }
 
+        function showOfflineMessage() {
+            $mdToast.show($mdToast.simple().textContent(OFFLINE_MESSAGE));
+        }
+    }
 })();

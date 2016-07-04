@@ -30,9 +30,6 @@ public class SurveyUUID {
 		return new String(decoded);
 	}
 
-	/**
-	 * @return a concatenated encoded key
-	 */
 	public String getEncodedSurveyfinalKey() {
 		return encodedSurveyfinalKey;
 	}

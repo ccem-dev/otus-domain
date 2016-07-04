@@ -1,16 +1,10 @@
 package br.org.domain.projects;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import br.org.tutty.Equalization;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "project", schema = "public")
@@ -36,16 +30,6 @@ public class Project implements Serializable{
 	
 	public Project(){}
 
-	public Project(String projectRestUrl, String projectName, String projectToken) {
-		this.projectRestUrl = projectRestUrl;
-		this.projectName = projectName;
-		this.projectToken = projectToken;
-	}
-
-	public String getProjectRestUrl() {
-		return projectRestUrl;
-	}
-
 	public String getName() {
 		return projectName;
 	}
@@ -53,5 +37,4 @@ public class Project implements Serializable{
 	public String getProjectToken() {
 		return projectToken;
 	}
-
 }

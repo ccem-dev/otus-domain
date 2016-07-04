@@ -1,17 +1,13 @@
 package br.org.domain.projects;
 
+import br.org.domain.exception.ConvertedDtoException;
+import br.org.domain.projects.dto.ProjectDto;
+import br.org.domain.rest.Response;
+import br.org.domain.security.Secured;
+
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-
-import br.org.domain.exception.ConvertedDtoException;
-import br.org.domain.rest.Response;
-import br.org.domain.projects.ProjectService;
-import br.org.domain.projects.dto.ProjectDto;
-
-import br.org.domain.security.Secured;
-import com.google.gson.Gson;
-
 import java.util.List;
 
 
@@ -25,14 +21,13 @@ public class OtusProjectResource {
 	@Path("/register")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String register(String projectData) {
+	public String register(ProjectDto projectDto) {
 		Response response = new Response();
 		
 		try{
-			ProjectDto projectDto = new Gson().fromJson(projectData, ProjectDto.class);
 			projectService.register(projectDto);
+			return response.buildSuccess().toJson();
 			
-			return response.setData(Boolean.TRUE).toJson();	
 		}catch (ConvertedDtoException e){
 			return response.buildError(e).toJson();
 		}

@@ -10,6 +10,7 @@
             'otusDomain.installer',
             'otusDomain.repository',
             'otusDomain.project',
+            'otusDomain.project.fieldCenter',
             /* Possibly shared modules */
             'otusDomainClient',
             'otus.client',

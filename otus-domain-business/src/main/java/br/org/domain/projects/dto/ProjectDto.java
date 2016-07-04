@@ -13,21 +13,24 @@ public class ProjectDto {
 	@Equalization(name = "projectToken")
 	private String projectToken;
 	
-	public ProjectDto(String projectRestUrl, String projectName, String projectToken){
-		this.projectRestUrl = projectRestUrl;
-		this.projectName = projectName;
-		this.projectToken = projectToken;
-	}
-
-	public ProjectDto() {
-	}
-
 	public String getProjectRestUrl() {
 		return projectRestUrl;
 	}
 
 	public String getName() {
 		return projectName;
+	}
+
+	public void setProjectToken(String projectToken) {
+		this.projectToken = projectToken;
+	}
+
+	public void setProjectRestUrl(String projectRestUrl) {
+		this.projectRestUrl = projectRestUrl;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public String getProjectToken() {

@@ -1,0 +1,85 @@
+<md-content flex>
+    <div layout-padding layout-margin layout-align="center top" layout="row" flex>
+        <md-button class="md-raised" ng-click="fieldCenterController.create()">
+            <md-tooltip md-direction="bottom">
+                Criar Novo
+            </md-tooltip>
+            <md-icon md-font-set="material-icons">add</md-icon>
+        </md-button>
+    </div>
+    <div>
+        <div layout-align="center center" layout="row">
+            <md-list flex="60">
+                <md-list-item ng-repeat="fieldCenter in  fieldCenterController.getAllCenters()">
+                    <md-card flex layout="row">
+                        <div flex="95">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <div layout="row">
+                                        <md-input-container>
+                                            <label>Sigla</label>
+                                            <input disabled ng-model="fieldCenter.acronym">
+                                        </md-input-container>
+                                        <md-input-container flex md-no-float>
+                                            <label>Nome</label>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.name" type="text">
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container>
+                                            <label>Estado</label>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.state">
+                                        </md-input-container>
+                                        <md-input-container flex="70" md-no-float>
+                                            <label>Endereço</label>
+                                            <md-icon md-font-set="material-icons">place</md-icon>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.address" type="text">
+                                        </md-input-container>
+                                        <md-input-container>
+                                            <label>Complemento</label>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.complement">
+                                        </md-input-container>
+                                    </div>
+                                    <div layout="row">
+                                        <md-input-container>
+                                            <label>Pais</label>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.country">
+                                        </md-input-container>
+                                        <md-input-container>
+                                            <label>Cep</label>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.zip">
+                                        </md-input-container>
+                                        <md-input-container md-no-float>
+                                            <label>Telefone</label>
+                                            <md-icon md-font-set="material-icons">phone</md-icon>
+                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.phone" type="phone">
+                                        </md-input-container>
+                                    </div>
+                                </md-card-title-text>
+                            </md-card-title>
+                        </div>
+                        <div>
+                            <div flex>
+                                <md-button ng-disabled="!fieldCenter.editMode" class="md-icon-button md-primary"
+                                ng-click="fieldCenterController.update(fieldCenter)">
+                                    <md-tooltip md-direction="left">
+                                        Atualizar
+                                    </md-tooltip>
+                                    <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
+                                </md-button>
+                            </div>
+                            <div flex>
+                                <md-button class="md-icon-button md-primary" ng-click="fieldCenterController.edit(fieldCenter)">
+                                    <md-tooltip md-direction="left">
+                                        Editar
+                                    </md-tooltip>
+                                    <md-icon md-font-set="material-icons">mode_edit</md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                    </md-card>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+</md-content>

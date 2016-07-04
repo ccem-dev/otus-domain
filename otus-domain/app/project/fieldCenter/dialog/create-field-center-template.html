@@ -1,0 +1,81 @@
+<md-dialog  ng-cloak>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Novo Centro</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="createFieldCenter.close()">
+                <md-icon md-font-set="material-icons">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            <form name="createForm" novalidate>
+                <div layout="row">
+
+                    <md-input-container>
+                        <label>Sigla</label>
+                        <input name="acronym" ng-change="createFieldCenter.resetValidation()" ng-model="fieldCenter.acronym" required/>
+
+                        <div ng-messages="createForm.acronym.$error">
+                            <div ng-message="required">Obrigatório</div>
+                            <div ng-message="ALREADY_EXIST">Centro já existente</div>
+                        </div>
+                    </md-input-container>
+
+
+                    <md-input-container flex md-no-float>
+                        <label>Nome</label>
+                        <input name="name" required ng-model="fieldCenter.name"></input>
+
+                        <div ng-messages="createForm.name.$error">
+                            <div ng-message="required">Obrigatório</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container>
+                        <label>Estado</label>
+                        <input ng-model="fieldCenter.state"></input>
+                    </md-input-container>
+
+                    <md-input-container flex="50" md-no-float>
+                        <label>Endereço</label>
+                        <md-icon md-font-set="material-icons">place</md-icon>
+                        <input ng-model="fieldCenter.address"></input>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Complemento</label>
+                        <input ng-model="fieldCenter.complement"></input>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container>
+                        <label>Pais</label>
+                        <input ng-model="fieldCenter.country"></input>
+                    </md-input-container>
+
+                    <md-input-container>
+                        <label>Cep</label>
+                        <input ng-model="fieldCenter.zip"></input>
+                    </md-input-container>
+
+                    <md-input-container md-no-float>
+                        <label>Telefone</label>
+                        <md-icon md-font-set="material-icons">phone</md-icon>
+                        <input ng-model="fieldCenter.phone"></input>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <md-button ng-click="createFieldCenter.close()">
+            Cancelar
+        </md-button>
+        <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="createFieldCenter.create(fieldCenter)">
+            Criar
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

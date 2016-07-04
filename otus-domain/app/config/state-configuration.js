@@ -8,7 +8,8 @@
             'USER_REGISTER': 'user-register',
             'INSTALLER': 'installer',
             'HOME': 'home',
-            'USER_ACTIVATION': 'user-activation'
+            'USER_ACTIVATION': 'user-activation',
+            'PROJECT_CENTER': 'field-center'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -65,6 +66,28 @@
                         templateUrl: 'app/user/management/activation/user-activation.html',
                         controller: 'UserActivationController',
                         controllerAs: 'userActivationController'
+                    }
+                }
+            })
+            .state('field-center', {
+                url: '/project/centers',
+                resolve : {
+                    loadCenters : function(ProjectFieldCenterService){
+                        ProjectFieldCenterService.loadCenters();
+                    }
+                },
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@field-center': {
+                        templateUrl: dashboardMenu
+                    },
+                    'system-content@field-center': {
+                        templateUrl: 'app/project/fieldCenter/field-center-template.html',
+                        controller: 'FieldCenterController',
+                        controllerAs: 'fieldCenterController'
                     }
                 }
             })

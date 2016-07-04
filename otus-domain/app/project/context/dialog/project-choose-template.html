@@ -3,7 +3,7 @@
         <div class="md-toolbar-tools">
             <h2>Escolha o Projeto</h2>
         </div>
-        <md-button ng-click="close()">
+        <md-button ng-click="projectChoose.close()">
             <md-icon>close</md-icon>
         </md-button>
     </md-toolbar>
@@ -11,7 +11,7 @@
         <md-dialog-content>
             <md-content>
                 <div layout="row" layout-align="center center" layout-wrap>
-                    <md-card class="offline-card disabled" ng-click="select(project)" ng-repeat="project in context.projects">
+                    <md-card class="offline-card disabled" ng-click="projectChoose.select(project)" ng-repeat="project in projectChoose.projects">
                         <md-card-header>
                             <md-card-avatar>
                                 <img src="app/assets/img/project_research.png" />
@@ -23,7 +23,7 @@
                             </md-card-header-text>
                         </md-card-header>
                     </md-card>
-                    <div layout-margin layout-padding ng-hide="context.projects.length">
+                    <div layout-margin layout-padding ng-hide="projectChoose.projects.length">
                         <h2 class="md-display-1">Nenhum Projeto Disponivel</h2>
                         <div class="md-body-1">
                             <p>Você não possui nenhum projeto registrado atualmente.</p>

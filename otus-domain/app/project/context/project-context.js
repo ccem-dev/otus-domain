@@ -1,29 +1,40 @@
-    (function() {
-        'use strict';
+(function() {
+    'use strict';
 
-        angular
-            .module('otusDomain.project')
-            .service('ProjectContext', ProjectContext);
+    angular
+        .module('otusDomain.project')
+        .service('ProjectContext', ProjectContext);
 
-        function ProjectContext() {
-            var self = this;
+    ProjectContext.$inject = ['RestResourceService'];
 
-            var current = null;
-            self.setProject = setProject;
-            self.hasProject = hasProject;
-            self.getCurrentProject = getCurrentProject;
+    function ProjectContext(RestResourceService) {
+        var self = this;
 
-            function setProject(project){
-                current = project;
-            }
+        var current = null;
+        var projects = [];
+        self.setProject = setProject;
+        self.hasProject = hasProject;
+        self.getCurrentProject = getCurrentProject;
+        self.loadProjects = loadProjects;
 
-            function getCurrentProject(){
-                return current;
-            }
-
-            function hasProject(){
-                return (current !== null);
-            }
+        function setProject(project) {
+            current = project;
         }
 
-    }());
+        function getCurrentProject() {
+            return current;
+        }
+
+        function hasProject() {
+            return (current !== null);
+        }
+
+        function loadProjects(success) {
+            var projectResource = RestResourceService.getOtusProjectResource();
+            projectResource.fetchAll(function(response) {
+                projects = response.data;
+                success(projects);
+            });
+        }
+    }
+}());

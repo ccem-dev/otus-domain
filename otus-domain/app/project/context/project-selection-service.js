@@ -5,21 +5,14 @@
         .module('otusDomain.project')
         .service('ProjectSelectionService', ProjectSelectionService);
 
-    ProjectSelectionService.$inject = ['ProjectContext', '$mdDialog', 'RestResourceService'];
+    ProjectSelectionService.$inject = ['ProjectContext', '$mdDialog'];
 
-    function ProjectSelectionService(ProjectContext, $mdDialog, RestResourceService) {
+    function ProjectSelectionService(ProjectContext, $mdDialog) {
         var self = this;
-        var projectResource;
-        var context = {};
+        var otusAuthenticatorResource;
 
         self.choose = choose;
         self.initialChoose = initialChoose;
-
-        init();
-
-        function init() {
-            projectResource = RestResourceService.getOtusProjectResource();
-        }
 
         function initialChoose() {
             if (!ProjectContext.hasProject()) {
@@ -28,29 +21,22 @@
         }
 
         function choose() {
-            loadProjects(function(response) {
-                context.projects = response.data;
-
-                context.selected = ProjectContext.setProject;
-                showModal();
+            ProjectContext.loadProjects(function(projects){
+                showModal(projects);
             });
         }
 
-        function showModal() {
+        function showModal(projects) {
             $mdDialog.show({
-                controller: 'ProjectChooseController',
+                controller: 'ProjectChooseController as projectChoose',
                 templateUrl: 'app/project/context/dialog/project-choose-template.html',
                 parent: angular.element(document.body),
                 clickOutsideToClose: true,
                 fullscreen: true,
                 locals: {
-                    context: context
+                    projects: projects
                 }
             });
-        }
-
-        function loadProjects(callback) {
-            projectResource.fetchAll(callback);
         }
     }
 
