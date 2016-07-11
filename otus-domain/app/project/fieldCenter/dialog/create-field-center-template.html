@@ -62,9 +62,8 @@
                     </md-input-container>
 
                     <md-input-container md-no-float>
-                        <label>Telefone</label>
                         <md-icon md-font-set="material-icons">phone</md-icon>
-                        <input ng-model="fieldCenter.phone"></input>
+                        <input ui-mask="(99) 99999999?9" ng-model="fieldCenter.phone"></input>
                     </md-input-container>
                 </div>
             </form>

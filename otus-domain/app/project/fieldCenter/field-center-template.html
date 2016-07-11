@@ -50,9 +50,8 @@
                                             <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.zip">
                                         </md-input-container>
                                         <md-input-container md-no-float>
-                                            <label>Telefone</label>
                                             <md-icon md-font-set="material-icons">phone</md-icon>
-                                            <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.phone" type="phone">
+                                            <input ui-mask="(99) 99999999?9" ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.phone" type="phone">
                                         </md-input-container>
                                     </div>
                                 </md-card-title-text>
@@ -80,6 +79,15 @@
                     </md-card>
                 </md-list-item>
             </md-list>
+        </div>
+    </div>
+    <div>
+        <div layout-padding layout-margin ng-show="!fieldCenterController.getAllCenters().length">
+            <h2>
+                <span ng-style="{'font-size' : '48px'}" class="material-icons">place</span>
+                <span class="md-display-2">Centros de Pesquisa</span>
+            </h2>
+            <span class="md-body-1">O projeto selecionado não possui nenhum centro cadastrado. Utilize o botão <md-icon md-font-set="material-icons">add</md-icon> para cadastrar novos centros.</span>
         </div>
     </div>
 </md-content>
