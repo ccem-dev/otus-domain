@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0"
-	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-	<persistence-unit name="DomainPool" transaction-type="JTA">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>java:jboss/datasources/domain</jta-data-source>
-		<exclude-unlisted-classes>false</exclude-unlisted-classes>
-		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-			<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-			<property name="hibernate.default_schema" value="public" />
+    <persistence-unit name="OtusDomainMongo" transaction-type="JTA">
+        <provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
 
-			<property name="hibernate.hbm2ddl.auto" value="${database.action}" />
+        <class>br.org.domain.email.EmailSender</class>
+        <class>br.org.domain.projects.Project</class>
+        <class>br.org.domain.repository.Repository</class>
+        <class>br.org.domain.system.SystemConfig</class>
+        <class>br.org.domain.user.User</class>
 
-			<property name="hibernate.format_sql" value="false" />
-			<property name="hibernate.show_sql" value="false" />
-		</properties>
-	</persistence-unit>
+        <properties>
+            <property name="hibernate.transaction.jta.platform"
+                      value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
+            <property name="hibernate.ogm.datastore.database" value="otus-domain"/>
+            <property name="hibernate.ogm.datastore.host" value="${database.host}"/>
+            <property name="hibernate.ogm.datastore.provider" value="mongodb"/>
+            <property name="hibernate.ogm.datastore.port" value="${database.port}"/>
+            <property name="hibernate.ogm.datastore.create_database" value="false"/>
+            <property name="hibernate.ogm.datastore.username" value="${database.username}"/>
+            <property name="hibernate.ogm.datastore.password" value="${database.password}"/>
+        </properties>
+    </persistence-unit>
 </persistence>

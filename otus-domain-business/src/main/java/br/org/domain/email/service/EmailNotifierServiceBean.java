@@ -8,10 +8,10 @@ import javax.inject.Inject;
 
 import br.org.domain.email.StudioEmail;
 import br.org.domain.email.WelcomeNotificationEmail;
+import br.org.domain.system.dao.SystemConfigDao;
 import br.org.owail.io.TemplateReader;
 import br.org.owail.sender.email.Sender;
 import br.org.owail.sender.gmail.GMailer;
-import br.org.domain.system.dao.SystemConfigDao;
 import br.org.domain.email.EmailSender;
 import br.org.domain.exception.EmailNotificationException;
 import br.org.domain.exceptions.DataNotFoundException;

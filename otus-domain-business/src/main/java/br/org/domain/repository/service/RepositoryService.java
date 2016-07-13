@@ -11,9 +11,6 @@ import br.org.domain.exception.RepositoryAlreadyExistException;
 import br.org.domain.exception.RepositoryOfflineException;
 import br.org.domain.repository.dto.RepositoryDto;
 
-/**
- * Created by diogoferreira on 30/11/15.
- */
 public interface RepositoryService {
     List<RepositoryDto> fetchRepository(String name) throws RepositoryNotFoundException;
 

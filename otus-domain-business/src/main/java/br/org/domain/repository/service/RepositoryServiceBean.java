@@ -1,35 +1,31 @@
 package br.org.domain.repository.service;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-import br.org.domain.repository.dao.RepositoryDao;
-import br.org.domain.user.dao.UserDao;
-import br.org.domain.repository.Repository;
-import br.org.domain.user.User;
+import br.org.domain.configuration.dto.SystemConfigDto;
 import br.org.domain.exception.ConvertedDtoException;
-import br.org.domain.exception.RepositoryNotFoundException;
 import br.org.domain.exception.RepositoryAlreadyExistException;
+import br.org.domain.exception.RepositoryNotFoundException;
 import br.org.domain.exception.RepositoryOfflineException;
 import br.org.domain.exceptions.DataNotFoundException;
-import br.org.domain.configuration.dto.SystemConfigDto;
+import br.org.domain.repository.Repository;
+import br.org.domain.repository.dao.RepositoryDao;
 import br.org.domain.repository.dto.RepositoryConnectionData;
 import br.org.domain.repository.dto.RepositoryDto;
 import br.org.domain.security.PasswordGenerator;
+import br.org.domain.user.User;
+import br.org.domain.user.dao.UserDao;
 import br.org.studio.tool.RepositoryManagerFacade;
 import br.org.studio.tool.base.repository.configuration.RepositoryConfiguration;
 import br.org.studio.tool.mongodb.database.MongoConnector;
 import br.org.studio.tool.mongodb.repository.MongoRepositoryConfiguration;
 import br.org.tutty.Equalizer;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 @Stateless
-@Local(RepositoryService.class)
 public class RepositoryServiceBean implements RepositoryService {
 
 	@Inject
@@ -48,19 +44,7 @@ public class RepositoryServiceBean implements RepositoryService {
 	public List<RepositoryDto> fetchRepository(String name) throws RepositoryNotFoundException {
 		try {
 			List<Repository> repositories = repositoryDao.fetch(name);
-			List<RepositoryDto> convertedRepositories = new ArrayList<>();
-
-			repositories.stream().forEach(new Consumer<Repository>() {
-				@Override
-				public void accept(Repository repository) {
-					RepositoryDto repositoryDto = new RepositoryDto();
-					try {
-						Equalizer.equalize(repository, repositoryDto);
-						convertedRepositories.add(repositoryDto);
-					} catch (IllegalAccessException | NoSuchFieldException e) {
-					}
-				}
-			});
+			List<RepositoryDto> convertedRepositories = equalizeRepositories(repositories);
 
 			return convertedRepositories;
 		} catch (DataNotFoundException e) {
@@ -72,24 +56,27 @@ public class RepositoryServiceBean implements RepositoryService {
 	public List<RepositoryDto> fetchAll() throws RepositoryNotFoundException {
 		try {
 			List<Repository> repositories = repositoryDao.fetchAll();
-			List<RepositoryDto> convertedRepositories = new ArrayList<>();
-
-			repositories.stream().forEach(new Consumer<Repository>() {
-				@Override
-				public void accept(Repository repository) {
-					RepositoryDto repositoryDto = new RepositoryDto();
-					try {
-						Equalizer.equalize(repository, repositoryDto);
-						convertedRepositories.add(repositoryDto);
-					} catch (IllegalAccessException | NoSuchFieldException e) {
-					}
-				}
-			});
+			List<RepositoryDto> convertedRepositories = equalizeRepositories(repositories);
 
 			return convertedRepositories;
 		} catch (DataNotFoundException e) {
 			throw new RepositoryNotFoundException();
 		}
+	}
+
+	private List<RepositoryDto> equalizeRepositories(List<Repository> repositories){
+		List<RepositoryDto> convertedRepositories = new ArrayList<>();
+
+		repositories.stream().forEach(repository -> {
+			RepositoryDto repositoryDto = new RepositoryDto();
+			try {
+				Equalizer.equalize(repository, repositoryDto);
+				convertedRepositories.add(repositoryDto);
+			} catch (IllegalAccessException | NoSuchFieldException e) {
+			}
+		});
+
+		return convertedRepositories;
 	}
 
 	@Override

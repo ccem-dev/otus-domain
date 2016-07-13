@@ -1,27 +1,21 @@
 package br.org.domain.email;
 
-import java.io.Serializable;
+import br.org.tutty.Equalization;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.org.tutty.Equalization;
-
 @Entity
-@Table(name = "email_sender", schema = "public")
-@SequenceGenerator(name = "senderSequence", sequenceName = "sender_seq", initialValue = 1, allocationSize = 1)
-public class EmailSender implements Serializable {
-
-	private static final long serialVersionUID = -2231961499270874947L;
+public class EmailSender {
 
 	@Id
-	@GeneratedValue(generator = "senderSequence", strategy = GenerationType.SEQUENCE)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
+	private String id;
 
 	@Equalization(name = "name")
 	@NotNull

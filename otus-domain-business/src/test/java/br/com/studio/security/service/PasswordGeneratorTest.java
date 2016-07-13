@@ -1,12 +1,11 @@
 package br.com.studio.security.service;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
+import br.org.domain.security.PasswordGenerator;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.domain.security.PasswordGenerator;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 public class PasswordGeneratorTest {
 

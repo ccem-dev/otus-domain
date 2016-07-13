@@ -1,28 +1,18 @@
 package br.org.domain.system;
 
+import br.org.domain.email.EmailSender;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import br.org.domain.email.EmailSender;
-
 @Entity
-@Table(name = "system_config")
-@SequenceGenerator(name = "SystemConfigSequence", sequenceName = "system_config_seq", initialValue = 1, allocationSize = 1)
-public class SystemConfig implements Serializable {
-
-	private static final long serialVersionUID = -2630898111000415759L;
+public class SystemConfig{
 
 	@Id
-	@GeneratedValue(generator = "SystemConfigSequence", strategy = GenerationType.SEQUENCE)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
+	private String id;
 
 	private Boolean ready;
 

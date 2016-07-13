@@ -1,93 +1,59 @@
 package br.org.domain.dao;
 
-import java.util.List;
+import br.org.domain.exceptions.DataNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
-import br.org.domain.exceptions.DataNotFoundException;
-import org.hibernate.Criteria;
-import org.hibernate.NonUniqueResultException;
-import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
+public class GenericDaoBean {
 
-public abstract class GenericDaoBean implements GenericDao {
+	@PersistenceContext
+	protected EntityManager em;
 
-	@PersistenceContext(unitName = "DomainPool")
-	protected EntityManager entityManager;
-
-	@Override
 	public void persist(Object entity) {
-		entityManager.persist(entity);
+		em.persist(entity);
 	}
 
 	public void merge(Object entity) {
-		entityManager.merge(entity);
+		em.merge(entity);
 	}
 
-	@Override
-	public Long count(Class<?> clazz) {
-		Criteria criteria = createCriteria(clazz);
-		criteria.setProjection(Projections.rowCount());
-
-		return (Long) criteria.uniqueResult();
+	public Object getSingleResult(String nativeQuery){
+		return em.createNativeQuery(nativeQuery).getSingleResult();
 	}
 
-	@Override
-	public void update(Object entity) {
-		entityManager.persist(entityManager.merge(entity));
+	public Object getSingleResult(String nativeQuery, Class clazz){
+		return em.createNativeQuery(nativeQuery, clazz).getSingleResult();
 	}
 
-	public Criteria createCriteria(Class<?> clazz) {
-		return getSession().createCriteria(clazz);
+	public List getListResult(String nativeQuery, Class clazz){
+		return em.createNativeQuery(nativeQuery, clazz).getResultList();
 	}
 
-	public Criteria createCriteria(Class<?> clazz, String alias) {
-		return getSession().createCriteria(clazz, alias);
-	}
-
-	public Session getSession() {
-		return entityManager.unwrap(Session.class);
-	}
-
-	@Override
-	public List listNotWaitingEmpty(Criteria criteria) throws DataNotFoundException {
-		List result = criteria.list();
-
-		if (result == null || result.isEmpty()) {
+	public Object notWaitingEmpty(Object entity) throws DataNotFoundException {
+		if(entity == null){
 			throw new DataNotFoundException();
-		} else {
-			return result;
+		}else {
+			return entity;
 		}
 	}
 
-	@Override
-	public List list(Criteria criteria) {
-		return criteria.list();
-	}
-
-	@Override
-	public Object uniqueResultNotWaitingEmpty(Criteria criteria) throws DataNotFoundException {
-		Object result = criteria.uniqueResult();
-
-		if (result == null) {
-			throw new DataNotFoundException();
-		} else {
-			return result;
+	public Boolean exist(Class clazz){
+		long count = count(clazz);
+		if (count == 0){
+			return Boolean.FALSE;
+		}else {
+			return Boolean.TRUE;
 		}
 	}
 
-	@Override
-	public Object uniqueResult(Criteria criteria) throws NonUniqueResultException {
-		try {
-			return criteria.uniqueResult();
-		} catch (NonUniqueResultException e) {
-			throw e;
-		}
+	public Long count(Class clazz){
+		return (Long) getSingleResult(String.format("db.%s.count()", clazz.getSimpleName()));
 	}
 
-	@Override
-	public void remove(Object entity) {
-		entityManager.remove(entityManager.merge(entity));
+	public void update(Object object){
+		em.merge(object);
 	}
+
 }

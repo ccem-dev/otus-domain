@@ -1,14 +1,14 @@
 package br.org.domain.projects;
 
-import br.org.domain.dao.GenericDao;
+import br.org.domain.dao.GenericDaoBean;
 import br.org.domain.exceptions.DataNotFoundException;
 
-import javax.ejb.Stateless;
 import java.util.List;
 
+public class ProjectDao extends GenericDaoBean{
 
-@Stateless
-public interface ProjectDao extends GenericDao{
-
-    public List<Project> fetchAll() throws DataNotFoundException;
+	public List<Project> fetchAll() throws DataNotFoundException {
+		String query = String.format("db.%s.find({})", "Project");
+		return (List<Project>) notWaitingEmpty(getListResult(query, Project.class));
+	}
 }

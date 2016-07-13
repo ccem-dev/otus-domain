@@ -1,8 +1,8 @@
 package br.org.domain.email.validation;
 
-import javax.inject.Inject;
-
 import br.org.domain.user.dao.UserDao;
+
+import javax.inject.Inject;
 
 public class EmailConstraint {
 

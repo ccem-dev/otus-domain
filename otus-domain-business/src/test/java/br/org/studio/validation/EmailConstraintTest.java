@@ -1,18 +1,17 @@
 package br.org.studio.validation;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-
 import br.org.domain.email.validation.EmailConstraint;
+import br.org.domain.user.dao.UserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.org.domain.user.dao.UserDao;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.Matchers.anyString;
+import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmailConstraintTest {

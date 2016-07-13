@@ -1,31 +1,20 @@
 package br.org.domain.repository;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
 import br.org.domain.user.User;
 import br.org.tutty.Equalization;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Entity
-@Table(name = "repository", schema = "public")
-@SequenceGenerator(name = "repositorySequence", sequenceName = "repository_seq", initialValue = 1, allocationSize = 1)
-public class Repository implements Serializable {
-
-	private static final long serialVersionUID = 7319297696352112154L;
+public class Repository {
 
 	@Id
-	@GeneratedValue(generator = "repositorySequence", strategy = GenerationType.SEQUENCE)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
+	private String id;
 
 	@Equalization(name = "uuid")
 	@NotNull
@@ -71,7 +60,7 @@ public class Repository implements Serializable {
 		this.user = user;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 

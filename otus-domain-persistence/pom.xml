@@ -1,63 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>otus-domain-persistence</artifactId>
-	<packaging>ejb</packaging>
+    <artifactId>otus-domain-persistence</artifactId>
+    <packaging>ejb</packaging>
 
-	<parent>
-		<groupId>org.ccem.domain</groupId>
-		<artifactId>otus-domain-root</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../otus-domain-root/pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.ccem.domain</groupId>
+        <artifactId>otus-domain-root</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../otus-domain-root/pom.xml</relativePath>
+    </parent>
 
-	<properties>
-		<database.action>validate</database.action>
-	</properties>
+    <properties>
+        <database.port>27017</database.port>
+        <database.host>localhost</database.host>
+        <database.username>otus</database.username>
+        <database.password>otus</database.password>
+    </properties>
 
-	<scm>
-		<connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
-		<developerConnection>scm:git:git@github.com:ccem-dev/otus-domain.git</developerConnection>
-	</scm>
+    <scm>
+        <connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
+        <developerConnection>scm:git:git@github.com:ccem-dev/otus-domain.git</developerConnection>
+    </scm>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.0.1.Final</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.1.Final</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.org.tutty</groupId>
-			<artifactId>equalizer</artifactId>
-			<version>1.0</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-mongodb</artifactId>
+            <version>5.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.ogm</groupId>
+            <artifactId>hibernate-ogm-core</artifactId>
+            <version>5.0.0.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>br.org.tutty</groupId>
+            <artifactId>equalizer</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
 
-		<plugins>
-			<plugin>
-				<groupId>org.wildfly.plugins</groupId>
-				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>1.1.0.Alpha4</version>
-			</plugin>
-		</plugins>
-	</build>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>1.1.0.Alpha4</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

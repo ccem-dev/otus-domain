@@ -1,6 +1,5 @@
 package br.org.domain.user.service;
 
-import br.org.domain.user.dto.ManagementUserDto;
 import br.org.domain.email.DisableUserNotificationEmail;
 import br.org.domain.email.EnableUserNotificationEmail;
 import br.org.domain.email.service.EmailNotifierService;
@@ -10,16 +9,15 @@ import br.org.domain.repository.dao.RepositoryDao;
 import br.org.domain.repository.service.RepositoryService;
 import br.org.domain.user.User;
 import br.org.domain.user.dao.UserDao;
+import br.org.domain.user.dto.ManagementUserDto;
 import br.org.tutty.Equalizer;
 
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-@Local(ManagementUserService.class)
 public class ManagementUserServiceBean implements ManagementUserService {
 
 	@Inject

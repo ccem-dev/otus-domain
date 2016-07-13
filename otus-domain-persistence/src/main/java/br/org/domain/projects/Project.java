@@ -1,20 +1,19 @@
 package br.org.domain.projects;
 
 import br.org.tutty.Equalization;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "project", schema = "public")
-@SequenceGenerator(name = "projectSequence", sequenceName = "project_seq", initialValue = 1, allocationSize = 1)
-public class Project implements Serializable{
-	private static final long serialVersionUID = -1807240220640971276L;
+public class Project{
 
 	@Id
-	@GeneratedValue(generator = "projectSequence", strategy = GenerationType.SEQUENCE)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
+	private String id;
 
 	@Equalization(name = "projectRestUrl")
 	@NotNull

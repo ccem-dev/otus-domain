@@ -1,14 +1,19 @@
 package br.org.domain.system.dao;
 
-import javax.ejb.Stateless;
-
-import br.org.domain.dao.GenericDao;
+import br.org.domain.dao.GenericDaoBean;
 import br.org.domain.email.EmailSender;
 import br.org.domain.exceptions.DataNotFoundException;
+import br.org.domain.system.SystemConfig;
 
-@Stateless
-public interface SystemConfigDao extends GenericDao {
-    Boolean isReady();
+public class SystemConfigDao extends GenericDaoBean{
 
-	EmailSender findEmailSender() throws DataNotFoundException;
+    public Boolean isReady(){
+        return exist(SystemConfig.class);
+    }
+    
+	public EmailSender findEmailSender() throws DataNotFoundException {
+        String query = String.format("db.%s.find({})", "SystemConfig", true);
+        SystemConfig systemConfig = (SystemConfig) notWaitingEmpty(getSingleResult(query, SystemConfig.class));
+		return systemConfig.getEmailSender();
+	}
 }

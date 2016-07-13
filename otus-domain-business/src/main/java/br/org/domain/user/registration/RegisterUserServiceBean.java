@@ -1,22 +1,21 @@
 package br.org.domain.user.registration;
 
+import br.org.domain.email.NewUserNotificationEmail;
+import br.org.domain.email.service.EmailNotifierService;
+import br.org.domain.exception.EmailNotificationException;
+import br.org.domain.exception.InvalidDtoException;
+import br.org.domain.exceptions.DataNotFoundException;
+import br.org.domain.system.dao.SystemConfigDao;
+import br.org.domain.user.User;
+import br.org.domain.user.dao.UserDao;
+import br.org.domain.user.dto.UserDto;
+import br.org.tutty.Equalizer;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.domain.exception.InvalidDtoException;
-import br.org.domain.system.dao.SystemConfigDao;
-import br.org.domain.user.dao.UserDao;
-import br.org.domain.user.dto.UserDto;
-import br.org.domain.email.service.EmailNotifierService;
-import br.org.domain.email.NewUserNotificationEmail;
-import br.org.domain.user.User;
-import br.org.domain.exception.EmailNotificationException;
-import br.org.domain.exceptions.DataNotFoundException;
-import br.org.tutty.Equalizer;
-
 @Stateless
-@Local(RegisterUserService.class)
 public class RegisterUserServiceBean implements RegisterUserService {
 
 	@Inject

@@ -1,21 +1,36 @@
 package br.org.domain.repository.dao;
 
-import java.util.List;
-
-import javax.ejb.Stateless;
-
-import br.org.domain.dao.GenericDao;
+import br.org.domain.dao.GenericDaoBean;
+import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.repository.Repository;
 import br.org.domain.user.User;
-import br.org.domain.exceptions.DataNotFoundException;
 
-@Stateless
-public interface RepositoryDao extends GenericDao {
-	List<Repository> fetch(String name) throws DataNotFoundException;
+import javax.persistence.NoResultException;
+import java.util.List;
 
-	List<Repository> fetchAll() throws DataNotFoundException;
+public class RepositoryDao extends GenericDaoBean{
 
-	Repository fetchRepositoryByUser(User user) throws DataNotFoundException;
+	public List<Repository> fetch(String name) throws DataNotFoundException {
+		String query = String.format("db.%s.find({ 'name' : '%s' })", "Repository", name);
+		return (List<Repository>) notWaitingEmpty(getListResult(query, Repository.class));
+	}
 
-	boolean userHasRepository(User user);
+	public List<Repository> fetchAll() throws DataNotFoundException {
+		String query = String.format("db.%s.find({})", "Repository");
+		return (List<Repository>) notWaitingEmpty(getListResult(query, Repository.class));
+	}
+
+	public Repository fetchRepositoryByUser(User user) throws DataNotFoundException {
+		String query = String.format("db.%s.find({'user_id' : ObjectId('%s') })", "Repository", user.getId());
+		return (Repository) notWaitingEmpty(getSingleResult(query, Repository.class));
+	}
+
+	public boolean userHasRepository(User user) {
+		try {
+			fetchRepositoryByUser(user);
+			return true;
+		} catch (NoResultException | DataNotFoundException e) {
+			return false;
+		}
+	}
 }

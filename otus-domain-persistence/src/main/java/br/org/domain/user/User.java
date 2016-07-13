@@ -1,30 +1,20 @@
 package br.org.domain.user;
 
-import java.io.Serializable;
+import br.org.tutty.Equalization;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import br.org.tutty.Equalization;
-
 @Entity
-@Table(name = "user", schema = "public")
-@SequenceGenerator(name = "UserSequence", sequenceName = "user_seq", initialValue = 1, allocationSize = 1, schema = "public")
-public class User implements Serializable {
-
-	private static final long serialVersionUID = -4681580716925463211L;
+public class User {
 
 	@Id
-	@GeneratedValue(generator = "UserSequence", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
 	@Equalization(name = "id")
-	private Integer id;
+	private String id;
 
 	@Equalization(name = "uuid")
 	@NotNull
@@ -35,11 +25,11 @@ public class User implements Serializable {
 	private String name;
 
 	@Equalization(name = "admin_flag")
+	@NotNull
 	private Boolean adm;
 
 	@Equalization(name = "surname")
 	@NotNull
-	@Column(name = "surname")
 	private String surname;
 
 	@Equalization(name = "phone")
@@ -85,7 +75,7 @@ public class User implements Serializable {
 		enable();
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
