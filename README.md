@@ -1,8 +1,7 @@
 # Configuração de Ambiente
 ## Download de Dependencias
 
-- Servidor: [Wildfly 9.0.1.Final](http://wildfly.org/downloads/)
-- JDBC: [Postgres 9.4 Build 1203](https://jdbc.postgresql.org/download.html)
+- Servidor: [Wildfly 9.0.1.Final](https://www.mongodb.com/download-center#community)
 
 ## Configurações Servidor
 Passos para realizar configurações no servidor que recebera a aplicação.
@@ -64,44 +63,12 @@ Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na p
     </socket-binding-group>
 ```
 
-### Configuração Datasource Wildfly
-Passos para realizar configuração da base de dados do projeto.
+### Criar base de dados MongoDB
 
-**Deve existir uma base de dados previamente criada com o respectivo nome otus-domain.**
+> use otus-domain <br>
+> db.createUser({user:"otus", pwd:"otus", roles:[{role:"dbOwner", db:"otus"}]}) <br>
 
-
-### Adição de Management User
-Para tornar possivel o acesso ao painel administrativo do servidor é necessario existir um usuario com as respectivas permissões. Adicione um usuario Management. [Tutorial](https://docs.jboss.org/author/display/WFLY8/add-user+utility)
-
-### Deploy JDBC
-Acessar Url http://servidor:9990/console (Painel Administrativo Servidor). 
-
-1. Opção Deployments
-2. Adicionar
-3. Upload novo Deploy
-4. Selecionar arquivo JDBC
-5. Habilitar
-6. Finalizar
-
-### Configurar Datasource
-Acessar Url http://servidor:9990/console (Painel Administrativo Servidor). 
-
-1. Configurações
-2. Subsystems
-3. Datasources
-4. View
-5. Adicionar
-
-Dados para Datasource:
-```
-Nome: domain
-JNDI: java:/jboss/datasources/domain
-```
-Selecionar **Detected Driver** : *postgresql-9.4-1203.jdbc.jar*
-
-**Test Connection - Success** 
-
-# Construindo do Projeto
+### Construindo o Projeto
 Para construir e realizar o deploy da aplição devem ser utilizadas as ferramentas [Maven](https://maven.apache.org/) e [NPM](https://www.npmjs.com/).
 
 Navegue até a pasta **otus-domain**, e execute:
@@ -114,45 +81,40 @@ Para realizar a remoção de dependencias de desenvolvimento
 
 Navegue até a pasta **otus-domain-root**, e execute:
 
-Para construir a base de dados: <br>
-> mvn clean install -Ddatabase.action=create
+> $ mvn clean install 
 
-Para **não** construir a base de dados: <br>
-> mvn clean install
+## Customizando dados Database MongoDB
+Como default os seguintes dados são utilizados para a base de dados:
 
-# Deploy Back-End
+**Nome**    : otus <br>
+**Usuário** : otus <br>
+**Senha**   : otus <br>
+
+## Customizar Database
+Para customizar o sistema para determinada base de dados, os seguintes valores podem
+ser utilizados como parametro durante o build:
+
+**HOST** : Endereço database (Ex. localhost)<br>
+**PORT** : Porta database (Ex. 27017)<br>
+**USER** : Usuário utilizado para administração da base de dados. <br>
+** Deve estar presente na base de dados otus-domain **
+
+> $ mvn wildfly:deploy -Ddatabase.host=HOST -Ddatabase.port=PORT -Ddatabase.username=USER -Ddatabase.password=PWD
+
+**O sistema sempre ira utilizar autenticação. Por default o database mongo não utiliza autenticação.
+Certifique-se que esta iniciando o respectivo serviço com --auth**
+
+### Deploy Back-End
 Para realizar o deploy do back-end, tendo previamente realizado a construção do projeto, navegue para a pasta **otus-domain-ear**, e execute:
 
-> mvn wildfly:deploy
+> $ mvn wildfly:deploy
 
-Esse recurso considera que o servidor esta inicializado e disponivel no seguinte endereço:
+### Deploy Front-End
+Para realizar o deploy do back-end, tendo previamente realizado a construção do projeto, navegue para a pasta **otus-domain**, e execute:
 
-> http://localhost:9990
+> $ mvn wildfly:deploy
 
-E existe um usuário para deploy, no respectivo servidor, com os seguintes dados:
-
-> username : admin
-> password : admin
-
-Para customizar os dados de deploy utilize os seguintes parametros:
-
-> wildfly:deploy -Dwildfly-hostname=endereço_servidor -Dwildfly-username=username -Dwildfly-password=password
-
-# Deploy Front-End
-Para realizar o deploy do front-end, tendo previamente realizado a construção do projeto, navegue para a pasta **otus-domain**, e execute:
-
-> mvn wildfly:deploy
-
-Esse recurso considera que o servidor esta inicializado e disponivel no seguinte endereço:
-
-> http://localhost:9990
-
-E existe um usuário para deploy, no respectivo servidor, com os seguintes dados:
-
-> username : admin
-> password : admin
-
-# Inicializando Front-End utilizando Browser-Sync
+### Inicializando Front-End utilizando Browser-Sync
 Para desenvolvimento de aplicações front-end, em ambiente de desenvolvimento, é possivel utilizar a ferramenta Browser Sync. Navegue para **otus-domain**, execute :
 
 Para realizar download de dependencias de front-end
@@ -168,15 +130,5 @@ Inicializando o servidor
 > $ npm run gulp browser-sync
 
 O serviço de front-end será acessivel através da url: **localhost:3000/otus-domain**
-
-
-
-
-
-
-
-
-
-
 
 
