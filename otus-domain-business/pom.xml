@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>br.org.tutty</groupId>
 			<artifactId>equalizer</artifactId>
-			<version>1.0</version>
+			<version>${equalize-version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

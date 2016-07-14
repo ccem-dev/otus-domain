@@ -15,43 +15,38 @@ import java.util.List;
 @Stateless
 @Local(ProjectService.class)
 public class ProjectServiceBean implements ProjectService {
-	
-	@Inject
-	private ProjectDao projectDao;
-	
-	@Override
-	public void register(ProjectDto projectDto){
-		Project project = new Project();
-		
-		try {
-			Equalizer.equalize(projectDto, project);
-			projectDao.persist(project);
-			
-		} catch (IllegalAccessException | NoSuchFieldException e) {
-			throw new ConvertedDtoException();
-		}			
-	}
 
-	@Override
-	public List<ProjectDto> fetchAll(){
-		List<ProjectDto> projectDtos = new ArrayList<>();
+    @Inject
+    private ProjectDao projectDao;
 
-		try {
-			List<Project> projects = projectDao.fetchAll();
+    @Override
+    public void register(ProjectDto projectDto) {
+        Project project = new Project();
 
-			for (Project project : projects) {
-				ProjectDto projectDto = new ProjectDto();
+        Equalizer.equalize(projectDto, project);
+        projectDao.persist(project);
+    }
 
-				Equalizer.equalize(project, projectDto);
-				projectDto.setProjectToken(project.getProjectToken().toString());
+    @Override
+    public List<ProjectDto> fetchAll() {
+        List<ProjectDto> projectDtos = new ArrayList<>();
 
-				projectDtos.add(projectDto);
-			}
+        try {
+            List<Project> projects = projectDao.fetchAll();
 
-		} catch (DataNotFoundException | NoSuchFieldException | IllegalAccessException e) {
-			return projectDtos;
-		}
+            for (Project project : projects) {
+                ProjectDto projectDto = new ProjectDto();
 
-		return projectDtos;
-	}
+                Equalizer.equalize(project, projectDto);
+                projectDto.setProjectToken(project.getProjectToken().toString());
+
+                projectDtos.add(projectDto);
+            }
+
+        } catch (DataNotFoundException e) {
+            return projectDtos;
+        }
+
+        return projectDtos;
+    }
 }

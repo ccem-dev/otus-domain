@@ -48,7 +48,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 			
 			repositoryService.createAdminRepository(user, systemConfigDto);
 
-		} catch (IllegalAccessException | NoSuchFieldException e) {
+		} catch (Exception e) {
 			throw new InvalidDtoException();
 		}
 	}
@@ -61,7 +61,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 			systemConfig.finalizeConfiguration();
 
 			systemConfigDao.persist(systemConfig);
-		}catch (IllegalAccessException | NoSuchFieldException | InvalidDtoException e){
+		}catch (Exception e){
 			throw new FillEmailSenderException();
 		}
 	}

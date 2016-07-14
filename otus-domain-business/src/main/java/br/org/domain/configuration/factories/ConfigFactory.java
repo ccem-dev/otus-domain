@@ -8,13 +8,13 @@ import br.org.tutty.Equalizer;
 
 public class ConfigFactory {
 	
-	public static SystemConfig buildConfigEmailSender(EmailSenderDto emailSenderDto) throws FillEmailSenderException, IllegalAccessException, NoSuchFieldException {
+	public static SystemConfig buildConfigEmailSender(EmailSenderDto emailSenderDto) throws FillEmailSenderException {
 		try{
 			EmailSender emailSender = new EmailSender();			
 			Equalizer.equalize(emailSenderDto, emailSender);
 			
 			return new SystemConfig(emailSender);
-		} catch(IllegalAccessException | NoSuchFieldException e){
+		} catch(Exception e){
 			throw new FillEmailSenderException();
 		}
 	}

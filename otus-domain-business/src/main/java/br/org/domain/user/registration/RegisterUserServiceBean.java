@@ -11,7 +11,6 @@ import br.org.domain.user.dao.UserDao;
 import br.org.domain.user.dto.UserDto;
 import br.org.tutty.Equalizer;
 
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -36,7 +35,7 @@ public class RegisterUserServiceBean implements RegisterUserService {
 
 			notifyAdm(user);
 
-		} catch (IllegalAccessException | NoSuchFieldException e) {
+		} catch (Exception e) {
 			throw new InvalidDtoException();
 		}
 	}
