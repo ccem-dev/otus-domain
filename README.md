@@ -131,4 +131,17 @@ Inicializando o servidor
 
 O serviço de front-end será acessivel através da url: **localhost:3000/otus-domain**
 
+### Inicializando Front-End utilizando SCP
+É possivel realizar o "deploy" da aplicação em qualquer tipo de serviço que seja acessivel utilizando SCP.
+Sync. Navegue para **otus-domain**, execute :
+
+Para realizar download de dependencias de front-end
+> npm install
+
+** Não realize npm prune --production pois a operação utiliza dependencias em escopo de desenvolvimento.**
+
+> mvn antrun:run@static-deploy -Dscp.user='USER' -Dscp.host='HOST' -Dscp.target='DIRECTORY_TARGET' -Dscp.password='USER_PASSWORD'
+
+O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus-domain**
+
 
