@@ -13,6 +13,7 @@ import com.nimbusds.jose.JOSEException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.io.Serializable;
 
 @Stateless
@@ -42,7 +43,7 @@ public class SecurityServiceBean implements SecurityService{
             } else {
                 throw new InvalidPasswordException();
             }
-        } catch (DataNotFoundException e) {
+        } catch (DataNotFoundException | NoResultException e) {
             throw new EmailNotFoundException();
 
         } catch (JOSEException e) {
