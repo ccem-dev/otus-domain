@@ -64,7 +64,7 @@
         function logout() {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
             authenticatorResource.invalidate(function(response) {
-                $window.sessionStorage.clear();
+                RestResourceService.removeSecurityToken();
                 goToLogin();
             });
         }
