@@ -9,6 +9,7 @@
 
     function ProjectChooseController($scope, $mdDialog, projects, ProjectSecurityService, $mdToast) {
         var OFFLINE_MESSAGE = 'Projeto Offline. Verifique o estado do projeto.';
+        var AUTHENTICATION_ERROR_MESSAGE = 'Erro ao realizar autenticação no projeto';
 
         self = this;
         self.projects = projects;
@@ -33,8 +34,10 @@
 
         function select(project) {
             if (project.status) {
-                ProjectSecurityService.authenticate(project, function() {
+                ProjectSecurityService.authenticate(project).then(function(){
                     close();
+                }, function(){
+                    showAuthenticationErrorMessage();
                 });
             } else {
                 showOfflineMessage();
@@ -43,6 +46,9 @@
 
         function showOfflineMessage() {
             $mdToast.show($mdToast.simple().textContent(OFFLINE_MESSAGE));
+        }
+        function showAuthenticationErrorMessage() {
+            $mdToast.show($mdToast.simple().textContent(AUTHENTICATION_ERROR_MESSAGE));
         }
     }
 })();

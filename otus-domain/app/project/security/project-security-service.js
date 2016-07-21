@@ -24,19 +24,26 @@
                 });
         }
 
-        function authenticate(project, callbackSuccess) {
+        function authenticate(project) {
+            var deferred = $q.defer();
             OtusRestResourceService.setUrl(project.projectRestUrl);
 
             var projectToken = project.projectToken;
             var otusAuthenticatorResource = OtusRestResourceService.getOtusAuthenticatorResource();
 
             otusAuthenticatorResource.authenticateProject(projectToken, function(response) {
-                project.sessionToken = response.data;
-                OtusRestResourceService.setSecurityProjectToken(project.sessionToken);
+                if (!response.hasErrors) {
+                    project.sessionToken = response.data;
+                    OtusRestResourceService.setSecurityProjectToken(project.sessionToken);
 
-                ProjectContext.setProject(project);
-                callbackSuccess();
+                    ProjectContext.setProject(project);
+                    deferred.resolve();
+                }else{
+                    deferred.reject();
+                }
             });
+
+            return deferred.promise;
         }
     }
 
