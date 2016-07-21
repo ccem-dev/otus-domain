@@ -5,9 +5,9 @@
         .module('otusDomain.project')
         .service('ProjectSecurityService', ProjectSecurityService);
 
-    ProjectSecurityService.$inject = ['OtusRestResourceService', '$q', 'ProjectContext'];
+    ProjectSecurityService.$inject = ['OtusRestResourceService', '$q', 'ProjectContext', 'ProjectAuthenticationFactory'];
 
-    function ProjectSecurityService(OtusRestResourceService, $q, ProjectContext) {
+    function ProjectSecurityService(OtusRestResourceService, $q, ProjectContext, ProjectAuthenticationFactory) {
         var self = this;
         self.isOnline = isOnline;
         self.authenticate = authenticate;
@@ -26,24 +26,42 @@
 
         function authenticate(project) {
             var deferred = $q.defer();
+
             OtusRestResourceService.setUrl(project.projectRestUrl);
 
-            var projectToken = project.projectToken;
+            var projectAuthentication = ProjectAuthenticationFactory.create(project);
             var otusAuthenticatorResource = OtusRestResourceService.getOtusAuthenticatorResource();
 
-            otusAuthenticatorResource.authenticateProject(projectToken, function(response) {
+            otusAuthenticatorResource.authenticateProject(projectAuthentication, function(response) {
                 if (!response.hasErrors) {
-                    project.sessionToken = response.data;
-                    OtusRestResourceService.setSecurityProjectToken(project.sessionToken);
-
-                    ProjectContext.setProject(project);
+                    approvedAuthentication(response.data, project);
                     deferred.resolve();
-                }else{
+                } else {
+                    rejectAuthentication();
                     deferred.reject();
                 }
             });
 
             return deferred.promise;
+        }
+
+        function approvedAuthentication(token, project) {
+            project.sessionToken = token;
+            OtusRestResourceService.setSecurityProjectToken(project.sessionToken);
+            ProjectContext.setProject(project);
+        }
+
+        function rejectAuthentication() {
+            OtusRestResourceService.resetConnectionData();
+            rollbackAuthenticationAttempt();
+        }
+
+        function rollbackAuthenticationAttempt() {
+            if (ProjectContext.hasProject()) {
+                var lastSelectedProject = ProjectContext.getCurrentProject();
+                OtusRestResourceService.setUrl(lastSelectedProject.projectRestUrl);
+                OtusRestResourceService.setSecurityProjectToken(lastSelectedProject.sessionToken);
+            }
         }
     }
 

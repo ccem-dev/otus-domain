@@ -14,7 +14,6 @@
             var m = moment(dateString, 'DD/MM/YYYY', true);
             return m.isValid() ? m.toDate() : new Date(NaN);
         };
-
     }
 
 }());

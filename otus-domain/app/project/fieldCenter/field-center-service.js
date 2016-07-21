@@ -22,6 +22,8 @@
             var otusFieldCenter = OtusRestResourceService.getOtusFieldCenterResource();
             otusFieldCenter.getAll(function(response) {
                 ProjectFieldCenterContext.setFieldCenters(response.data);
+            }, function(){
+                ProjectFieldCenterContext.setFieldCenters([]);
             });
         }
 
