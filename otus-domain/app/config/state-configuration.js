@@ -33,6 +33,14 @@
             })
             .state('login', {
                 url: '/login',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.alreadyLogged();
+                    },
+                    initialConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.initialConfiguration();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/authenticator/login/login.html',
@@ -43,6 +51,11 @@
             })
             .state('user-register', {
                 url: '/user/register',
+                resolve: {
+                    initialConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.initialConfiguration();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/user/management/registry/user-register.html',
@@ -53,6 +66,11 @@
             })
             .state('user-activation', {
                 url: '/user/activation',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: mainDashBoardTemplate,
@@ -71,8 +89,14 @@
             })
             .state('field-center', {
                 url: '/project/centers',
-                resolve : {
-                    loadCenters : function(ProjectFieldCenterService){
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    },
+                    selectedProject: function(RouteRulesResolver) {
+                        return RouteRulesResolver.selectedProject();
+                    },
+                    loadCenters: function(ProjectFieldCenterService) {
                         ProjectFieldCenterService.loadCenters();
                     }
                 },
@@ -93,9 +117,9 @@
             })
             .state('home', {
                 url: '/home',
-                resolve : {
-                    selectProject : function(ProjectSelectionService){
-                        ProjectSelectionService.initialChoose();
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
                     }
                 },
                 views: {
