@@ -68,6 +68,23 @@
 
             return deferred.promise;
         };
+
+        self.onlyOneConfiguration = function onlyOneConfiguration() {
+            var deferred = $q.defer();
+
+            var installerResource = RestResourceService.getInstallerResource();
+            installerResource.ready(function(response) {
+                if (response.data) {
+                    deferred.reject({
+                        redirectTo: APP_STATE.LOGIN
+                    });
+                } else {
+                    deferred.resolve();
+                }
+            });
+
+            return deferred.promise;
+        };
     }
 
 }());

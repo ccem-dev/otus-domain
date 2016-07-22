@@ -20,6 +20,11 @@
         $stateProvider
             .state('installer', {
                 url: '/installer',
+                resolve: {
+                    onlyOneConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.onlyOneConfiguration();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/installer/initial/initial-config.html',
