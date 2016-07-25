@@ -5,9 +5,9 @@
         .module('otusDomain')
         .service('RouteRulesResolver', RouteRulesResolver);
 
-    RouteRulesResolver.$inject = ['$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService'];
+    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService'];
 
-    function RouteRulesResolver($q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService) {
+    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService) {
         var self = this;
 
         self.loggedUser = function loggedUser() {
@@ -85,6 +85,17 @@
 
             return deferred.promise;
         };
+
+        $rootScope.$on('$stateChangeError', function(evt, to, toParams, from, fromParams, error) {
+            evt.preventDefault();
+            if (error.redirectTo) {
+                $state.go(error.redirectTo);
+            } else {
+                $state.go('error', {
+                    status: error.status
+                });
+            }
+        });
     }
 
 }());

@@ -11,11 +11,10 @@
         'APP_STATE',
         'RestResourceService',
         'OtusRestResourceService',
-        '$window',
-        '$rootScope'
+        '$window'
     ];
 
-    function DashboardStateService($state, $http, APP_STATE, RestResourceService, OtusRestResourceService, $window, $rootScope) {
+    function DashboardStateService($state, $http, APP_STATE, RestResourceService, OtusRestResourceService, $window) {
         var self = this;
 
         /* Public interface */
@@ -72,16 +71,6 @@
                 goToLogin();
             });
         }
-
-        $rootScope.$on('$stateChangeError', function(evt, to, toParams, from, fromParams, error) {
-            if (error.redirectTo) {
-                $state.go(error.redirectTo);
-            } else {
-                $state.go('error', {
-                    status: error.status
-                });
-            }
-        });
     }
 
 }());
