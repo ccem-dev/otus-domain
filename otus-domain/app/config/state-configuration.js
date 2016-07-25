@@ -150,8 +150,8 @@
                 }
             });
 
-        /* Default state (route) */
+        /* Default state (route)
+         * $locationProvider.html5Mode(true); */
         $urlRouterProvider.otherwise('/login');
-        /* $locationProvider.html5Mode(true); /*
     }
 }());
