@@ -17,7 +17,7 @@
                 open: 'external',
                 baseDir: '../',
                 middleware: [
-                    browserSyncSpa(/^[^\.]+$/, baseDir),
+                    //browserSyncSpa(/^[^\.]+$/, baseDir),
 
                     function(req, res, next) {
                         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,7 +26,7 @@
                     }
                 ]
             },
-            startPath: 'otus-domain/login'
+            startPath: 'otus-domain'
         });
 
         gulp.watch([
