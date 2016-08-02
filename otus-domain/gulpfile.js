@@ -46,7 +46,7 @@
     });
 
     gulp.task('replace-env', function(value) {
-        gulp.src('./app/config/env.js')
+        gulp.src('app/config/env.js')
             .pipe(replaceTask({
                 patterns: [{
                     match: /http:\/\/api\-domain\.localhost:8080/g,
