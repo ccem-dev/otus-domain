@@ -20,7 +20,8 @@
         "gulp": "gulp",
         "start": "npm run gulp browser-sync",
         "karma": "karma",
-        "build": "gulp compress"
+        "build": "gulp compress",
+        "replace-env": "gulp replace-env"
     },
     "dependencies": {
         "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#dev",
@@ -37,6 +38,7 @@
         "angular-resource": "1.5.3"
     },
     "devDependencies": {
+        "gulp-replace-task": "0.11.0",
         "gulp-minify": "0.0.11",
         "gulp-sonar": "2.1.0",
         "gulp": "^3.9.1",

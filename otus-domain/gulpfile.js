@@ -9,6 +9,7 @@
     var concat = require('gulp-concat');
     var sonar = require('gulp-sonar');
     var packageJson = require('./package.json');
+    var replaceTask = require('gulp-replace-task');
     var baseDir = __dirname + '/app/index.html';
 
     gulp.task('browser-sync', function() {
@@ -43,6 +44,18 @@
             .pipe(minify())
             .pipe(gulp.dest('dist'));
     });
+
+    gulp.task('replace-env', function(value) {
+        gulp.src('app/config/env.js')
+            .pipe(replaceTask({
+                patterns: [{
+                    match: /http:\/\/api\-domain\.localhost:8080/g,
+                    replacement: process.env.npm_config_apiUrl,
+                }]
+            }))
+            .pipe(gulp.dest('app/config'));
+    });
+
 
     gulp.task('upgrade-version', function(value) {
         gulp.src('./package.json')
