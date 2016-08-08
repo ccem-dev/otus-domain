@@ -45,7 +45,7 @@ angular
 
 
                 function compare(password, passToCompare){
-                    if(password != passToCompare){
+                    if(password !== passToCompare){
                         ngModel.$setValidity('passwordMatch', false);
                     }else{
                         ngModel.$setValidity('passwordMatch', true);

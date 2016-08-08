@@ -9,8 +9,13 @@
 
     function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService) {
         var self = this;
+        self.loggedUser = loggedUser;
+        self.alreadyLogged = alreadyLogged;
+        self.selectedProject = selectedProject;
+        self.initialConfiguration = initialConfiguration;
+        self.onlyOneConfiguration = onlyOneConfiguration;
 
-        self.loggedUser = function loggedUser() {
+        function loggedUser() {
             var deferred = $q.defer();
 
             if (!RestResourceService.isLogged()) {
@@ -24,7 +29,7 @@
             return deferred.promise;
         };
 
-        self.alreadyLogged = function alreadyLogged() {
+        function alreadyLogged() {
             var deferred = $q.defer();
 
             if (RestResourceService.isLogged()) {
@@ -38,7 +43,7 @@
             return deferred.promise;
         };
 
-        self.selectedProject = function selectedProject() {
+        function selectedProject() {
             var deferred = $q.defer();
 
             if (ProjectContext.hasProject()) {
@@ -52,7 +57,7 @@
             return deferred.promise;
         };
 
-        self.initialConfiguration = function initialConfiguration() {
+        function initialConfiguration() {
             var deferred = $q.defer();
 
             var installerResource = RestResourceService.getInstallerResource();
@@ -69,7 +74,7 @@
             return deferred.promise;
         };
 
-        self.onlyOneConfiguration = function onlyOneConfiguration() {
+        function onlyOneConfiguration() {
             var deferred = $q.defer();
 
             var installerResource = RestResourceService.getInstallerResource();

@@ -5,9 +5,9 @@
         .module('otusDomain.dashboard')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$http', '$scope', '$rootScope'];
+    HomeController.$inject = [];
 
-    function HomeController($http, $scope, $rootScope) {
+    function HomeController() {
 
     }
 

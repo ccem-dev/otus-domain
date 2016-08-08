@@ -5,9 +5,9 @@
         .module('otusDomain.project.fieldCenter')
         .service('ProjectFieldCenterService', ProjectFieldCenterService);
 
-    ProjectFieldCenterService.$inject = ['OtusRestResourceService', 'ProjectFieldCenterContext', '$q'];
+    ProjectFieldCenterService.$inject = ['OtusRestResourceService', 'ProjectFieldCenterContext'];
 
-    function ProjectFieldCenterService(OtusRestResourceService, ProjectFieldCenterContext, $q) {
+    function ProjectFieldCenterService(OtusRestResourceService, ProjectFieldCenterContext) {
         var self = this;
         self.loadCenters = loadCenters;
         self.getCenters = getCenters;

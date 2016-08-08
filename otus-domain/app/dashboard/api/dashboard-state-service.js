@@ -10,11 +10,10 @@
         '$http',
         'APP_STATE',
         'RestResourceService',
-        'OtusRestResourceService',
-        '$window'
+        'OtusRestResourceService'
     ];
 
-    function DashboardStateService($state, $http, APP_STATE, RestResourceService, OtusRestResourceService, $window) {
+    function DashboardStateService($state, $http, APP_STATE, RestResourceService, OtusRestResourceService) {
         var self = this;
 
         /* Public interface */
@@ -64,7 +63,7 @@
 
         function logout() {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
-            authenticatorResource.invalidate(function(response) {
+            authenticatorResource.invalidate(function() {
                 RestResourceService.removeSecurityToken();
                 OtusRestResourceService.removeSecurityProjectToken();
 

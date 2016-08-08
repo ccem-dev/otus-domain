@@ -33,7 +33,7 @@
                 .ok('Sim')
                 .cancel('Cancelar');
 
-            $mdDialog.show(dialog).then(function(result) {
+            $mdDialog.show(dialog).then(function() {
                 changeStatus(user);
             }, function() {
                 user.enable = !user.enable;
@@ -42,7 +42,7 @@
 
         function enable(user) {
             var userResource = RestResourceService.getUserResource();
-            userResource.enable(user, function(response) {
+            userResource.enable(user, function() {
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent('Usuário habilitado.')
@@ -54,7 +54,7 @@
 
         function disable(user) {
             var userResource = RestResourceService.getUserResource();
-            userResource.disable(user, function(response) {
+            userResource.disable(user, function() {
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent('Usuário desabilitado.')

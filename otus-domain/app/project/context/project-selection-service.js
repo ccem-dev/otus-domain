@@ -9,7 +9,6 @@
 
     function ProjectSelectionService(ProjectContext, $mdDialog) {
         var self = this;
-        var otusAuthenticatorResource;
 
         self.choose = choose;
         self.initialChoose = initialChoose;

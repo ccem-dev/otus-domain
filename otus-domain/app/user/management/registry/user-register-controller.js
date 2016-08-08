@@ -14,7 +14,7 @@
 
         function register(user) {
             var userResource = RestResourceService.getUserResource();
-            userResource.create(user, function(response) {
+            userResource.create(user, function() {
                 confirmAlertRegister();
             });
         }
@@ -25,7 +25,7 @@
 
         /* Private implementations */
         function confirmAlertRegister() {
-            alert = $mdDialog.alert().title('Informação').content('Sua liberação está pendente de aprovação.').ok('ok');
+            var alert = $mdDialog.alert().title('Informação').content('Sua liberação está pendente de aprovação.').ok('ok');
             $mdDialog
                 .show(alert)
                 .finally(function() {
@@ -45,7 +45,7 @@
                         restrict: 'A',
                         require: 'ngModel',
                         link: function(scope, element, attrs, ctrl) {
-                            ctrl.$asyncValidators.emailInUse = function(modelValue, viewValue) {
+                            ctrl.$asyncValidators.emailInUse = function(modelValue) {
                                 var deferred = $q.defer();
                                 var userRestResource = RestResourceService.getUserResource();
 

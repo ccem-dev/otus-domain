@@ -22,7 +22,7 @@
         $scope.register = function(systemConf) {
             $scope.isLoading = true;
             $scope.validateEmailService(systemConf).then(function() {
-                installerResource.config(systemConf, function(response) {
+                installerResource.config(systemConf, function() {
                         $scope.isLoading = false;
                         confirmAlertToNavigate();
                     },
@@ -56,7 +56,7 @@
         };
 
         function confirmAlertToNavigate() {
-            alert = $mdDialog.alert()
+            var alert = $mdDialog.alert()
                 .title('Informação')
                 .content('Seu cadastro foi realizado com sucesso! Você vai ser redirecionado para a tela de login.')
                 .ok('ok');
