@@ -24,6 +24,7 @@
         self.goToUserRegister = goToUserRegister;
         self.goToUserActivation = goToUserActivation;
         self.goToProjectCenters = goToProjectCenters;
+        self.goToProjectConfiguration = goToProjectConfiguration;
         self.logout = logout;
 
         init();
@@ -60,6 +61,11 @@
         function goToProjectCenters() {
             self.currentState = 'Centros';
             $state.go(APP_STATE.PROJECT_CENTER);
+        }
+
+        function goToProjectConfiguration() {
+            self.currentState = 'Configurações de Projeto';
+            $state.go(APP_STATE.PROJECT_CONFIGURATION);
         }
 
         function logout() {

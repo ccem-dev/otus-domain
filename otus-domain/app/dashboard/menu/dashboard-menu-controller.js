@@ -28,7 +28,7 @@
         self.hasSelectedProject = hasSelectedProject;
         self.getCurrentProject = getCurrentProject;
         self.openProjectCenters = openProjectCenters;
-
+        self.openProjectConfiguration = openProjectConfiguration;
 
         function getSelectedSystemArea() {
             return DashboardStateService.currentState;
@@ -62,20 +62,25 @@
             close();
         }
 
+        function openProjectConfiguration() {
+          DashboardStateService.goToProjectConfiguration();
+          close();
+        }
+
         function logout() {
             LogoutDialogService.showDialog()
                 .onConfirm(DashboardStateService.logout);
         }
 
-        function hasSelectedProject(){
+        function hasSelectedProject() {
             return ProjectContext.hasProject();
         }
 
-        function getCurrentProject(){
+        function getCurrentProject() {
             return ProjectContext.getCurrentProject();
         }
 
-        function chooseProject(){
+        function chooseProject() {
             ProjectSelectionService.choose();
         }
     }

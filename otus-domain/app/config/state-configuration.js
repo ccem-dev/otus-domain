@@ -9,7 +9,8 @@
             'INSTALLER': 'installer',
             'HOME': 'home',
             'USER_ACTIVATION': 'user-activation',
-            'PROJECT_CENTER': 'field-center'
+            'PROJECT_CENTER': 'field-center',
+            'PROJECT_CONFIGURATION': 'configuration-center'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -117,6 +118,31 @@
                         templateUrl: 'app/project/fieldCenter/field-center-template.html',
                         controller: 'FieldCenterController',
                         controllerAs: 'fieldCenterController'
+                    }
+                }
+            })
+            .state('configuration-center', {
+                url: '/project/configuration',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    },
+                    selectedProject: function(RouteRulesResolver) {
+                        return RouteRulesResolver.selectedProject();
+                    }
+                },
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@configuration-center': {
+                        templateUrl: dashboardMenu
+                    },
+                    'system-content@configuration-center': {
+                        templateUrl: 'app/project/configuration/configuration-template.html',
+                        controller: 'ProjectConfigurationController',
+                        controllerAs: 'projectConfigurationController'
                     }
                 }
             })
