@@ -1,0 +1,31 @@
+<md-list-item layout="row" layout-align="center center">
+    <md-card flex layout="column">
+        <md-card-title layout="row">
+            <md-card-title-text>
+                <span class="md-headline">Identidade visual do projeto</span>
+                <span class="md-subhead"></span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-content layout-gt-md="row" layout="column" layout-wrap>
+            <md-content flex="15" layout="column" layout-align="top center" layout-padding layout-wrap>
+                <div layout="row" layout-align="start center">
+                    <span class="md-title">Logo</span>
+                    <md-button class="md-icon-button">
+                        <md-icon flex md-font-library="material-icons" md-tooltip="lalaia" aria-label="Logo">autorenew</md-icon>
+                    </md-button>
+                </div>
+                <img id="logo-image" width="180px" heigh="110px" ng-src="{{$ctrl.bannerURL}}"></img>
+            </md-content>
+
+            <md-content flex="85" layout="column" layout-padding layout-wrap>
+                <div layout="row" layout-align="start center">
+                    <span class="md-title">Banner</span>
+                    <md-button class="md-icon-button">
+                        <md-icon md-font-library="material-icons" aria-label="Banner">autorenew</md-icon>
+                    </md-button>
+                </div>
+                <img width="1920px" heigh="338px" ng-src="{{$ctrl.logoURL}}"></img>
+            </md-content>
+        </md-content>
+    </md-card>
+</md-list-item>

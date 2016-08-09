@@ -1,23 +1,18 @@
 (function() {
-  'use strict'
+    'use strict'
 
+    angular
+        .module('otusDomain.project')
+        .component('otusParticipantRegister', {
+            templateUrl: 'app/project/configuration/config-components/participant-register/participant-register-template.html',
 
-  angular
-    .module('otusDomain.project')
-    .component('otusParticipantRegister', {
-      templateUrl:'app/project/configuration/config-components/participant-register/participant-register-template.html',
+            controller: function(ProjectConfigurationService) {
+                var self = this;
+                _init();
 
-      controller: function(ProjectConfigurationService) {
-        var self = this;
-
-        _init();
-
-        /* Public Interface */
-
-        function _init() {
-          self.data  = ProjectConfigurationService.fetchConfig();
-        }
-
-      }
-    })
+                function _init() {
+                    self.data = ProjectConfigurationService.fetchConfig();
+                }
+            }
+        })
 }());

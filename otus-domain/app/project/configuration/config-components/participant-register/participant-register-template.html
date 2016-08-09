@@ -1,15 +1,17 @@
-<md-list-item layout="row" layout-align="center center" layout-fill>
-  <md-card flex layout="row">
-    <md-card-title>
-      <md-card-title-text>
-        <span class="md-headline">Template de Cadastro de Participante</span>
-        <span class="md-subhead"></span>
-      </md-card-title-text>
-    </md-card-title>
-    <md-card-actions layout="column" layout-align="center end">
-      <md-button ng-disabled="$ctrl.data.templatePicked">Escolher</md-button>
-      Template já escolhido:
-      {{$ctrl.data.templateName}}
-    </md-card-actions>
-  </md-card>
+<md-list-item layout="row" layout-align="center center">
+    <md-card flex layout="row">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Template de Cadastro de Participante</span>
+                <span class="md-subhead"></span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="column" layout-align="center end">
+            <md-button ng-disabled="$ctrl.data.templateLocked">Escolher</md-button>
+            <span ng-show="$ctrl.data.templatePicked">
+                Template já escolhido:
+                {{$ctrl.data.templateName}}
+            </span>
+        </md-card-actions>
+    </md-card>
 </md-list-item>

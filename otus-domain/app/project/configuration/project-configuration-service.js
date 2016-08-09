@@ -18,6 +18,7 @@
             var jsonConfig = {
                 "templateName": "Elegibilidade",
                 "templatePicked": "true",
+                "templateLocked" : "true",
                 "projectName": "ELSA",
                 "projectOwner": "Bruce =]"
             };
