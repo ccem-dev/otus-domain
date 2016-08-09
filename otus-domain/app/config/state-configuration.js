@@ -142,7 +142,7 @@
                     'system-content@configuration-center': {
                         templateUrl: 'app/project/configuration/configuration-template.html',
                         controller: 'ProjectConfigurationController',
-                        controllerAs: 'projectConfigurationController'
+                        controllerAs: 'configController'
                     }
                 }
             })

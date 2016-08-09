@@ -1,1 +1,10 @@
-lalaia
+<div layout="row" flex layout-align="center start" >
+    <md-list layout-padding layout="column" flex="60" layout-align="start center" >
+        <md-list-item layout="row" layout-align="space-between center" layout-fill>
+            <span>Responsável pelo projeto:
+            </span>
+            <span>{{configController.data.projectOwner}}</span>
+        </md-list-item>
+        <otus-participant-register></otus-participant-register>
+    </md-list>
+</div>
