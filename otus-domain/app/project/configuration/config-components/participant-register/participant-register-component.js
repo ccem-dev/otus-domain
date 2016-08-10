@@ -1,5 +1,5 @@
 (function() {
-    'use strict'
+    'use strict';
 
     angular
         .module('otusDomain.project')
@@ -14,5 +14,5 @@
                     self.data = ProjectConfigurationService.fetchConfig();
                 }
             }
-        })
+        });
 }());

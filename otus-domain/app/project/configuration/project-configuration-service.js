@@ -1,5 +1,5 @@
 (function() {
-    'use strict'
+    'use strict';
 
     angular
         .module('otusDomain.project')
@@ -11,18 +11,25 @@
       var self = this;
 
       self.fetchConfig = fetchConfig;
-
+      self.uploadFile = uploadFile;
 
         function fetchConfig() {
             // return OtusRestResourceService.getProjectConfig();
             var jsonConfig = {
                 "templateName": "Elegibilidade",
-                "templatePicked": "true",
-                "templateLocked" : "true",
+                "templatePicked": false,
+                "templateLocked" : false,
                 "projectName": "ELSA",
                 "projectOwner": "Bruce =]"
             };
             return jsonConfig;
+        }
+
+
+        function uploadFile() {
+          var reader = new FileReader();
+
+          console.log(reader);
         }
 
     }
