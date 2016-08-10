@@ -11,7 +11,7 @@
         var OFFLINE_MESSAGE = 'Projeto Offline. Verifique o estado do projeto.';
         var AUTHENTICATION_ERROR_MESSAGE = 'Erro ao realizar autenticação no projeto';
 
-        self = this;
+        var self = this;
         self.projects = projects;
         self.close = close;
         self.select = select;
@@ -27,7 +27,7 @@
         }
 
         function validateConnection(projects) {
-            projects.forEach(function(project, index, array) {
+            projects.forEach(function(project) {
                 ProjectSecurityService.isOnline(project);
             });
         }

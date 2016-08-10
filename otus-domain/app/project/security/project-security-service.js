@@ -19,7 +19,7 @@
             installerResource.ready(function(response) {
                     project.status = response.data;
                 },
-                function(err) {
+                function() {
                     project.status = false;
                 });
         }

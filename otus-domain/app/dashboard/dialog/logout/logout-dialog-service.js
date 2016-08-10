@@ -37,20 +37,19 @@
                 );
 
             return {
-                onConfirm: function onConfirm(callback) {
+                onConfirm: function (callback) {
                     self.callback = callback;
                 }
             };
         }
 
         function forwardSuccessfulExecution(response) {
-            if (response.action == 'confirm') {
+            if (response.action === 'confirm') {
                 if (self.callback) self.callback(response.data);
             }
         }
 
         function forwardUnsuccessfulExecution(error) {
-            console.log(error);
         }
     }
 

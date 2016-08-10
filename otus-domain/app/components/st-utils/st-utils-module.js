@@ -8,7 +8,7 @@
         self.normalizeString = normalizeString;
 
         function normalizeString(directiveName) {
-            var tokenSeparator = (directiveName.indexOf('-') != -1) ? '-' : '.';
+            var tokenSeparator = (directiveName.indexOf('-') !== -1) ? '-' : '.';
 
             var directiveParts = directiveName.split(tokenSeparator),
                 loopSize = directiveParts.length,

@@ -2,7 +2,7 @@
 
     angular
         .module('otusDomain')
-        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
+        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
         .constant('APP_STATE', {
             'LOGIN': 'login',
             'USER_REGISTER': 'user-register',
@@ -13,7 +13,7 @@
             'PROJECT_CONFIGURATION': 'configuration-center'
         });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
+    function stateConfiguration($stateProvider, $urlRouterProvider) {
 
         var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
         var mainDashBoardTemplate = 'app/dashboard/template/main-dashboard-template.html';
@@ -176,9 +176,6 @@
                 }
             });
 
-        /* Default state (route)
-         *  $locationProvider.html5Mode(true);
-         */
         $urlRouterProvider.otherwise('/login');
     }
 }());

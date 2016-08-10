@@ -5,9 +5,9 @@
         .module('otusDomain.project')
         .service('ProjectContext', ProjectContext);
 
-    ProjectContext.$inject = ['RestResourceService', '$window'];
+    ProjectContext.$inject = ['RestResourceService'];
 
-    function ProjectContext(RestResourceService, $window) {
+    function ProjectContext(RestResourceService) {
         var self = this;
         var current = null;
         var projects = [];
@@ -21,7 +21,7 @@
 
         function setProject(project) {
             current = project;
-            propagateChange(current);
+            propagateChange();
         }
 
         function getCurrentProject() {
@@ -45,7 +45,7 @@
         }
 
         function propagateChange() {
-            observers.forEach(function(observer, index, array) {
+            observers.forEach(function(observer) {
                 observer(current);
             });
         }
