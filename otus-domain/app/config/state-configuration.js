@@ -9,6 +9,7 @@
             'INSTALLER': 'installer',
             'HOME': 'home',
             'USER_ACTIVATION': 'user-activation',
+            'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
             'PROJECT_CENTER': 'field-center'
         });
 
@@ -74,7 +75,39 @@
                 resolve: {
                     loggedUser: function(RouteRulesResolver) {
                         return RouteRulesResolver.loggedUser();
+                    },
+                    userManagementType: [function() {
+                        return 'domain';
+                    }]
+                },
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@user-activation': {
+                        templateUrl: dashboardMenu
+
+                    },
+                    'system-content@user-activation': {
+                        templateUrl: 'app/user/management/activation/user-activation.html',
+                        controller: 'UserActivationController',
+                        controllerAs: 'userActivationController'
                     }
+                }
+            })
+            .state('user-otus-management', {
+                url: '/project/user',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    },
+                    selectedProject: function(RouteRulesResolver) {
+                        return RouteRulesResolver.selectedProject();
+                    },
+                    userManagementType: [function() {
+                        return 'otus';
+                    }]
                 },
                 views: {
                     'system-wrap': {

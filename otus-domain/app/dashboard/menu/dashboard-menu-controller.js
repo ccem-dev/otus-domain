@@ -28,6 +28,7 @@
         self.hasSelectedProject = hasSelectedProject;
         self.getCurrentProject = getCurrentProject;
         self.openProjectCenters = openProjectCenters;
+        self.openUserActivationInProject = openUserActivationInProject;
 
 
         function getSelectedSystemArea() {
@@ -54,6 +55,11 @@
 
         function openUserActivation() {
             DashboardStateService.goToUserActivation();
+            close();
+        }
+
+        function openUserActivationInProject() {
+            DashboardStateService.goToUserActivationInProject();
             close();
         }
 

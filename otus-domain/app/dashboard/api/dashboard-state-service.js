@@ -22,6 +22,7 @@
         self.goToInstaller = goToInstaller;
         self.goToUserRegister = goToUserRegister;
         self.goToUserActivation = goToUserActivation;
+        self.goToUserActivationInProject = goToUserActivationInProject;
         self.goToProjectCenters = goToProjectCenters;
         self.logout = logout;
 
@@ -54,6 +55,11 @@
         function goToUserActivation() {
             self.currentState = 'Liberação de Usuários';
             $state.go(APP_STATE.USER_ACTIVATION);
+        }
+
+        function goToUserActivationInProject() {
+            self.currentState = 'Liberação de usuários no projeto selecionado';
+            $state.go(APP_STATE.USER_ACTIVATION_IN_PROJECT);
         }
 
         function goToProjectCenters() {
