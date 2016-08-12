@@ -73,15 +73,15 @@
                 .onConfirm(DashboardStateService.logout);
         }
 
-        function hasSelectedProject(){
+        function hasSelectedProject() {
             return ProjectContext.hasProject();
         }
 
-        function getCurrentProject(){
+        function getCurrentProject() {
             return ProjectContext.getCurrentProject();
         }
 
-        function chooseProject(){
+        function chooseProject() {
             ProjectSelectionService.choose();
         }
     }

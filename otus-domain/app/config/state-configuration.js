@@ -114,11 +114,11 @@
                         templateUrl: mainDashBoardTemplate,
                         controller: 'DashboardMenuController as dashboardMenu'
                     },
-                    'dashboard-menu@user-activation': {
+                    'dashboard-menu@user-otus-management': {
                         templateUrl: dashboardMenu
 
                     },
-                    'system-content@user-activation': {
+                    'system-content@user-otus-management': {
                         templateUrl: 'app/user/management/activation/user-activation.html',
                         controller: 'UserActivationController',
                         controllerAs: 'userActivationController'
