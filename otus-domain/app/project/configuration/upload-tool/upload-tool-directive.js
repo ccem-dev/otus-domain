@@ -5,7 +5,11 @@
         .module('otusDomain.project')
         .directive('uploadTool', directive);
 
-    function directive() {
+    directive.$inject = [
+        'otusjs.otus-domain.project.UploadToolService'
+    ];
+
+    function directive(UploadToolService) {
 
         var ddo = {
             restrict: 'A',
@@ -15,39 +19,38 @@
 
         function linkFunction($scope, $element, attributes) {
             var fileUploadElement;
-            var uploadType = attributes.uploadTool;
-            $element.on('click', function() {
+            var uploadType = attributes.type || 'any';
+            $element.on('click', function(event) {
                 fileUploadElement = _createInput(uploadType);
                 fileUploadElement.click();
 
                 fileUploadElement.addEventListener('change', function() {
                     var fileToUpload = this.files[0];
-                    _uploadSurveyTemplate(fileToUpload);
+                    console.log(fileToUpload);
                 });
             });
 
             function _uploadSurveyTemplate(fileToUpload) {
-              console.log(fileToUpload);
-              var reader = new FileReader();
-              reader.readAsDataURL(fileToUpload);
-              console.log(reader);
-              reader.onload = function() {
-                console.log('load');
-              };
+                var reader = new FileReader();
+                reader.readAsDataURL(fileToUpload);
+                reader.onload = function() {
 
-              reader.onloadend = function() {
-                // console.log(reader.result);
-                console.log('loadend');
-              };
-                // SurveyTemplateUploadService.upload(fileToUpload);
+                };
             }
 
             function _createInput(uploadType) {
-                fileUploadElement = document.createElement('input');
-                fileUploadElement.setAttribute('type', 'file');
-                fileUploadElement.setAttribute('accept', 'image/*');
+                var acceptance = UploadToolService.uploadTypeResolver(uploadType);
+                if (acceptance !== '') {
+                    fileUploadElement = document.createElement('input');
+                    fileUploadElement.setAttribute('type', 'file');
+                    fileUploadElement.setAttribute('accept', acceptance);
+                } else {
+                    fileUploadElement = document.createElement('button');
+                }
+
                 return fileUploadElement;
             }
+
         }
     }
 
