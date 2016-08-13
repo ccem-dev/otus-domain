@@ -11,7 +11,6 @@
       var self = this;
 
       self.fetchConfig = fetchConfig;
-      self.uploadFile = uploadFile;
 
         function fetchConfig() {
             // return OtusRestResourceService.getProjectConfig();
@@ -19,17 +18,9 @@
                 "templateName": "Elegibilidade",
                 "templatePicked": false,
                 "templateLocked" : false,
-                "projectName": "ELSA",
-                "projectOwner": "Bruce =]"
+                "projectName": "LINDA"
             };
             return jsonConfig;
-        }
-
-
-        function uploadFile() {
-          var reader = new FileReader();
-
-          console.log(reader);
         }
 
     }

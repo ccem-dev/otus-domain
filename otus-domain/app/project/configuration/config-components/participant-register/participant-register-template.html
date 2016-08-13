@@ -1,12 +1,12 @@
 <md-list-item layout="row" layout-align="center center">
-    <md-card flex layout="row">
+    <md-card flex layout="row" layout-margin>
         <md-card-title>
-            <md-card-title-text>
-                <span class="md-headline">Template de Cadastro de Participante</span>
+            <md-card-title-text >
+                <span class="md-body-2">Template Registro de Participante</span>
                 <span class="md-subhead"></span>
             </md-card-title-text>
         </md-card-title>
-        <md-button class="md-primary" ng-hide="$ctrl.data.templatePicked" upload-tool type="image, json">Escolher</md-button>
+        <md-button class="md-primary" ng-hide="$ctrl.data.templatePicked" upload-tool="$ctrl.uploadConfig">Escolher</md-button>
         <md-card-actions layout="row" layout-align="center end" ng-show="$ctrl.data.templatePicked">
             <span class="md-headline">
                 Template escolhido:

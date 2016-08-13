@@ -1,4 +1,4 @@
-describe('otusjs.otus-domain.project.UploadToolService', function() {
+xdescribe('otusjs.otus-domain.project.UploadToolService', function() {
     var Mock = {};
     var service;
 
