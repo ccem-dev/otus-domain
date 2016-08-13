@@ -1,0 +1,28 @@
+<div layout="row" flex>
+    <div layout="column" flex>
+        <div layout="row" layout-align="center center" style="background-color:#448AFF"
+        flex="20">
+            <span class="md-display-3 project-name">
+                Otus Domain
+            </span>
+        </div>
+        <div layout-padding layout-margin layout-sm="column" layout="row" layout-align="center center">
+            <div>
+                <img src="app/assets/img/otus-crash.png" />
+            </div>
+            <div layout-padding>
+                <div>
+                    <p class="md-display-2">OFFLINE !</p>
+                    <p class="md-body-1">
+                        Nosso sistema esta temporariamente fora do ar.
+                    </p>
+                    <p class="md-body-1">Isso pode ter ocorrido devido alguma manutenção preventiva
+                        ou dificuldade tecnica.</p>
+                </div>
+                <md-button class="md-button md-primary" ng-click="controller.tryAgain()">
+                    Tentar novamente
+                </md-button>
+            </div>
+        </div>
+    </div>
+</div>

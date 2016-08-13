@@ -9,7 +9,8 @@
             'INSTALLER': 'installer',
             'HOME': 'home',
             'USER_ACTIVATION': 'user-activation',
-            'PROJECT_CENTER': 'field-center'
+            'PROJECT_CENTER': 'field-center',
+            'ERROR_OFFLINE': 'offline'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider) {
@@ -146,6 +147,15 @@
                     },
                     'section-commands@home': {
                         templateUrl: 'app/dashboard/home/home-commands-section.html'
+                    }
+                }
+            })
+            .state('offline', {
+                url: '/offline',
+                views: {
+                    'system-wrap': {
+                        templateUrl: 'app/response-error/offline/offline.html',
+                        controller: 'ResponseErrorOfflineController as controller'
                     }
                 }
             });

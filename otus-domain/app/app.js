@@ -15,7 +15,7 @@
             'otusDomainClient',
             'otus.client',
             'user',
-            'utils'
+            'utils',
         ]);
 
 }());
