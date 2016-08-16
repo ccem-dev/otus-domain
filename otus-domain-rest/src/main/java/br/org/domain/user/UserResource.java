@@ -90,4 +90,15 @@ public class UserResource {
         return response.buildSuccess().toJson();
     }
 
+    @GET
+    @Path("/fetch/current")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Secured
+    public String getCurrentUser() {
+        List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
+        Response response = new Response();
+        return response.buildSuccess(managementUserDtos).toJson();
+    }
+
 }

@@ -1,16 +1,15 @@
 package br.org.domain.email.service;
 
 import br.org.domain.email.StudioEmail;
-import br.org.owail.sender.email.Sender;
-import br.org.domain.exception.EmailNotificationException;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.email.dto.EmailSenderDto;
+import br.org.domain.exception.EmailNotificationException;
+import br.org.owail.sender.email.Sender;
 
 public interface EmailNotifierService {
 
-    void sendEmail(StudioEmail email) throws EmailNotificationException, DataNotFoundException;
+    void sendEmail(StudioEmail email) throws EmailNotificationException;
 
-    Sender getSender() throws DataNotFoundException;
+    Sender getSender();
 
-    void sendWelcomeEmail(EmailSenderDto emailSenderDto) throws EmailNotificationException, DataNotFoundException;
+    void sendWelcomeEmail(EmailSenderDto emailSenderDto) throws EmailNotificationException;
 }

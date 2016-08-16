@@ -16,4 +16,6 @@ public interface SecurityContextService {
     void removeToken(String jwtSignedAndSerialized) throws DataNotFoundException;
 
     void validateToken(String token) throws TokenException;
+
+    String getUserId(String token) throws DataNotFoundException;
 }

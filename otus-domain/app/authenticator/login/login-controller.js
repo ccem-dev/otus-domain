@@ -14,7 +14,7 @@
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
 
             authenticatorResource.authenticate(user, function(response) {
-                RestResourceService.setSecurityToken(response.data);
+                RestResourceService.setSecurityToken(response.data.token);
 
                 if (!response.hasErrors) {
                     DashboardStateService.goToHome();

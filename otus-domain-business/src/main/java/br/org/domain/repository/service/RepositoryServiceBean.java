@@ -5,7 +5,6 @@ import br.org.domain.exception.ConvertedDtoException;
 import br.org.domain.exception.RepositoryAlreadyExistException;
 import br.org.domain.exception.RepositoryNotFoundException;
 import br.org.domain.exception.RepositoryOfflineException;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.repository.Repository;
 import br.org.domain.repository.dao.RepositoryDao;
 import br.org.domain.repository.dto.RepositoryConnectionData;
@@ -21,6 +20,7 @@ import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class RepositoryServiceBean implements RepositoryService {
 
             return convertedRepositories;
 
-        } catch (DataNotFoundException e) {
+        } catch (NoResultException e) {
             throw new RepositoryNotFoundException();
         }
     }
@@ -61,7 +61,7 @@ public class RepositoryServiceBean implements RepositoryService {
 
             return convertedRepositories;
 
-        } catch (DataNotFoundException e) {
+        } catch (NoResultException e) {
             throw new RepositoryNotFoundException();
         }
     }
@@ -154,20 +154,8 @@ public class RepositoryServiceBean implements RepositoryService {
     }
 
     private RepositoryConnectionData getAdminRepositoryConnectionData() {
-        User admin = null;
-        Repository adminRepository = null;
-
-        try {
-            admin = userDao.findAdmin();
-        } catch (DataNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            adminRepository = repositoryDao.fetchRepositoryByUser(admin);
-        } catch (DataNotFoundException e) {
-            e.printStackTrace();
-        }
+        User admin = userDao.findAdmin();
+        Repository adminRepository = repositoryDao.fetchRepositoryByUser(admin);
 
         return new RepositoryConnectionData(adminRepository);
     }

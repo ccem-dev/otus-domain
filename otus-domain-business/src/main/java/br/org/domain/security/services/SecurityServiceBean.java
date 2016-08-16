@@ -1,34 +1,31 @@
 package br.org.domain.security.services;
 
+import br.org.domain.exception.*;
+import br.org.domain.user.builder.CurrentUserBuilder;
+import br.org.domain.user.dto.CurrentUserDto;
 import br.org.domain.user.User;
-import br.org.domain.exception.EmailNotFoundException;
-import br.org.domain.exception.InvalidPasswordException;
-import br.org.domain.exception.TokenException;
-import br.org.domain.exception.UserDisabledException;
 import br.org.domain.security.dtos.AuthenticationDto;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.user.dao.UserDao;
+import br.org.domain.user.service.ManagementUserService;
+import br.org.tutty.Equalizer;
 import com.nimbusds.jose.JOSEException;
 
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import java.io.Serializable;
 
 @Stateless
-public class SecurityServiceBean implements SecurityService{
+public class SecurityServiceBean implements SecurityService {
 
     @Inject
-    private UserDao userDao;
+    private ManagementUserService userService;
 
     @Inject
     private SecurityContextService securityContextService;
 
     @Override
-    public String authenticate(AuthenticationDto authenticationDto) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException, TokenException {
+    public CurrentUserDto authenticate(AuthenticationDto authenticationDto) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException, TokenException {
         try {
-            User user = userDao.fetchByEmail(authenticationDto.getEmail());
+            User user = userService.fetchUserByEmail(authenticationDto.getEmail());
 
             if (user.getPassword().equals(authenticationDto.getPassword())) {
                 if (user.isEnable()) {
@@ -36,14 +33,15 @@ public class SecurityServiceBean implements SecurityService{
                     String jwtSignedAndSerialized = securityContextService.generateToken(authenticationDto, secretKey);
                     securityContextService.addToken(jwtSignedAndSerialized, secretKey);
 
-                    return jwtSignedAndSerialized;
+                    CurrentUserDto currentUser = CurrentUserBuilder.build(user, jwtSignedAndSerialized);
+                    return currentUser;
                 } else {
                     throw new UserDisabledException();
                 }
             } else {
                 throw new InvalidPasswordException();
             }
-        } catch (DataNotFoundException | NoResultException e) {
+        } catch (DataNotFoundException e) {
             throw new EmailNotFoundException();
 
         } catch (JOSEException e) {
@@ -52,9 +50,15 @@ public class SecurityServiceBean implements SecurityService{
     }
 
     @Override
-    public void invalidate(String token){
+    public String parseUserId(String token) throws DataNotFoundException {
+        return securityContextService.getUserId(token);
+    }
+
+    @Override
+    public void invalidate(String token) {
         try {
             securityContextService.removeToken(token);
-        } catch (br.org.domain.exception.DataNotFoundException e) {}
+        } catch (br.org.domain.exception.DataNotFoundException e) {
+        }
     }
 }
