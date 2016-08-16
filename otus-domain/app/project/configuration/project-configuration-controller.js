@@ -3,10 +3,10 @@
 
   angular
     .module('otusDomain.project')
-    .controller('ProjectConfigurationController', ProjectConfigurationController);
+    .controller('otusjs.otus-domain.project.ProjectConfigurationController', ProjectConfigurationController);
 
     ProjectConfigurationController.$inject=[
-      'ProjectConfigurationService'
+      'otusjs.otus-domain.project.ProjectConfigurationService'
     ];
 
     function ProjectConfigurationController(ProjectConfigurationService) {
@@ -17,7 +17,7 @@
 
 
       function _init() {
-        self.data  = ProjectConfigurationService.fetchConfig();
+        console.log('smile and wave');
       }
 
 

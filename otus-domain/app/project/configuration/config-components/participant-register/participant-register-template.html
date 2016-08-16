@@ -1,20 +1,26 @@
 <md-list-item layout="row" layout-align="center center">
-    <md-card flex layout="row" layout-margin>
-        <md-card-title>
-            <md-card-title-text >
+    <md-card flex layout="column" layout-margin>
+        <md-card-title layout="row">
+            <md-card-title-text>
                 <span class="md-body-2">Template Registro de Participante</span>
-                <span class="md-subhead"></span>
+                <div layout="column" ng-show="$ctrl.data.file">
+                    <span class="md-subhead">Atual:
+                        {{$ctrl.data.file.identity.name}}
+                        -
+                        {{$ctrl.data.file.identity.acronym}}</span>
+                    <span class="md-subhead">Data de Upload:
+                        {{$ctrl.sendingDate}}</span>
+                        <span class="md-subhead">Por:
+                          {{$ctrl.data.userEmail}}</span>
+                          <span class="md-caption" ng-show="$ctrl.changed">* não salvo</span>
+                </div>
             </md-card-title-text>
-        </md-card-title>
-        <md-button class="md-primary" ng-hide="$ctrl.data.templatePicked" upload-tool="$ctrl.uploadConfig">Escolher</md-button>
-        <md-card-actions layout="row" layout-align="center end" ng-show="$ctrl.data.templatePicked">
-            <span class="md-headline">
-                Template escolhido:
-                {{$ctrl.data.templateName}}
-            </span>
-            <md-button class="md-icon-button" ng-disabled="$ctrl.data.templateLocked">
-                <md-icon flex ng-disabled="$ctrl.data.templateLocked" md-font-library="material-icons" md-tooltip="lalaia" aria-label="Logo">autorenew</md-icon>
+            <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.data.templateLocked" upload-tool="$ctrl.uploadConfig">
+                <md-icon md-font-library="material-icons" aria-label="Save">autorenew</md-icon>
             </md-button>
-        </md-card-actions>
+            <md-button class="md-icon-button md-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.changed">
+                <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
+            </md-button>
+        </md-card-title>
     </md-card>
 </md-list-item>

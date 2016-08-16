@@ -62,7 +62,7 @@ describe('uploadTool', function() {
         },
         'type': 'image'
     };
-    
+
     function mockUploadToolService($injector) {
         Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.UploadToolService');
         return Mock.UploadToolService;
