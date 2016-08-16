@@ -60,7 +60,6 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Secured
     public String getUsers() {
-    	System.out.println("domain getUsers fetch chamado!");
         List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
         Response response = new Response();
         return response.buildSuccess(managementUserDtos).toJson();
