@@ -141,7 +141,7 @@
                     },
                     'system-content@configuration-center': {
                         templateUrl: 'app/project/configuration/configuration-template.html',
-                        controller: 'ProjectConfigurationController',
+                        controller: 'otusjs.otus-domain.project.ProjectConfigurationController',
                         controllerAs: 'configController'
                     }
                 }
