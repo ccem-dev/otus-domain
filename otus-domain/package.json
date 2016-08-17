@@ -16,7 +16,8 @@
         "url": "https://github.com/ccem-dev/otus-domain"
     },
     "scripts": {
-        "test": "karma start karma.conf.js",
+        "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
+        "test": "karma start karma.conf.js --single-run",
         "gulp": "gulp",
         "start": "npm run gulp browser-sync",
         "karma": "karma",
@@ -58,6 +59,7 @@
         "karma-phantomjs-launcher": "^0.2.3",
         "phantomjs": ">=1.9",
         "phantomjs-prebuilt": "^2.1.2",
-        "gulp-bump": "2.1.0"
+        "gulp-bump": "2.1.0",
+        "karma-coverage": "^1.0.0"
     }
 }

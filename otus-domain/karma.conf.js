@@ -6,7 +6,6 @@ module.exports = function(config) {
     var COMPONENTS_ROOT_PATH = 'app/components/';
     var NODE_MODULES_ROOT_PATH = 'node_modules/';
 
-
     config.set({
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
@@ -46,12 +45,25 @@ module.exports = function(config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {},
+        preprocessors: {
+            'app/**/*.js': ['coverage']
+        },
+
+        coverageReporter: {
+            reporters: [{
+                type: 'html',
+                dir: 'target/test-coverage/'
+            }, {
+                type: 'lcov',
+                dir: 'target/test-coverage/',
+                subdir: 'report-lcov'
+            }]
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'html'],
+        reporters: ['progress', 'html', 'coverage', 'lcov'],
 
         htmlReporter: {
             outputFile: 'target/unit-result.report.html',
@@ -77,7 +89,7 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true,
+        singleRun: false,
 
         // Concurrency level
         // how many browser should be started simultaneous

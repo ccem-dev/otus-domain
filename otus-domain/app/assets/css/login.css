@@ -21,12 +21,10 @@
 #login-page #divDown{
 	background-color: white;
 	height: 60%;
-
 }
 
 #login-page .nameDomain{
 	text-align: left;
-	color: white;
 	top: 58%;
     position: relative;
     margin: 0 auto;
@@ -79,5 +77,9 @@ label[for="phonenumber"] {
 	width: 60%;
 	left: 12%;
 	right: 12%
-
 }
+
+.project-name{
+    color: white;
+}
+

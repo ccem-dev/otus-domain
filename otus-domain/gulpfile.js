@@ -85,7 +85,13 @@
                 sourceEncoding: 'UTF-8',
                 exec: {
                     maxBuffer: 1024 * 1024
+                },
+                javascript: {
+                    lcov: {
+                        reportPath: 'target/test-coverage/report-lcov/lcov.info'
+                    }
                 }
+
             }
         };
 

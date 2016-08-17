@@ -24,6 +24,7 @@
         self.goToUserActivation = goToUserActivation;
         self.goToUserActivationInProject = goToUserActivationInProject;
         self.goToProjectCenters = goToProjectCenters;
+        self.goToErrorOffline = goToErrorOffline;
         self.logout = logout;
 
         init();
@@ -65,6 +66,11 @@
         function goToProjectCenters() {
             self.currentState = 'Centros';
             $state.go(APP_STATE.PROJECT_CENTER);
+        }
+
+        function goToErrorOffline() {
+            self.currentState = 'Offline';
+            $state.go(APP_STATE.ERROR_OFFLINE);
         }
 
         function logout() {
