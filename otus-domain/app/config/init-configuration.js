@@ -2,11 +2,13 @@
 
     angular
         .module('otusDomain')
-        .run(['RestResourceService', '$window', initConfiguration]);
+        .run(['RestResourceService', '$window', 'user.UserService', initConfiguration]);
 
-    function initConfiguration(RestResourceService, $window) {
+    function initConfiguration(RestResourceService, $window, UserService) {
         var __env = $window.__env;
+
         RestResourceService.setUrl(__env.apiUrl);
+        UserService.reloadCurrentUser();
     }
 
 }());

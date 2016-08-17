@@ -49,10 +49,10 @@
     <script src="app/components/st-password/st-password-module.js"></script>
 
     <!-- ************************************** Otus Domain ************************************** -->
+    <script src="app/config/env.js"></script>
     <script src="app/app.js"></script>
 
     <!-- app.config -->
-    <script src="app/config/env.js"></script>
     <script src="app/config/init-configuration.js"></script>
     <script src="app/config/dependencies-configuration.js"></script>
     <script src="app/config/locale-configuration.js"></script>
@@ -60,12 +60,17 @@
     <script src="app/config/theme-configuration.js"></script>
     <script src="app/config/route-rules-resolver-service.js"></script>
 
+    <!-- REST RESOURCE -->
+    <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
+
     <!-- AUTHENTICATOR -->
     <script src="app/authenticator/authenticator-module.js"></script>
     <script src="app/authenticator/login/login-controller.js"></script>
 
     <!-- USER -->
     <script src="app/user/user-module.js"></script>
+    <script src="app/user/api/user-service.js"></script>
+    <script src="app/user/user-context.js"></script>
     <script src="app/user/management/user-management-module.js"></script>
     <script src="app/user/management/registry/user-register-controller.js"></script>
     <script src="app/user/management/activation/user-activation-controller.js"></script>
@@ -76,9 +81,6 @@
 
     <!-- REPOSITORY -->
     <script src="app/survey-repository/repository-module.js"></script>
-
-    <!-- REST RESOURCE -->
-    <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
 
     <!-- ************************************** Studio Dashboard ************************************** -->
     <script src="app/dashboard/dashboard-module.js"></script>

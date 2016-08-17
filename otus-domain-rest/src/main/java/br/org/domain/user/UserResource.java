@@ -1,18 +1,25 @@
 package br.org.domain.user;
 
 import br.org.domain.email.validation.EmailConstraint;
+import br.org.domain.exception.DataNotFoundException;
 import br.org.domain.exception.InvalidDtoException;
+import br.org.domain.exception.TokenException;
 import br.org.domain.rest.Response;
 import br.org.domain.security.Secured;
+import br.org.domain.security.TokenParser;
 import br.org.domain.security.services.SecurityContextService;
+import br.org.domain.user.dto.CurrentUserDto;
 import br.org.domain.user.dto.ManagementUserDto;
 import br.org.domain.user.dto.UserDto;
 import br.org.domain.user.registration.RegisterUserService;
 import br.org.domain.user.service.ManagementUserService;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -95,10 +102,19 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secured
-    public String getCurrentUser() {
-        List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
+    public String getCurrentUser(@Context HttpServletRequest request) {
         Response response = new Response();
-        return response.buildSuccess(managementUserDtos).toJson();
+        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        try {
+            String token = TokenParser.parse(authorizationHeader);
+            CurrentUserDto currentUserDto = managementUserService.fetchUserByToken(token);
+
+            return response.buildSuccess(currentUserDto).toJson();
+
+        } catch (DataNotFoundException e) {
+            return response.buildError(new TokenException()).toJson();
+        }
     }
 
 }

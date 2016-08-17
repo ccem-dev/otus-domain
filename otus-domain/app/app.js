@@ -14,7 +14,7 @@
             /* Possibly shared modules */
             'otusDomainClient',
             'otus.client',
-            'user',
+            'otusDomain.user',
             'utils'
         ]);
 

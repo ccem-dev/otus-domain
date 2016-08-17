@@ -1,6 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('user.management', ['passwordControl']);
+    angular.module('otusDomain.user.management', ['passwordControl']);
 
 })();
