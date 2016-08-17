@@ -17,7 +17,6 @@
         $scope.loadUsers = loadUsers;
         $scope.changeStatus = changeStatus;
         $scope.confirmDialog = confirmDialog;
-        $scope.currentRestResourceService = null;
 
         _init();
 
