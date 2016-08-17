@@ -4,29 +4,41 @@ describe('UserActivationController', function() {
     var controller;
 
     beforeEach(function() {
-        module('otus');
+        module('otusDomain');
 
-        mockUserData();
-
-        inject(function(_$controller_, _$injector_, $rootScope) {
-            controller = _$controller_('SignupController', {
+        inject(function(_$controller_, _$injector_, $http, $scope, $filter, $mdDialog, $mdToast) {
+            controller = _$controller_('UserActivationController', {
                 $scope: mockScope($rootScope),
-                SignupService: mockRestResourceService(_$injector_),
-                SignupService: mockOtusRestResourceService(_$injector_)
+                'ResourceService': mockRestResourceService(_$injector_),
+                'RestResourceService': mockOtusRestResourceService(_$injector_)
             });
         });
     });
 
-    describe('init', function() {
-        it('method should to assign RestResourceService in clientSelected', function() {
+    describe("Match controller", function() {
 
+        xit("should be created successfully", function() {
+            expect(true).toBe(true);
         });
     });
 
+    function mockRestResourceService() {
+        Mock.RestResourceService = $injector.get('RestResourceService');
+        return Mock.RestResourceService;
+    }
+
+    function mockOtusRestResourceService() {
+        Mock.OtusRestResourceService = $injector.get('OtusRestResourceService');
+        return Mock.OtusRestResourceService;
+    }
+
     function mockScope($rootScope) {
         Mock.$scope = $rootScope.$new();
-        
+        return Mock.$scope;
+    }
 
+    function mockHttp($rootScope) {
+        Mock.$scope = $rootScope.$new();
         return Mock.$scope;
     }
 

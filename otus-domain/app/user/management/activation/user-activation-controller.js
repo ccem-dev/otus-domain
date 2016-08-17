@@ -5,19 +5,30 @@
         .module('user.management')
         .controller('UserActivationController', UserActivationController);
 
-    UserActivationController.$inject = ['$http', '$scope', '$filter', 'RestResourceService', 'OtusRestResourceService', '$mdDialog', '$mdToast', 'userManagementType'];
+    UserActivationController.$inject = [
+        '$http',
+        '$scope',
+        '$filter',
+        'RestResourceService',
+        'OtusRestResourceService',
+        '$mdDialog',
+        '$mdToast',
+        'userManagementType'
+    ];
 
     function UserActivationController($http, $scope, $filter, RestResourceService, OtusRestResourceService, $mdDialog, $mdToast, userManagementType) {
+        var self = this;
+
         var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário ?';
         var DIALOG_TITLE = 'Mudança de Estatus';
         var DIALOG_ARIA = 'Mudança de Status';
         var clientSelected = null;
 
-        $scope.users = [];
-        $scope.loadUsers = loadUsers;
-        $scope.changeStatus = changeStatus;
-        $scope.confirmDialog = confirmDialog;
-        $scope.currentRestResourceService = null;
+        self.users = [];
+        self.loadUsers = loadUsers;
+        self.changeStatus = changeStatus;
+        self.confirmDialog = confirmDialog;
+        self.currentRestResourceService = null;
 
         _init();
 
