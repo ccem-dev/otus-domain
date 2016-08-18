@@ -15,9 +15,16 @@
         function responseError(response) {
             var dashboard = $injector.get('DashboardStateService');
 
+            /**
+             * TODO
+             * Check if response has any error. You must differentiate when one
+             * Otus project without access
+
             if (response.status === -1) {
-                dashboard.goToErrorOffline();
+                //dashboard.goToErrorOffline();
             }
+            **/
+
             return response;
         }
 

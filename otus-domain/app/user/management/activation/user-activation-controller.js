@@ -17,16 +17,30 @@
         $scope.loadUsers = loadUsers;
         $scope.changeStatus = changeStatus;
         $scope.confirmDialog = confirmDialog;
+        $scope.headerDomain = false;
+        $scope.headerOtus = false;
 
         _init();
 
         function _init() {
             if (userManagementType === 'domain') {
                 clientSelected = RestResourceService;
+                buildHeaderDomain();
             } else {
                 clientSelected = OtusRestResourceService;
+                buildHeaderOtus();
             }
             loadUsers();
+        }
+
+        function buildHeaderDomain() {
+            $scope.headerDomain = true;
+            $scope.headerOtus = false;
+        }
+
+        function buildHeaderOtus() {
+            $scope.headerDomain = false;
+            $scope.headerOtus = true;
         }
 
         function changeStatus(user) {
