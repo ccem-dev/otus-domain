@@ -9,7 +9,7 @@
             'INSTALLER': 'installer',
             'HOME': 'home',
             'USER_ACTIVATION': 'user-activation',
-			'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
+            'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
             'PROJECT_CENTER': 'field-center',
             'ERROR_OFFLINE': 'offline'
         });
@@ -77,9 +77,11 @@
                     loggedUser: function(RouteRulesResolver) {
                         return RouteRulesResolver.loggedUser();
                     },
-                    userManagementType: [function() {
-                        return 'domain';
-                    }]
+                    userManagementType: [
+                        function() {
+                            return 'domain';
+                        }
+                    ]
                 },
                 views: {
                     'system-wrap': {
@@ -97,7 +99,7 @@
                     }
                 }
             })
-			.state('user-otus-management', {
+            .state('user-otus-management', {
                 url: '/project/user',
                 resolve: {
                     loggedUser: function(RouteRulesResolver) {
@@ -106,9 +108,11 @@
                     selectedProject: function(RouteRulesResolver) {
                         return RouteRulesResolver.selectedProject();
                     },
-                    userManagementType: [function() {
-                        return 'otus';
-                    }]
+                    userManagementType: [
+                        function() {
+                            return 'otus';
+                        }
+                    ]
                 },
                 views: {
                     'system-wrap': {
@@ -183,7 +187,7 @@
                     }
                 }
             })
-			.state('offline', {
+            .state('offline', {
                 url: '/offline',
                 views: {
                     'system-wrap': {
@@ -191,7 +195,7 @@
                         controller: 'ResponseErrorOfflineController as controller'
                     }
                 }
-            })
+            });
 
         $urlRouterProvider.otherwise('/login');
     }

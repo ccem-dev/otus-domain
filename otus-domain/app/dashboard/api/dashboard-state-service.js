@@ -77,7 +77,7 @@
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
             authenticatorResource.invalidate(function() {
                 RestResourceService.removeSecurityToken();
-                OtusRestResourceService.removeSecurityProjectToken();
+                OtusRestResourceService.removeSecurityToken();
 
                 goToLogin();
             });
