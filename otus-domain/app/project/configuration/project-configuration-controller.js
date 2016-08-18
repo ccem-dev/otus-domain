@@ -11,16 +11,5 @@
 
     function ProjectConfigurationController(ProjectConfigurationService) {
       var self = this;
-      _init();
-
-      /*Public interface*/
-
-
-      function _init() {
-        console.log('smile and wave');
-      }
-
-
-
     }
 }());

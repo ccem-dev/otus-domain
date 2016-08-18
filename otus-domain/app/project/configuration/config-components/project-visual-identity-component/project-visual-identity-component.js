@@ -1,5 +1,5 @@
 (function() {
-    'use strict'
+    'use strict';
 
     angular
         .module('otusDomain.project')
@@ -21,8 +21,6 @@
         _init();
 
         /* Public Interface*/
-        self.logoURL = 'app/assets/img/image_not_found.jpg';
-        self.bannerURL = 'app/assets/img/image_not_found.jpg';
         self.progressBanner = false;
         self.progressLogo = false;
         self.uploadBanner = {
@@ -34,16 +32,24 @@
             'type': 'image'
         };
         self.save = save;
+        self.notFound = 'app/assets/img/image_not_found.jpg';
 
         function _init() {
+            updateFields();
+        }
+
+        function updateFields() {
+            var notFound = 'app/assets/img/image_not_found.jpg';
             self.data = ProjectConfigurationService.fetchProjectsVisualIdentity();
-            self.changedd = false;
+            self.data.bannerURL = self.data.bannerURL || notFound;
+            self.data.logoURL = self.data.logoURL || notFound;
+            self.changed = false;
         }
 
         function updateBanner(file) {
             self.progressBanner = true;
             getImageURL(file).then(function(imageURL) {
-                self.bannerURL = imageURL;
+                self.data.bannerURL = imageURL;
                 self.changed = true;
                 self.progressBanner = false;
             });
@@ -52,7 +58,7 @@
         function updateLogo(file) {
             self.progressLogo = true;
             getImageURL(file).then(function(imageURL) {
-                self.logoURL = imageURL;
+                self.data.logoURL = imageURL;
                 self.changed = true;
                 self.progressLogo = false;
             });
@@ -71,7 +77,10 @@
 
         function save() {
             self.changed = false;
-            ProjectConfigurationService.updateVisualIdentityConfiguration({'logo':self.logoURL, 'banner':self.bannerURL});
+            ProjectConfigurationService.updateVisualIdentityConfiguration({
+                'logo': self.logoURL,
+                'banner': self.bannerURL
+            });
             $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
         }
 
