@@ -30,6 +30,7 @@ describe('uploadTool', function() {
         it('should call the type resolver', function() {
             var $element = '<button upload-tool="uploadConfig"></button>';
             element = $compile($element)(scope);
+            scope.$apply();
             element[0].click();
             expect(Mock.UploadToolService.uploadTypeResolver).toHaveBeenCalled();
         });
