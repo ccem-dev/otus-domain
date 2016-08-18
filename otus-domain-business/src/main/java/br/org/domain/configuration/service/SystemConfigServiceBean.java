@@ -7,7 +7,6 @@ import br.org.domain.email.service.EmailNotifierService;
 import br.org.domain.exception.EmailNotificationException;
 import br.org.domain.exception.FillEmailSenderException;
 import br.org.domain.exception.InvalidDtoException;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.repository.service.RepositoryService;
 import br.org.domain.system.SystemConfig;
 import br.org.domain.system.dao.SystemConfigDao;
@@ -17,6 +16,7 @@ import br.org.tutty.Equalizer;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 @Stateless
 @Local(SystemConfigService.class)
@@ -71,7 +71,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
         try {
             emailNotifierService.sendWelcomeEmail(emailSenderDto);
 
-        } catch (EmailNotificationException | DataNotFoundException e) {
+        } catch (EmailNotificationException | NoResultException e) {
             throw new EmailNotificationException(e);
         }
 

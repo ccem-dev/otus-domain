@@ -1,6 +1,6 @@
 (function() {
     angular
-        .module('user.management')
+        .module('otusDomain.user.management')
         .controller('UserRegisterController', UserRegisterController);
 
     UserRegisterController.$inject = ['$http', '$mdDialog', 'DashboardStateService', 'RestResourceService'];
@@ -35,7 +35,7 @@
     }
 
     angular
-        .module('user.management')
+        .module('otusDomain.user.management')
         .directive(
             'unique', ['$http', '$q', 'RestResourceService',
                 function($http, $q, RestResourceService) {

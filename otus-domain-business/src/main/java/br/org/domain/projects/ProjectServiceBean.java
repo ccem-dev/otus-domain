@@ -1,14 +1,12 @@
 package br.org.domain.projects;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
-import br.org.domain.exception.ConvertedDtoException;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.projects.dto.ProjectDto;
 import br.org.tutty.Equalizer;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +41,7 @@ public class ProjectServiceBean implements ProjectService {
                 projectDtos.add(projectDto);
             }
 
-        } catch (DataNotFoundException e) {
+        } catch (NoResultException e) {
             return projectDtos;
         }
 

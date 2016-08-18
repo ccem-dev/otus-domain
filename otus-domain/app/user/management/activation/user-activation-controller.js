@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('user.management')
+        .module('otusDomain.user.management')
         .controller('UserActivationController', UserActivationController);
 
     UserActivationController.$inject = ['$http', '$scope', '$filter', 'RestResourceService', '$mdDialog', '$mdToast'];

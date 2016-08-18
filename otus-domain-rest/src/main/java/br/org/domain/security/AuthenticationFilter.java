@@ -30,7 +30,7 @@ public class AuthenticationFilter implements ContainerRequestFilter{
             throw new NotAuthorizedException("Authorization header must be provided");
         }
 
-        String token = authorizationHeader.substring("Bearer".length()).trim();
+        String token = TokenParser.parse(authorizationHeader);
 
         try{
             securityContextService.validateToken(token);

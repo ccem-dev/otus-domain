@@ -74,6 +74,14 @@ public class SecurityContextServiceBean implements SecurityContextService {
 		} catch (ParseException | JOSEException e) {
 			throw new TokenException();
 		}
+	}
 
+	@Override
+	public String getUserId(String token) throws DataNotFoundException {
+		try {
+			return securityContext.getUserId(token);
+		} catch (ParseException e) {
+			throw new DataNotFoundException();
+		}
 	}
 }

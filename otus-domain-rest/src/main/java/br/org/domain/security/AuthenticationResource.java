@@ -6,6 +6,7 @@ import br.org.domain.exception.InvalidPasswordException;
 import br.org.domain.exception.TokenException;
 import br.org.domain.exception.UserDisabledException;
 import br.org.domain.security.dtos.AuthenticationDto;
+import br.org.domain.user.dto.CurrentUserDto;
 import br.org.domain.security.services.SecurityService;
 import com.google.gson.Gson;
 
@@ -36,8 +37,8 @@ public class AuthenticationResource {
 
         Response response = new Response();
         try {
-            String jwt = securityService.authenticate(authenticationDto);
-            response.setData(jwt);
+            CurrentUserDto currentUserDto = securityService.authenticate(authenticationDto);
+            response.setData(currentUserDto);
 
             return response.buildSuccess().toJson();
 

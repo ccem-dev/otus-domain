@@ -3,17 +3,21 @@ package br.org.domain.user.service;
 import br.org.domain.email.DisableUserNotificationEmail;
 import br.org.domain.email.EnableUserNotificationEmail;
 import br.org.domain.email.service.EmailNotifierService;
+import br.org.domain.exception.DataNotFoundException;
 import br.org.domain.exception.EmailNotificationException;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.repository.dao.RepositoryDao;
 import br.org.domain.repository.service.RepositoryService;
+import br.org.domain.security.services.SecurityService;
 import br.org.domain.user.User;
+import br.org.domain.user.builder.CurrentUserBuilder;
 import br.org.domain.user.dao.UserDao;
+import br.org.domain.user.dto.CurrentUserDto;
 import br.org.domain.user.dto.ManagementUserDto;
 import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,9 @@ public class ManagementUserServiceBean implements ManagementUserService {
 
 	@Inject
 	private UserDao userDao;
+
+    @Inject
+    private SecurityService securityService;
 
 	@Inject
 	private EmailNotifierService emailNotifierService;
@@ -52,6 +59,24 @@ public class ManagementUserServiceBean implements ManagementUserService {
 		return administrationUsersDtos;
 	}
 
+    @Override
+    public CurrentUserDto fetchUserByToken(String token) throws DataNotFoundException {
+        String email = securityService.parseUserId(token);
+        User user = fetchUserByEmail(email);
+
+        CurrentUserDto currentUser = CurrentUserBuilder.build(user, token);
+        return currentUser;
+    }
+
+    @Override
+    public User fetchUserByEmail(String email) throws DataNotFoundException {
+        try {
+            return userDao.fetchByEmail(email);
+        }catch (NoResultException e){
+            throw new DataNotFoundException();
+        }
+    }
+
 	@Override
 	public void disableUsers(ManagementUserDto managementUserDto) {
             try {
@@ -65,7 +90,7 @@ public class ManagementUserServiceBean implements ManagementUserService {
                 disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
 
                 emailNotifierService.sendEmail(disableUserNotificationEmail);
-            } catch (DataNotFoundException | EmailNotificationException e) {
+            } catch (EmailNotificationException e) {
                 e.printStackTrace();
             }
 	}
@@ -87,7 +112,7 @@ public class ManagementUserServiceBean implements ManagementUserService {
                 }
 
                 emailNotifierService.sendEmail(enableUserNotificationEmail);
-            } catch (DataNotFoundException | EmailNotificationException e) {
+            } catch (EmailNotificationException e) {
                 e.printStackTrace();
             }
 	}
