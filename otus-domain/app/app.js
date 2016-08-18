@@ -12,7 +12,7 @@
             'otusDomain.project',
             'otusDomain.project.fieldCenter',
             /* Possibly shared modules */
-            'otusDomainClient',
+            'otus.domain.client',
             'otus.client',
             'otusDomain.user',
             'utils'

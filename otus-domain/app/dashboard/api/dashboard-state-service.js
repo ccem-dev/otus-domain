@@ -22,8 +22,10 @@
         self.goToInstaller = goToInstaller;
         self.goToUserRegister = goToUserRegister;
         self.goToUserActivation = goToUserActivation;
+        self.goToUserActivationInProject = goToUserActivationInProject;
         self.goToProjectCenters = goToProjectCenters;
         self.goToProjectConfiguration = goToProjectConfiguration;
+        self.goToErrorOffline = goToErrorOffline;
         self.logout = logout;
 
         init();
@@ -57,6 +59,11 @@
             $state.go(APP_STATE.USER_ACTIVATION);
         }
 
+        function goToUserActivationInProject() {
+            self.currentState = 'Liberação de usuários no projeto selecionado';
+            $state.go(APP_STATE.USER_ACTIVATION_IN_PROJECT);
+        }
+
         function goToProjectCenters() {
             self.currentState = 'Centros';
             $state.go(APP_STATE.PROJECT_CENTER);
@@ -67,11 +74,16 @@
             $state.go(APP_STATE.PROJECT_CONFIGURATION);
         }
 
+        function goToErrorOffline() {
+            self.currentState = 'Offline';
+            $state.go(APP_STATE.ERROR_OFFLINE);
+        }
+
         function logout() {
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
             authenticatorResource.invalidate(function() {
                 RestResourceService.removeSecurityToken();
-                OtusRestResourceService.removeSecurityProjectToken();
+                OtusRestResourceService.removeSecurityToken();
 
                 goToLogin();
             });

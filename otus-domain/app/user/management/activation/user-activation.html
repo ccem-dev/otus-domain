@@ -1,4 +1,7 @@
 <md-content flex>
+    <md-subheader class="md-primary" ng-show="headerDomain">Usuários Domain</md-subheader>
+    <md-subheader class="md-primary" ng-show="headerOtus">Usuários Otus</md-subheader>
+
     <md-input-container layout="row">
         <md-icon md-font-library="material-icons">search</md-icon>
         <input ng-model="query" placeholder="Busca pelo Nome ou Email"></input>

@@ -5,9 +5,9 @@
         .module('otusDomain.project')
         .controller('ProjectChooseController', ProjectChooseController);
 
-    ProjectChooseController.$inject = ['$scope', '$mdDialog', 'projects', 'ProjectSecurityService', '$mdToast'];
+    ProjectChooseController.$inject = ['$scope', '$mdDialog', 'projects', 'ProjectSecurityService', '$mdToast', 'ProjectContext', 'OtusRestResourceService'];
 
-    function ProjectChooseController($scope, $mdDialog, projects, ProjectSecurityService, $mdToast) {
+    function ProjectChooseController($scope, $mdDialog, projects, ProjectSecurityService, $mdToast, ProjectContext, OtusRestResourceService) {
         var OFFLINE_MESSAGE = 'Projeto Offline. Verifique o estado do projeto.';
         var AUTHENTICATION_ERROR_MESSAGE = 'Erro ao realizar autenticação no projeto';
 
@@ -20,6 +20,7 @@
 
         function init() {
             validateConnection(self.projects);
+            rollbackProjectConnectionData();
         }
 
         function close() {
@@ -34,9 +35,12 @@
 
         function select(project) {
             if (project.status) {
-                ProjectSecurityService.authenticate(project).then(function(){
+                ProjectSecurityService.authenticate(project).then(function(response) {
+                    approveProjectAuthentication(response.data, project);
                     close();
-                }, function(){
+
+                }, function() {
+                    rollbackProjectConnectionData();
                     showAuthenticationErrorMessage();
                 });
             } else {
@@ -44,9 +48,25 @@
             }
         }
 
+        function rollbackProjectConnectionData() {
+            if (ProjectContext.hasProject()) {
+                var lastSelectedProject = ProjectContext.getCurrentProject();
+
+                OtusRestResourceService.setUrl(lastSelectedProject.projectRestUrl);
+                OtusRestResourceService.setSecurityToken(lastSelectedProject.sessionToken);
+            }
+        }
+
+        function approveProjectAuthentication(token, project) {
+            project.sessionToken = token;
+            OtusRestResourceService.setSecurityToken(project.sessionToken);
+            ProjectContext.setProject(project);
+        }
+
         function showOfflineMessage() {
             $mdToast.show($mdToast.simple().textContent(OFFLINE_MESSAGE));
         }
+
         function showAuthenticationErrorMessage() {
             $mdToast.show($mdToast.simple().textContent(AUTHENTICATION_ERROR_MESSAGE));
         }

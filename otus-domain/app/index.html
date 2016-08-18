@@ -1,131 +1,135 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="otusDomain">
 
-    <head>
-        <base href="/otus-domain/"/>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="initial-scale=1">
-        <title>Otus Domain</title>
+<head>
+    <base href="/otus-domain/" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="initial-scale=1">
+    <title>Otus Domain</title>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="app/assets/img/corujaneutra.png" rel="icon"/>
-        <!-- ASSETS -->
-        <!-- application -->
-        <link href="app/assets/css/styles.css" rel="stylesheet"/>
-        <link href="app/assets/css/login.css" rel="stylesheet"/>
-        <link href="app/assets/css/user-register.css" rel="stylesheet"/>
-        <link href="app/assets/css/initial-config.css" rel="stylesheet"/>
-        <!-- library -->
-        <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
-    </head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- ASSETS -->
+    <!-- application -->
+    <link href="app/assets/css/styles.css" rel="stylesheet" />
+    <link href="app/assets/css/login.css" rel="stylesheet" />
+    <link href="app/assets/css/user-register.css" rel="stylesheet" />
+    <link href="app/assets/css/initial-config.css" rel="stylesheet" />
+    <!-- library -->
+    <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"
+    />
+</head>
 
-    <body layout="row" flex class="md-body-2" md-theme="layoutTheme">
-        <div layout="row" flex ui-view="system-wrap"></div>
-    </body>
+<body layout="row" flex class="md-body-2" md-theme="layoutTheme">
+    <div layout="row" flex ui-view="system-wrap"></div>
+</body>
 
-    <!-- Script imports -->
-    <!-- ************************************* jQuery ************************************* -->
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+<!-- Script imports -->
+<!-- ************************************* jQuery ************************************* -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
 
-    <!-- ************************************* Angular ************************************* -->
-    <script src="node_modules/angular/angular.min.js"></script>
-    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
-    <script src="node_modules/angular-aria/angular-aria.min.js"></script>
-    <script src="node_modules/angular-messages/angular-messages.min.js"></script>
-    <script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
-    <script src="node_modules/angular-ui-router/build/angular-ui-router.min.js"></script>
-    <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+<!-- ************************************* Angular ************************************* -->
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+<script src="node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="node_modules/angular-messages/angular-messages.min.js"></script>
+<script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
+<script src="node_modules/angular-ui-router/build/angular-ui-router.min.js"></script>
+<script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
-    <!-- ************************************* Angular Material ************************************* -->
-    <script src="node_modules/angular-material/angular-material.min.js"></script>
+<!-- ************************************* Angular Material ************************************* -->
+<script src="node_modules/angular-material/angular-material.min.js"></script>
 
-    <!-- ************************************* Moment ************************************* -->
-    <script src="node_modules/moment/moment.js"></script>
+<!-- ************************************* Moment ************************************* -->
+<script src="node_modules/moment/moment.js"></script>
 
-    <!-- ***************************************** Utils ***************************************** -->
-    <!-- Utils -->
-    <script src="app/components/st-utils/st-utils-module.js"></script>
-    <script src="app/components/st-password/st-password-module.js"></script>
-
-    <!-- ************************************** Otus Domain ************************************** -->
-    <script src="app/config/env.js"></script>
-    <script src="app/app.js"></script>
-
-    <!-- app.config -->
-    <script src="app/config/init-configuration.js"></script>
-    <script src="app/config/dependencies-configuration.js"></script>
-    <script src="app/config/locale-configuration.js"></script>
-    <script src="app/config/state-configuration.js"></script>
-    <script src="app/config/theme-configuration.js"></script>
-    <script src="app/config/route-rules-resolver-service.js"></script>
-
-    <!-- REST RESOURCE -->
-    <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
-
-    <!-- AUTHENTICATOR -->
-    <script src="app/authenticator/authenticator-module.js"></script>
-    <script src="app/authenticator/login/login-controller.js"></script>
-
-    <!-- USER -->
-    <script src="app/user/user-module.js"></script>
-    <script src="app/user/api/user-service.js"></script>
-    <script src="app/user/user-context.js"></script>
-    <script src="app/user/management/user-management-module.js"></script>
-    <script src="app/user/management/registry/user-register-controller.js"></script>
-    <script src="app/user/management/activation/user-activation-controller.js"></script>
-
-    <!-- INSTALLER -->
-    <script src="app/installer/installer-module.js"></script>
-    <script src="app/installer/initial/initial-config-controller.js"></script>
-
-    <!-- REPOSITORY -->
-    <script src="app/survey-repository/repository-module.js"></script>
-
-    <!-- ************************************** Studio Dashboard ************************************** -->
-    <script src="app/dashboard/dashboard-module.js"></script>
-
-    <!-- API -->
-    <script src="app/dashboard/api/dashboard-state-service.js"></script>
-
-    <!-- DIALOG -->
-    <script src="app/dashboard/dialog/logout/logout-dialog-service.js"></script>
-
-    <!-- HOME -->
-    <script src="app/dashboard/home/home-controller.js"></script>
-
-    <!-- MENU -->
-    <script src="app/dashboard/menu/dashboard-menu-controller.js"></script>
-
-    <!-- PROJECT -->
-    <script src="app/project/project-module.js"></script>
-    <script src="app/project/security/project-security-service.js"></script>
-    <script src="app/project/security/project-authentication-factory.js"></script>
-    <script src="app/project/context/project-selection-service.js"></script>
-    <script src="app/project/context/project-context.js"></script>
-    <script src="app/project/context/dialog/project-choose-controller.js"></script>
-    <script src="app/project/otus-waiting-project-directive.js"></script>
-
-    <!-- PROJECT-FIELD_CENTER -->
-    <script src="app/project/fieldCenter/field-center-module.js"></script>
-    <script src="app/project/fieldCenter/field-center-service.js"></script>
-    <script src="app/project/fieldCenter/field-center-controller.js"></script>
-    <script src="app/project/fieldCenter/field-center-context.js"></script>
-    <script src="app/project/fieldCenter/dialog/create-field-center-controller.js"></script>
-
-    <!-- PROJECT-CONFIGURATION -->
-    <script src="app/project/configuration/project-configuration-controller.js"></script>
-    <script src="app/project/configuration/project-configuration-service.js"></script>
-    <script src="app/project/configuration/config-components/participant-register/participant-register-component.js"></script>
-
-    <script src="app/project/configuration/config-components/project-visual-identity-component/project-visual-identity-component.js"></script>
-
-    <!-- UPLOAD TOOL -->
-    <script src="app/project/configuration/upload-tool/upload-tool-directive.js"></script>
-    <script src="app/project/configuration/upload-tool/upload-tool-service.js"></script>
+<!-- ***************************************** Utils ***************************************** -->
+<!-- Utils -->
+<script src="app/components/st-utils/st-utils-module.js"></script>
+<script src="app/components/st-password/st-password-module.js"></script>
 
 
-    <!-- OTUS-CLIENT -->
-    <script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
+<!-- ************************************** Otus Domain ************************************** -->
+<script src="app/config/env.js"></script>
+<script src="app/app.js"></script>
+
+<!-- app.config -->
+<script src="app/config/init-configuration.js"></script>
+<script src="app/config/dependencies-configuration.js"></script>
+<script src="app/config/locale-configuration.js"></script>
+<script src="app/config/state-configuration.js"></script>
+<script src="app/config/theme-configuration.js"></script>
+<script src="app/config/route-rules-resolver-service.js"></script>
+
+<!-- REST RESOURCE -->
+<script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
+
+<!-- AUTHENTICATOR -->
+<script src="app/authenticator/authenticator-module.js"></script>
+<script src="app/authenticator/login/login-controller.js"></script>
+
+<!-- USER -->
+<script src="app/user/user-module.js"></script>
+<script src="app/user/api/user-service.js"></script>
+<script src="app/user/user-context.js"></script>
+<script src="app/user/management/user-management-module.js"></script>
+<script src="app/user/management/registry/user-register-controller.js"></script>
+<script src="app/user/management/activation/user-activation-controller.js"></script>
+
+<!-- INSTALLER -->
+<script src="app/installer/installer-module.js"></script>
+<script src="app/installer/initial/initial-config-controller.js"></script>
+
+<!-- REPOSITORY -->
+<script src="app/survey-repository/repository-module.js"></script>
+
+<!-- ************************************** Studio Dashboard ************************************** -->
+<script src="app/dashboard/dashboard-module.js"></script>
+
+<!-- API -->
+<script src="app/dashboard/api/dashboard-state-service.js"></script>
+
+<!-- DIALOG -->
+<script src="app/dashboard/dialog/logout/logout-dialog-service.js"></script>
+
+<!-- HOME -->
+<script src="app/dashboard/home/home-controller.js"></script>
+
+<!-- MENU -->
+<script src="app/dashboard/menu/dashboard-menu-controller.js"></script>
+
+<!-- PROJECT -->
+<script src="app/project/project-module.js"></script>
+<script src="app/project/security/project-security-service.js"></script>
+<script src="app/project/security/project-authentication-factory.js"></script>
+<script src="app/project/context/project-selection-service.js"></script>
+<script src="app/project/context/project-context.js"></script>
+<script src="app/project/context/dialog/project-choose-controller.js"></script>
+<script src="app/project/otus-waiting-project-directive.js"></script>
+
+<!-- PROJECT-FIELD_CENTER -->
+<script src="app/project/fieldCenter/field-center-module.js"></script>
+<script src="app/project/fieldCenter/field-center-service.js"></script>
+<script src="app/project/fieldCenter/field-center-controller.js"></script>
+<script src="app/project/fieldCenter/field-center-context.js"></script>
+<script src="app/project/fieldCenter/dialog/create-field-center-controller.js"></script>
+
+<!-- OTUS-CLIENT -->
+<script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
+
+<!-- INTERCEPTORS ERRORS -->
+<script src="app/response-error/interceptors/interceptor-configuration.js"></script>
+<script src="app/response-error/interceptors/response-interceptor.js"></script>
+<script src="app/response-error/offline/offline-controller.js"></script>
+
+<!-- PROJECT-CONFIGURATION -->
+<script src="app/project/configuration/project-configuration-controller.js"></script>
+<script src="app/project/configuration/project-configuration-service.js"></script>
+<script src="app/project/configuration/config-components/participant-register/participant-register-component.js"></script>
+<script src="app/project/configuration/config-components/project-visual-identity-component/project-visual-identity-component.js"></script>>
+
+<!-- UPLOAD TOOL -->
+<script src="app/project/configuration/upload-tool/upload-tool-directive.js"></script>
+<script src="app/project/configuration/upload-tool/upload-tool-service.js"></script>
 
 </html>

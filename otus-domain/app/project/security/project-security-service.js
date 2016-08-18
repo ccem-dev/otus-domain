@@ -34,34 +34,13 @@
 
             otusAuthenticatorResource.authenticateProject(projectAuthentication, function(response) {
                 if (!response.hasErrors) {
-                    approvedAuthentication(response.data, project);
-                    deferred.resolve();
+                    deferred.resolve(response);
                 } else {
-                    rejectAuthentication();
-                    deferred.reject();
+                    deferred.reject(response);
                 }
             });
 
             return deferred.promise;
-        }
-
-        function approvedAuthentication(token, project) {
-            project.sessionToken = token;
-            OtusRestResourceService.setSecurityProjectToken(project.sessionToken);
-            ProjectContext.setProject(project);
-        }
-
-        function rejectAuthentication() {
-            OtusRestResourceService.resetConnectionData();
-            rollbackAuthenticationAttempt();
-        }
-
-        function rollbackAuthenticationAttempt() {
-            if (ProjectContext.hasProject()) {
-                var lastSelectedProject = ProjectContext.getCurrentProject();
-                OtusRestResourceService.setUrl(lastSelectedProject.projectRestUrl);
-                OtusRestResourceService.setSecurityProjectToken(lastSelectedProject.sessionToken);
-            }
         }
     }
 

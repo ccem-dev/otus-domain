@@ -9,7 +9,9 @@
             'INSTALLER': 'installer',
             'HOME': 'home',
             'USER_ACTIVATION': 'user-activation',
+            'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
             'PROJECT_CENTER': 'field-center',
+            'ERROR_OFFLINE': 'offline',
             'PROJECT_CONFIGURATION': 'configuration-center'
         });
 
@@ -75,7 +77,13 @@
                 resolve: {
                     loggedUser: function(RouteRulesResolver) {
                         return RouteRulesResolver.loggedUser();
-                    }
+                    },
+                    userManagementType: [
+
+                        function() {
+                            return 'domain';
+                        }
+                    ]
                 },
                 views: {
                     'system-wrap': {
@@ -87,6 +95,37 @@
 
                     },
                     'system-content@user-activation': {
+                        templateUrl: 'app/user/management/activation/user-activation.html',
+                        controller: 'UserActivationController',
+                        controllerAs: 'userActivationController'
+                    }
+                }
+            })
+            .state('user-otus-management', {
+                url: '/project/user',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    },
+                    selectedProject: function(RouteRulesResolver) {
+                        return RouteRulesResolver.selectedProject();
+                    },
+                    userManagementType: [
+
+                        function() {
+                            return 'otus';
+                        }
+                    ]
+                },
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@user-otus-management': {
+                        templateUrl: dashboardMenu
+                    },
+                    'system-content@user-otus-management': {
                         templateUrl: 'app/user/management/activation/user-activation.html',
                         controller: 'UserActivationController',
                         controllerAs: 'userActivationController'
@@ -121,31 +160,6 @@
                     }
                 }
             })
-            .state('configuration-center', {
-                url: '/project/configuration',
-                resolve: {
-                    loggedUser: function(RouteRulesResolver) {
-                        return RouteRulesResolver.loggedUser();
-                    },
-                    selectedProject: function(RouteRulesResolver) {
-                        return RouteRulesResolver.selectedProject();
-                    }
-                },
-                views: {
-                    'system-wrap': {
-                        templateUrl: mainDashBoardTemplate,
-                        controller: 'DashboardMenuController as dashboardMenu'
-                    },
-                    'dashboard-menu@configuration-center': {
-                        templateUrl: dashboardMenu
-                    },
-                    'system-content@configuration-center': {
-                        templateUrl: 'app/project/configuration/configuration-template.html',
-                        controller: 'otusjs.otus-domain.project.ProjectConfigurationController',
-                        controllerAs: 'configController'
-                    }
-                }
-            })
             .state('home', {
                 url: '/home',
                 resolve: {
@@ -172,6 +186,40 @@
                     },
                     'section-commands@home': {
                         templateUrl: 'app/dashboard/home/home-commands-section.html'
+                    }
+                }
+            })
+            .state('configuration-center', {
+                url: '/project/configuration',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    },
+                    selectedProject: function(RouteRulesResolver) {
+                        return RouteRulesResolver.selectedProject();
+                    }
+                },
+                views: {
+                    'system-wrap': {
+                        templateUrl: mainDashBoardTemplate,
+                        controller: 'DashboardMenuController as dashboardMenu'
+                    },
+                    'dashboard-menu@configuration-center': {
+                        templateUrl: dashboardMenu
+                    },
+                    'system-content@configuration-center': {
+                        templateUrl: 'app/project/configuration/configuration-template.html',
+                        controller: 'otusjs.otus-domain.project.ProjectConfigurationController',
+                        controllerAs: 'configController'
+                    }
+                }
+            })
+            .state('offline', {
+                url: '/offline',
+                views: {
+                    'system-wrap': {
+                        templateUrl: 'app/response-error/offline/offline.html',
+                        controller: 'ResponseErrorOfflineController as controller'
                     }
                 }
             });
