@@ -18,7 +18,7 @@
                     </md-button>
                     <md-progress-circular ng-if = "$ctrl.progressLogo" md-mode="indeterminate"></md-progress-circular>
                 </div>
-                <img id="logo-image" ng-src="{{$ctrl.logoURL}}"></img>
+                <img id="logo-image" ng-src="{{$ctr.data.logoURL}}"></img>
             </md-content>
 
             <md-content flex="85" layout-gt-md="column" layout="row" layout-padding layout-wrap>
@@ -29,7 +29,7 @@
                     </md-button>
                     <md-progress-circular ng-show = "$ctrl.progressBanner" md-mode="indeterminate"></md-progress-circular>
                 </div>
-                <img flex ng-src="{{$ctrl.bannerURL}}"></img>
+                <img flex ng-src="{{$ctrl.data.bannerURL}}"></img>
             </md-content>
         </md-content>
     </md-card>

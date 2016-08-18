@@ -29,20 +29,22 @@
         var mainFile;
 
         function _init() {
+            updateFields();
+        }
+
+        function updateFields() {
             self.changed = false;
             self.data = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
-            self.sendingDate = new Date(self.data.sendingDate);
-            self.sendingDate = self.sendingDate.toLocaleDateString() + ' - ' + self.sendingDate.toLocaleTimeString();
+            if (self.data != {}) {  //TODO check this test accordingly to rest return
+                self.sendingDate = new Date(self.data.sendingDate);
+                self.sendingDate = self.sendingDate.toLocaleDateString() + ' - ' + self.sendingDate.toLocaleTimeString();
+            }
         }
 
         function uploadFile(file) {
             self.changed = true;
             fileParser(file).then(function(templateObject) {
-                mainFile = templateObject;
-                self.data.file = mainFile;
-                self.sendingDate = new Date();
-                self.sendingDate = self.sendingDate.toLocaleDateString() + ' - ' + self.sendingDate.toLocaleTimeString();
-                //email update
+                self.data.file = templateObject;
             });
         }
 
@@ -57,17 +59,17 @@
         }
 
         function save() {
-            self.changed = false;
-            ProjectConfigurationService.updateParticipantRegisterConfiguration(mainFile);
-            Object.assign(self.data.file, mainFile);
-            $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
+            updateRest().then(function(response) {
+                $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
+                updateFields();
+            });
         }
 
-        function updateRest(){
-          var deferred = $q.defer();
-          deferred.resolve();
-          deferred.reject(); //TODO   implementar quando chamadas rest estiverem prontas
-          return deferred.promise;
+        function updateRest() {
+            var deferred = $q.defer();
+            deferred.resolve(ProjectConfigurationService.updateParticipantRegisterConfiguration(mainFile));
+            deferred.reject(); //TODO   implementar quando chamadas rest estiverem prontas
+            return deferred.promise;
         }
 
     }

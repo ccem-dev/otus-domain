@@ -9,12 +9,17 @@
 
     function ProjectConfigurationService() {
         var self = this;
-
+        _init();
         /* Public Interface */
         self.fetchParticipantRegisterConfiguration = fetchParticipantRegisterConfiguration;
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
         self.updateParticipantRegisterConfiguration = updateParticipantRegisterConfiguration;
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
+
+
+        function _init() {
+        }
+
 
         /* Participant Register Fetcher */
         function fetchParticipantRegisterConfiguration() {
@@ -27,7 +32,6 @@
                         'acronym': 'ELE'
                     }
                 },
-                'userEmail':'brenoscheffer@gmail.com',
                 'sendingDate': 'Mon Aug 03 2016 20:04:52 GMT-0300 (BRT)'
             };
             return jsonSetUp;
@@ -46,7 +50,7 @@
         function fetchProjectsVisualIdentity() {
             // return OtusRestResourceService.getProjectConfig();
             var jsonSetUp = {
-                "logoURL": '',
+                "logoURL": null,
                 "bannerURL": ''
             };
             return jsonSetUp;
@@ -54,6 +58,7 @@
 
         function updateVisualIdentityConfiguration(files) {
             console.log(files);
+            return true;
         }
     }
 }());
