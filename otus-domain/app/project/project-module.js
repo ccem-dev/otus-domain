@@ -1,6 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('otusDomain.project', []);
+    angular.module('otusDomain.project', ['ngMaterial']);
 
 })();

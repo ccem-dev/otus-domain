@@ -17,8 +17,7 @@
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
 
-        function _init() {
-        }
+        function _init() {}
 
 
         /* Participant Register Fetcher */
@@ -32,31 +31,50 @@
                         'acronym': 'ELE'
                     }
                 },
-                'sendingDate': 'Mon Aug 03 2016 20:04:52 GMT-0300 (BRT)'
+                'sendingDate': 'Mon Aug 03 2016 20:04:52 GMT-0300 (BRT)',
+                'domain': ''
             };
-            return jsonSetUp;
+            //expect: returns full object or {}
+            return {};
         }
 
         function updateParticipantRegisterConfiguration(file) {
-          //TODO
-          //find out who is gonna resolve user email and sending date
+            //TODO
+            // expected:
+            // {
+            //   'file':self.data.file,
+            //   'date':new Date()
+            // };
             if (file) {
                 console.log(file);
             }
+            return file;
         }
 
 
         /* Visual Identity */
         function fetchProjectsVisualIdentity() {
             // return OtusRestResourceService.getProjectConfig();
-            var jsonSetUp = {
-                "logoURL": null,
-                "bannerURL": ''
-            };
+            var jsonSetUp ={
+                    'files':{
+                      "logoURL": null,
+                      "bannerURL": ''
+                    },
+                    'date':''
+                  };
             return jsonSetUp;
         }
 
         function updateVisualIdentityConfiguration(files) {
+          //expected
+          // {
+          //   'files':{
+          //       'logo': self.data.logoURL,
+          //       'banner': self.data.bannerURL
+          //   },
+          //   'date':new Date()
+          // }
+
             console.log(files);
             return true;
         }

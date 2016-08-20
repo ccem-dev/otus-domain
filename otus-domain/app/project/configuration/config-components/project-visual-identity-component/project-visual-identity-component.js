@@ -40,16 +40,26 @@
 
         function updateFields() {
             var notFound = 'app/assets/img/image_not_found.jpg';
-            self.data = ProjectConfigurationService.fetchProjectsVisualIdentity();
-            self.data.bannerURL = self.data.bannerURL || notFound;
-            self.data.logoURL = self.data.logoURL || notFound;
-            self.changed = false;
+            (function() {
+                var deferred = $q.defer();
+                deferred.resolve(ProjectConfigurationService.fetchProjectsVisualIdentity());
+                return deferred.promise;
+
+            }())
+            .then(function(data) {
+                    self.data = data;
+                })
+                .finally(function() {
+                    self.data.files.bannerURL = self.data.files.bannerURL || notFound;
+                    self.data.files.logoURL = self.data.files.logoURL || notFound;
+                    self.changed = false;
+                });
         }
 
         function updateBanner(file) {
             self.progressBanner = true;
             getImageURL(file).then(function(imageURL) {
-                self.data.bannerURL = imageURL;
+                self.data.files.bannerURL = imageURL;
                 self.changed = true;
                 self.progressBanner = false;
             });
@@ -58,7 +68,7 @@
         function updateLogo(file) {
             self.progressLogo = true;
             getImageURL(file).then(function(imageURL) {
-                self.data.logoURL = imageURL;
+                self.data.files.logoURL = imageURL;
                 self.changed = true;
                 self.progressLogo = false;
             });
@@ -77,11 +87,20 @@
 
         function save() {
             self.changed = false;
-            ProjectConfigurationService.updateVisualIdentityConfiguration({
-                'logo': self.logoURL,
-                'banner': self.bannerURL
-            });
+            var uploadSet = {
+                'files': {
+                    'logo': self.data.files.logoURL,
+                    'banner': self.data.files.bannerURL
+                },
+                'sendingDate': new Date()
+            };
+            ProjectConfigurationService.updateVisualIdentityConfiguration(uploadSet);
+            self.data.sendingDate = getDate(uploadSet.sendingDate);
             $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
+        }
+
+        function getDate(date) {
+            return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
         }
 
     }

@@ -29,24 +29,27 @@
         var mainFile;
 
         function _init() {
-            updateFields();
+            self.data = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
+            updateFields(self.data);
         }
 
-        function updateFields() {
+        function updateFields(data) {
             self.changed = false;
-            self.data = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
-            if (self.data != {}) {  //TODO check this test accordingly to rest return
-                self.sendingDate = new Date(self.data.sendingDate);
-                self.sendingDate = self.sendingDate.toLocaleDateString() + ' - ' + self.sendingDate.toLocaleTimeString();
+            if (!!self.data.file) { //TODO check this test accordingly to rest return
+                self.data.sendingDate = getDate(new Date(data.sendingDate));
             }
         }
 
         function uploadFile(file) {
             self.changed = true;
+            if(file.type==='application/json'){
             fileParser(file).then(function(templateObject) {
                 self.data.file = templateObject;
+                self.data.sendingDate = '';
             });
+          }
         }
+        //application/json
 
         function fileParser(file) {
             var deferred = $q.defer();
@@ -59,19 +62,25 @@
         }
 
         function save() {
-            updateRest().then(function(response) {
+            updateRest().then(function(uploadSet) {
                 $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
-                updateFields();
+                updateFields(uploadSet);
             });
         }
 
         function updateRest() {
             var deferred = $q.defer();
-            deferred.resolve(ProjectConfigurationService.updateParticipantRegisterConfiguration(mainFile));
-            deferred.reject(); //TODO   implementar quando chamadas rest estiverem prontas
+            var uploadSet = {
+                'file': self.data.file,
+                'sendingDate': new Date()
+            };
+            deferred.resolve(ProjectConfigurationService.updateParticipantRegisterConfiguration(uploadSet));
             return deferred.promise;
         }
 
+        function getDate(date){
+          return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
+        }
     }
 
 }());

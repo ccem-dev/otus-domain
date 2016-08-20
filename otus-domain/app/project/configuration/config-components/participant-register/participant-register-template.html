@@ -4,15 +4,18 @@
             <md-card-title-text>
                 <span class="md-body-2">Template Registro de Participante</span>
                 <div layout="column" ng-show="$ctrl.data.file">
-                    <span class="md-subhead">Atual:
+                    <span class="md-subhead">Template Escolhido:
                         {{$ctrl.data.file.identity.name}}
                         -
                         {{$ctrl.data.file.identity.acronym}}</span>
-                    <span class="md-subhead">Data de Upload:
-                        {{$ctrl.sendingDate}}</span>
-                        <!-- <span class="md-subhead">Por:
+                    <span class="md-subhead" ng-show="$ctrl.data.sendingDate">Data de Upload:
+                        {{$ctrl.data.sendingDate}}</span>
+                    <!-- <span class="md-subhead">Por:
                           {{$ctrl.data.userEmail}}</span> -->
-                          <span class="md-caption" ng-show="$ctrl.changed">* não salvo</span>
+                    <span class="md-caption" ng-show="$ctrl.changed">* não salvo</span>
+                </div>
+                <div ng-hide="$ctrl.data.file">
+                  <span class="md-subhead">Nenhum template selecionado</span>
                 </div>
             </md-card-title-text>
             <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.data.templateLocked" md-tooltip="lalari" upload-tool="$ctrl.uploadConfig">

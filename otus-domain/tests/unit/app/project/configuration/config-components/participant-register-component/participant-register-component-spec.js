@@ -1,35 +1,44 @@
-xdescribe('participant register component', function() {
+describe('project praticipant register setter', function() {
     var Mock = {};
-    var directive,
-        element,
-        $compile,
-        $rootScope,
+    var $componentController,
         $injector,
-        scope,
-        component;
+        $mdToast,
+        $q,
+        ctrl,
+        $scope;
 
     beforeEach(function() {
         module('otusDomain.project');
 
-        inject(function(_$compile_, _$rootScope_, _$injector_) {
-            $compile = _$compile_;
-            $rootScope = _$rootScope_;
+        inject(function(_$componentController_, _$injector_, _$q_, _$rootScope_, _$mdToast_) {
+            $mdToast = _$mdToast_;
+            $scope = _$rootScope_.$new();
+            $q = _$q_;
+            $componentController = _$componentController_;
             $injector = _$injector_;
+            deferred = $q.defer(); //_$q_.defer();
             mockUploadToolService($injector);
-            scope = $rootScope.$new();
-            element = angular.element('<otus-participant-register></otus-participant-register>');
-            $compile(element)(scope);
+            ctrl = $componentController('otusParticipantRegister', {
+                $scope: $scope
+            });
         });
     });
 
-    it('just should', function(){
-      scope.$digest();
-      console.log(element.find('saveBtn'));
+    it('should set set empty fields when rest return equals to null', function() {
+        Mock.UploadToolService.fetchParticipantRegisterConfiguration = {};
+        expect(ctrl.data).toEqual({});
+    });
+
+    it('should do nothing when a wrong file format is given', function() {
+        Mock.UploadToolService.fetchParticipantRegisterConfiguration = {};
+        ctrl.uploadConfig.callback({
+            type: 'notJson'
+        });
+        expect(ctrl.data).toEqual({});
     });
 
     function mockUploadToolService($injector) {
         Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.UploadToolService');
         return Mock.UploadToolService;
     }
-
 });
