@@ -1,12 +1,12 @@
-xdescribe('otusjs.otus-domain.project.UploadToolService', function() {
+ describe('otusjs.otus-domain.project.configuration.UploadToolService', function() {
     var Mock = {};
     var service;
 
     beforeEach(function() {
-        module('otusDomain.project');
+        module('otusDomain.project.configuration');
 
         inject(function(_$injector_) {
-            service = _$injector_.get('otusjs.otus-domain.project.UploadToolService');
+            service = _$injector_.get('otusjs.otus-domain.project.configuration.UploadToolService');
         });
     });
 

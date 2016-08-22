@@ -2,11 +2,11 @@
     'use strict';
 
     angular
-        .module('otusDomain.project')
+        .module('otusDomain.project.configuration')
         .directive('uploadTool', directive);
 
     directive.$inject = [
-        'otusjs.otus-domain.project.UploadToolService'
+        'otusjs.otus-domain.project.configuration.UploadToolService'
     ];
 
     function directive(UploadToolService) {

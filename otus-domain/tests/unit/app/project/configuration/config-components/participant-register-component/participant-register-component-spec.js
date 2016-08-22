@@ -8,7 +8,7 @@ describe('project praticipant register setter', function() {
         $scope;
 
     beforeEach(function() {
-        module('otusDomain.project');
+        module('otusDomain.project.configuration');
 
         inject(function(_$componentController_, _$injector_, _$q_, _$rootScope_, _$mdToast_) {
             $mdToast = _$mdToast_;
@@ -38,7 +38,7 @@ describe('project praticipant register setter', function() {
     });
 
     function mockUploadToolService($injector) {
-        Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.UploadToolService');
+        Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.configuration.UploadToolService');
         return Mock.UploadToolService;
     }
 });

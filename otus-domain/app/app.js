@@ -11,6 +11,7 @@
             'otusDomain.repository',
             'otusDomain.project',
             'otusDomain.project.fieldCenter',
+            'otusDomain.project.configuration',
             /* Possibly shared modules */
             'otus.domain.client',
             'otus.client',

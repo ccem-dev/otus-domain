@@ -8,7 +8,7 @@ describe('uploadTool', function() {
         scope;
 
     beforeEach(function() {
-        module('otusDomain.project');
+        module('otusDomain.project.configuration');
 
         inject(function(_$compile_, _$rootScope_, _$injector_) {
             $compile = _$compile_;
@@ -65,7 +65,7 @@ describe('uploadTool', function() {
     };
 
     function mockUploadToolService($injector) {
-        Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.UploadToolService');
+        Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.configuration.UploadToolService');
         return Mock.UploadToolService;
     }
 

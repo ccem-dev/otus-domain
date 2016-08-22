@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('otusDomain.project')
-    .controller('otusjs.otus-domain.project.ProjectConfigurationController', ProjectConfigurationController);
+    .module('otusDomain.project.configuration')
+    .controller('otusjs.otus-domain.project.configuration.ProjectConfigurationController', ProjectConfigurationController);
 
     ProjectConfigurationController.$inject=[
-      'otusjs.otus-domain.project.ProjectConfigurationService'
+      'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
     ];
 
     function ProjectConfigurationController(ProjectConfigurationService) {

@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusDomain.project')
+        .module('otusDomain.project.configuration')
         .component('otusParticipantRegister', {
             templateUrl: 'app/project/configuration/config-components/participant-register/participant-register-template.html',
 
@@ -12,7 +12,7 @@
 
     Controller.$inject = [
         '$q',
-        'otusjs.otus-domain.project.ProjectConfigurationService',
+        'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
         '$mdToast'
     ];
 

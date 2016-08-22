@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('otusDomain.project')
-        .service('otusjs.otus-domain.project.UploadToolService', service);
+        .module('otusDomain.project.configuration')
+        .service('otusjs.otus-domain.project.configuration.UploadToolService', service);
 
     service.$inject = [];
 
@@ -23,7 +23,7 @@
                         acceptance += mappedType + ', ';
                     }
                 }
-            }            
+            }
             return acceptance || 'any';
         }
 

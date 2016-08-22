@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusDomain.project')
+        .module('otusDomain.project.configuration')
         .component('otusVisualIdentity', {
             templateUrl: 'app/project/configuration/config-components/project-visual-identity-component/project-visual-identity-template.html',
             controller: Controller
@@ -12,7 +12,7 @@
 
     Controller.$inject = [
         '$q',
-        'otusjs.otus-domain.project.ProjectConfigurationService',
+        'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
         '$mdToast'
     ];
 
