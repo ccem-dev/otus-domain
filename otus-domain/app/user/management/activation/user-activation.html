@@ -23,12 +23,13 @@
                                     <div layout="column">
                                         <span class="md-headline">{{user.name}}</span>
                                         <span class="md-subhead description">{{user.email}}</span>
+                                        <span ng-show="user.admin" class="md-subhead description">Administrador</span>
                                     </div>
                                     <span flex></span>
                                 </md-card-title-text>
                             </md-card-title>
                             <md-action>
-                                <md-switch aria-label="Estatus" ng-model="user.enable" class="md-primary" md-no-ink
+                                <md-switch ng-disabled="user.admin" aria-label="Estatus" ng-model="user.enable" class="md-primary" md-no-ink
                                 ng-change="confirmDialog(user, user.enable)"></md-switch>
                             </md-action>
                         </md-card>
