@@ -1,5 +1,6 @@
 package br.org.domain.email.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import javax.ejb.Asynchronous;
@@ -8,6 +9,7 @@ import javax.inject.Inject;
 
 import br.org.domain.email.StudioEmail;
 import br.org.domain.email.WelcomeNotificationEmail;
+import br.org.domain.security.EncryptorResources;
 import br.org.domain.system.dao.SystemConfigDao;
 import br.org.owail.io.TemplateReader;
 import br.org.owail.sender.email.Sender;
@@ -37,15 +39,15 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
         try {
             mailer.send();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new EmailNotificationException(e);
         }
     }
 
     @Override
-    public Sender getSender() throws DataNotFoundException {
+    public Sender getSender() throws DataNotFoundException, UnsupportedEncodingException {
         EmailSender emailSender = systemConfigDao.findEmailSender();
-        return new Sender(emailSender.getName(), emailSender.getEmailAddress(), emailSender.getPassword());
+        return new Sender(emailSender.getName(), emailSender.getEmailAddress(), EncryptorResources.decrypt(emailSender.getPassword()));
+
     }
 
     @Override

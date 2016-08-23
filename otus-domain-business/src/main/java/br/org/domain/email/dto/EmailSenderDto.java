@@ -3,6 +3,8 @@ package br.org.domain.email.dto;
 import br.org.domain.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
+import java.io.UnsupportedEncodingException;
+
 public class EmailSenderDto {
 
 	@Equalization(name = "name")
@@ -14,8 +16,8 @@ public class EmailSenderDto {
 	@Equalization(name = "password")
 	private String password;
 
-	public void encrypt() {
-		this.password = EncryptorResources.encrypt(password);
+	public void encrypt() throws UnsupportedEncodingException {
+		this.password = EncryptorResources.encryptReversible(password);
 	}
 
     public String getEmail() {

@@ -14,6 +14,7 @@ import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class ManagementUserServiceBean implements ManagementUserService {
                 disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
 
                 emailNotifierService.sendEmail(disableUserNotificationEmail);
-            } catch (DataNotFoundException | EmailNotificationException e) {
+            } catch (DataNotFoundException | EmailNotificationException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 	}
@@ -87,7 +88,7 @@ public class ManagementUserServiceBean implements ManagementUserService {
                 }
 
                 emailNotifierService.sendEmail(enableUserNotificationEmail);
-            } catch (DataNotFoundException | EmailNotificationException e) {
+            } catch (DataNotFoundException | EmailNotificationException | UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
 	}

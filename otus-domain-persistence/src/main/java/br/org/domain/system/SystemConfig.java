@@ -16,7 +16,7 @@ public class SystemConfig{
 
 	private Boolean ready;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@Embedded
 	private EmailSender emailSender;
 
 	public SystemConfig(EmailSender emailSender) {

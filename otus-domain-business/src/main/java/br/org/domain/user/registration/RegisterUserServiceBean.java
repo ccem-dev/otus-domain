@@ -13,48 +13,45 @@ import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.UnsupportedEncodingException;
 
 @Stateless
 public class RegisterUserServiceBean implements RegisterUserService {
 
-	@Inject
-	private SystemConfigDao genericDao;
-	@Inject
-	private EmailNotifierService emailNotifier;
+    @Inject
+    private SystemConfigDao genericDao;
+    @Inject
+    private EmailNotifierService emailNotifier;
     @Inject
     private UserDao userDao;
     @Inject
     private EmailNotifierService emailNotifierService;
 
-	@Override
-	public void createUser(UserDto userDto) throws InvalidDtoException {
-		try {
-			User user = new User();
-			Equalizer.equalize(userDto, user);
-			genericDao.persist(user);
+    @Override
+    public void createUser(UserDto userDto) throws InvalidDtoException {
+        try {
+            User user = new User();
+            Equalizer.equalize(userDto, user);
+            genericDao.persist(user);
 
-			notifyAdm(user);
+            notifyAdm(user);
 
-		} catch (Exception e) {
-			throw new InvalidDtoException();
-		}
-	}
+        } catch (Exception e) {
+            throw new InvalidDtoException();
+        }
+    }
 
-	private void notifyAdm(User user) {
-		try {
-			try {
-                User admin = userDao.findAdmin();
+    private void notifyAdm(User user) {
+        try {
+            User admin = userDao.findAdmin();
 
-                NewUserNotificationEmail newUserNotificationEmail = new NewUserNotificationEmail(user);
-                newUserNotificationEmail.defineAdminRecipient(admin);
-                newUserNotificationEmail.setFrom(emailNotifierService.getSender());
+            NewUserNotificationEmail newUserNotificationEmail = new NewUserNotificationEmail(user);
+            newUserNotificationEmail.defineAdminRecipient(admin);
+            newUserNotificationEmail.setFrom(emailNotifierService.getSender());
 
-                emailNotifier.sendEmail(newUserNotificationEmail);
-			} catch (DataNotFoundException e) {
-				e.printStackTrace();
-			}
-		} catch (EmailNotificationException e) {
-			e.printStackTrace();
-		}
-	}
+            emailNotifier.sendEmail(newUserNotificationEmail);
+        } catch (DataNotFoundException | EmailNotificationException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 }

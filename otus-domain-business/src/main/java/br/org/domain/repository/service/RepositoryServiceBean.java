@@ -10,6 +10,7 @@ import br.org.domain.repository.Repository;
 import br.org.domain.repository.dao.RepositoryDao;
 import br.org.domain.repository.dto.RepositoryConnectionData;
 import br.org.domain.repository.dto.RepositoryDto;
+import br.org.domain.security.EncryptorResources;
 import br.org.domain.security.PasswordGenerator;
 import br.org.domain.user.User;
 import br.org.domain.user.dao.UserDao;
@@ -21,6 +22,7 @@ import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,8 +135,13 @@ public class RepositoryServiceBean implements RepositoryService {
 
     @Override
     public Boolean checkRepositoryCredentials(RepositoryConnectionData repositoryConnectionData) {
-        return MongoConnector.getConnector(repositoryConnectionData.getHost(), repositoryConnectionData.getPort())
-                .isValidCredentials(repositoryConnectionData.getUsername(), repositoryConnectionData.getDatabase(), repositoryConnectionData.getPassword());
+        try {
+            return MongoConnector.getConnector(repositoryConnectionData.getHost(), repositoryConnectionData.getPort())
+                    .isValidCredentials(repositoryConnectionData.getUsername(), repositoryConnectionData.getDatabase(), EncryptorResources.decrypt(repositoryConnectionData.getPassword()));
+
+        } catch (UnsupportedEncodingException e) {
+            return Boolean.FALSE;
+        }
     }
 
     @Override

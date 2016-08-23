@@ -62,7 +62,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 
 			systemConfigDao.persist(systemConfig);
 		}catch (Exception e){
-			throw new FillEmailSenderException();
+			throw new FillEmailSenderException(e);
 		}
 	}
 

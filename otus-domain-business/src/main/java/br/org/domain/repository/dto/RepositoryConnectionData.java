@@ -1,8 +1,10 @@
 package br.org.domain.repository.dto;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
 import br.org.domain.repository.Repository;
+import br.org.domain.security.EncryptorResources;
 import br.org.studio.tool.base.repository.RepositoryConnectionDataDescriptor;
 
 public class RepositoryConnectionData implements RepositoryConnectionDataDescriptor {
@@ -50,8 +52,7 @@ public class RepositoryConnectionData implements RepositoryConnectionDataDescrip
 
 	@Override
 	public String getPassword() {
-		byte[] decodedPassword = Base64.getDecoder().decode(this.password.getBytes());
-		return new String(decodedPassword);
+		return password;
 	}
 	
 	public void setPassword(String password) {
@@ -67,9 +68,8 @@ public class RepositoryConnectionData implements RepositoryConnectionDataDescrip
 		this.username = username;
 	}
 	
-	public void encrypt() {
-		byte[] encode = Base64.getEncoder().encode(this.password.getBytes());
-		this.password = new String(encode);
+	public void encrypt() throws UnsupportedEncodingException {
+		this.password = EncryptorResources.encryptReversible(password);
 	}
 
 }

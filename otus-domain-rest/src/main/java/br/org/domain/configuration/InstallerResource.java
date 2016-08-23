@@ -1,5 +1,6 @@
 package br.org.domain.configuration;
 
+import br.org.domain.exception.EmailNotFoundException;
 import br.org.domain.rest.Response;
 import br.org.domain.configuration.service.SystemConfigService;
 import br.org.domain.exception.EmailNotificationException;
@@ -9,6 +10,7 @@ import com.google.gson.Gson;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.UnsupportedEncodingException;
 
 @Path("/installer")
 public class InstallerResource {
@@ -30,9 +32,10 @@ public class InstallerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String config(String systemConfigJSon) {
         SystemConfigDto systemConfigDto = new Gson().fromJson(systemConfigJSon, SystemConfigDto.class);
+        Response response = new Response();
 
         try {
-            systemConfigDto.getUserDto().encrypt();
+            systemConfigDto.encrypt();
             systemConfigService.createInitialSystemConfig(systemConfigDto);
             return new Gson().toJson(Boolean.TRUE);
 
@@ -50,11 +53,15 @@ public class InstallerResource {
         Response response = new Response();
 
         try {
+            systemConfigDto.encrypt();
             systemConfigService.verifyEmailService(systemConfigDto.getEmailSenderDto());
-            response.setData(Boolean.TRUE);
+            response.buildSuccess(Boolean.TRUE);
 
         } catch (EmailNotificationException e) {
-            response.setData(Boolean.FALSE);
+            response.buildError(e);
+
+        } catch (UnsupportedEncodingException e) {
+            response.buildError(new EmailNotificationException(e));
         }
 
         return response.toJson();

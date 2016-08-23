@@ -3,19 +3,11 @@ package br.org.domain.email;
 import br.org.tutty.Equalization;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
+@Embeddable
 public class EmailSender {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Type(type = "objectid")
-	private String id;
 
 	@Equalization(name = "name")
 	@NotNull

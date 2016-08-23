@@ -1,5 +1,6 @@
 package br.org.domain.repository;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +58,14 @@ public class RepositoryResource {
     public String isValidRepositoryCredentials(String repository) {
         RepositoryConnectionData repositoryConnectionData = new Gson().fromJson(repository, RepositoryConnectionData.class);
         Response response = new Response();
-        repositoryConnectionData.encrypt();
-        response.setData(repositoryService.checkRepositoryCredentials(repositoryConnectionData));
+
+        try {
+            repositoryConnectionData.encrypt();
+            response.buildSuccess(repositoryService.checkRepositoryCredentials(repositoryConnectionData));
+
+        } catch (UnsupportedEncodingException e) {
+            response.setData(Boolean.FALSE);
+        }
 
         return response.toJson();
     }

@@ -25,7 +25,7 @@ public class AuthenticationDto implements Serializable {
 	}
 
 	public void encryptPassword() {
-		this.password = EncryptorResources.encrypt(password);
+		this.password = EncryptorResources.encryptIrreversible(password);
 	}
 
 	public String getEmail() {

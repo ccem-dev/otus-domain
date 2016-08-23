@@ -4,7 +4,9 @@ import br.org.domain.email.dto.EmailSenderDto;
 import br.org.domain.repository.dto.RepositoryDto;
 import br.org.domain.user.dto.UserDto;
 
-public class SystemConfigDto {
+import java.io.UnsupportedEncodingException;
+
+public class SystemConfigDto  {
 	private UserDto user;
 	private EmailSenderDto emailSender;
 	private RepositoryDto repository;
@@ -19,6 +21,11 @@ public class SystemConfigDto {
 
 	public RepositoryDto getRepositoryDto() {
 		return repository;
+	}
+
+	public void encrypt() throws UnsupportedEncodingException {
+		user.encrypt();
+		emailSender.encrypt();
 	}
 
 }

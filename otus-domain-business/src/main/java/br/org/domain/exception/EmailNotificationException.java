@@ -1,22 +1,17 @@
 package br.org.domain.exception;
 
-public class EmailNotificationException extends Exception {
-
-	private static final long serialVersionUID = 2323962994727909366L;
-
-	public EmailNotificationException() {
-	}
-
-	public EmailNotificationException(String message) {
-		super(message);
-	}
-
+public class EmailNotificationException extends Exception implements ResponseError {
 	public EmailNotificationException(Throwable cause) {
 		super(cause);
 	}
 
-	public EmailNotificationException(String message, Throwable cause) {
-		super(message, cause);
+	@Override
+	public Object getObjectError() {
+		return new ErrorData();
 	}
 
+	class ErrorData{
+		private String message = "Email Notification Error";
+		private ErrorType errorType = ErrorType.EMAIL_NOTIFICATION_ERROR;
+	}
 }

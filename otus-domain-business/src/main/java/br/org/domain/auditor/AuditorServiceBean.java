@@ -25,7 +25,7 @@ public class AuditorServiceBean implements AuditorService {
         auditorContext.addLogEntry(logEntry);
     }
 
-    @Schedule(minute = "*/1", info = "Persist Auditor Log")
+    @Schedule(hour = "*/1", info = "Persist Auditor Log")
     public void persist() {
         Auditor auditor = auditorContext.getAuditor();
         if (!auditor.isEmpty()) {
