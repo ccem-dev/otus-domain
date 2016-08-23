@@ -32,27 +32,38 @@
             'type': 'image'
         };
         self.save = save;
-        self.notFound = 'app/assets/img/image_not_found.jpg';
+
+        var notFound = 'app/assets/img/image_not_found.jpg';
+
 
         function _init() {
             updateFields();
         }
 
-        function updateFields() {
-            var notFound = 'app/assets/img/image_not_found.jpg';
-            (function() {
-                var deferred = $q.defer();
-                deferred.resolve(ProjectConfigurationService.fetchProjectsVisualIdentity());
-                return deferred.promise;
+        function fetchData() {
+            var deferred = $q.defer();
+            deferred.resolve(ProjectConfigurationService.fetchProjectsVisualIdentity());
+            return deferred.promise;
+        }
 
-            }())
-            .then(function(data) {
-                    self.data = data;
+        function updateFields() {
+            fetchData()
+                .then(function(data) {
+                    if (data.files) {
+                        self.data = data;
+                    } else {
+                        self.data = {
+                            'files': {
+                                "logoURL": notFound,
+                                "bannerURL": notFound
+                            },
+                            'date': ''
+                        };
+                    }
                 })
                 .finally(function() {
-                    self.data.files.bannerURL = self.data.files.bannerURL || notFound;
-                    self.data.files.logoURL = self.data.files.logoURL || notFound;
                     self.changed = false;
+                    console.log(self.data);
                 });
         }
 
@@ -94,9 +105,17 @@
                 },
                 'sendingDate': new Date()
             };
-            ProjectConfigurationService.updateVisualIdentityConfiguration(uploadSet);
-            self.data.sendingDate = getDate(uploadSet.sendingDate);
+            ProjectConfigurationService.updateVisualIdentityConfiguration(uploadSet, successfull, failure);
+        }
+
+        function successfull() {
+            self.data.sendingDate = getDate(new Date());
             $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
+        }
+
+        function failure() {
+          $mdToast.show($mdToast.simple().textContent('Falha ao atualizar imagem'));
+          updateFields();
         }
 
         function getDate(date) {

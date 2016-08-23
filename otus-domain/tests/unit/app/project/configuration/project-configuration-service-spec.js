@@ -1,4 +1,4 @@
-xdescribe('project configuration service', function() {
+describe('project configuration service', function() {
     var Mock = {};
     var service,
         $injector,
@@ -12,16 +12,19 @@ xdescribe('project configuration service', function() {
             $injector = _$injector_;
             deferred = $q.defer(); //_$q_.defer();
             service = $injector.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService');
-            mockUploadToolService($injector);
 
         });
     });
 
     /* Participant Register Fetcher */
+    //fetchParticipantRegisterConfiguration
+    //updateParticipantRegisterConfiguration
     it('just should', function() {
     });
 
 
     /* Visual Identity */
+    //fetchProjectsVisualIdentity
+    //updateVisualIdentityConfiguration
 
 });

@@ -29,11 +29,11 @@
         var mainFile;
 
         function _init() {
-            self.data = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
-            updateFields(self.data);
+            updateFields();
         }
 
         function updateFields(data) {
+            self.data = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
             self.changed = false;
             if (!!self.data.file) { //TODO check this test accordingly to rest return
                 self.data.sendingDate = getDate(new Date(data.sendingDate));
@@ -42,12 +42,12 @@
 
         function uploadFile(file) {
             self.changed = true;
-            if(file.type==='application/json'){
-            fileParser(file).then(function(templateObject) {
-                self.data.file = templateObject;
-                self.data.sendingDate = '';
-            });
-          }
+            if (file.type === 'application/json') {
+                fileParser(file).then(function(templateObject) {
+                    self.data.file = templateObject;
+                    self.data.sendingDate = '';
+                });
+            }
         }
         //application/json
 
@@ -62,24 +62,26 @@
         }
 
         function save() {
-            updateRest().then(function(uploadSet) {
-                $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
-                updateFields(uploadSet);
-            });
-        }
-
-        function updateRest() {
-            var deferred = $q.defer();
             var uploadSet = {
                 'file': self.data.file,
                 'sendingDate': new Date()
             };
-            deferred.resolve(ProjectConfigurationService.updateParticipantRegisterConfiguration(uploadSet));
-            return deferred.promise;
+            ProjectConfigurationService.updateParticipantRegisterConfiguration(uploadSet, successfull, failure);
         }
 
-        function getDate(date){
-          return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
+        function successfull() {
+            self.changed = false;
+            self.data.sendingDate = getDate(new Date());
+            $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
+        }
+
+        function failure() {
+            $mdToast.show($mdToast.simple().textContent('Falha ao salvar formulário'));
+            updateFields();
+        }
+
+        function getDate(date) {
+            return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
         }
     }
 

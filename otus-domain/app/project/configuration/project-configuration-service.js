@@ -5,9 +5,11 @@
         .module('otusDomain.project.configuration')
         .service('otusjs.otus-domain.project.configuration.ProjectConfigurationService', ProjectConfigurationService);
 
-    ProjectConfigurationService.$inject = [];
+    ProjectConfigurationService.$inject = [
+        'OtusRestResourceService'
+    ];
 
-    function ProjectConfigurationService() {
+    function ProjectConfigurationService(OtusRestResourceService) {
         var self = this;
         _init();
         /* Public Interface */
@@ -22,61 +24,49 @@
 
         /* Participant Register Fetcher */
         function fetchParticipantRegisterConfiguration() {
-            // return OtusRestResourceService.getProjectConfig();
-            var jsonSetUp = {
-                "templateLocked": false,
-                'file': {
-                    "identity": {
-                        'name': 'Elegibilidade',
-                        'acronym': 'ELE'
-                    }
-                },
-                'sendingDate': 'Mon Aug 03 2016 20:04:52 GMT-0300 (BRT)',
-                'domain': ''
-            };
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            var data = {};
+            ProjectConfiguration.getParticipantRegister(function(response) {
+                data = response.data;
+            }, function() {
+                data = {};
+            });
+
+            return data;
             //expect: returns full object or {}
-            return {};
         }
 
-        function updateParticipantRegisterConfiguration(file) {
-            //TODO
-            // expected:
-            // {
-            //   'file':self.data.file,
-            //   'date':new Date()
-            // };
-            if (file) {
-                console.log(file);
-            }
-            return file;
+        function updateParticipantRegisterConfiguration(file, successfullCallback, failureCallback) {
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            ProjectConfiguration.updateParticipantRegister(file, function(data) {
+                successfullCallback();
+            }, function(error) {
+                failureCallback();
+            });
         }
 
 
         /* Visual Identity */
         function fetchProjectsVisualIdentity() {
-            // return OtusRestResourceService.getProjectConfig();
-            var jsonSetUp ={
-                    'files':{
-                      "logoURL": null,
-                      "bannerURL": ''
-                    },
-                    'date':''
-                  };
-            return jsonSetUp;
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            var data = {};
+            ProjectConfiguration.getVisualIdentity(function(response) {
+                data = response.data;
+            }, function() {
+                data = {};
+            });
+            return data;
         }
 
-        function updateVisualIdentityConfiguration(files) {
-          //expected
-          // {
-          //   'files':{
-          //       'logo': self.data.logoURL,
-          //       'banner': self.data.bannerURL
-          //   },
-          //   'date':new Date()
-          // }
-
-            console.log(files);
-            return true;
+        function updateVisualIdentityConfiguration(files, successfullCallback, failureCallback) {
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            var success;
+            ProjectConfiguration.updateVisualIdentity(files, function() {
+                successfullCallback();
+            }, function() {
+                failureCallback();
+            });
+            return success;
         }
     }
 }());
