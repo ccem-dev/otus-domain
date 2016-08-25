@@ -6,12 +6,14 @@
         .service('otusjs.otus-domain.project.configuration.ProjectConfigurationService', ProjectConfigurationService);
 
     ProjectConfigurationService.$inject = [
-        'OtusRestResourceService'
+        'OtusRestResourceService',
+        '$http'
     ];
 
-    function ProjectConfigurationService(OtusRestResourceService) {
+    function ProjectConfigurationService(OtusRestResourceService, $http) {
         var self = this;
         _init();
+
         /* Public Interface */
         self.fetchParticipantRegisterConfiguration = fetchParticipantRegisterConfiguration;
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
@@ -19,7 +21,8 @@
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
 
-        function _init() {}
+        function _init() {
+        }
 
 
         /* Participant Register Fetcher */
@@ -27,6 +30,7 @@
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var data = {};
             ProjectConfiguration.getParticipantRegister(function(response) {
+              console.log(response);
                 data = response.data;
             }, function() {
                 data = {};
@@ -38,12 +42,37 @@
 
         function updateParticipantRegisterConfiguration(file, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            ProjectConfiguration.updateParticipantRegister(file, function(data) {
-                successfullCallback();
-            }, function(error) {
-                failureCallback();
-            });
+            ProjectConfiguration.updateParticipantRegister(file,
+                function(data) {
+                    console.log(data);
+                    successfullCallback();
+                },
+                function(error) {
+                    failureCallback();
+                });
+
+
         }
+
+        // function lalaia() {
+        //
+        //     $http({
+        //         method: 'POST',
+        //         url: '/someUrl'
+        //     }).success(function successCallback(response, a, b) {
+        //         console.log(response);
+        //         console.log(a);
+        //         console.log(b);
+        //         console.log((b()));
+        //         console.log('sucesso');
+        //         // this callback will be called asynchronously
+        //         // when the response is available
+        //     }).error(function errorCallback(response) {
+        //         console.log('erro');
+        //         // called asynchronously if an error occurs
+        //         // or server returns response with an error status.
+        //     });
+        // }
 
 
         /* Visual Identity */
@@ -52,7 +81,8 @@
             var data = {};
             ProjectConfiguration.getVisualIdentity(function(response) {
                 data = response.data;
-            }, function() {
+            }, function(error) {
+                console.log('error ' + error);
                 data = {};
             });
             return data;
@@ -66,7 +96,6 @@
             }, function() {
                 failureCallback();
             });
-            return success;
         }
     }
 }());

@@ -63,7 +63,6 @@
                 })
                 .finally(function() {
                     self.changed = false;
-                    console.log(self.data);
                 });
         }
 
