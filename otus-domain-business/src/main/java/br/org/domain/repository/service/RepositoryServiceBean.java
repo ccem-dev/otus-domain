@@ -1,10 +1,7 @@
 package br.org.domain.repository.service;
 
 import br.org.domain.configuration.dto.SystemConfigDto;
-import br.org.domain.exception.ConvertedDtoException;
-import br.org.domain.exception.RepositoryAlreadyExistException;
-import br.org.domain.exception.RepositoryNotFoundException;
-import br.org.domain.exception.RepositoryOfflineException;
+import br.org.domain.exception.*;
 import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.repository.Repository;
 import br.org.domain.repository.dao.RepositoryDao;
@@ -139,7 +136,7 @@ public class RepositoryServiceBean implements RepositoryService {
             return MongoConnector.getConnector(repositoryConnectionData.getHost(), repositoryConnectionData.getPort())
                     .isValidCredentials(repositoryConnectionData.getUsername(), repositoryConnectionData.getDatabase(), EncryptorResources.decrypt(repositoryConnectionData.getPassword()));
 
-        } catch (UnsupportedEncodingException e) {
+        } catch (EncryptedException e) {
             return Boolean.FALSE;
         }
     }

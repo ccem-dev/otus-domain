@@ -67,10 +67,10 @@
 
                     <md-input-container class="md-block">
                         <label>Confirmação de Senha</label>
-                        <input name="passwordConfirm" st-password-match="user.password" ng-model="user.passwordConfirm" type="password" ng-required="true" />
+                        <input name="passwordConfirmation" st-password-match="user.password" ng-model="user.passwordConfirmation" type="password" ng-required="true" />
 
-                        <div ng-messages="registerUserForm.passwordConfirm.$error">
-                            <div ng-message="required" ng-show="registerUserForm.passwordConfirm.$error.required">
+                        <div ng-messages="registerUserForm.passwordConfirmation.$error">
+                            <div ng-message="required" ng-show="registerUserForm.passwordConfirmation.$error.required">
                                 Obrigatório
                             </div>
                             <div ng-message="passwordMatch">Suas senhas não coincidem.</div>

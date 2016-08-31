@@ -20,6 +20,15 @@ public class ResettableStreamHttpServletRequest extends HttpServletRequestWrappe
         this.servletStream = new ResettableServletInputStream();
     }
 
+    @Override
+    public String getHeader(String name) {
+        final String value = request.getParameter(name);
+        if (value != null) {
+            return value;
+        }
+        return super.getHeader(name);
+    }
+
     public void resetInputStream() {
         servletStream.stream = new ByteArrayInputStream(rawData);
     }
@@ -41,7 +50,6 @@ public class ResettableStreamHttpServletRequest extends HttpServletRequestWrappe
         }
         return new BufferedReader(new InputStreamReader(servletStream));
     }
-
 
     private class ResettableServletInputStream extends ServletInputStream {
 

@@ -17,15 +17,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
 
-@WebFilter(filterName = "auditorFilter",
-        urlPatterns = {
-                "/v01/otus/*",
-                "/v01/project/*",
-                "/v01/url/*",
-                "/v01/repository/*",
-                "/v01/repository/*",
-                "/v01/user/*",
-        })
+@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/*"})
 public class AuditorServletFilter implements Filter {
 
     @Inject
@@ -43,15 +35,15 @@ public class AuditorServletFilter implements Filter {
         ResettableStreamHttpServletRequest resettableStreamHttpServletRequest = new ResettableStreamHttpServletRequest(httpServletRequest);
 
         if (isLoggedMethod(httpServletRequest.getMethod())) {
+            BodyLog bodyLog = new BodyLog(IOUtils.toString(resettableStreamHttpServletRequest.getReader()));
             String authorizationHeader = resettableStreamHttpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
             String token = readToken(authorizationHeader);
             String userId = readUserId(token);
             String remoteAddress = resettableStreamHttpServletRequest.getRemoteAddr();
-            String body = IOUtils.toString(resettableStreamHttpServletRequest.getReader());
             String url = resettableStreamHttpServletRequest.getRequestURL().toString();
             Map<String, String[]> parameterMap = resettableStreamHttpServletRequest.getParameterMap();
 
-            auditorService.log(new LogEntryDto(remoteAddress, url, body, userId, parameterMap, token));
+            auditorService.log(new LogEntryDto(remoteAddress, url, bodyLog.getBody(), userId, parameterMap, token));
             resettableStreamHttpServletRequest.resetInputStream();
         }
 

@@ -68,13 +68,6 @@
                 });
         }
 
-        /**
-         *
-         * RepositoryConfiguration
-         * Precisa ser refatorado
-         *
-         */
-
         $scope.validateCredentials = function(repository) {
             repositoryResource.validateCredentials(repository, function(response) {
                 showMessageCredentials(response.data);

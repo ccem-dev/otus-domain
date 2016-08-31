@@ -55,10 +55,10 @@ public class UserResource {
     }
 
     @GET
+    @Secured
     @Path("/fetch")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Secured
     public String getUsers() {
         List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
         Response response = new Response();
@@ -66,10 +66,10 @@ public class UserResource {
     }
 
     @POST
+    @Secured
     @Path("/disable")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Secured
     public String disableUsers(ManagementUserDto managementUserDto) {
         managementUserService.disableUsers(managementUserDto);
         Response response = new Response();
@@ -79,10 +79,10 @@ public class UserResource {
     }
 
     @POST
+    @Secured
     @Path("/enable")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Secured
     public String enableUsers(ManagementUserDto managementUserDto) {
         managementUserService.enableUsers(managementUserDto);
         Response response = new Response();
