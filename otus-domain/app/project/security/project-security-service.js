@@ -33,7 +33,7 @@
             var otusAuthenticatorResource = OtusRestResourceService.getOtusAuthenticatorResource();
 
             otusAuthenticatorResource.authenticateProject(projectAuthentication, function(response) {
-                if (!response.hasErrors) {
+                if (response.data) {
                     deferred.resolve(response);
                 } else {
                     deferred.reject(response);
