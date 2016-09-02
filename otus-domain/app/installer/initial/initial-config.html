@@ -3,165 +3,147 @@
         <div class="logo" id="logo"></div>
         <div layout="row" id="welcome">
             <h2 layout="row" layout-align="center center">
-                  <span class="md-display-2">Bem-vindo!</span>
-              </h2>
+                <span class="md-display-2">Bem-vindo!</span>
+            </h2>
         </div>
     </div>
 
     <md-content layout="row" id="separatorLine" layout-align="center center">
         <h2>Vamos iniciar a Instalação do Projeto.</h3>
-   </md-content>
+    </md-content>
 
-   <md-content layout="column" flex>
-           <form name="initialConfigSystemForm" novalidate ng-submit="register(systemConf)">
+    <md-content layout="column" flex>
+        <form name="initialConfigSystemForm" novalidate ng-submit="initialConfigController.register(systemConf)">
 
-           <div layout="row" layout-align="center" id="installerLayout">
-               <div layout="column" flex="80">
-                   <div layout="row"  id="container">
-                       <div layout="column" flex style="padding: 20px">
-                           <div layout="row" flex >
-                                   <md-tabs md-border-bottom flex>
-                                       <md-tab label="Cadastro do Administrador">
-                                           <md-input-container flex>
-                                               <label>Nome</label>
-                                               <input name="name" ng-model="systemConf.user.name" type="text" ng-required="true" />
+            <div layout="row" layout-align="center" id="installerLayout">
+                <div layout="column" flex="80">
+                    <div layout="row"  id="container">
+                        <div layout="column" flex style="padding: 20px">
+                            <div layout="row" flex >
+                                <md-tabs md-border-bottom flex>
+                                    <md-tab label="Cadastro do Administrador">
+                                        <md-input-container flex>
+                                            <label>Nome</label>
+                                            <input name="name" ng-model="systemConf.user.name" type="text" ng-required="true" />
 
-                                               <div ng-messages="initialConfigSystemForm.name.$error">
-                                                   <div ng-message="required" ng-show="initialConfigSystemForm.name.$error.required">
-                                                       Obrigatório
-                                                   </div>
-                                               </div>
-                                           </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.name.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.name.$error.required">
+                                                    Obrigatório
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                           <md-input-container flex>
-                                               <label>Sobrenome</label>
-                                               <input name="surname" ng-model="systemConf.user.surname" type="text" ng-required="true" />
+                                        <md-input-container flex>
+                                            <label>Sobrenome</label>
+                                            <input name="surname" ng-model="systemConf.user.surname" type="text" ng-required="true" />
 
-                                               <div ng-messages="initialConfigSystemForm.surname.$error">
-                                                   <div ng-message="required" ng-show="initialConfigSystemForm.surname.$error.required">
-                                                       Obrigatório
-                                                   </div>
-                                               </div>
-                                           </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.surname.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.surname.$error.required">
+                                                    Obrigatório
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                               <md-input-container class="md-block">
-                                                   <label>Celular</label>
-                                                   <input name="phone" id="phonenumber" ng-model="systemConf.user.phone" type="text" ui-options={clearOnBlur:false} ng-required="true" ui-mask="(99) 99999999?9" />
+                                        <md-input-container class="md-block">
+                                            <label>Celular</label>
+                                            <input name="phone" id="phonenumber" ng-model="systemConf.user.phone" type="text" ui-options={clearOnBlur:false} ng-required="true" ui-mask="(99) 99999999?9" />
 
-                                                   <div ng-messages="initialConfigSystemForm.phone.$error">
-                                                       <div ng-message="required" ng-show="initialConfigSystemForm.phone.$error.required">Obrigatório
-                                                       </div>
-                                                       <div ng-message="ui-mask" ng-show="initialConfigSystemForm.phone.$error.mask">Insira um número válido.
-                                                       </div>
-                                                   </div>
-                                               </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.phone.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.phone.$error.required">Obrigatório
+                                                </div>
+                                                <div ng-message="ui-mask" ng-show="initialConfigSystemForm.phone.$error.mask">Insira um número válido.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                               <md-input-container class="md-block">
-                                                   <label>Email</label>
-                                                   <input name="email" ng-model="systemConf.user.email" type="email" ng-required="true" />
+                                        <md-input-container class="md-block">
+                                            <label>Email</label>
+                                            <input name="email" ng-model="systemConf.user.email" type="email" ng-required="true" />
 
-                                                   <div ng-messages="initialConfigSystemForm.email.$error">
-                                                       <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório
-                                                       </div>
-                                                       <div ng-message="email" ng-show="initialConfigSystemForm.email.$error.email">Insira um email válido.
-                                                       </div>
-                                                   </div>
-                                               </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.email.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório
+                                                </div>
+                                                <div ng-message="email" ng-show="initialConfigSystemForm.email.$error.email">Insira um email válido.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                               <md-input-container class="md-block">
-                                                   <label>Senha</label>
-                                                   <input name="password" ng-model="systemConf.user.password" type="password" ng-required="true" st-password />
+                                        <md-input-container class="md-block">
+                                            <label>Senha</label>
+                                            <input name="password" ng-model="systemConf.user.password" type="password" ng-required="true" st-password />
 
-                                                   <div ng-messages="initialConfigSystemForm.password.$error">
-                                                       <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
-                                                           A senha deve conter caracter minúsculo, um maiúsculo, um digito e de 6 a 32 caracteres.
-                                                       </div>
-                                                   </div>
-                                               </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.password.$error">
+                                                <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
+                                                    A senha deve conter caracter minúsculo, um maiúsculo, um digito e de 6 a 32 caracteres.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                               <md-input-container class="md-block">
-                                                   <label>Confirmação de Senha</label>
-                                                   <input name="passwordConfirmation" ng-model="systemConf.user.passwordConfirmation" type="password" ng-required="true" st-password-match="systemConf.user.password" />
+                                        <md-input-container class="md-block">
+                                            <label>Confirmação de Senha</label>
+                                            <input name="passwordConfirmation" ng-model="systemConf.user.passwordConfirmation" type="password" ng-required="true" st-password-match="systemConf.user.password" />
 
-                                                   <div ng-messages="initialConfigSystemForm.passwordConfirmation.$error">
-                                                       <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirmation.$error.required">
-                                                           Obrigatório
-                                                       </div>
-                                                       <div ng-message="passwordMatch">
-                                                           Suas senhas não coincidem.
-                                                       </div>
-                                                   </div>
-                                               </md-input-container>
-                                       </md-tab>
+                                            <div ng-messages="initialConfigSystemForm.passwordConfirmation.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirmation.$error.required">
+                                                    Obrigatório
+                                                </div>
+                                                <div ng-message="passwordMatch">
+                                                    Suas senhas não coincidem.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </md-tab>
 
-                                       <md-tab label="Repositório">
-                                           <div ui-view="repository-config"></div>
-                                       </md-tab>
+                                    <md-tab label="Repositório">
+                                        <div ui-view="repository-config"></div>
+                                    </md-tab>
 
-                                       <md-tab label="E-mail">
-                                           <md-input-container class="md-block">
-                                               <label>Prefixo para Emails</label>
-                                               <input name="emailSenderName" ng-model="systemConf.emailSender.name" type="text" ng-required="true" />
+                                    <md-tab label="E-mail">
+                                        <md-input-container class="md-block">
+                                            <label>Prefixo para Emails</label>
+                                            <input name="emailSenderName" ng-model="systemConf.emailSender.name" type="text" ng-required="true" />
 
-                                               <div ng-messages="initialConfigSystemForm.emailSenderName.$error">
-                                                   <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderName.$error.required">
-                                                       Obrigatório
-                                                   </div>
-                                               </div>
-                                           </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.emailSenderName.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderName.$error.required">
+                                                    Obrigatório
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                           <md-input-container class="md-block">
-                                               <label>Email</label>
-                                               <input name="emailSenderEmail" ng-model="systemConf.emailSender.email" ng-change="resetValidationEmail()" type="email" ng-required="true" />
+                                        <md-input-container class="md-block">
+                                            <label>Email</label>
+                                            <input name="emailSenderEmail" ng-model="systemConf.emailSender.email" type="email" ng-required="true" />
 
-                                               <div ng-messages="initialConfigSystemForm.emailSenderEmail.$error">
-                                                   <div ng-message="email">Insira um email válido.</div>
-                                                   <div ng-message="required">Obrigatório</div>
-                                                   <div ng-message="emailService">Erro ao validar serviço de email. Verifique dados informados</div>
-                                               </div>
-                                           </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.emailSenderEmail.$error">
+                                                <div ng-message="email">Insira um email válido.</div>
+                                                <div ng-message="required">Obrigatório</div>
+                                                <div ng-message="emailService">Erro ao validar serviço de email. Verifique dados informados</div>
+                                            </div>
+                                        </md-input-container>
 
-                                           <md-input-container class="md-block">
-                                               <label>Senha</label>
-                                               <input name="emailSenderPassword" ng-change="resetValidationEmail()" ng-model="systemConf.emailSender.password" type="password" ng-required="true" />
+                                        <md-input-container class="md-block">
+                                            <label>Senha</label>
+                                            <input name="emailSenderPassword" ng-blur="initialConfigController.validateEmailService(systemConf.emailSender)" ng-model="systemConf.emailSender.password" type="password" ng-required="true" />
 
-                                               <div ng-messages="initialConfigSystemForm.emailSenderPassword.$error">
-                                                   <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPassword.$error.required">Obrigatório
-                                                   </div>
-                                               </div>
-                                           </md-input-container>
-
-                                           <md-input-container class="md-block">
-                                               <label>Confirmação de Senha</label>
-                                               <input name="emailSenderPasswordConfirm" ng-model="systemConf.emailSender.passwordConfirmation" st-password-match="systemConf.emailSender.password" type="password" ng-required="true" />
-
-                                               <div ng-messages="initialConfigSystemForm.emailSenderPasswordConfirm.$error">
-                                                   <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPasswordConfirm.$error.required">Obrigatório
-                                                   </div>
-                                                   <div ng-message="passwordMatch">
-                                                       Suas senhas não coincidem.
-                                                   </div>
-                                               </div>
-                                           </md-input-container>
-                                       </md-tab>
-                                   </md-tabs>
-                           </div>
-                       </div>
-                   </div>
-                   <md-content layout="row" layout-align="start center">
-                       <md-button
-                            type="submit"
-                            class="md-raised md-accent"
-                            ng-disabled="initialConfigSystemForm.$invalid || isLoading">
-                            Cadastrar
-                        </md-button>
+                                            <div ng-messages="initialConfigSystemForm.emailSenderPassword.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.emailSenderPassword.$error.required">Obrigatório
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </md-tab>
+                                </md-tabs>
+                            </div>
+                        </div>
+                    </div>
+                    <md-content layout="row" layout-align="start center">
+                        <md-button  type="submit" class="md-raised md-accent" ng-disabled="initialConfigSystemForm.$invalid || isLoading"> Cadastrar </md-button>
 
                         <div layout="row" layout-sm="column" layout-align="center">
                             <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
                         </div>
-                   </md-content>
-               </div>
-           </div>
-       </form>
-   </md-content>
+                    </md-content>
+                </div>
+            </div>
+        </form>
+    </md-content>
 </md-content>

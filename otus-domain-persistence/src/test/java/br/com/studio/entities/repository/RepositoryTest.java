@@ -1,10 +1,9 @@
 package br.com.studio.entities.repository;
 
+import br.org.domain.repository.Repository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import br.org.domain.repository.Repository;
 
 public class RepositoryTest {
 

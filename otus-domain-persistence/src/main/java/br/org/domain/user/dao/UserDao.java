@@ -1,7 +1,6 @@
 package br.org.domain.user.dao;
 
 import br.org.domain.dao.GenericDaoBean;
-import br.org.domain.exceptions.DataNotFoundException;
 import br.org.domain.user.User;
 
 import javax.persistence.NoResultException;
@@ -18,22 +17,22 @@ public class UserDao extends GenericDaoBean{
             notWaitingEmpty(getSingleResult(query, User.class));
             return Boolean.TRUE;
 
-        } catch (NoResultException | DataNotFoundException e) {
+        } catch (NoResultException e) {
             return Boolean.FALSE;
         }
     }
 
-    public User findAdmin() throws DataNotFoundException {
+    public User findAdmin() {
         String query = String.format("db.%s.find({ '%s' : %s })", "User", ADM, true);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }
 
-    public User fetchByEmail(String email) throws DataNotFoundException {
+    public User fetchByEmail(String email) {
         String query = String.format("db.%s.find({ '%s' : '%s' })", "User", EMAIL, email);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }
 
-    public User fetchEnableByEmail(String email) throws DataNotFoundException {
+    public User fetchEnableByEmail(String email){
         String query = String.format("db.%s.find({ '%s' : '%s', '%s' : '%s' })", "User", EMAIL, email, "enable", true);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }

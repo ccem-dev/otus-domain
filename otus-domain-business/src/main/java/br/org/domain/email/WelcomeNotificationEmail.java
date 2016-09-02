@@ -1,10 +1,10 @@
 package br.org.domain.email;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WelcomeNotificationEmail extends Email implements StudioEmail {
 

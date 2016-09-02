@@ -3,7 +3,7 @@ package br.org.domain.log;
 import java.util.regex.Pattern;
 
 public class BodyLog {
-    private static String REGEX_PASSWORD = "\"(?i)(password|pwd|passwordConfirmation)\":\"[\\w\\p{Punct}&&[^&]]*?\"";
+    private static String REGEX_PASSWORD = "\"(?i)(password|pwd|passwordConfirmation)\"*:*\"[\\w\\p{Punct}&&[^&]]*?\"";
     private String body;
 
     public BodyLog(String body) {

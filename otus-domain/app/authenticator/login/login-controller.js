@@ -14,9 +14,8 @@
             var authenticatorResource = RestResourceService.getAuthenticatorResource();
 
             authenticatorResource.authenticate(user, function(response) {
-                RestResourceService.setSecurityToken(response.data);
-
-                if (!response.hasErrors) {
+                if (response.data) {
+                    RestResourceService.setSecurityToken(response.data);
                     DashboardStateService.goToHome();
                 } else {
                     $mdToast.show($mdToast.simple().textContent(LOGIN_ERROR_MESSAGE));

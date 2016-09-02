@@ -1,46 +1,54 @@
 package br.org.domain.security.dtos;
 
-import java.io.Serializable;
-
+import br.org.domain.exception.bussiness.EncryptedException;
+import br.org.domain.rest.Dto;
 import br.org.domain.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-public class AuthenticationDto implements Serializable {
+public class AuthenticationDto implements Dto {
 
-	private static final long serialVersionUID = 7577651923731847238L;
+    @Equalization(name = "email")
+    private String email;
 
-	@Equalization(name = "email")
-	private String email;
+    @Equalization(name = "password")
+    private String password;
 
-	@Equalization(name = "password")
-	private String password;
+    private String issuer;
 
-	private String issuer;
-	
-	public AuthenticationDto(String email, String password, String issuer) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.issuer = issuer;
-	}
+    public AuthenticationDto() {
+    }
 
-	public void encryptPassword() {
-		this.password = EncryptorResources.encryptIrreversible(password);
-	}
+    public AuthenticationDto(String email, String password, String issuer) {
+        super();
+        this.email = email;
+        this.password = password;
+        this.issuer = issuer;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
-	
-	public String getIssuer() {
-		return issuer;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setIssuer(String issuer){
-		this.issuer = issuer;
-	}
+    public String getIssuer() {
+        return issuer;
+    }
+
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
+    }
+
+    @Override
+    public Boolean isValid() {
+        return (email != null && !email.isEmpty())
+                && (password != null && !password.isEmpty());
+    }
+
+    @Override
+    public void encrypt() throws EncryptedException {
+        this.password = EncryptorResources.encryptIrreversible(password);
+    }
 }

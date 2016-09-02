@@ -12,6 +12,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.HttpMethod;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
 import java.text.ParseException;
@@ -65,7 +66,11 @@ public class AuditorServletFilter implements Filter {
 
     private String readToken(String authorizationHeader) {
         if (authorizationHeader != null) {
-            return AuthorizationHeaderReader.readToken(authorizationHeader);
+            try {
+                return AuthorizationHeaderReader.readToken(authorizationHeader);
+            } catch (NotAuthorizedException e) {
+                return "";
+            }
         } else {
             return "";
         }

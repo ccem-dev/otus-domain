@@ -1,14 +1,13 @@
 package br.com.studio.entities.user;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.List;
-
+import br.org.domain.user.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.domain.user.User;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class UserTest {
 
@@ -35,7 +34,7 @@ public class UserTest {
 	@Test
 	public void checkedIsAdm() {
 		user.becomesAdm();
-		assertEquals(true, user.getAdm());
+		assertEquals(true, user.isAdmin());
 	}
 
 	@Test
@@ -50,7 +49,7 @@ public class UserTest {
 	public void init_user_disable_and_without_adm_flag() {
 		User user = new User();
 
-		Assert.assertFalse(user.getAdm());
+		Assert.assertFalse(user.isAdmin());
 		Assert.assertFalse(user.isEnable());
 	}
 

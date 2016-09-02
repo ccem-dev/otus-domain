@@ -2,7 +2,7 @@ package br.org.domain.auditor;
 
 import br.org.tutty.Equalization;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 import java.util.Date;
 
 @Embeddable

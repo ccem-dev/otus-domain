@@ -1,14 +1,13 @@
 package br.org.studio.utils;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import br.org.domain.repository.Repository;
+import br.org.domain.user.User;
 import br.org.domain.utils.SurveyUUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.domain.repository.Repository;
-import br.org.domain.user.User;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class SurveyUUIDTest {
 

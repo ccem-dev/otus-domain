@@ -30,11 +30,11 @@
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/installer/initial/initial-config.html',
-                        controller: 'InitialConfigController',
-                        controllerAs: 'initialConfigController'
+                        controller: 'InitialConfigController as initialConfigController'
                     },
                     'repository-config@installer': {
                         templateUrl: 'app/survey-repository/repository.html',
+                        controller: 'InitialConfigController as initialConfigController'
                     }
                 }
             })

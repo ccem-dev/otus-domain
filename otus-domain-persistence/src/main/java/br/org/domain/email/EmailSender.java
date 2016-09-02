@@ -1,9 +1,8 @@
 package br.org.domain.email;
 
 import br.org.tutty.Equalization;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 @Embeddable

@@ -1,18 +1,16 @@
 package br.org.domain.rest;
 
-import br.org.domain.repository.RepositoryResource;
-import br.org.domain.user.UserResource;
-import br.org.domain.security.AuthenticationResource;
 import br.org.domain.configuration.InstallerResource;
-import br.org.domain.projects.OtusProjectResource;
-import br.org.domain.projects.UrlResource;
-
-import java.util.HashSet;
-import java.util.Set;
+import br.org.domain.projects.ProjectResource;
+import br.org.domain.repository.RepositoryResource;
+import br.org.domain.security.AuthenticationResource;
+import br.org.domain.user.UserResource;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
 
 @ApplicationPath("studio")
 public class EndPointsLoader extends Application {
@@ -30,10 +28,7 @@ public class EndPointsLoader extends Application {
 	private InstallerResource installerResource;
 
 	@Inject
-	private UrlResource urlResource;
-	
-	@Inject
-	private OtusProjectResource otusProjectResource;
+	private ProjectResource projectResource;
 
 	@Override
 	public Set<Class<?>> getClasses() {
@@ -42,8 +37,7 @@ public class EndPointsLoader extends Application {
 		resources.add(AuthenticationResource.class);
 		resources.add(RepositoryResource.class);
 		resources.add(InstallerResource.class);
-		resources.add(UrlResource.class);
-		resources.add(OtusProjectResource.class);
+		resources.add(ProjectResource.class);
 		return resources;
 	}
 
@@ -54,8 +48,7 @@ public class EndPointsLoader extends Application {
 		resources.add(authenticationResource);
 		resources.add(repositoryResource);
 		resources.add(installerResource);
-		resources.add(urlResource);
-		resources.add(otusProjectResource);
+		resources.add(projectResource);
 		return resources;
 	}
 

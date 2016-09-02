@@ -1,6 +1,6 @@
 package br.org.domain.security;
 
-import br.org.domain.exception.EncryptedException;
+import br.org.domain.exception.bussiness.EncryptedException;
 import sun.misc.BASE64Encoder;
 
 import java.io.UnsupportedEncodingException;

@@ -1,8 +1,7 @@
 package br.org.domain.dao;
 
-import br.org.domain.exceptions.DataNotFoundException;
-
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -31,9 +30,9 @@ public class GenericDaoBean {
 		return em.createNativeQuery(nativeQuery, clazz).getResultList();
 	}
 
-	public Object notWaitingEmpty(Object entity) throws DataNotFoundException {
+	public Object notWaitingEmpty(Object entity) {
 		if(entity == null){
-			throw new DataNotFoundException();
+			throw new NoResultException();
 		}else {
 			return entity;
 		}

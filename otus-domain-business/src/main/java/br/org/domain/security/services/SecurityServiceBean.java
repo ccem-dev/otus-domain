@@ -1,20 +1,17 @@
 package br.org.domain.security.services;
 
-import br.org.domain.user.User;
-import br.org.domain.exception.EmailNotFoundException;
-import br.org.domain.exception.InvalidPasswordException;
-import br.org.domain.exception.TokenException;
-import br.org.domain.exception.UserDisabledException;
+import br.org.domain.exception.bussiness.DataNotFoundException;
+import br.org.domain.exception.bussiness.InvalidPasswordException;
+import br.org.domain.exception.bussiness.TokenException;
+import br.org.domain.exception.bussiness.UserDisabledException;
 import br.org.domain.security.dtos.AuthenticationDto;
-import br.org.domain.exceptions.DataNotFoundException;
+import br.org.domain.user.User;
 import br.org.domain.user.dao.UserDao;
 import com.nimbusds.jose.JOSEException;
 
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.NoResultException;
-import java.io.Serializable;
 
 @Stateless
 public class SecurityServiceBean implements SecurityService{
@@ -26,7 +23,7 @@ public class SecurityServiceBean implements SecurityService{
     private SecurityContextService securityContextService;
 
     @Override
-    public String authenticate(AuthenticationDto authenticationDto) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException, TokenException {
+    public String authenticate(AuthenticationDto authenticationDto) throws InvalidPasswordException, UserDisabledException, TokenException, DataNotFoundException {
         try {
             User user = userDao.fetchByEmail(authenticationDto.getEmail());
 
@@ -43,8 +40,8 @@ public class SecurityServiceBean implements SecurityService{
             } else {
                 throw new InvalidPasswordException();
             }
-        } catch (DataNotFoundException | NoResultException e) {
-            throw new EmailNotFoundException();
+        } catch (NoResultException e) {
+            throw new DataNotFoundException();
 
         } catch (JOSEException e) {
             throw new TokenException();
@@ -55,6 +52,6 @@ public class SecurityServiceBean implements SecurityService{
     public void invalidate(String token){
         try {
             securityContextService.removeToken(token);
-        } catch (br.org.domain.exception.DataNotFoundException e) {}
+        } catch (DataNotFoundException e) {}
     }
 }
