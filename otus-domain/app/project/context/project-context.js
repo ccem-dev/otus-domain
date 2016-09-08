@@ -34,7 +34,7 @@
 
         function loadProjects(success) {
             var projectResource = RestResourceService.getOtusProjectResource();
-            projectResource.fetchAll(function(response) {
+            projectResource.list(function(response) {
                 projects = response.data;
                 success(projects);
             });
