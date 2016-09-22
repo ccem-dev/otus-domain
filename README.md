@@ -3,6 +3,11 @@
 
 - Servidor: [Wildfly 9.0.1.Final](https://www.mongodb.com/download-center#community)
 
+### Versões de ferramentas necessárias
+
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/) <br />
+Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/) 
+
 ## Configurações Servidor
 [Ambiente Otus Domain Vagrante](https://github.com/ccem-dev/otus-domain-api-vagrant/blob/master/README.md)
 
