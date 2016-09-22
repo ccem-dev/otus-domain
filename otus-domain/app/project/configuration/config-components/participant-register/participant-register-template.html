@@ -2,34 +2,36 @@
     <md-card flex layout="column" layout-margin>
         <md-card-title layout="row">
             <md-card-title-text>
-                <span class="md-body-2">Template Registro de Participante</span>
-                <div layout="column" ng-show="$ctrl.data.file">
-                    <span class="md-subhead">Template Escolhido:
-                        {{$ctrl.data.file.identity.name}}
+                <span class="md-body-2">Templates do Projeto</span>
+                <div layout="column" ng-show="$ctrl.uploadedTemplates.length !== 0">
+                  <span class="md-subhead">Templates Escolhidos:</span>
+                    <span class="md-subhead" ng-repeat="template in $ctrl.uploadedTemplates">
+                        - {{template.identity.acronym}}
                         -
-                        {{$ctrl.data.file.identity.acronym}}</span>
-                    <span class="md-subhead" ng-show="$ctrl.data.sendingDate">Data de Upload:
-                        {{$ctrl.data.sendingDate}}</span>
-                    <!-- <span class="md-subhead">Por:
-                          {{$ctrl.data.userEmail}}</span> -->
-                    <span class="md-caption" ng-show="$ctrl.changed">* não salvo</span>
-                </div>
-                <div ng-hide="$ctrl.data.file">
-                  <span class="md-subhead">Nenhum template selecionado</span>
+                        {{template.identity.name}}</span>
                 </div>
             </md-card-title-text>
-            <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.data.templateLocked" md-tooltip="lalari" upload-tool="$ctrl.uploadConfig">
+            <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
                 <md-icon md-font-library="material-icons" aria-label="Load">autorenew</md-icon>
                 <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
                     Enviar Template
                 </md-tooltip>
             </md-button>
-            <md-button id="saveBtn" class="md-icon-button md-primary" ng-click="$ctrl.save()" ng-disabled="!$ctrl.changed">
+            <md-button id="saveBtn" class="md-icon-button md-primary" ng-click="$ctrl.save()">
                 <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
                 <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
                     Salvar
                 </md-tooltip>
             </md-button>
         </md-card-title>
+        <md-card-content>
+            <div ng-repeat="template in $ctrl.templatesList track by template.acronym" ng-cloak>
+                <md-card layout-padding>
+                    {{template.acronym}}
+                    -
+                    {{template.name}}
+                </md-card>
+            </div>
+        </md-card-content>
     </md-card>
 </md-list-item>

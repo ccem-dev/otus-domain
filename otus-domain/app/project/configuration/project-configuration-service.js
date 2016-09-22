@@ -12,6 +12,28 @@
 
     function ProjectConfigurationService(OtusRestResourceService, $http) {
         var self = this;
+        var templatesList = [{
+            'name': 'Integração',
+            'acronym': 'INT'
+        }, {
+            'name': 'Profile',
+            'acronym': 'PRF'
+        }, {
+            'name': 'Edgar Alan',
+            'acronym': 'POE'
+        }, {
+            'name': 'Elegibilidade',
+            'acronym': 'ELEA'
+        }, {
+            'name': 'Gathering',
+            'acronym': 'GOP'
+        }, {
+            'name': 'Stark',
+            'acronym': 'NED'
+        }, {
+            'name': 'Theodor Evelyn Mosby',
+            'acronym': 'TED'
+        }];
         _init();
 
         /* Public Interface */
@@ -21,61 +43,50 @@
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
 
-        function _init() {
-        }
+        function _init() {}
 
 
-        /* Participant Register Fetcher */
+        /* Participant Register Section */
         function fetchParticipantRegisterConfiguration() {
-            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            var data = {};
-            ProjectConfiguration.getParticipantRegister(function(response) {
-              console.log(response);
-                data = response.data;
-            }, function() {
-                data = {};
-            });
 
-            return data;
+            return templatesList;
+
+            //TODO - rest on hold
+            // var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            // var data = {};
+            // ProjectConfiguration.getParticipantRegister(function(response) {
+            //     console.log(response);
+            //     data = response.data;
+            // }, function() {
+            //     data = {};
+            // });
+            //
+            // return data;
             //expect: returns full object or {}
         }
 
-        function updateParticipantRegisterConfiguration(file, successfullCallback, failureCallback) {
-            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            ProjectConfiguration.updateParticipantRegister(file,
-                function(data) {
-                    console.log(data);
-                    successfullCallback();
-                },
-                function(error) {
-                    failureCallback();
-                });
+        function updateParticipantRegisterConfiguration(fileList, successfullCallback, failureCallback) {
+            // fileList.forEach(function(file) {
+            //     templatesList.push(file);
+            // });
+
+            //TODO - return goes on then
+            templatesList = templatesList.concat(fileList);
+            return templatesList;
+            // var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            // ProjectConfiguration.updateParticipantRegister(file,
+            //     function(data) {
+            //         console.log(data);
+            //         successfullCallback();
+            //     },
+            //     function(error) {
+            //         failureCallback();
+            //     });
 
 
         }
 
-        // function lalaia() {
-        //
-        //     $http({
-        //         method: 'POST',
-        //         url: '/someUrl'
-        //     }).success(function successCallback(response, a, b) {
-        //         console.log(response);
-        //         console.log(a);
-        //         console.log(b);
-        //         console.log((b()));
-        //         console.log('sucesso');
-        //         // this callback will be called asynchronously
-        //         // when the response is available
-        //     }).error(function errorCallback(response) {
-        //         console.log('erro');
-        //         // called asynchronously if an error occurs
-        //         // or server returns response with an error status.
-        //     });
-        // }
-
-
-        /* Visual Identity */
+        /* Visual Identity Section*/
         function fetchProjectsVisualIdentity() {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var data = {};

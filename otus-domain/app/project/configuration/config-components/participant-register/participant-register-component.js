@@ -26,30 +26,26 @@
             'callback': uploadFile,
             'type': 'json'
         };
+        self.uploadedTemplates = [];
+        // self.templatesList = [];
+
         var mainFile;
 
         function _init() {
-            updateFields();
+            _getTemplatesList();
         }
 
-        function updateFields(data) {
-            self.data = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
-            self.changed = false;
-            if (!!self.data.file) { //TODO check this test accordingly to rest return
-                self.data.sendingDate = getDate(new Date(data.sendingDate));
-            }
+        function _getTemplatesList() {
+            self.templatesList = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
         }
 
         function uploadFile(file) {
-            self.changed = true;
             if (file.type === 'application/json') {
                 fileParser(file).then(function(templateObject) {
-                    self.data.file = templateObject;
-                    self.data.sendingDate = '';
+                    self.uploadedTemplates.push(templateObject);
                 });
             }
         }
-        //application/json
 
         function fileParser(file) {
             var deferred = $q.defer();
@@ -62,22 +58,37 @@
         }
 
         function save() {
-            var uploadSet = {
-                'file': self.data.file,
-                'sendingDate': new Date()
-            };
-            ProjectConfigurationService.updateParticipantRegisterConfiguration(uploadSet, successfull, failure);
+            if (self.uploadedTemplates.length === 0) {
+                return;
+            }
+            var uploadList = [];
+            self.uploadedTemplates.forEach(function(file) {
+              console.log(file);
+                uploadList.push({
+                    'name': file.identity.name,
+                    'acronym': file.identity.acronym
+                });
+
+
+            });
+            self.uploadedTemplates = [];
+            try {
+              self.templatesList = ProjectConfigurationService.updateParticipantRegisterConfiguration(uploadList);
+
+            } catch (e) {
+              console.log(e);
+            } finally {
+
+            }
         }
 
         function successfull() {
-            self.changed = false;
             self.data.sendingDate = getDate(new Date());
             $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
         }
 
         function failure() {
             $mdToast.show($mdToast.simple().textContent('Falha ao salvar formulário'));
-            updateFields();
         }
 
         function getDate(date) {
