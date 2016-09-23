@@ -31,9 +31,12 @@
                 fileUploadElement.click();
 
                 fileUploadElement.addEventListener('change', function() {
-                    var fileToUpload = this.files[0];
-                    if (fileToUpload) {
-                        callback(fileToUpload);
+                    var filesToUpload = [];
+                    for (var i = 0; i < this.files.length; i++) {
+                      filesToUpload.push(this.files[i]);
+                    }
+                    if (filesToUpload.length !== 0) {
+                        callback(filesToUpload);
                     }
                 });
             });
@@ -44,6 +47,7 @@
                     fileUploadElement = document.createElement('input');
                     fileUploadElement.setAttribute('type', 'file');
                     fileUploadElement.setAttribute('accept', acceptance);
+                    fileUploadElement.setAttribute('multiple', '');
                 } else {
                     fileUploadElement = document.createElement('button');
                 }

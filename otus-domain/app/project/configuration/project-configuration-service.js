@@ -69,10 +69,15 @@
             // fileList.forEach(function(file) {
             //     templatesList.push(file);
             // });
-
+            console.log(fileList);
+            fileList.forEach(function(file) {
+                templatesList.push({
+                    'acronym': file.identity.acronym,
+                    'name': file.identity.name
+                });
+            });
             //TODO - return goes on then
-            templatesList = templatesList.concat(fileList);
-            return templatesList;
+            successfullCallback(templatesList);
             // var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             // ProjectConfiguration.updateParticipantRegister(file,
             //     function(data) {

@@ -39,12 +39,14 @@
             self.templatesList = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
         }
 
-        function uploadFile(file) {
-            if (file.type === 'application/json') {
-                fileParser(file).then(function(templateObject) {
-                    self.uploadedTemplates.push(templateObject);
-                });
-            }
+        function uploadFile(fileList) {
+            fileList.forEach(function(file) {
+                if (file.type === 'application/json') {
+                    fileParser(file).then(function(templateObject) {
+                        self.uploadedTemplates.push(templateObject);
+                    });
+                }
+            });
         }
 
         function fileParser(file) {
@@ -58,36 +60,16 @@
         }
 
         function save() {
-            if (self.uploadedTemplates.length === 0) {
-                return;
-            }
-            var uploadList = [];
-            self.uploadedTemplates.forEach(function(file) {
-              console.log(file);
-                uploadList.push({
-                    'name': file.identity.name,
-                    'acronym': file.identity.acronym
-                });
-
-
-            });
+            ProjectConfigurationService.updateParticipantRegisterConfiguration(self.uploadedTemplates, successfullCallback, failureCallback);
             self.uploadedTemplates = [];
-            try {
-              self.templatesList = ProjectConfigurationService.updateParticipantRegisterConfiguration(uploadList);
-
-            } catch (e) {
-              console.log(e);
-            } finally {
-
-            }
         }
 
-        function successfull() {
-            self.data.sendingDate = getDate(new Date());
-            $mdToast.show($mdToast.simple().textContent('Salvo com sucesso'));
+        function successfullCallback(templatesList) {
+          console.log(templatesList);
+            self.templatesList = templatesList;
         }
 
-        function failure() {
+        function failureCallback() {
             $mdToast.show($mdToast.simple().textContent('Falha ao salvar formulário'));
         }
 
