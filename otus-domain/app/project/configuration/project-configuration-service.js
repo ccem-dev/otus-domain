@@ -48,45 +48,42 @@
 
         /* Participant Register Section */
         function fetchParticipantRegisterConfiguration() {
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
 
-            return templatesList;
 
             //TODO - rest on hold
-            // var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             // var data = {};
-            // ProjectConfiguration.getParticipantRegister(function(response) {
-            //     console.log(response);
-            //     data = response.data;
-            // }, function() {
-            //     data = {};
-            // });
+            ProjectConfiguration.getParticipantRegister(function(response) {
+                console.log(response);
+                return templatesList;
+            }, function() {
+                console.log('error');
+            });
+            return templatesList;
             //
             // return data;
             //expect: returns full object or {}
         }
 
         function updateParticipantRegisterConfiguration(fileList, successfullCallback, failureCallback) {
-            // fileList.forEach(function(file) {
-            //     templatesList.push(file);
-            // });
-            console.log(fileList);
-            fileList.forEach(function(file) {
-                templatesList.push({
-                    'acronym': file.identity.acronym,
-                    'name': file.identity.name
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            ProjectConfiguration.updateParticipantRegister(fileList,
+                function(data) {
+                  console.log(data);
+                    fileList.forEach(function(file) {
+                        templatesList.push({
+                            'acronym': file.identity.acronym,
+                            'name': file.identity.name
+                        });
+                    });
+                    successfullCallback(templatesList);
+                },
+                function(error) {
+                    failureCallback();
                 });
-            });
+
+
             //TODO - return goes on then
-            successfullCallback(templatesList);
-            // var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            // ProjectConfiguration.updateParticipantRegister(file,
-            //     function(data) {
-            //         console.log(data);
-            //         successfullCallback();
-            //     },
-            //     function(error) {
-            //         failureCallback();
-            //     });
 
 
         }

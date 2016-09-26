@@ -29,6 +29,11 @@
         self.uploadedTemplates = [];
         // self.templatesList = [];
 
+        var editions = {
+          'post':[],
+          'update':[]
+        };
+
         var mainFile;
 
         function _init() {
