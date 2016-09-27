@@ -14,25 +14,32 @@
         var self = this;
         var templatesList = [{
             'name': 'Integração',
-            'acronym': 'INT'
+            'acronym': 'INT',
+            'templateType': ''
         }, {
             'name': 'Profile',
-            'acronym': 'PRF'
+            'acronym': 'PRF',
+            'templateType': 'profile'
         }, {
             'name': 'Edgar Alan',
-            'acronym': 'POE'
+            'acronym': 'POE',
+            'templateType': 'profile'
         }, {
             'name': 'Elegibilidade',
-            'acronym': 'ELEA'
+            'acronym': 'ELEA',
+            'templateType': ''
         }, {
             'name': 'Gathering',
-            'acronym': 'GOP'
+            'acronym': 'GOP',
+            'templateType': ''
         }, {
             'name': 'Stark',
-            'acronym': 'NED'
+            'acronym': 'NED',
+            'templateType': ''
         }, {
             'name': 'Theodor Evelyn Mosby',
-            'acronym': 'TED'
+            'acronym': 'TED',
+            'templateType': 'profile'
         }];
         _init();
 
@@ -48,6 +55,7 @@
 
         /* Participant Register Section */
         function fetchParticipantRegisterConfiguration() {
+            return templatesList;
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
 
 
@@ -55,7 +63,6 @@
             // var data = {};
             ProjectConfiguration.getParticipantRegister(function(response) {
                 console.log(response);
-                return templatesList;
             }, function() {
                 console.log('error');
             });
@@ -66,17 +73,18 @@
         }
 
         function updateParticipantRegisterConfiguration(fileList, successfullCallback, failureCallback) {
+            fileList.forEach(function(file) {
+                templatesList.push({
+                    'acronym': file.identity.acronym,
+                    'name': file.identity.name,
+                    'templateType':''
+                });
+            });
+            successfullCallback(templatesList);
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             ProjectConfiguration.updateParticipantRegister(fileList,
                 function(data) {
-                  console.log(data);
-                    fileList.forEach(function(file) {
-                        templatesList.push({
-                            'acronym': file.identity.acronym,
-                            'name': file.identity.name
-                        });
-                    });
-                    successfullCallback(templatesList);
+                    console.log(data);
                 },
                 function(error) {
                     failureCallback();

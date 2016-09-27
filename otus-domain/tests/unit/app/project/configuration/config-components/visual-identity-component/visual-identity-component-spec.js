@@ -1,4 +1,4 @@
-describe('project visual identity component', function() {
+xdescribe('project visual identity component', function() {
     var Mock = {};
     var $componentController,
         $injector,

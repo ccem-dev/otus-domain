@@ -27,14 +27,11 @@
             'type': 'json'
         };
         self.uploadedTemplates = [];
-        // self.templatesList = [];
 
         var editions = {
           'post':[],
-          'update':[]
+          'update':{'row':[]}
         };
-
-        var mainFile;
 
         function _init() {
             _getTemplatesList();
@@ -76,10 +73,6 @@
 
         function failureCallback() {
             $mdToast.show($mdToast.simple().textContent('Falha ao salvar formulário'));
-        }
-
-        function getDate(date) {
-            return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString();
         }
     }
 

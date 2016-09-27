@@ -27,6 +27,8 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-router/build/angular-ui-router.min.js',
             /* Otus platform */
+            NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
+            NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
             COMPONENTS_ROOT_PATH + 'st-utils/**/*-module.js',
             /* Application files */
             APP_ROOT_PATH + 'app.js',

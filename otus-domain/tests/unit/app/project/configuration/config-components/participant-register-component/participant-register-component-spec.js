@@ -8,34 +8,67 @@ describe('project praticipant register setter', function() {
         $scope;
 
     beforeEach(function() {
+        module('otusDomain');
+    });
+    beforeEach(function() {
         module('otusDomain.project.configuration');
+
+        module(function($provide) {
+            $provide.service('defaultAlertFactoryA', myServiceName);
+        });
 
         inject(function(_$componentController_, _$injector_, _$q_, _$rootScope_, _$mdToast_) {
             $mdToast = _$mdToast_;
             $scope = _$rootScope_.$new();
             $q = _$q_;
-            $componentController = _$componentController_;
             $injector = _$injector_;
-            deferred = $q.defer(); //_$q_.defer();
-            mockUploadToolService($injector);
+            $componentController = _$componentController_;
+            deferred = $q.defer();
+            mockProjectConfigurationService($injector);
             ctrl = $componentController('otusParticipantRegister', {
                 $scope: $scope
             });
         });
     });
 
-    it('should set set empty fields when rest return equals to null', function() {
-        Mock.UploadToolService.fetchParticipantRegisterConfiguration = {};
-        expect(ctrl.data).toEqual({});
+    xdescribe('some uploads', function() {
+        it('should do nothing when a wrong file format is given', function() {
+            Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = {};
+            ctrl.uploadConfig.callback({
+                type: 'notJson'
+            });
+            expect(ctrl.data).toEqual({});
+        });
     });
 
-    it('should do nothing when a wrong file format is given', function() {
-        Mock.UploadToolService.fetchParticipantRegisterConfiguration = {};
-        ctrl.uploadConfig.callback({
-            type: 'notJson'
+    describe('an init w a few files given by the backend', function() {
+        Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = {};
+        it('should feed self.templatesList with the given files info', function() {
+            Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = [{
+                'name': 'Integração',
+                'acronym': 'INT',
+                'templateType': ''
+            }, {
+                'name': 'Profile',
+                'acronym': 'PRF',
+                'templateType': 'profile'
+            }, {
+                'name': 'Elegibilidade',
+                'acronym': 'ELEA',
+                'templateType': ''
+            }];
+
+            expect(self.templatesList).toEqual(Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration);
         });
-        expect(ctrl.data).toEqual({});
+
     });
+
+
+
+    function mockProjectConfigurationService($injector) {
+        Mock.ProjectConfigurationService = $injector.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService');
+        return Mock.ProjectConfigurationService;
+    }
 
     function mockUploadToolService($injector) {
         Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.configuration.UploadToolService');
