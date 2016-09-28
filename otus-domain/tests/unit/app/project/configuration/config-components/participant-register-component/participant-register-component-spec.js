@@ -7,44 +7,32 @@ describe('project praticipant register setter', function() {
         ctrl,
         $scope;
 
+
     beforeEach(function() {
         module('otusDomain');
-    });
-    beforeEach(function() {
-        module('otusDomain.project.configuration');
-
-        module(function($provide) {
-            $provide.service('defaultAlertFactoryA', myServiceName);
-        });
 
         inject(function(_$componentController_, _$injector_, _$q_, _$rootScope_, _$mdToast_) {
             $mdToast = _$mdToast_;
             $scope = _$rootScope_.$new();
             $q = _$q_;
             $injector = _$injector_;
-            $componentController = _$componentController_;
             deferred = $q.defer();
-            mockProjectConfigurationService($injector);
-            ctrl = $componentController('otusParticipantRegister', {
+            var Injections = {
+                '$q': $q,
+                'ProjectConfigurationService': mockProjectConfigurationService($injector),
+                '$mdToast': $mdToast
+            };
+            var Bindings = {
                 $scope: $scope
-            });
+            };
+            $componentController = _$componentController_;
+            ctrl = $componentController('otusParticipantRegister', Injections, Bindings);
         });
     });
 
-    xdescribe('some uploads', function() {
-        it('should do nothing when a wrong file format is given', function() {
-            Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = {};
-            ctrl.uploadConfig.callback({
-                type: 'notJson'
-            });
-            expect(ctrl.data).toEqual({});
-        });
-    });
-
-    describe('an init w a few files given by the backend', function() {
-        Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = {};
-        it('should feed self.templatesList with the given files info', function() {
-            Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = [{
+    it('should feed self.templatesList with the given files info', function() {
+        Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = function() {
+            return [{
                 'name': 'Integração',
                 'acronym': 'INT',
                 'templateType': ''
@@ -57,12 +45,22 @@ describe('project praticipant register setter', function() {
                 'acronym': 'ELEA',
                 'templateType': ''
             }];
-
-            expect(self.templatesList).toEqual(Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration);
-        });
-
+        };
+        var result = angular.equals(ctrl.templatesList, Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration());
+        console.log(ctrl.templatesList);
+        expect(result).toBe(true);
     });
 
+
+    xdescribe('some uploads', function() {
+        it('should do nothing when a wrong file format is given', function() {
+            Mock.ProjectConfigurationService.fetchParticipantRegisterConfiguration = {};
+            ctrl.uploadConfig.callback({
+                type: 'notJson'
+            });
+            expect(ctrl.data).toEqual({});
+        });
+    });
 
 
     function mockProjectConfigurationService($injector) {
