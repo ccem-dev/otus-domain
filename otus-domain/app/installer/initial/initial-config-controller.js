@@ -5,12 +5,20 @@
         .module('otusDomain.installer')
         .controller('InitialConfigController', InitialConfigController);
 
-    InitialConfigController.$inject = ['$q', '$scope', '$mdDialog', 'DashboardStateService', 'RestResourceService'];
+    InitialConfigController.$inject = ['$q', '$mdToast', '$scope', '$mdDialog', 'DashboardStateService', 'RestResourceService'];
 
-    function InitialConfigController($q, $scope, $mdDialog, DashboardStateService, RestResourceService) {
+    function InitialConfigController($q, $mdToast, $scope, $mdDialog, DashboardStateService, RestResourceService) {
+        self = this;
+        var successMessage = 'Seu cadastro foi realizado com sucesso! Você vai ser redirecionado para a tela de login.';
+        var errorMessage = 'Houve um erro ao instalar seu projeto. Verifique os dados informados';
+        var repositoryResource;
+        var installerResource;
 
-        var repositoryResource,
-            installerResource;
+        self.register = register;
+        self.validateEmailService = validateEmailService;
+        self.validateCredentials = validateCredentials;
+        self.validateRepositoryConnection = validateRepositoryConnection;
+        self.validateEmailService = validateEmailService;
 
         init();
 
@@ -19,46 +27,32 @@
             installerResource = RestResourceService.getInstallerResource();
         }
 
-        $scope.register = function(systemConf) {
+        function register (systemConf) {
             $scope.isLoading = true;
-            $scope.validateEmailService(systemConf).then(function() {
-                installerResource.config(systemConf, function() {
-                        $scope.isLoading = false;
-                        confirmAlertToNavigate();
-                    },
-                    function() {
-                        $scope.isLoading = false;
-                    });
-            }, function() {
+
+            installerResource.config(systemConf, function(response) {
+                if (response.data) {
+                    _successNavigation();
+
+                } else {
+                    _messageError(response.MESSAGE);
+                }
                 $scope.isLoading = false;
             });
-        };
+        }
 
-        $scope.validateEmailService = function(systemConf) {
-            var deferred = $q.defer();
 
-            installerResource.validation(systemConf, function(response) {
-                if (response.data) {
-                    $scope.resetValidationEmail();
-                    deferred.resolve(true);
-                } else {
-                    $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', false);
-                    deferred.reject(false);
-                }
-            });
+        function _messageError(message) {
+            $mdToast.show(
+                $mdToast.simple()
+                .textContent(errorMessage)
+            );
+        }
 
-            return deferred.promise;
-        };
-
-        $scope.resetValidationEmail = function() {
-            $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', true);
-            $scope.initialConfigSystemForm.$setValidity('emailService', true);
-        };
-
-        function confirmAlertToNavigate() {
+        function _successNavigation() {
             var alert = $mdDialog.alert()
                 .title('Informação')
-                .content('Seu cadastro foi realizado com sucesso! Você vai ser redirecionado para a tela de login.')
+                .content(successMessage)
                 .ok('ok');
 
             $mdDialog
@@ -68,33 +62,39 @@
                 });
         }
 
-        /**
-         *
-         * RepositoryConfiguration
-         * Precisa ser refatorado
-         *
-         */
-
-        $scope.validateCredentials = function(repository) {
-            repositoryResource.validateCredentials(repository, function(response) {
-                showMessageCredentials(response.data);
+        function validateEmailService(emailSender) {
+            installerResource.validationEmail(emailSender, function(response) {
+                validationEmailService(response.data);
             });
-        };
-
-        $scope.validateRepositoryConnection = function(repository) {
-            repositoryResource.validateConnection(repository, function(response) {
-                showMessageRepositoryConnection(response.data);
-            });
-        };
-
-        function showMessageCredentials(isValid) {
-            $scope.initialConfigSystemForm.repositoryUsername.$setValidity('credentials', isValid);
-            $scope.initialConfigSystemForm.repositoryPassword.$setValidity('credentials', isValid);
         }
 
-        function showMessageRepositoryConnection(isValid) {
+        function validateCredentials(repository) {
+            repositoryResource.validateCredentials(repository, function(response) {
+                validationCredentials(response.data);
+            });
+        }
+
+        function validateRepositoryConnection(repository) {
+            repositoryResource.validateConnection(repository, function(response) {
+                validationRepositoryConnection(response.data);
+            });
+        }
+
+        function validationEmailService(isValid) {
+            $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', isValid);
+            $scope.initialConfigSystemForm.$setValidity('emailService', isValid);
+        }
+
+        function validationCredentials(isValid) {
+            $scope.initialConfigSystemForm.repositoryUsername.$setValidity('credentials', isValid);
+            $scope.initialConfigSystemForm.repositoryPassword.$setValidity('credentials', isValid);
+            $scope.initialConfigSystemForm.$setValidity('credentials', isValid);
+        }
+
+        function validationRepositoryConnection(isValid) {
             $scope.initialConfigSystemForm.repositoryHost.$setValidity('connection', isValid);
             $scope.initialConfigSystemForm.repositoryPort.$setValidity('connection', isValid);
+            $scope.initialConfigSystemForm.$setValidity('credentials', isValid);
         }
     }
 

@@ -11,6 +11,8 @@
         <class>br.org.domain.repository.Repository</class>
         <class>br.org.domain.system.SystemConfig</class>
         <class>br.org.domain.user.User</class>
+        <class>br.org.domain.auditor.Auditor</class>
+        <class>br.org.domain.auditor.LogEntry</class>
 
         <properties>
             <property name="hibernate.transaction.jta.platform"

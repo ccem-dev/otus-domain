@@ -3,10 +3,9 @@ package br.org.domain.user.service;
 import br.org.domain.email.DisableUserNotificationEmail;
 import br.org.domain.email.EnableUserNotificationEmail;
 import br.org.domain.email.service.EmailNotifierService;
-import br.org.domain.exception.DataNotFoundException;
-import br.org.domain.exception.EmailNotificationException;
+import br.org.domain.exception.bussiness.*;
+import br.org.domain.repository.api.RepositoryInternalFacade;
 import br.org.domain.repository.dao.RepositoryDao;
-import br.org.domain.repository.service.RepositoryService;
 import br.org.domain.security.services.SecurityService;
 import br.org.domain.user.User;
 import br.org.domain.user.builder.CurrentUserBuilder;
@@ -24,27 +23,27 @@ import java.util.List;
 @Stateless
 public class ManagementUserServiceBean implements ManagementUserService {
 
-	@Inject
-	private UserDao userDao;
+    @Inject
+    private UserDao userDao;
+
+    @Inject
+    private EmailNotifierService emailNotifierService;
+
+    @Inject
+    private RepositoryInternalFacade repositoryInternalFacade;
+
+    @Inject
+    private RepositoryDao repositoryDao;
 
     @Inject
     private SecurityService securityService;
 
-	@Inject
-	private EmailNotifierService emailNotifierService;
+    @Override
+    public List<ManagementUserDto> list() {
+        List<ManagementUserDto> administrationUsersDtos = new ArrayList<>();
+        List<User> users = userDao.fetchAll();
 
-	@Inject
-	private RepositoryService repositoryService;
-
-	@Inject
-	private RepositoryDao repositoryDao;
-
-	@Override
-	public List<ManagementUserDto> fetchUsers() {
-		List<ManagementUserDto> administrationUsersDtos = new ArrayList<>();
-		List<User> users = userDao.fetchAll();
-
-		users.stream().forEach(user -> {
+        users.stream().forEach(user -> {
             ManagementUserDto managementUserDto = new ManagementUserDto();
 
             try {
@@ -56,16 +55,49 @@ public class ManagementUserServiceBean implements ManagementUserService {
             }
         });
 
-		return administrationUsersDtos;
-	}
+        return administrationUsersDtos;
+    }
 
     @Override
-    public CurrentUserDto fetchUserByToken(String token) throws DataNotFoundException {
-        String email = securityService.parseUserId(token);
-        User user = fetchUserByEmail(email);
+    public void disable(String email) throws EmailNotificationException, DataNotFoundException {
+        try {
+            User user = userDao.fetchByEmail(email);
+            if (!user.isAdmin()) {
+                user.disable();
 
-        CurrentUserDto currentUser = CurrentUserBuilder.build(user, token);
-        return currentUser;
+                userDao.update(user);
+
+                DisableUserNotificationEmail disableUserNotificationEmail = new DisableUserNotificationEmail();
+                disableUserNotificationEmail.defineRecipient(user);
+                disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
+
+                emailNotifierService.sendEmail(disableUserNotificationEmail);
+            }
+
+        } catch (NoResultException e) {
+            throw new DataNotFoundException();
+        }
+    }
+
+    @Override
+    public void enable(String email) throws EmailNotificationException, DataNotFoundException, RepositoryConnectionNotFound, RepositoryOfflineException, ValidationException {
+        try {
+            User user = userDao.fetchByEmail(email);
+            user.enable();
+            userDao.update(user);
+
+            EnableUserNotificationEmail enableUserNotificationEmail = new EnableUserNotificationEmail();
+            enableUserNotificationEmail.defineRecipient(user);
+            enableUserNotificationEmail.setFrom(emailNotifierService.getSender());
+
+            repositoryInternalFacade.createTo(user);
+            emailNotifierService.sendEmail(enableUserNotificationEmail);
+
+        } catch (NoResultException e) {
+            throw new DataNotFoundException();
+
+        } catch (AlreadyExistException e) {
+        }
     }
 
     @Override
@@ -77,43 +109,21 @@ public class ManagementUserServiceBean implements ManagementUserService {
         }
     }
 
-	@Override
-	public void disableUsers(ManagementUserDto managementUserDto) {
-            try {
-                User user = userDao.fetchByEmail(managementUserDto.getEmail());
-                user.disable();
+    @Override
+    public CurrentUserDto fetchCurrentUser(String token) throws DataNotFoundException {
+        String email = securityService.fetchUserId(token);
+        User user = fetchUserByEmail(email);
+        CurrentUserDto currentUser = CurrentUserBuilder.build(user, token);
+        return currentUser;
+    }
 
-                userDao.update(user);
+    @Override
+    public Boolean isUnique(String email) {
+        if (email != null && userDao.emailExists(email)) {
+            return Boolean.FALSE;
+        } else {
+            return Boolean.TRUE;
+        }
+    }
 
-                DisableUserNotificationEmail disableUserNotificationEmail = new DisableUserNotificationEmail();
-                disableUserNotificationEmail.defineRecipient(user);
-                disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
-
-                emailNotifierService.sendEmail(disableUserNotificationEmail);
-            } catch (EmailNotificationException e) {
-                e.printStackTrace();
-            }
-	}
-
-	@Override
-	public void enableUsers(ManagementUserDto managementUserDto) {
-            try {
-                User user = userDao.fetchByEmail(managementUserDto.getEmail());
-                user.enable();
-
-                userDao.update(user);
-
-                EnableUserNotificationEmail enableUserNotificationEmail = new EnableUserNotificationEmail();
-                enableUserNotificationEmail.defineRecipient(user);
-                enableUserNotificationEmail.setFrom(emailNotifierService.getSender());
-
-                if (!repositoryDao.userHasRepository(user)) {
-                    repositoryService.createRepositoryTo(user);
-                }
-
-                emailNotifierService.sendEmail(enableUserNotificationEmail);
-            } catch (EmailNotificationException e) {
-                e.printStackTrace();
-            }
-	}
 }

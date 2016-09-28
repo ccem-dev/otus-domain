@@ -1,15 +1,18 @@
 package br.org.domain.security.services;
 
-import br.org.domain.exception.*;
+import br.org.domain.exception.bussiness.DataNotFoundException;
+import br.org.domain.exception.bussiness.InvalidPasswordException;
+import br.org.domain.exception.bussiness.TokenException;
+import br.org.domain.exception.bussiness.UserDisabledException;
 import br.org.domain.security.dtos.AuthenticationDto;
 import br.org.domain.user.dto.CurrentUserDto;
 
 public interface SecurityService {
 
 	CurrentUserDto authenticate(AuthenticationDto authenticationDto)
-			throws InvalidPasswordException, EmailNotFoundException, UserDisabledException, TokenException;
+			throws InvalidPasswordException, UserDisabledException, TokenException, DataNotFoundException;
 
-	String parseUserId(String token) throws DataNotFoundException;
+	String fetchUserId(String token) throws DataNotFoundException;
 
 	void invalidate(String token);
 }

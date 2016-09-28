@@ -3,26 +3,64 @@
 
     angular
         .module('otusDomain.user')
-        .service('user.UserService', service);
+        .service('UserService', service);
 
-    service.$inject = ['user.UserContext'];
+    service.$inject = ['RestResourceService', 'OtusRestResourceService', '$q', 'UserContext'];
 
-    function service(UserContext) {
+    function service(domainResource, otusResource, $q, UserContext) {
         var self = this;
-        self.getCurrentUser = getCurrentUser;
-        self.reloadCurrentUser = reloadCurrentUser;
-        self.setCurrentUser = setCurrentUser;
+        self.getLoggedUser = getLoggedUser;
+        self.authenticate = authenticate;
+        self.logout = logout;
+        self.reloadLoggedUser = reloadLoggedUser;
 
-        function setCurrentUser(currentUser){
-            UserContext.setCurrentUser(currentUser);
+        function authenticate(widget) {
+            var deferred = $q.defer();
+            var authenticatorResource = domainResource.getAuthenticatorResource();
+
+            authenticatorResource.authenticate(widget, function(response) {
+                if (response.data) {
+                    _addLoggedUser(response.data);
+                    deferred.resolve();
+                } else {
+                    deferred.reject();
+                }
+            });
+
+            return deferred.promise;
         }
 
-        function getCurrentUser() {
-            return UserContext.getCurrentUser();
+        function logout() {
+            var deferred = $q.defer();
+            var authenticatorResource = domainResource.getAuthenticatorResource();
+
+            authenticatorResource.invalidate(function() {
+                _removeLoggedUser();
+                deferred.resolve();
+            }, function() {
+                deferred.reject();
+            });
+
+            return deferred.promise;
         }
 
-        function reloadCurrentUser() {
+        function reloadLoggedUser() {
             UserContext.reloadCurrentUser();
+        }
+
+        function _addLoggedUser(user) {
+            domainResource.setSecurityToken(user.token);
+            UserContext.setCurrentUser(user);
+        }
+
+        function _removeLoggedUser() {
+            UserContext.removeCurrentUser();
+            domainResource.removeSecurityToken();
+            otusResource.removeSecurityToken();
+        }
+
+        function getLoggedUser() {
+            return UserContext.getCurrentUser();
         }
     }
 

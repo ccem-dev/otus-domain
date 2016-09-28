@@ -29,7 +29,7 @@
 		<module>../otus-domain-business</module>
 		<module>../otus-domain-ear</module>
 		<module>../otus-domain-persistence</module>
-		<module>../otus-domain</module>
+<!--		<module>../otus-domain</module>-->
 	</modules>
 
 	<repositories>

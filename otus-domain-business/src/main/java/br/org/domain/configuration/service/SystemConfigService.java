@@ -1,18 +1,21 @@
 package br.org.domain.configuration.service;
 
 import br.org.domain.configuration.dto.SystemConfigDto;
-import br.org.domain.exception.EmailNotificationException;
 import br.org.domain.email.dto.EmailSenderDto;
-import br.org.domain.exception.InvalidDtoException;
+import br.org.domain.exception.bussiness.AlreadyExistException;
+import br.org.domain.exception.bussiness.DataNotFoundException;
+import br.org.domain.exception.bussiness.EmailNotificationException;
+import br.org.domain.exception.bussiness.ValidationException;
+import br.org.domain.repository.dto.RepositoryConnectionDataDto;
 
 
 public interface SystemConfigService {
 
     Boolean isReady();
 
-	void createAdmin(SystemConfigDto systemConfigDto) throws InvalidDtoException;
+    RepositoryConnectionDataDto fetchRepositoryConnectionData() throws DataNotFoundException;
 
-	void createInitialSystemConfig(SystemConfigDto systemConfigDto) throws Exception;
+    Boolean validateEmailService(EmailSenderDto emailSenderDto);
 
-    void verifyEmailService(EmailSenderDto emailSenderDto) throws EmailNotificationException;
+    void create(SystemConfigDto systemConfigDto) throws ValidationException, EmailNotificationException, AlreadyExistException;
 }

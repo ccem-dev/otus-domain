@@ -1,22 +1,16 @@
 package br.org.domain.user;
 
 import br.org.domain.email.validation.EmailConstraint;
-import br.org.domain.exception.DataNotFoundException;
-import br.org.domain.exception.InvalidDtoException;
-import br.org.domain.exception.TokenException;
 import br.org.domain.rest.Response;
 import br.org.domain.security.Secured;
 import br.org.domain.security.TokenParser;
-import br.org.domain.security.services.SecurityContextService;
+import br.org.domain.user.api.UserFacade;
 import br.org.domain.user.dto.CurrentUserDto;
 import br.org.domain.user.dto.ManagementUserDto;
 import br.org.domain.user.dto.UserDto;
-import br.org.domain.user.registration.RegisterUserService;
-import br.org.domain.user.service.ManagementUserService;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -27,74 +21,55 @@ import java.util.List;
 public class UserResource {
 
     @Inject
-    private RegisterUserService registerUserService;
+    private UserFacade userFacade;
+
     @Inject
     private EmailConstraint emailConstraint;
-    @Inject
-    private SecurityContextService securityContextService;
-    @Inject
-    private HttpSession httpSession;
-    @Inject
-    private ManagementUserService managementUserService;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public String create(UserDto userDto) {
-        Response response = new Response();
-        try {
-            userDto.encrypt();
-
-            registerUserService.createUser(userDto);
-            return response.buildSuccess().toJson();
-
-        } catch (InvalidDtoException e) {
-            return response.buildError(e).toJson();
-        }
+        userDto.encrypt();
+        userFacade.create(userDto);
+        return new Response().buildSuccess().toJson();
     }
 
     @GET
-    @Path("/exists")
+    @Path("/exist")
     @Produces(MediaType.APPLICATION_JSON)
     public String userEmailExists(@QueryParam("email") String email) {
         Boolean result = emailConstraint.isUnique(email);
-        Response response = new Response();
-        return response.buildSuccess(!result).toJson();
+        return new Response().buildSuccess(!result).toJson();
     }
 
     @GET
-    @Path("/fetch")
+    @Secured
+    @Path("/list")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Secured
-    public String getUsers() {
-        List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
-        Response response = new Response();
-        return response.buildSuccess(managementUserDtos).toJson();
+    public String list() {
+        List<ManagementUserDto> managementUserDtos = userFacade.list();
+        return new Response().buildSuccess(managementUserDtos).toJson();
     }
 
     @POST
+    @Secured
     @Path("/disable")
-    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
     public String disableUsers(ManagementUserDto managementUserDto) {
-        managementUserService.disableUsers(managementUserDto);
-        Response response = new Response();
-
-        return response.buildSuccess().toJson();
-
+        userFacade.disable(managementUserDto.getEmail());
+        return new Response().buildSuccess().toJson();
     }
 
     @POST
-    @Path("/enable")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     @Secured
+    @Path("/enable")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public String enableUsers(ManagementUserDto managementUserDto) {
-        managementUserService.enableUsers(managementUserDto);
-        Response response = new Response();
-
-        return response.buildSuccess().toJson();
+        userFacade.enable(managementUserDto.getEmail());
+        return new Response().buildSuccess().toJson();
     }
 
     @GET
@@ -103,18 +78,9 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Secured
     public String getCurrentUser(@Context HttpServletRequest request) {
-        Response response = new Response();
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-        try {
-            String token = TokenParser.parse(authorizationHeader);
-            CurrentUserDto currentUserDto = managementUserService.fetchUserByToken(token);
-
-            return response.buildSuccess(currentUserDto).toJson();
-
-        } catch (DataNotFoundException e) {
-            return response.buildError(new TokenException()).toJson();
-        }
+        String token = TokenParser.parse(authorizationHeader);
+        CurrentUserDto currentUserDto = userFacade.fetchLoggedUser(token);
+        return new Response().buildSuccess(currentUserDto).toJson();
     }
-
 }

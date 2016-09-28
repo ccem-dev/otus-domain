@@ -8,5 +8,5 @@ public interface ProjectService {
 
 	void register(ProjectDto projectDto);
 
-	List<ProjectDto> fetchAll();
+	List<ProjectDto> list();
 }

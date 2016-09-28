@@ -1,6 +1,6 @@
 package br.org.domain.user.service;
 
-import br.org.domain.exception.DataNotFoundException;
+import br.org.domain.exception.bussiness.*;
 import br.org.domain.user.User;
 import br.org.domain.user.dto.CurrentUserDto;
 import br.org.domain.user.dto.ManagementUserDto;
@@ -8,13 +8,15 @@ import br.org.domain.user.dto.ManagementUserDto;
 import java.util.List;
 
 public interface ManagementUserService {
-    List<ManagementUserDto> fetchUsers();
+    List<ManagementUserDto> list();
 
-    CurrentUserDto fetchUserByToken(String token) throws DataNotFoundException;
+    void disable(String email) throws EmailNotificationException, DataNotFoundException;
+
+    void enable(String email) throws EmailNotificationException, DataNotFoundException, RepositoryConnectionNotFound, RepositoryOfflineException, AlreadyExistException, ValidationException;
 
     User fetchUserByEmail(String email) throws DataNotFoundException;
 
-    void disableUsers(ManagementUserDto managementUserDto);
+    CurrentUserDto fetchCurrentUser(String token) throws DataNotFoundException;
 
-    void enableUsers(ManagementUserDto managementUserDto);
+    Boolean isUnique(String email);
 }

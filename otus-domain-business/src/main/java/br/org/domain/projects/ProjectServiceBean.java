@@ -1,5 +1,6 @@
 package br.org.domain.projects;
 
+import br.org.domain.projects.builder.ProjectBuilder;
 import br.org.domain.projects.dto.ProjectDto;
 import br.org.tutty.Equalizer;
 
@@ -20,31 +21,18 @@ public class ProjectServiceBean implements ProjectService {
     @Override
     public void register(ProjectDto projectDto) {
         Project project = new Project();
-
         Equalizer.equalize(projectDto, project);
         projectDao.persist(project);
     }
 
     @Override
-    public List<ProjectDto> fetchAll() {
-        List<ProjectDto> projectDtos = new ArrayList<>();
-
+    public List<ProjectDto> list() {
         try {
             List<Project> projects = projectDao.fetchAll();
-
-            for (Project project : projects) {
-                ProjectDto projectDto = new ProjectDto();
-
-                Equalizer.equalize(project, projectDto);
-                projectDto.setProjectToken(project.getProjectToken().toString());
-
-                projectDtos.add(projectDto);
-            }
+            return ProjectBuilder.build(projects);
 
         } catch (NoResultException e) {
-            return projectDtos;
+            return new ArrayList<>();
         }
-
-        return projectDtos;
     }
 }

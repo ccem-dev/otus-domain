@@ -27,12 +27,12 @@ public class UserDao extends GenericDaoBean{
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }
 
-    public User fetchByEmail(String email){
+    public User fetchByEmail(String email) {
         String query = String.format("db.%s.find({ '%s' : '%s' })", "User", EMAIL, email);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }
 
-    public User fetchEnableByEmail(String email) {
+    public User fetchEnableByEmail(String email){
         String query = String.format("db.%s.find({ '%s' : '%s', '%s' : '%s' })", "User", EMAIL, email, "enable", true);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }

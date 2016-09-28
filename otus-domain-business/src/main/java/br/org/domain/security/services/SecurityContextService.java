@@ -1,9 +1,11 @@
 package br.org.domain.security.services;
 
-import br.org.domain.exception.DataNotFoundException;
-import br.org.domain.exception.TokenException;
+import br.org.domain.exception.bussiness.DataNotFoundException;
+import br.org.domain.exception.bussiness.TokenException;
 import br.org.domain.security.dtos.AuthenticationDto;
 import com.nimbusds.jose.JOSEException;
+
+import java.text.ParseException;
 
 public interface SecurityContextService {
 
@@ -17,5 +19,5 @@ public interface SecurityContextService {
 
     void validateToken(String token) throws TokenException;
 
-    String getUserId(String token) throws DataNotFoundException;
+    String getUserId(String token) throws ParseException;
 }
