@@ -10,7 +10,6 @@
     function UserActivationController($http, $scope, $filter, RestResourceService, OtusRestResourceService, $mdDialog, $mdToast, userManagementType) {
         var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário ?';
         var DIALOG_TITLE = 'Mudança de Estatus';
-        var DIALOG_ARIA = 'Mudança de Status';
         var clientSelected = null;
 
         $scope.users = [];
@@ -55,7 +54,6 @@
             var dialog = $mdDialog.confirm()
                 .title(DIALOG_TITLE)
                 .textContent(DIALOG_TEXT_CONTENT)
-                .ariaLabel(DIALOG_ARIA)
                 .ok('Sim')
                 .cancel('Cancelar');
 
@@ -73,8 +71,6 @@
                     $mdToast.simple()
                     .textContent('Usuário habilitado.')
                 );
-
-                loadUsers();
             });
         }
 
@@ -85,14 +81,12 @@
                     $mdToast.simple()
                     .textContent('Usuário desabilitado.')
                 );
-
-                loadUsers();
             });
         }
 
         function loadUsers() {
             var userResource = clientSelected.getUserResource();
-            userResource.fetch(function(response) {
+            userResource.list(function(response) {
                 $scope.users = response.data;
             });
         }

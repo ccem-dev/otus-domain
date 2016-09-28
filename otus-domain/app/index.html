@@ -72,9 +72,10 @@
 <!-- USER -->
 <script src="app/user/user-module.js"></script>
 <script src="app/user/api/user-service.js"></script>
-<script src="app/user/user-context.js"></script>
+<script src="app/user/context/user-context.js"></script>
 <script src="app/user/management/user-management-module.js"></script>
 <script src="app/user/management/registry/user-register-controller.js"></script>
+<script src="app/user/management/registry/user-unique-directive.js"></script>
 <script src="app/user/management/activation/user-activation-controller.js"></script>
 
 <!-- INSTALLER -->
@@ -101,12 +102,15 @@
 
 <!-- PROJECT -->
 <script src="app/project/project-module.js"></script>
-<script src="app/project/security/project-security-service.js"></script>
-<script src="app/project/security/project-authentication-factory.js"></script>
-<script src="app/project/context/project-selection-service.js"></script>
-<script src="app/project/context/project-context.js"></script>
-<script src="app/project/context/dialog/project-choose-controller.js"></script>
-<script src="app/project/otus-waiting-project-directive.js"></script>
+
+<!-- PROJECT -->
+<script src="app/project/selection/model/project-factory.js"></script>
+<script src="app/project/selection/ui/toolbar/otus-project-selection-directive.js"></script>
+<script src="app/project/selection/ui/otus-waiting-project-directive.js"></script>
+<script src="app/project/selection/ui/dialog/project-choose-controller.js"></script>
+<script src="app/project/selection/project-context.js"></script>
+<script src="app/project/selection/project-security-service.js"></script>
+<script src="app/project/selection/project-selection-service.js"></script>
 
 <!-- PROJECT-FIELD_CENTER -->
 <script src="app/project/fieldCenter/field-center-module.js"></script>

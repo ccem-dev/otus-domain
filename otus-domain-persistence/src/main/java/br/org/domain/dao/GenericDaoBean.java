@@ -30,7 +30,7 @@ public class GenericDaoBean {
 		return em.createNativeQuery(nativeQuery, clazz).getResultList();
 	}
 
-	public Object notWaitingEmpty(Object entity) throws NoResultException {
+	public Object notWaitingEmpty(Object entity) {
 		if(entity == null){
 			throw new NoResultException();
 		}else {

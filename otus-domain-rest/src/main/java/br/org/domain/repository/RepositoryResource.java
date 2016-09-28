@@ -1,132 +1,51 @@
 package br.org.domain.repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import br.org.domain.repository.api.RepositoryFacade;
+import br.org.domain.repository.dto.RepositoryConnectionDataDto;
+import br.org.domain.repository.dto.RepositoryDto;
+import br.org.domain.rest.Response;
+import br.org.domain.security.Secured;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
-import br.org.domain.rest.Response;
-import com.google.gson.Gson;
-
-import br.org.domain.exception.RepositoryNotFoundException;
-import br.org.domain.repository.service.RepositoryService;
-import br.org.domain.repository.dto.RepositoryConnectionData;
-import br.org.domain.repository.dto.RepositoryDto;
-
-@Path("repository")
+@Path("/repository")
 public class RepositoryResource {
 
     @Inject
-    private RepositoryService repositoryService;
+    private RepositoryFacade repositoryFacade;
 
     @GET
+    @Secured
+    @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<RepositoryDto> getAll() {
-        List<RepositoryDto> repositories = new ArrayList<RepositoryDto>();
-        try {
-            repositories = repositoryService.fetchAll();
-        } catch (RepositoryNotFoundException e) {
-        }
-
-        return repositories;
+    public String list() {
+        List<RepositoryDto> repositories = repositoryFacade.list();
+        return new Response().setData(repositories).toJson();
     }
 
     @POST
-    @Path("validate/connection")
+    @Path("/validate/connection")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getConnectionStatus(String repository) {
-        RepositoryConnectionData repositoryConnectionData = new Gson().fromJson(repository, RepositoryConnectionData.class);
-        Response response = new Response();
-
-        response.setData(repositoryService.validationConnection(repositoryConnectionData));
-        return response.toJson();
+    public String getConnectionStatus(RepositoryConnectionDataDto repositoryConnectionDataDto) {
+        return new Response().setData(repositoryFacade.validateConnection(repositoryConnectionDataDto)).toJson();
     }
 
     @POST
-    @Path("validate/credentials")
+    @Path("/validate/credentials")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String isValidRepositoryCredentials(String repository) {
-        RepositoryConnectionData repositoryConnectionData = new Gson().fromJson(repository, RepositoryConnectionData.class);
-        Response response = new Response();
-        repositoryConnectionData.encrypt();
-        response.setData(repositoryService.checkRepositoryCredentials(repositoryConnectionData));
-
-        return response.toJson();
+    public String isValidRepositoryCredentials(RepositoryConnectionDataDto repositoryConnectionDataDto) {
+        return new Response().buildSuccess(repositoryFacade.validateCredentials(repositoryConnectionDataDto)).toJson();
     }
 
     @GET
-    @Path("validate/database")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public String existDatabase(String repository) {
-        Response response = new Response();
-        RepositoryDto repositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
-
-        response.setData(repositoryService.existsDatabase(repositoryDto));
-        return response.toJson();
-    }
-
-    @GET
-    @Path("/get")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String existRepository(@QueryParam("repositoryName") String repositoryName) {
-        Response response = new Response();
-        List<RepositoryDto> repositories;
-
-        try {
-            repositories = repositoryService.fetchRepository(repositoryName);
-            response.setData(repositories);
-
-        } catch (RepositoryNotFoundException e) {
-            response.setError(e);
-        }
-
-        return response.toJson();
-    }
-
-    @POST
-    @Path("/connect")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String connect(String repository) {
-        Response response = new Response();
-        RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
-
-        try {
-            repositoryService.persist(convertedRepositoryDto);
-            response.setData(Boolean.TRUE);
-
-        } catch (Exception e) {
-            response.setError(e);
-        }
-
-        return response.toJson();
-    }
-
-    @POST
-    @Path("/create")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String create(String repository) {
-        RepositoryDto convertedRepositoryDto = new Gson().fromJson(repository, RepositoryDto.class);
-        Response response = new Response();
-
-        try {
-            repositoryService.create(convertedRepositoryDto);
-            response.setData(Boolean.TRUE);
-
-        } catch (Exception e) {
-            response.setError(e);
-        }
-
-        return response.toJson();
+    public String get(@QueryParam("name") String repositoryName) {
+        return new Response().setData(repositoryFacade.fetch(repositoryName)).toJson();
     }
 }

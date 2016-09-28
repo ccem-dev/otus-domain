@@ -16,28 +16,28 @@ public class Repository {
 	@Type(type = "objectid")
 	private String id;
 
-	@Equalization(name = "uuid")
 	@NotNull
+	@Equalization(name = "uuid")
 	private UUID uuid;
 
-	@Equalization(name = "database")
 	@NotNull
+	@Equalization(name = "database")
 	private String database;
 
-	@Equalization(name = "host")
 	@NotNull
+	@Equalization(name = "host")
 	private String host;
 
-	@Equalization(name = "port")
 	@NotNull
+	@Equalization(name = "port")
 	private String port;
 
-	@Equalization(name = "username")
 	@NotNull
+	@Equalization(name = "username")
 	private String username;
 
-	@Equalization(name = "password")
 	@NotNull
+	@Equalization(name = "password")
 	private String password;
 
 	@Equalization(name = "user")

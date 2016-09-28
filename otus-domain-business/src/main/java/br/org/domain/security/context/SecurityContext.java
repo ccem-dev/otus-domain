@@ -1,28 +1,23 @@
 package br.org.domain.security.context;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.SignedJWT;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
+
 @ApplicationScoped
-public class SecurityContext implements Serializable {
-
-    private static final long serialVersionUID = 109656450161251588L;
-
+public class SecurityContext {
     private Map<String, byte[]> securityMap;
 
     @PostConstruct
     public void setUp() {
-        securityMap = new HashMap<String, byte[]>();
+        securityMap = new HashMap<>();
     }
 
     public void add(String jwtSignedAndSerialized, byte[] secretKey) {
@@ -30,8 +25,10 @@ public class SecurityContext implements Serializable {
     }
 
     public void remove(String token) throws ParseException {
-        String tokenWithoutPrefix = token.substring("Bearer".length()).trim();
-        securityMap.remove(tokenWithoutPrefix);
+        if (token != null) {
+            String tokenWithoutPrefix = token.substring("Bearer".length()).trim();
+            securityMap.remove(tokenWithoutPrefix);
+        }
     }
 
     public String getUserId(String token) throws ParseException {

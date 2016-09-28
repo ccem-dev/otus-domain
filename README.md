@@ -3,6 +3,11 @@
 
 - Servidor: [Wildfly 9.0.1.Final](https://www.mongodb.com/download-center#community)
 
+### Versões de ferramentas necessárias
+
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/) <br />
+Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/) 
+
 ## Configurações Servidor
 [Ambiente Otus Domain Vagrante](https://github.com/ccem-dev/otus-domain-api-vagrant/blob/master/README.md)
 
@@ -67,7 +72,7 @@ Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na p
 ### Criar base de dados MongoDB
 
 > use otus-domain <br>
-> db.createUser({user:"otus", pwd:"otus", roles:[{role:"dbOwner", db:"otus"}]}) <br>
+> db.createUser({user:"otus", pwd:"otus", roles:[{role:"dbOwner", db:"otus-domain"}]}) <br>
 
 ### Construindo o Projeto
 Para construir e realizar o deploy da aplição devem ser utilizadas as ferramentas [Maven](https://maven.apache.org/) e [NPM](https://www.npmjs.com/).
@@ -144,5 +149,10 @@ Para realizar download de dependencias de front-end
 > mvn antrun:run@static-deploy -Dscp.user='USER' -Dscp.host='HOST' -Dscp.target='DIRECTORY_TARGET' -Dscp.password='USER_PASSWORD'
 
 O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus-domain**
+
+### Contato
+Gostaria de saber mais sobre nosso projeto ?! Entre em contato conosco. <br />
+Email: ccem-projects@gmail.com <br />
+Chat : https://www.hipchat.com/gWD3zStLw
 
 

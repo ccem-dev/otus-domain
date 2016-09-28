@@ -3,9 +3,11 @@ package br.org.domain.projects;
 import br.org.tutty.Equalization;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Entity
 public class Project{

@@ -1,77 +1,101 @@
 package br.org.domain.user.dto;
 
+import br.org.domain.rest.Dto;
 import br.org.domain.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-public class UserDto {
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 
-	@Equalization(name = "name")
-	private String name;
+public class UserDto implements Dto {
 
-	@Equalization(name = "surname")
-	private String surname;
+    @Equalization(name = "name")
+    private String name;
 
-	@Equalization(name = "phone")
-	private String phone;
+    @Equalization(name = "surname")
+    private String surname;
 
-	@Equalization(name = "email")
-	private String email;
+    @Equalization(name = "phone")
+    private String phone;
 
-	@Equalization(name = "password")
-	private String password;
+    @Equalization(name = "email")
+    private String email;
 
-	private String passwordConfirm;
+    @Equalization(name = "password")
+    private String password;
 
-	public String getName() {
-		return name;
-	}
+    private String passwordConfirmation;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    @Override
+    public Boolean isValid() {
+        try {
+            InternetAddress internetAddress = new InternetAddress(email);
+            internetAddress.validate();
 
-	public String getSurname() {
-		return surname;
-	}
+            return (name != null && !name.isEmpty())
+                    && (surname != null && !surname.isEmpty())
+                    && (phone != null && !phone.isEmpty())
+                    && (email != null && !email.isEmpty())
+                    && (password != null && !password.isEmpty())
+                    && (passwordConfirmation != null && !passwordConfirmation.isEmpty());
 
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
+        } catch (AddressException e) {
+            return Boolean.FALSE;
+        }
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void encrypt() {
+        if (password != null && passwordConfirmation != null) {
+            this.password = EncryptorResources.encryptIrreversible(password);
+            this.passwordConfirmation = EncryptorResources.encryptIrreversible(passwordConfirmation);
+        }
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
 
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void encrypt() {
-		this.password = EncryptorResources.encrypt(password);
-	}
+    public String getPassword() {
+        return password;
+    }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+    
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
 }

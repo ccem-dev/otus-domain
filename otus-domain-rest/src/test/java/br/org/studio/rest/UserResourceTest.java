@@ -1,10 +1,6 @@
 package br.org.studio.rest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-
+import br.org.domain.email.validation.EmailConstraint;
 import br.org.domain.rest.Response;
 import br.org.domain.user.UserResource;
 import org.junit.Before;
@@ -14,7 +10,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import br.org.domain.email.validation.EmailConstraint;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserResourceTest {

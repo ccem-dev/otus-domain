@@ -4,7 +4,6 @@ import br.org.domain.email.EmailSender;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 public class SystemConfig{
@@ -16,14 +15,18 @@ public class SystemConfig{
 
 	private Boolean ready;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@Embedded
 	private EmailSender emailSender;
 
-	public SystemConfig(EmailSender emailSender) {
-		this.emailSender = emailSender;
-	}
+	@Embedded
+	private RepositoryConnectionData repositoryConnectionData;
 
 	protected SystemConfig() {
+	}
+
+	public SystemConfig(EmailSender emailSender, RepositoryConnectionData repositoryConnectionData) {
+		this.emailSender = emailSender;
+		this.repositoryConnectionData = repositoryConnectionData;
 	}
 
 	public void finalizeConfiguration() {
@@ -38,4 +41,7 @@ public class SystemConfig{
 		return emailSender;
 	}
 
+	public RepositoryConnectionData getRepositoryConnectionData() {
+		return repositoryConnectionData;
+	}
 }

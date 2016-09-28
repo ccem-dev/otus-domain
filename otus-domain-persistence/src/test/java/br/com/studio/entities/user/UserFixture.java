@@ -1,9 +1,9 @@
 package br.com.studio.entities.user;
 
+import br.org.domain.user.User;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import br.org.domain.user.User;
 
 public class UserFixture {
 
