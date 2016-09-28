@@ -73,7 +73,7 @@ public class UserResource {
     }
 
     @GET
-    @Path("/fetch/current")
+    @Path("/current")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secured
