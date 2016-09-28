@@ -67,6 +67,7 @@
         }
 
         function updateBanner(file) {
+          //TODO testar tipo de arquivo
             self.progressBanner = true;
             getImageURL(file).then(function(imageURL) {
                 self.data.files.bannerURL = imageURL;
@@ -76,6 +77,7 @@
         }
 
         function updateLogo(file) {
+          //TODO testar tipo de arquivo
             self.progressLogo = true;
             getImageURL(file).then(function(imageURL) {
                 self.data.files.logoURL = imageURL;

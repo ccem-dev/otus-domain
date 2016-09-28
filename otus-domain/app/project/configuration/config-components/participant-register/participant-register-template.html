@@ -25,17 +25,35 @@
             </md-button>
         </md-card-title>
         <md-card-content layout="row">
-            <md-content style="height: 444px" flex>
-                <md-list layout="column" flex>
-                    <md-list-item layout="row" ng-repeat="template in $ctrl.templatesList track by $index" ng-cloak>
-                        <div layout="column" layout-fill>
-                            <md-card layout="row" layout-padding>
-                                <span>({{template.acronym}})
-                                    {{template.name}}</span>
-                            </md-card>
-                        </div>
-                    </md-list-item>
-                </md-list>
+            <md-content style="height: 500px" flex>
+                <section>
+                    <md-subheader layout="column" class="md-primary">
+                        <span>Sigla</span>
+                        <span> - Nome</span>
+                    </md-subheader>
+                    <md-list layout="column" flex>
+                        <md-list-item layout="row" ng-repeat="template in $ctrl.templatesList track by $index" ng-cloak>
+                            <div layout="column" layout-fill>
+                                <md-card layout="row" layout-padding layout-align="space-between">
+                                    <div layout="row" layout-align="start center">
+                                        <div layout="column">
+
+                                            <span class="md-subheader">{{template.acronym}}
+                                            </span>
+                                            <span class="md-body-2">
+                                                {{template.name}}</span>
+                                        </div>
+                                    </div>
+                                    <div layout="row">
+                                        <md-checkbox class="md-primary" ng-model="template.templateType==='profile'" name="profile" ng-disabled="true" aria-label="Is Profile">
+                                            Perfil
+                                        </md-checkbox>
+                                    </div>
+                                </md-card>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </section>
             </md-content>
         </md-card-content>
     </md-card>

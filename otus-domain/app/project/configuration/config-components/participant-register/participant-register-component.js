@@ -39,10 +39,10 @@
 
         function _getTemplatesList() {
             self.templatesList = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
+            console.log(self.templatesList);
         }
 
         function uploadFile(fileList) {
-          console.log();
             fileList.forEach(function(file) {
                 if (fileList[0].name.split('.')[1] === 'json') {
                     fileParser(file).then(function(templateObject) {
