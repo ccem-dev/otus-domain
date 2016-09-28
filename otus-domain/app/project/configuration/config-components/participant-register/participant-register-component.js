@@ -42,8 +42,9 @@
         }
 
         function uploadFile(fileList) {
+          console.log();
             fileList.forEach(function(file) {
-                if (file.type === 'application/json') {
+                if (fileList[0].name.split('.')[1] === 'json') {
                     fileParser(file).then(function(templateObject) {
                         self.uploadedTemplates.push(templateObject);
                     });
