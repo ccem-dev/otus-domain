@@ -24,9 +24,6 @@
         self.openSurveyForms = openSurveyForms;
         self.openUserActivation = openUserActivation;
         self.logout = logout;
-        self.chooseProject = chooseProject;
-        self.hasSelectedProject = hasSelectedProject;
-        self.getCurrentProject = getCurrentProject;
         self.openProjectCenters = openProjectCenters;
         self.openUserActivationInProject = openUserActivationInProject;
         self.openProjectConfiguration = openProjectConfiguration;
@@ -76,18 +73,6 @@
         function logout() {
             LogoutDialogService.showDialog()
                 .onConfirm(DashboardStateService.logout);
-        }
-
-        function hasSelectedProject(){
-            return ProjectContext.hasProject();
-        }
-
-        function getCurrentProject(){
-            return ProjectContext.getCurrentProject();
-        }
-
-        function chooseProject(){
-            ProjectSelectionService.choose();
         }
     }
 

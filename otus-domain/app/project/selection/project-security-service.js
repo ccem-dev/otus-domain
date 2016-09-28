@@ -18,7 +18,11 @@
 
             installerResource.ready(
                 function(response) {
-                    project.changeStatus(response.data);
+                    if (response.data) {
+                        project.online();
+                    } else {
+                        project.offline();
+                    }
                 },
                 function() {
                     project.offline();

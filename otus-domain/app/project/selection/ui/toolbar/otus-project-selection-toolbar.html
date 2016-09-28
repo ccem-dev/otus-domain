@@ -1,8 +1,8 @@
 <div layout="row" layout-align="center center">
 
-    <span ng-show="dashboardMenu.hasSelectedProject()">{{dashboardMenu.getCurrentProject().name}}</span>
+    <span ng-show="hasProject()">{{project.name}}</span>
 
-    <md-whiteframe class="md-whiteframe-10dp image-brand icon-clickable" ng-click="dashboardMenu.chooseProject()">
+    <md-whiteframe class="md-whiteframe-10dp image-brand icon-clickable" ng-click="chooseProject()">
         <a class="navbar-brand">
             <img ng-src="app/assets/img/project_research.png" class="md-avatar toolbar-icon icon-clickable"
             />

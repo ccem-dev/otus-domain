@@ -44,7 +44,6 @@
 
         function changeStatus(boolean) {
             self.status = boolean;
-
         }
     }
 
