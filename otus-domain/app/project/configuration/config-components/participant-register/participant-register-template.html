@@ -32,20 +32,20 @@
                         <span> - Nome</span>
                     </md-subheader>
                     <md-list layout="column" flex>
-                        <md-list-item layout="row" ng-repeat="template in $ctrl.templatesList track by $index" ng-cloak>
+                        <md-list-item layout="row" ng-repeat="template in $ctrl.surveyTemplatesList track by $index" ng-cloak>
                             <div layout="column" layout-fill>
                                 <md-card layout="row" layout-padding layout-align="space-between">
                                     <div layout="row" layout-align="start center">
                                         <div layout="column">
 
-                                            <span class="md-subheader">{{template.acronym}}
+                                            <span class="md-subheader">{{template.template.identity.acronym}}
                                             </span>
                                             <span class="md-body-2">
-                                                {{template.name}}</span>
+                                                {{template.template.identity.name}}</span>
                                         </div>
                                     </div>
                                     <div layout="row">
-                                        <md-checkbox class="md-primary" ng-model="template.templateType==='profile'" name="profile" ng-disabled="true" aria-label="Is Profile">
+                                        <md-checkbox class="md-primary" ng-model="template.templateType" name="profile" ng-disabled="true" aria-label="Is Profile">
                                             Perfil
                                         </md-checkbox>
                                     </div>

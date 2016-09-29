@@ -18,7 +18,9 @@
 
     function Controller($q, ProjectConfigurationService, $mdToast) {
         var self = this;
-        _init();
+        this.$onInit = function() {
+            _init();
+        };
 
         /* Public Interface*/
         self.save = save;
@@ -34,12 +36,16 @@
         };
 
         function _init() {
+            self.surveyTemplatesList = [];
             _getTemplatesList();
         }
 
         function _getTemplatesList() {
-            self.templatesList = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
-            console.log(self.templatesList);
+            var promise = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
+            promise.then(function(data) {
+                self.surveyTemplatesList = data;
+            });
+
         }
 
         function uploadFile(fileList) {
@@ -67,9 +73,11 @@
             self.uploadedTemplates = [];
         }
 
-        function successfullCallback(templatesList) {
-          console.log(templatesList);
-            self.templatesList = templatesList;
+        function successfullCallback(surveyTemplatesList) {
+        //   console.log(surveyTemplatesList);
+            // self.surveyTemplatesList = surveyTemplatesList;
+            $mdToast.show($mdToast.simple().textContent('Formulário enviado!'));
+            _init();
         }
 
         function failureCallback() {
