@@ -16,19 +16,19 @@
         _init();
 
         /* Public Interface */
-        self.fetchParticipantRegisterConfiguration = fetchParticipantRegisterConfiguration;
+        self.fetchSurveysManagerConfiguration = fetchSurveysManagerConfiguration;
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
-        self.updateParticipantRegisterConfiguration = updateParticipantRegisterConfiguration;
+        self.updateSurveysManagerConfiguration = updateSurveysManagerConfiguration;
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
         function _init() {}
 
 
-        /* Participant Register Section */
-        function fetchParticipantRegisterConfiguration() {
+        /* Surveys Manager Section */
+        function fetchSurveysManagerConfiguration() {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var defer = $q.defer();
-            ProjectConfiguration.getSurveyTemplates(function(response) {
+            ProjectConfiguration.getSurveys(function(response) {
                 console.log(response);
                 defer.resolve(response.data);
             }, function() {
@@ -37,9 +37,9 @@
             return defer.promise;
         }
 
-        function updateParticipantRegisterConfiguration(updateObject, successfullCallback, failureCallback) {
+        function updateSurveysManagerConfiguration(updateObject, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            ProjectConfiguration.insertTemplate(updateObject.post,
+            ProjectConfiguration.publishTemplate(updateObject.post,
                 function(data) {
                     console.log(data);
                     successfullCallback();

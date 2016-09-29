@@ -45,7 +45,7 @@
                                         </div>
                                     </div>
                                     <div layout="row">
-                                        <md-checkbox class="md-primary" ng-checked="surveyForm.surveyTemplate === 'PROFILE'" name="profile" ng-disabled="true" aria-label="Is Profile">
+                                        <md-checkbox class="md-primary" ng-click="$ctrl.updateSurveyType(surveyForm)" ng-checked="{{(surveyForm.surveyTemplate === 'PROFILE')}}" name="profile" ng-disabled="false" aria-label="Is Profile">
                                             Perfil
                                         </md-checkbox>
                                     </div>

@@ -3,8 +3,8 @@
 
     angular
         .module('otusDomain.project.configuration')
-        .component('otusParticipantRegister', {
-            templateUrl: 'app/project/configuration/config-components/participant-register/participant-register-template.html',
+        .component('otusSurveysManager', {
+            templateUrl: 'app/project/configuration/config-components/surveys-manager/surveys-manager-template.html',
             controller: Controller
         });
 
@@ -23,6 +23,8 @@
 
         /* Public Interface*/
         self.save = save;
+        self.updateSurveyType = updateSurveyType;
+
         self.uploadConfig = {
             'callback': uploadFile,
             'type': 'json'
@@ -30,16 +32,14 @@
 
         self.editions = {
             'post': {},
-            'update': {
-                'row': []
-            }
+            'update': {}
         };
         self.uploaded = function() {
-          return angular.equals(self.editions.post, {});
+            return angular.equals(self.editions.post, {});
         };
 
         function _getTemplatesList() {
-            var promise = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
+            var promise = ProjectConfigurationService.fetchSurveysManagerConfiguration();
             promise.then(function(data) {
                 console.log(data);
                 self.surveyTemplatesList = data;
@@ -50,7 +50,7 @@
             fileList.forEach(function(file) {
                 if (fileList[0].name.split('.')[1] === 'json') {
                     fileParser(file).then(function(templateObject) {
-                        self.editions.post = templateObject;
+                        self.editions.post = templateObject;                        
                     });
                 }
             });
@@ -67,16 +67,24 @@
         }
 
         function save() {
-            ProjectConfigurationService.updateParticipantRegisterConfiguration(self.editions, successfullCallback, failureCallback);
+            ProjectConfigurationService.updateSurveysManagerConfiguration(self.editions, successfullCallback, failureCallback);
             _resetEdition();
+        }
+
+        function updateSurveyType(survey) {
+            if (survey.surveyFormType === 'PROFILE') {
+                survey.surveyFormType = 'FORM_INTERVIEW';
+            } else {
+                survey.surveyFormType = 'PROFILE';
+            }
+            self.editions.update = survey;
+            console.log(self.editions);
         }
 
         function _resetEdition() {
             self.editions = {
                 'post': {},
-                'update': {
-                    'row': []
-                }
+                'update': {}
             };
         }
 
