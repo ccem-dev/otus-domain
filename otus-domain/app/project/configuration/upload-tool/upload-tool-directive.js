@@ -47,7 +47,6 @@
                     fileUploadElement = document.createElement('input');
                     fileUploadElement.setAttribute('type', 'file');
                     fileUploadElement.setAttribute('accept', acceptance);
-                    fileUploadElement.setAttribute('multiple', '');
                 } else {
                     fileUploadElement = document.createElement('button');
                 }

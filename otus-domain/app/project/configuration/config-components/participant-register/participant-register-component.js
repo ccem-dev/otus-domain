@@ -5,9 +5,7 @@
         .module('otusDomain.project.configuration')
         .component('otusParticipantRegister', {
             templateUrl: 'app/project/configuration/config-components/participant-register/participant-register-template.html',
-
             controller: Controller
-
         });
 
     Controller.$inject = [
@@ -18,8 +16,9 @@
 
     function Controller($q, ProjectConfigurationService, $mdToast) {
         var self = this;
+
         this.$onInit = function() {
-            _init();
+            _getTemplatesList();
         };
 
         /* Public Interface*/
@@ -28,31 +27,30 @@
             'callback': uploadFile,
             'type': 'json'
         };
-        self.uploadedTemplates = [];
 
-        var editions = {
-          'post':[],
-          'update':{'row':[]}
+        self.editions = {
+            'post': {},
+            'update': {
+                'row': []
+            }
         };
-
-        function _init() {
-            self.surveyTemplatesList = [];
-            _getTemplatesList();
-        }
+        self.uploaded = function() {
+          return angular.equals(self.editions.post, {});
+        };
 
         function _getTemplatesList() {
             var promise = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
             promise.then(function(data) {
                 self.surveyTemplatesList = data;
+                console.log(self.surveyTemplatesList);
             });
-
         }
 
         function uploadFile(fileList) {
             fileList.forEach(function(file) {
                 if (fileList[0].name.split('.')[1] === 'json') {
                     fileParser(file).then(function(templateObject) {
-                        self.uploadedTemplates.push(templateObject);
+                        self.editions.post = templateObject;
                     });
                 }
             });
@@ -69,15 +67,23 @@
         }
 
         function save() {
-            ProjectConfigurationService.updateParticipantRegisterConfiguration(self.uploadedTemplates, successfullCallback, failureCallback);
-            self.uploadedTemplates = [];
+            ProjectConfigurationService.updateParticipantRegisterConfiguration(self.editions, successfullCallback, failureCallback);
+            _resetEdition();
         }
 
-        function successfullCallback(surveyTemplatesList) {
-        //   console.log(surveyTemplatesList);
-            // self.surveyTemplatesList = surveyTemplatesList;
+        function _resetEdition() {
+            self.editions = {
+                'post': {},
+                'update': {
+                    'row': []
+                }
+            };
+        }
+
+        function successfullCallback(uploadedSurveyTemplate) {
+            // self.surveyTemplatesList.push(uploadedSurveyTemplate);
+            _getTemplatesList();
             $mdToast.show($mdToast.simple().textContent('Formulário enviado!'));
-            _init();
         }
 
         function failureCallback() {

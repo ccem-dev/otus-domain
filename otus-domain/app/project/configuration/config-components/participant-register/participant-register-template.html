@@ -3,12 +3,12 @@
         <md-card-title layout="row">
             <md-card-title-text>
                 <span class="md-body-2">Templates do Projeto</span>
-                <div layout="column" ng-show="$ctrl.uploadedTemplates.length !== 0">
+                <div layout="column" ng-hide="$ctrl.uploaded()">
                     <span class="md-subhead">Templates Escolhidos:</span>
-                    <span class="md-subhead" ng-repeat="template in $ctrl.uploadedTemplates">
-                        {{template.identity.acronym}}
+                    <span class="md-subhead">
+                        {{$ctrl.editions.post.identity.acronym}}
                         -
-                        {{template.identity.name}}</span>
+                        {{$ctrl.editions.post.identity.name}}</span>
                 </div>
             </md-card-title-text>
             <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
@@ -17,7 +17,7 @@
                     Enviar Template
                 </md-tooltip>
             </md-button>
-            <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.uploadedTemplates.length === 0" ng-click="$ctrl.save()">
+            <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.uploaded()" ng-click="$ctrl.save()">
                 <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
                 <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
                     Salvar
@@ -32,20 +32,20 @@
                         <span> - Nome</span>
                     </md-subheader>
                     <md-list layout="column" flex>
-                        <md-list-item layout="row" ng-repeat="template in $ctrl.surveyTemplatesList track by $index" ng-cloak>
+                        <md-list-item layout="row" ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index" ng-cloak>
                             <div layout="column" layout-fill>
                                 <md-card layout="row" layout-padding layout-align="space-between">
                                     <div layout="row" layout-align="start center">
                                         <div layout="column">
 
-                                            <span class="md-subheader">{{template.template.identity.acronym}}
+                                            <span class="md-subheader">{{surveyForm.surveyTemplate.identity.acronym}}
                                             </span>
                                             <span class="md-body-2">
-                                                {{template.template.identity.name}}</span>
+                                                {{surveyForm.surveyTemplate.identity.name}}</span>
                                         </div>
                                     </div>
                                     <div layout="row">
-                                        <md-checkbox class="md-primary" ng-model="template.templateType" name="profile" ng-disabled="true" aria-label="Is Profile">
+                                        <md-checkbox class="md-primary" ng-checked="surveyForm.surveyTemplate === 'PROFILE'" name="profile" ng-disabled="true" aria-label="Is Profile">
                                             Perfil
                                         </md-checkbox>
                                     </div>

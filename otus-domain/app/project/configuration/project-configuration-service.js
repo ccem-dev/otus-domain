@@ -13,55 +13,20 @@
 
     function ProjectConfigurationService(OtusRestResourceService, $http, $q) {
         var self = this;
-        var templatesList = [{
-            'name': 'Integração',
-            'acronym': 'INT',
-            'templateType': ''
-        }, {
-            'name': 'Profile',
-            'acronym': 'PRF',
-            'templateType': 'profile'
-        }, {
-            'name': 'Edgar Alan',
-            'acronym': 'POE',
-            'templateType': 'profile'
-        }, {
-            'name': 'Elegibilidade',
-            'acronym': 'ELEA',
-            'templateType': ''
-        }, {
-            'name': 'Gathering',
-            'acronym': 'GOP',
-            'templateType': ''
-        }, {
-            'name': 'Stark',
-            'acronym': 'NED',
-            'templateType': ''
-        }, {
-            'name': 'Theodor Evelyn Mosby',
-            'acronym': 'TED',
-            'templateType': 'profile'
-        }];
         _init();
 
         /* Public Interface */
         self.fetchParticipantRegisterConfiguration = fetchParticipantRegisterConfiguration;
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
         self.updateParticipantRegisterConfiguration = updateParticipantRegisterConfiguration;
-        self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
-
+        self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;        
 
         function _init() {}
 
 
         /* Participant Register Section */
         function fetchParticipantRegisterConfiguration() {
-            //return templatesList;
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-
-
-            //TODO - rest on hold
-            var surveyTemplatesList = [];
             var defer = $q.defer();
             ProjectConfiguration.getSurveyTemplates(function(response) {
                 defer.resolve(response.data.data);
@@ -69,22 +34,11 @@
                 console.log('error');
             });
             return defer.promise;
-            //
-            // return data;
-            //expect: returns full object or {}
         }
 
-        function updateParticipantRegisterConfiguration(fileList, successfullCallback, failureCallback) {
-            // fileList.forEach(function(file) {
-            //     templatesList.push({
-            //         'acronym': file.identity.acronym,
-            //         'name': file.identity.name,
-            //         'templateType':''
-            //     });
-            // });
-            // successfullCallback(templatesList);
+        function updateParticipantRegisterConfiguration(updateObject, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            ProjectConfiguration.insertTemplate(fileList[0],
+            ProjectConfiguration.insertTemplate(updateObject.post,
                 function(data) {
                     console.log(data);
                     successfullCallback();
