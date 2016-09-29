@@ -19,7 +19,7 @@
         self.fetchParticipantRegisterConfiguration = fetchParticipantRegisterConfiguration;
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
         self.updateParticipantRegisterConfiguration = updateParticipantRegisterConfiguration;
-        self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;        
+        self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
         function _init() {}
 
@@ -29,7 +29,8 @@
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var defer = $q.defer();
             ProjectConfiguration.getSurveyTemplates(function(response) {
-                defer.resolve(response.data.data);
+                console.log(response);
+                defer.resolve(response.data);
             }, function() {
                 console.log('error');
             });

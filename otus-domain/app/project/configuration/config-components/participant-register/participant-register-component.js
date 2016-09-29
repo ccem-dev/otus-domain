@@ -41,8 +41,8 @@
         function _getTemplatesList() {
             var promise = ProjectConfigurationService.fetchParticipantRegisterConfiguration();
             promise.then(function(data) {
+                console.log(data);
                 self.surveyTemplatesList = data;
-                console.log(self.surveyTemplatesList);
             });
         }
 
@@ -81,7 +81,6 @@
         }
 
         function successfullCallback(uploadedSurveyTemplate) {
-            // self.surveyTemplatesList.push(uploadedSurveyTemplate);
             _getTemplatesList();
             $mdToast.show($mdToast.simple().textContent('Formulário enviado!'));
         }
