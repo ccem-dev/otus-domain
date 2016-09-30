@@ -37,9 +37,20 @@
             return defer.promise;
         }
 
-        function updateSurveysManagerConfiguration(updateObject, successfullCallback, failureCallback) {
+        function _updateSurveyState() {
+          var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+          ProjectConfiguration.updateSurveyTemplate(updateObject.update,
+              function(data) {
+                  successfullCallback();
+              },
+              function(error) {
+                  failureCallback();
+              });
+        }
+
+        function updateSurveysManagerConfiguration(file, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            ProjectConfiguration.publishTemplate(updateObject.post,
+            ProjectConfiguration.publishTemplate(file,
                 function(data) {
                     console.log(data);
                     successfullCallback();
@@ -47,11 +58,6 @@
                 function(error) {
                     failureCallback();
                 });
-
-
-            //TODO - return goes on then
-
-
         }
 
         /* Visual Identity Section*/

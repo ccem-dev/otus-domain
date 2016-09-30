@@ -22,20 +22,21 @@
         };
 
         /* Public Interface*/
-        self.save = save;
-        self.updateSurveyType = updateSurveyType;
+        self.uploadTemplate = uploadTemplate;
+        self.updateSurveyFormType = updateSurveyFormType;
 
         self.uploadConfig = {
             'callback': uploadFile,
             'type': 'json'
         };
 
-        self.editions = {
-            'post': {},
-            'update': {}
-        };
+        self.uploadedFile = {};
         self.uploaded = function() {
-            return angular.equals(self.editions.post, {});
+            return (angular.equals(self.uploadedFile, {}) ? true : false);
+        };
+        self.changeCheck = function() {
+            console.log('arr');
+            return self.surveyTemplatesList;
         };
 
         function _getTemplatesList() {
@@ -50,7 +51,7 @@
             fileList.forEach(function(file) {
                 if (fileList[0].name.split('.')[1] === 'json') {
                     fileParser(file).then(function(templateObject) {
-                        self.editions.post = templateObject;                        
+                        self.uploadedFile = templateObject;
                     });
                 }
             });
@@ -66,29 +67,25 @@
             return deferred.promise;
         }
 
-        function save() {
-            ProjectConfigurationService.updateSurveysManagerConfiguration(self.editions, successfullCallback, failureCallback);
-            _resetEdition();
+        function uploadTemplate() {
+            ProjectConfigurationService.updateSurveysManagerConfiguration(self.uploadedFile, successfullCallback, failureCallback);
         }
 
-        function updateSurveyType(survey) {
-            if (survey.surveyFormType === 'PROFILE') {
-                survey.surveyFormType = 'FORM_INTERVIEW';
-            } else {
-                survey.surveyFormType = 'PROFILE';
+
+        function updateSurveyFormType(index) {
+            var types = ['PROFILE', 'FORM_INTERVIEW'];
+            if (self.surveyTemplatesList[index].surveyFormType === 'PROFILE') {
+              self.surveyTemplatesList[index].surveyFormType = 'FORM_INTERVIEW';
             }
-            self.editions.update = survey;
-            console.log(self.editions);
-        }
+            else{
+              self.surveyTemplatesList[index].surveyFormType = 'PROFILE';
+            }
+            console.log(self.surveyTemplatesList);
 
-        function _resetEdition() {
-            self.editions = {
-                'post': {},
-                'update': {}
-            };
         }
 
         function successfullCallback(uploadedSurveyTemplate) {
+            self.uploadedFile = {};
             _getTemplatesList();
             $mdToast.show($mdToast.simple().textContent('Formulário enviado!'));
         }
