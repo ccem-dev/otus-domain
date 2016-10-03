@@ -1,6 +1,6 @@
 <md-content flex layout-padding>
     <md-card flex layout="column" layout-margin>
-        <md-card-title layout="row">
+        <md-card-title layout="row" style="height: 95px">
             <md-card-title-text>
                 <span class="md-body-2">Templates do Projeto</span>
                 <div layout="column" ng-hide="$ctrl.uploaded()">
@@ -31,8 +31,7 @@
                         <span>Sigla - Nome</span>
                     </md-subheader>
                     <md-list>
-                        <md-list-item flex ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index"
-                                      ng-click="$ctrl.updateSurveyFormType($index)">
+                        <md-list-item layout-padding flex ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index">
                             <div layout="row" layout-fill layout-align="space-between">
                                 <div class="md-list-item-text" layout="column" layout-align="start center">
                                     <div layout="column">
@@ -44,8 +43,11 @@
                                 </div>
                                 <div layout="column">
                                     <md-checkbox class="md-primary"
-                                              ng-checked="{{(surveyForm.surveyTemplate === 'PROFILE')}}"
-                                              ng-disabled="false" aria-label="Tipo de perfil">
+                                              ng-change="$ctrl.updateSurveyFormType($index)"
+                                              ng-model="surveyForm.surveyFormType"
+                                              aria-label="Tipo de perfil"
+                                              ng-false-value="'FORM_INTERVIEW'"
+                                              ng-true-value="'PROFILE'">
                                         Perfil
                                     </md-checkbox>
                                 </div>

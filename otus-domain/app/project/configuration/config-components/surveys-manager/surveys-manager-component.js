@@ -24,7 +24,6 @@
         /* Public Interface*/
         self.uploadTemplate = uploadTemplate;
         self.updateSurveyFormType = updateSurveyFormType;
-
         self.uploadConfig = {
             'callback': uploadFile,
             'type': 'json'
@@ -33,10 +32,6 @@
         self.uploadedFile = {};
         self.uploaded = function() {
             return (angular.equals(self.uploadedFile, {}) ? true : false);
-        };
-        self.changeCheck = function() {
-            console.log('arr');
-            return self.surveyTemplatesList;
         };
 
         function _getTemplatesList() {
@@ -68,30 +63,25 @@
         }
 
         function uploadTemplate() {
-            ProjectConfigurationService.updateSurveysManagerConfiguration(self.uploadedFile, successfullCallback, failureCallback);
+            ProjectConfigurationService.publishTemplate(self.uploadedFile, successfullCallback, failureCallback);
         }
 
 
         function updateSurveyFormType(index) {
-            var types = ['PROFILE', 'FORM_INTERVIEW'];
-            if (self.surveyTemplatesList[index].surveyFormType === 'PROFILE') {
-              self.surveyTemplatesList[index].surveyFormType = 'FORM_INTERVIEW';
-            }
-            else{
-              self.surveyTemplatesList[index].surveyFormType = 'PROFILE';
-            }
-            console.log(self.surveyTemplatesList);
-
+            var selectedAcronym = self.surveyTemplatesList[index].surveyTemplate.identity.acronym;
+            var newType = self.surveyTemplatesList[index].surveyFormType;
+            ProjectConfigurationService.updateSurveyTemplateType({'acronym': selectedAcronym, 'type': newType}, successfullCallback, failureCallback);
+            console.log({'acronym': selectedAcronym, 'type': newType});
         }
 
         function successfullCallback(uploadedSurveyTemplate) {
             self.uploadedFile = {};
             _getTemplatesList();
-            $mdToast.show($mdToast.simple().textContent('Formulário enviado!'));
+            $mdToast.show($mdToast.simple().textContent('AHA!'));
         }
 
         function failureCallback() {
-            $mdToast.show($mdToast.simple().textContent('Falha ao salvar formulário'));
+            $mdToast.show($mdToast.simple().textContent('NEM!'));
         }
     }
 

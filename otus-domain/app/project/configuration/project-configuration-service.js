@@ -17,8 +17,10 @@
 
         /* Public Interface */
         self.fetchSurveysManagerConfiguration = fetchSurveysManagerConfiguration;
+        self.publishTemplate = publishTemplate;
+        self.updateSurveyTemplateType = updateSurveyTemplateType;
+
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
-        self.updateSurveysManagerConfiguration = updateSurveysManagerConfiguration;
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
         function _init() {}
@@ -37,9 +39,9 @@
             return defer.promise;
         }
 
-        function _updateSurveyState() {
+        function updateSurveyTemplateType(updateObject, successfullCallback, failureCallback) {
           var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-          ProjectConfiguration.updateSurveyTemplate(updateObject.update,
+          ProjectConfiguration.updateSurveyTemplateType({'acronym':updateObject.acronym, 'data':updateObject.type},
               function(data) {
                   successfullCallback();
               },
@@ -48,11 +50,10 @@
               });
         }
 
-        function updateSurveysManagerConfiguration(file, successfullCallback, failureCallback) {
+        function publishTemplate(file, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             ProjectConfiguration.publishTemplate(file,
                 function(data) {
-                    console.log(data);
                     successfullCallback();
                 },
                 function(error) {
