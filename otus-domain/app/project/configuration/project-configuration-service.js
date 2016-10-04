@@ -41,7 +41,7 @@
 
         function updateSurveyTemplateType(updateObject, successfullCallback, failureCallback) {
           var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-          ProjectConfiguration.updateSurveyTemplateType({'acronym':updateObject.acronym, 'data':updateObject.type},
+          ProjectConfiguration.updateSurveyTemplateType({'acronym':updateObject.acronym, 'newSurveyFormType':updateObject.type},
               function(data) {
                   successfullCallback();
               },
