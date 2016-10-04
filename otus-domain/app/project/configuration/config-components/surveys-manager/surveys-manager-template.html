@@ -42,14 +42,17 @@
                                     </div>
                                 </div>
                                 <div layout="column">
-                                    <md-checkbox class="md-primary"
-                                              ng-change="$ctrl.updateSurveyFormType($index)"
-                                              ng-model="surveyForm.surveyFormType"
-                                              aria-label="Tipo de perfil"
-                                              ng-false-value="'FORM_INTERVIEW'"
-                                              ng-true-value="'PROFILE'">
+                                  <div layout=row layout-align="center center">
+                                    <md-checkbox class="md-primary" ng-change="$ctrl.updateSurveyFormType($index)" ng-model="surveyForm.surveyFormType" aria-label="Tipo de perfil" ng-false-value="'FORM_INTERVIEW'" ng-true-value="'PROFILE'">
                                         Perfil
                                     </md-checkbox>
+                                    <md-button class="md-icon-button md-primary" ng-click="$ctrl.deleteSurveyTemplate($index)">
+                                        <md-icon md-font-library="material-icons" aria-label="Save">delete</md-icon>
+                                        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                                            Excluir
+                                        </md-tooltip>
+                                    </md-button>
+                                  </div>
                                 </div>
                             </div>
                             <md-divider></md-divider>

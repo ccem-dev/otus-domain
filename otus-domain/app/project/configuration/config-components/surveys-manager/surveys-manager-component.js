@@ -24,6 +24,7 @@
         /* Public Interface*/
         self.uploadTemplate = uploadTemplate;
         self.updateSurveyFormType = updateSurveyFormType;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
         self.uploadConfig = {
             'callback': uploadFile,
             'type': 'json'
@@ -63,25 +64,56 @@
         }
 
         function uploadTemplate() {
-            ProjectConfigurationService.publishTemplate(self.uploadedFile, successfullCallback, failureCallback);
+            ProjectConfigurationService.publishTemplate(self.uploadedFile, successfullUploadCallback, failurePublishCallback);
         }
 
+        function deleteSurveyTemplate(index) {
+            ProjectConfigurationService.deleteSurveyTemplate()
+                .then(function() {
+                    self.surveyTemplatesList.splice(index, 1);
+                    $mdToast.show($mdToast.simple().textContent('Excluído'));
+                })
+                .catch(function() {
+                  console.log('erro de deleçao');
+                });
+        }
 
         function updateSurveyFormType(index) {
             var selectedAcronym = self.surveyTemplatesList[index].surveyTemplate.identity.acronym;
             var newType = self.surveyTemplatesList[index].surveyFormType;
-            ProjectConfigurationService.updateSurveyTemplateType({'acronym': selectedAcronym, 'type': newType}, successfullCallback, failureCallback);
-            console.log({'acronym': selectedAcronym, 'type': newType});
+            ProjectConfigurationService.updateSurveyTemplateType({
+                'acronym': selectedAcronym,
+                'type': newType
+            }, successfullUpdateTypeCallback, failurePublishCallback);
+            console.log({
+                'acronym': selectedAcronym,
+                'type': newType
+            });
         }
 
-        function successfullCallback(uploadedSurveyTemplate) {
+        function successfullUpdateTypeCallback() {
+            $mdToast.show($mdToast.simple().textContent('Alterado com sucesso'));
+        }
+
+        function successfullUploadCallback(uploadedSurveyTemplate) {
             self.uploadedFile = {};
             _getTemplatesList();
-            $mdToast.show($mdToast.simple().textContent('AHA!'));
+            $mdToast.show($mdToast.simple().textContent('Upload realizado com sucesso'));
         }
 
-        function failureCallback() {
-            $mdToast.show($mdToast.simple().textContent('NEM!'));
+        function failurePublishCallback(error) {
+            var errorMessage = '';
+            switch (error) {
+                case 'UNIQUE_ACRONYM':
+                    errorMessage += 'Já existe um formulário com esta sigla';
+                    break;
+                case 'UNIQUE_ID':
+                    errorMessage += 'Ids de questões dos formulários devem ser únicos';
+                    break;
+                default:
+
+            }
+            $mdToast.show($mdToast.simple().textContent(errorMessage));
         }
     }
 

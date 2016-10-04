@@ -19,6 +19,7 @@
         self.fetchSurveysManagerConfiguration = fetchSurveysManagerConfiguration;
         self.publishTemplate = publishTemplate;
         self.updateSurveyTemplateType = updateSurveyTemplateType;
+        self.deleteSurveyTemplate = deleteSurveyTemplate;
 
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
@@ -31,7 +32,6 @@
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var defer = $q.defer();
             ProjectConfiguration.getSurveys(function(response) {
-                console.log(response);
                 defer.resolve(response.data);
             }, function() {
                 console.log('error');
@@ -40,25 +40,51 @@
         }
 
         function updateSurveyTemplateType(updateObject, successfullCallback, failureCallback) {
-          var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-          ProjectConfiguration.updateSurveyTemplateType({'acronym':updateObject.acronym, 'newSurveyFormType':updateObject.type},
-              function(data) {
-                  successfullCallback();
-              },
-              function(error) {
-                  failureCallback();
-              });
-        }
-
-        function publishTemplate(file, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            ProjectConfiguration.publishTemplate(file,
-                function(data) {
+            ProjectConfiguration.updateSurveyTemplateType({
+                    'acronym': updateObject.acronym,
+                    'newSurveyFormType': updateObject.type,
+                    'resourceErrorHandler': failureCallback
+                },
+                function(response) {
                     successfullCallback();
                 },
                 function(error) {
                     failureCallback();
                 });
+        }
+
+        function deleteSurveyTemplate() {
+            var defer = $q.defer();
+            // defer.resolve(true);
+            defer.reject(true);
+            return defer.promise;
+        }
+
+        function publishTemplate(file, successfullCallback, failureCallback) {
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            var defer = $q.defer();
+            // defer.reject(true);
+            ProjectConfiguration.publishTemplate(file,
+                function(response) {
+                    var errorList = [];
+                    console.log(response.data.responses);
+                    response.data.responses.forEach(function(validation) {
+                        if (validation.conflicts.length !== 0) {
+                            errorList.push(validation.VALIDATION_TYPE);
+                        }
+                    });
+                    if (errorList.length > 0) {
+                        failureCallback(errorList);
+                    } else {
+                      defer.resolve(true);
+                        successfullCallback();
+                    }
+                },
+                function(error) {
+                    failureCallback();
+                });
+            return defer.promise;
         }
 
         /* Visual Identity Section*/
