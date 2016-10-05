@@ -41,48 +41,59 @@
 
         function updateSurveyTemplateType(updateObject, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            var defer = $q.defer();
             ProjectConfiguration.updateSurveyTemplateType({
                     'acronym': updateObject.acronym,
-                    'newSurveyFormType': updateObject.type,
-                    'resourceErrorHandler': failureCallback
+                    'newSurveyFormType': updateObject.type
                 },
                 function(response) {
+                  defer.resolve(true);
                     successfullCallback();
                 },
                 function(error) {
+                  defer.reject(true);
                     failureCallback();
                 });
         }
 
-        function deleteSurveyTemplate() {
+        function deleteSurveyTemplate(acronym) {
             var defer = $q.defer();
-            // defer.resolve(true);
-            defer.reject(true);
-            return defer.promise;
-        }
-
-        function publishTemplate(file, successfullCallback, failureCallback) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
-            var defer = $q.defer();
-            // defer.reject(true);
-            ProjectConfiguration.publishTemplate(file,
+            ProjectConfiguration.deleteSurveyTemplate({
+                    'acronym': acronym,
+                },
                 function(response) {
-                    var errorList = [];
-                    console.log(response.data.responses);
-                    response.data.responses.forEach(function(validation) {
-                        if (validation.conflicts.length !== 0) {
-                            errorList.push(validation.VALIDATION_TYPE);
-                        }
-                    });
-                    if (errorList.length > 0) {
-                        failureCallback(errorList);
+                    console.log(response);
+                    if (true) {
+                        defer.resolve(true);
                     } else {
-                      defer.resolve(true);
-                        successfullCallback();
+                        defer.reject(true);
                     }
                 },
                 function(error) {
-                    failureCallback();
+                    console.log('error');
+                });
+
+            return defer.promise;
+        }
+
+        function publishTemplate(file) {
+            var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            var defer = $q.defer();
+            ProjectConfiguration.publishTemplate(file,
+            // ProjectConfiguration.publishTemplate({'template':file, callback: function() {}},
+                function(response) {
+                  console.log(response);
+                    if ('data' in response) {
+                          defer.resolve(true);
+                    }
+                    else{
+                          defer.reject(true);
+                    }
+                },
+                function(error) {
+                  console.log('error');
+                    // failureCallback();
                 });
             return defer.promise;
         }

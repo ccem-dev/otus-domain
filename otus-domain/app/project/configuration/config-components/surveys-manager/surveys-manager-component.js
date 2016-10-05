@@ -22,7 +22,7 @@
         };
 
         /* Public Interface*/
-        self.uploadTemplate = uploadTemplate;
+        self.publishTemplate = publishTemplate;
         self.updateSurveyFormType = updateSurveyFormType;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
         self.uploadConfig = {
@@ -63,18 +63,25 @@
             return deferred.promise;
         }
 
-        function uploadTemplate() {
-            ProjectConfigurationService.publishTemplate(self.uploadedFile, successfullUploadCallback, failurePublishCallback);
+        function publishTemplate() {
+            ProjectConfigurationService.publishTemplate(self.uploadedFile, successfullUploadCallback, failurePublishCallback)
+                .then(function() {
+                    successfullUploadCallback();
+                })
+                .catch(function(error) {
+                  console.log(error);
+                    failurePublishCallback(error);
+                });
         }
 
         function deleteSurveyTemplate(index) {
-            ProjectConfigurationService.deleteSurveyTemplate()
+            ProjectConfigurationService.deleteSurveyTemplate(self.surveyTemplatesList[index].surveyTemplate.identity.acronym)
                 .then(function() {
                     self.surveyTemplatesList.splice(index, 1);
                     $mdToast.show($mdToast.simple().textContent('Excluído'));
                 })
                 .catch(function() {
-                  console.log('erro de deleçao');
+                    $mdToast.show($mdToast.simple().textContent('Erro ao excluir'));
                 });
         }
 
@@ -84,18 +91,18 @@
             ProjectConfigurationService.updateSurveyTemplateType({
                 'acronym': selectedAcronym,
                 'type': newType
-            }, successfullUpdateTypeCallback, failurePublishCallback);
-            console.log({
-                'acronym': selectedAcronym,
-                'type': newType
+            }, failurePublishCallback)
+            .then(function() {
+              $mdToast.show($mdToast.simple().textContent('Alterado com sucesso'));
+
+            })
+            .catch(function() {
+              $mdToast.show($mdToast.simple().textContent('Erro ao alterar'));
+
             });
         }
 
-        function successfullUpdateTypeCallback() {
-            $mdToast.show($mdToast.simple().textContent('Alterado com sucesso'));
-        }
-
-        function successfullUploadCallback(uploadedSurveyTemplate) {
+        function successfullUploadCallback() {
             self.uploadedFile = {};
             _getTemplatesList();
             $mdToast.show($mdToast.simple().textContent('Upload realizado com sucesso'));
@@ -106,14 +113,15 @@
             switch (error) {
                 case 'UNIQUE_ACRONYM':
                     errorMessage += 'Já existe um formulário com esta sigla';
+                    $mdToast.show($mdToast.simple().textContent(errorMessage));
                     break;
                 case 'UNIQUE_ID':
                     errorMessage += 'Ids de questões dos formulários devem ser únicos';
+                    $mdToast.show($mdToast.simple().textContent(errorMessage));
                     break;
                 default:
 
             }
-            $mdToast.show($mdToast.simple().textContent(errorMessage));
         }
     }
 
