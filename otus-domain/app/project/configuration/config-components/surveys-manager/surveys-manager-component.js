@@ -11,10 +11,11 @@
     Controller.$inject = [
         '$q',
         'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
-        '$mdToast'
+        '$mdToast',
+        '$mdDialog'
     ];
 
-    function Controller($q, ProjectConfigurationService, $mdToast) {
+    function Controller($q, ProjectConfigurationService, $mdToast, $mdDialog) {
         var self = this;
 
         this.$onInit = function() {
@@ -64,14 +65,26 @@
 
 
         function deleteSurveyTemplate(index) {
-            ProjectConfigurationService.deleteSurveyTemplate(self.surveyTemplatesList[index].surveyTemplate.identity.acronym)
-                .then(function() {
-                    self.surveyTemplatesList.splice(index, 1);
-                    $mdToast.show($mdToast.simple().textContent('Excluído'));
-                })
-                .catch(function() {
-                    $mdToast.show($mdToast.simple().textContent('Erro ao excluir'));
-                });
+            var deleteConfirmDialog = $mdDialog.confirm()
+                .title('Exclusão de Formulário')
+                .textContent('Você tem certeza que deseja excluir esse Formulário?')
+                .ariaLabel('exclusão de formulário')
+                .ok('Sim')
+                .cancel('Não');
+
+            $mdDialog.show(deleteConfirmDialog).then(function() {
+                ProjectConfigurationService.deleteSurveyTemplate(self.surveyTemplatesList[index].surveyTemplate.identity.acronym)
+                    .then(function() {
+                        self.surveyTemplatesList.splice(index, 1);
+                        $mdToast.show($mdToast.simple().textContent('Excluído'));
+                    })
+                    .catch(function() {
+                        $mdToast.show($mdToast.simple().textContent('Erro ao excluir'));
+                    });
+            }, function() {
+                console.log('Cancel');
+            });
+
         }
 
         function updateSurveyFormType(index) {
@@ -109,6 +122,7 @@
         }
 
         function publishFailureMessenger(error) {
+            console.log(error);
             var errorMessage = '';
             switch (error) {
                 case 'CONFLICT':
