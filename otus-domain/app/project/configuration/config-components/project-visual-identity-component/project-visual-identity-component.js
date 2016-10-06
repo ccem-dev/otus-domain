@@ -42,7 +42,7 @@
 
         function fetchData() {
             var deferred = $q.defer();
-            deferred.resolve(ProjectConfigurationService.fetchProjectsVisualIdentity());
+            deferred.resolve(true);//ProjectConfigurationService.fetchProjectsVisualIdentity());
             return deferred.promise;
         }
 
@@ -67,7 +67,7 @@
         }
 
         function updateBanner(file) {
-          //TODO testar tipo de arquivo
+            //TODO testar tipo de arquivo
             self.progressBanner = true;
             getImageURL(file).then(function(imageURL) {
                 self.data.files.bannerURL = imageURL;
@@ -77,7 +77,7 @@
         }
 
         function updateLogo(file) {
-          //TODO testar tipo de arquivo
+            //TODO testar tipo de arquivo
             self.progressLogo = true;
             getImageURL(file).then(function(imageURL) {
                 self.data.files.logoURL = imageURL;
@@ -92,7 +92,7 @@
             reader.onload = function() {
                 deferred.resolve(reader.result);
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file[0]);
             return deferred.promise;
 
         }
@@ -115,8 +115,8 @@
         }
 
         function failure() {
-          $mdToast.show($mdToast.simple().textContent('Falha ao atualizar imagem'));
-          updateFields();
+            $mdToast.show($mdToast.simple().textContent('Falha ao atualizar imagem'));
+            updateFields();
         }
 
         function getDate(date) {

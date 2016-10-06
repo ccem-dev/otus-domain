@@ -1,18 +1,18 @@
-<md-content flex layout-padding>
+<md-content flex>
     <md-card flex layout="column" layout-margin>
         <md-card-title layout="row" style="height: 95px">
             <md-card-title-text>
-                <span class="md-body-2">Templates do Projeto</span>
+                <span class="md-body-2">Formulários do Projeto</span>
                 <div layout="column" ng-hide="$ctrl.disableSaving">
                     <span class="md-subhead">Templates Escolhidos:</span>
                     <span class="md-subhead">
-                        {{$ctrl.uploadedFile.identity.acronym}}
+                        {{$ctrl.uploadedObject.identity.acronym}}
                         -
-                        {{$ctrl.uploadedFile.identity.name}}</span>
+                        {{$ctrl.uploadedObject.identity.name}}</span>
                 </div>
             </md-card-title-text>
             <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
-                <md-icon md-font-library="material-icons" aria-label="Load">autorenew</md-icon>
+                <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
                 <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
                     Enviar Template
                 </md-tooltip>
@@ -25,11 +25,15 @@
             </md-button>
         </md-card-title>
         <md-card-content layout="row">
-            <md-content style="height: 500px" flex>
-                <section>
-                    <md-subheader class="md-primary">
-                        <span>Sigla - Nome</span>
-                    </md-subheader>
+            <p ng-if="$ctrl.surveyTemplatesList.length === 0" flex>
+                <md-icon md-svg-icon="information" class="md-primary"></md-icon>
+                {{$ctrl.noListInfo}}
+            </p>
+            <section flex ng-if="$ctrl.surveyTemplatesList.length !== 0">
+                <md-subheader class="md-primary">
+                    Lista de Formulários
+                </md-subheader>
+                <md-content style="max-height: 500px" flex>
                     <md-list>
                         <md-list-item layout-padding flex ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index">
                             <div layout="row" layout-fill layout-align="space-between">
@@ -42,24 +46,24 @@
                                     </div>
                                 </div>
                                 <div layout="column">
-                                  <div layout=row layout-align="center center">
-                                    <md-checkbox class="md-primary" ng-change="$ctrl.updateSurveyFormType($index)" ng-model="surveyForm.surveyFormType" aria-label="Tipo de formulário" ng-false-value="'FORM_INTERVIEW'" ng-true-value="'PROFILE'">
-                                        Perfil
-                                    </md-checkbox>
-                                    <md-button class="md-icon-button md-primary" ng-click="$ctrl.deleteSurveyTemplate($index)">
-                                        <md-icon md-font-library="material-icons" aria-label="Save">delete</md-icon>
-                                        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-                                            Excluir
-                                        </md-tooltip>
-                                    </md-button>
-                                  </div>
+                                    <div class="md-secondary-container">
+                                        <md-checkbox class="md-primary" ng-change="$ctrl.updateSurveyFormType($index)" ng-model="surveyForm.surveyFormType" aria-label="Tipo de formulário" ng-false-value="'FORM_INTERVIEW'" ng-true-value="'PROFILE'">
+                                            Perfil
+                                        </md-checkbox>
+                                        <md-button class="md-icon-button md-primary" ng-click="$ctrl.deleteSurveyTemplate($index)">
+                                            <md-icon md-font-library="material-icons" aria-label="Save">delete</md-icon>
+                                            <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                                                Excluir
+                                            </md-tooltip>
+                                        </md-button>
+                                    </div>
                                 </div>
                             </div>
                             <md-divider></md-divider>
                         </md-list-item>
                     </md-list>
-                </section>
-            </md-content>
+                </md-content>
+            </section>
         </md-card-content>
     </md-card>
 </md-content>
