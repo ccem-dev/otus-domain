@@ -77,12 +77,7 @@
 
         function publishTemplate(template) {
             var defer = $q.defer();
-            ProjectConfiguration.publishTemplate(template,
-                // ProjectConfiguration.publishTemplate(
-                //   {
-                //     'template': template
-                //   },
-                // ProjectConfiguration.publishTemplate({'template':template, callback: function() {}},
+            ProjectConfiguration.publishTemplate(template,                
                 function(response) {
                     if ('data' in response) {
                         defer.resolve(response.data);

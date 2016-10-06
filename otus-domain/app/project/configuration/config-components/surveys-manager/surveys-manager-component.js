@@ -36,8 +36,8 @@
         self.disableSaving = true;
 
         function _getTemplatesList() {
-            var promise = ProjectConfigurationService.fetchSurveysManagerConfiguration();
-            promise.then(function(data) {
+            ProjectConfigurationService.fetchSurveysManagerConfiguration()
+            .then(function(data) {
                     self.surveyTemplatesList = data;
                     if (self.surveyTemplatesList.length === 0) {
                         self.noListInfo = 'Nenhum formulário adicionado';
