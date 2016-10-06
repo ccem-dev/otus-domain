@@ -20,10 +20,6 @@
 .icon-clickable {
     cursor: pointer;
 }
-.image-otus-toolbar {
-    width: 38px;
-    margin-top: inherit;
-}
 md-input-container.md-input-invalid>md-icon {
     color: red;
 }
