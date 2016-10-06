@@ -39,7 +39,7 @@
             return defer.promise;
         }
 
-        function updateSurveyTemplateType(updateObject, successfullCallback, failureCallback) {
+        function updateSurveyTemplateType(updateObject) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var defer = $q.defer();
             ProjectConfiguration.updateSurveyTemplateType({
@@ -47,13 +47,14 @@
                     'newSurveyFormType': updateObject.type
                 },
                 function(response) {
-                  defer.resolve(true);
-                    successfullCallback();
-                },
-                function(error) {
-                  defer.reject(true);
-                    failureCallback();
+                    console.log(response);
+                    if (response.data) {
+                        defer.resolve(true);
+                    } else {
+                        defer.reject(true);
+                    }
                 });
+            return defer.promise;
         }
 
         function deleteSurveyTemplate(acronym) {
@@ -64,36 +65,32 @@
                 },
                 function(response) {
                     console.log(response);
-                    if (true) {
+                    if (response.data) {
                         defer.resolve(true);
                     } else {
                         defer.reject(true);
                     }
-                },
-                function(error) {
-                    console.log('error');
                 });
 
             return defer.promise;
         }
 
-        function publishTemplate(file) {
+        function publishTemplate(template) {
             var ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
             var defer = $q.defer();
-            ProjectConfiguration.publishTemplate(file,
-            // ProjectConfiguration.publishTemplate({'template':file, callback: function() {}},
+            ProjectConfiguration.publishTemplate(template,
+                // ProjectConfiguration.publishTemplate(
+                //   {
+                //     'template': template
+                //   },
+                // ProjectConfiguration.publishTemplate({'template':template, callback: function() {}},
                 function(response) {
-                  console.log(response);
+                    console.log(response);
                     if ('data' in response) {
-                          defer.resolve(true);
+                        defer.resolve(response.data);
+                    } else {
+                        defer.reject(response.STATUS);
                     }
-                    else{
-                          defer.reject(true);
-                    }
-                },
-                function(error) {
-                  console.log('error');
-                    // failureCallback();
                 });
             return defer.promise;
         }

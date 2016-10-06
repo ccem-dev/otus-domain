@@ -31,9 +31,7 @@
         };
 
         self.uploadedFile = {};
-        self.uploaded = function() {
-            return (angular.equals(self.uploadedFile, {}) ? true : false);
-        };
+        self.disableSaving = true;
 
         function _getTemplatesList() {
             var promise = ProjectConfigurationService.fetchSurveysManagerConfiguration();
@@ -48,6 +46,7 @@
                 if (fileList[0].name.split('.')[1] === 'json') {
                     fileParser(file).then(function(templateObject) {
                         self.uploadedFile = templateObject;
+                        self.disableSaving = false;
                     });
                 }
             });
@@ -63,16 +62,6 @@
             return deferred.promise;
         }
 
-        function publishTemplate() {
-            ProjectConfigurationService.publishTemplate(self.uploadedFile, successfullUploadCallback, failurePublishCallback)
-                .then(function() {
-                    successfullUploadCallback();
-                })
-                .catch(function(error) {
-                  console.log(error);
-                    failurePublishCallback(error);
-                });
-        }
 
         function deleteSurveyTemplate(index) {
             ProjectConfigurationService.deleteSurveyTemplate(self.surveyTemplatesList[index].surveyTemplate.identity.acronym)
@@ -89,39 +78,47 @@
             var selectedAcronym = self.surveyTemplatesList[index].surveyTemplate.identity.acronym;
             var newType = self.surveyTemplatesList[index].surveyFormType;
             ProjectConfigurationService.updateSurveyTemplateType({
-                'acronym': selectedAcronym,
-                'type': newType
-            }, failurePublishCallback)
-            .then(function() {
-              $mdToast.show($mdToast.simple().textContent('Alterado com sucesso'));
+                    'acronym': selectedAcronym,
+                    'type': newType
+                })
+                .then(function() {
+                    $mdToast.show($mdToast.simple().textContent('Alterado com sucesso'));
 
-            })
-            .catch(function() {
-              $mdToast.show($mdToast.simple().textContent('Erro ao alterar'));
-
-            });
+                })
+                .catch(function() {
+                    $mdToast.show($mdToast.simple().textContent('Erro ao alterar'));
+                    console.log(self.surveyTemplatesList[index]);
+                });
         }
 
-        function successfullUploadCallback() {
+        function publishTemplate() {
+            ProjectConfigurationService.publishTemplate(self.uploadedFile)
+                .then(function(surveyTemplate) {
+                    successfullPublishCallback(surveyTemplate);
+                })
+                .catch(function(error) {
+                    publishFailureMessenger(error);
+                });
+        }
+
+        function successfullPublishCallback(surveyTemplate) {
             self.uploadedFile = {};
-            _getTemplatesList();
+            self.disableSaving = true;
+            self.surveyTemplatesList.push(surveyTemplate);
             $mdToast.show($mdToast.simple().textContent('Upload realizado com sucesso'));
         }
 
-        function failurePublishCallback(error) {
+        function publishFailureMessenger(error) {
             var errorMessage = '';
             switch (error) {
-                case 'UNIQUE_ACRONYM':
+                case 'CONFLICT':
                     errorMessage += 'Já existe um formulário com esta sigla';
-                    $mdToast.show($mdToast.simple().textContent(errorMessage));
-                    break;
-                case 'UNIQUE_ID':
-                    errorMessage += 'Ids de questões dos formulários devem ser únicos';
-                    $mdToast.show($mdToast.simple().textContent(errorMessage));
                     break;
                 default:
+                    errorMessage += 'Ocorreu um erro';
 
             }
+            $mdToast.show($mdToast.simple().textContent(errorMessage));
         }
     }
 
