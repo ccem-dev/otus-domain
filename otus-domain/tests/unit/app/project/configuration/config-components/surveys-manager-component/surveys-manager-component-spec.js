@@ -1,22 +1,24 @@
-xdescribe('project praticipant register', function() {
+describe('project praticipant register', function() {
     var Mock = {};
     var $componentController,
         $injector,
         $mdToast,
         $q,
         ctrl,
-        $scope,
-        $rootScope;
+        scope,
+        $rootScope,
+        surveyList,
+        deferred;
 
     beforeEach(module('otusDomain'));
     beforeEach(inject(function(_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_) {
         $componentController = _$componentController_;
         $mdToast = _$mdToast_;
         $q = _$q_;
-        $rootScope = _$rootScope_;
+        scope = _$rootScope_.$new();
 
         var Bindings = {
-            $scope: $rootScope
+            $scope: scope
         };
         $injector = _$injector_;
         var Injections = {
@@ -28,10 +30,14 @@ xdescribe('project praticipant register', function() {
         ctrl = $componentController('otusSurveysManager', Injections, Bindings);
     }));
 
-    xit('should feed self.templatesList with the given files info', function() {
-        spyOn(Mock.ProjectConfigurationService, 'fetchSurveysManagerConfiguration');
-        Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration = function() {
-            return [{
+    describe('the controller initialization', function() {
+        beforeEach(function() {
+            deferred = $q.defer();
+            spyOn(Mock.ProjectConfigurationService, 'fetchSurveysManagerConfiguration').and.returnValue(deferred.promise);
+
+        });
+        it('should initialize the survey list', function() {
+            surveyList = [{
                 'sender': "brenoscheffer@gmail.com",
                 'sendingDate': "Oct 6, 2016 10:56:46 PM",
                 'surveyFormType': "FORM_INTERVIEW",
@@ -62,27 +68,51 @@ xdescribe('project praticipant register', function() {
                     }
                 }
           }];
-        };
-        ctrl.$onInit();
-        expect(Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration).toHaveBeenCalled();
+            deferred.resolve(surveyList);
+            var result;
+            Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration().then(function(returnFromPromise) {
+                result = returnFromPromise;
+                expect(result).toBeDefined(surveyList);
+            });
+            scope.$apply();
+            expect(Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration).toHaveBeenCalled();
+        });
+        it('should set the correct message when surveyList is empty (rest return)', function(done) {
+            ctrl.$onInit();
+            Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration()
+                .then(function() {
+                    expect(ctrl.noListInfo).toEqual('Nenhum formulário adicionado');
+                    done();
+                });
+            deferred.resolve([]);
+            scope.$digest();
+        });
+        it('should set the correct message when could not reach the server (rest return)', function(done) {
+            ctrl.$onInit();
+            Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration()
+                .then(function() {})
+                .catch(function() {
+                    expect(ctrl.noListInfo).toEqual('Erro de comunicação com servidor');
+                    done();
+                });
+            deferred.reject(true);
+            scope.$digest();
+        });
     });
 
-
-    xdescribe('some uploads', function() {
+    describe('some uploads', function() {
         it('should do nothing when a wrong file format is given', function() {
             Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration = {};
-            ctrl.uploadConfig.callback({
+            ctrl.uploadConfig = {
                 type: 'notJson'
-            });
-            expect(ctrl.data).toEqual({});
+            };
+            expect(ctrl.uploadedObject).toEqual({});
         });
     });
 
 
     function mockProjectConfigurationService($injector) {
-        Mock.ProjectConfigurationService = $injector.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService', {
-            // 'OtusRestResourceService': $injector.get('OtusRestResourceService')
-        });
+        Mock.ProjectConfigurationService = $injector.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService');
         return Mock.ProjectConfigurationService;
     }
 

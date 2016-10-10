@@ -48,6 +48,7 @@
                 .catch(function() {
                     self.surveyTemplatesList = [];
                     self.noListInfo = 'Erro de comunicação com servidor';
+                    console.log(self.noListInfo);
                 });
         }
 
