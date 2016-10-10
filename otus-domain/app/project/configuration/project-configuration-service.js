@@ -6,12 +6,11 @@
         .service('otusjs.otus-domain.project.configuration.ProjectConfigurationService', ProjectConfigurationService);
 
     ProjectConfigurationService.$inject = [
-        'OtusRestResourceService',
-        '$http',
+        'OtusRestResourceService',      
         '$q'
     ];
 
-    function ProjectConfigurationService(OtusRestResourceService, $http, $q) {
+    function ProjectConfigurationService(OtusRestResourceService, $q) {
         var self = this;
         var ProjectConfiguration;
         _init();
@@ -77,7 +76,7 @@
 
         function publishTemplate(template) {
             var defer = $q.defer();
-            ProjectConfiguration.publishTemplate(template,                
+            ProjectConfiguration.publishTemplate(template,
                 function(response) {
                     if ('data' in response) {
                         defer.resolve(response.data);

@@ -8,15 +8,16 @@ describe('project praticipant register', function() {
         scope,
         $rootScope,
         surveyList,
-        deferred;
+        deferred,
+        $compile;
 
     beforeEach(module('otusDomain'));
-    beforeEach(inject(function(_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_) {
+    beforeEach(inject(function(_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
         $componentController = _$componentController_;
         $mdToast = _$mdToast_;
         $q = _$q_;
         scope = _$rootScope_.$new();
-
+        $compile = _$compile_;
         var Bindings = {
             $scope: scope
         };
@@ -36,6 +37,12 @@ describe('project praticipant register', function() {
             spyOn(Mock.ProjectConfigurationService, 'fetchSurveysManagerConfiguration').and.returnValue(deferred.promise);
 
         });
+
+        it('should toast', function() {
+            console.log(ctrl);
+            ctrl.updateSurveyFormType(0);
+        });
+
         it('should initialize the survey list', function() {
             surveyList = [{
                 'sender': "brenoscheffer@gmail.com",
@@ -100,24 +107,10 @@ describe('project praticipant register', function() {
         });
     });
 
-    describe('some uploads', function() {
-        it('should do nothing when a wrong file format is given', function() {
-            Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration = {};
-            ctrl.uploadConfig = {
-                type: 'notJson'
-            };
-            expect(ctrl.uploadedObject).toEqual({});
-        });
-    });
 
 
     function mockProjectConfigurationService($injector) {
         Mock.ProjectConfigurationService = $injector.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService');
         return Mock.ProjectConfigurationService;
-    }
-
-    function mockUploadToolService($injector) {
-        Mock.UploadToolService = $injector.get('otusjs.otus-domain.project.configuration.UploadToolService');
-        return Mock.UploadToolService;
     }
 });
