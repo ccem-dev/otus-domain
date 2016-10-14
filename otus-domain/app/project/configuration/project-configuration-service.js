@@ -6,7 +6,7 @@
         .service('otusjs.otus-domain.project.configuration.ProjectConfigurationService', ProjectConfigurationService);
 
     ProjectConfigurationService.$inject = [
-        'OtusRestResourceService',      
+        'OtusRestResourceService',
         '$q'
     ];
 
@@ -25,7 +25,7 @@
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
 
         function _init() {
-          ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
         }
 
 
@@ -33,11 +33,11 @@
         function fetchSurveysManagerConfiguration() {
             var defer = $q.defer();
             ProjectConfiguration.getSurveys(function(response) {
-              if ('data' in response) {
-                defer.resolve(response.data);
-              }else{
-                defer.reject(true);
-              }
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
             });
             return defer.promise;
         }
@@ -77,7 +77,7 @@
         function publishTemplate(template) {
             var defer = $q.defer();
             ProjectConfiguration.publishTemplate(template,
-                function(response) {
+                function(response) {                   
                     if ('data' in response) {
                         defer.resolve(response.data);
                     } else {
@@ -90,21 +90,19 @@
         /* Visual Identity Section*/
         function fetchProjectsVisualIdentity() {
             var data = {};
+            var defer = $q.defer();
             ProjectConfiguration.getVisualIdentity(function(response) {
-                data = response.data;
-            }, function(error) {
-                data = {};
+                defer.resolve();
             });
-            return data;
+            return defer.promise;
         }
 
-        function updateVisualIdentityConfiguration(files, successfullCallback, failureCallback) {
-            var success;
+        function updateVisualIdentityConfiguration(files) {
+            var defer = $q.defer();
             ProjectConfiguration.updateVisualIdentity(files, function() {
-                successfullCallback();
-            }, function() {
-                failureCallback();
+               defer.resolve();
             });
+            return defer.promise;
         }
     }
 }());

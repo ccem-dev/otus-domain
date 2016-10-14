@@ -118,6 +118,33 @@ describe('project praticipant register', function() {
 
         });
 
+        it('should add an published template to the surveyTemplatesList', function(done) {
+            spyOn(Mock.ProjectConfigurationService, 'publishTemplate').and.returnValue(defer.promise);
+            ctrl.surveyTemplatesList = [];
+            ctrl.publishTemplate();
+            Mock.ProjectConfigurationService.publishTemplate()
+                .then(function() {
+                    expect(ctrl.surveyTemplatesList).toContain('file');
+                    done();
+                });
+                defer.resolve('file');
+                scope.$digest();
+
+        });
+        it('should not add an published template to the surveyTemplatesList when get an error', function(done) {
+            spyOn(Mock.ProjectConfigurationService, 'publishTemplate').and.returnValue(defer.promise);
+            ctrl.surveyTemplatesList = [];
+            ctrl.publishTemplate();
+            Mock.ProjectConfigurationService.publishTemplate()
+                .catch(function() {
+                    expect(ctrl.surveyTemplatesList).not.toContain('file');
+                    done();
+                });
+                defer.reject();
+                scope.$digest();
+
+        });
+
         it('should remove an survey when deleteSurveyTemplate is called', function(done) {
             spyOn(Mock.ProjectConfigurationService, 'fetchSurveysManagerConfiguration').and.returnValue(defer.promise);
             spyOn(Mock.ProjectConfigurationService, 'deleteSurveyTemplate').and.returnValue(deferred.promise);

@@ -117,7 +117,7 @@
 
         function publishTemplate() {
             ProjectConfigurationService.publishTemplate(self.uploadedFile)
-                .then(function(surveyTemplate) {
+                .then(function(surveyTemplate) {                   
                     successfullPublishCallback(surveyTemplate);
                 })
                 .catch(function(message) {
