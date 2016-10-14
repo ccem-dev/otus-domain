@@ -1,4 +1,4 @@
-describe('project configuration service', function() {
+fdescribe('project configuration service', function() {
     var Mock = {};
     var service,
         $injector,
