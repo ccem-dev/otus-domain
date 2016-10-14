@@ -2,14 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>otus-domain-persistence</artifactId>
     <packaging>ejb</packaging>
 
     <parent>
         <groupId>org.ccem.domain</groupId>
         <artifactId>otus-domain-root</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../otus-domain-root/pom.xml</relativePath>
     </parent>
 
@@ -19,11 +18,6 @@
         <database.username>otus</database.username>
         <database.password>otus</database.password>
     </properties>
-
-    <scm>
-        <connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
-        <developerConnection>scm:git:git@github.com:ccem-dev/otus-domain.git</developerConnection>
-    </scm>
 
     <dependencies>
         <dependency>
@@ -53,7 +47,7 @@
         <dependency>
             <groupId>br.org.tutty</groupId>
             <artifactId>equalizer</artifactId>
-            <version>${equalize-version}</version>
+            <version>${equalize.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -65,14 +59,6 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
-
-        <plugins>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.1.0.Alpha4</version>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

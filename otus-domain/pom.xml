@@ -1,21 +1,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>otus-domain</artifactId>
     <packaging>war</packaging>
 
     <parent>
         <groupId>org.ccem.domain</groupId>
         <artifactId>otus-domain-root</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../otus-domain-root/pom.xml</relativePath>
     </parent>
-
-    <scm>
-        <connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
-        <developerConnection>scm:git:git@github.com:ccem-dev/otus-domain.git</developerConnection>
-    </scm>
 
     <build>
         <finalName>otus-domain</finalName>
