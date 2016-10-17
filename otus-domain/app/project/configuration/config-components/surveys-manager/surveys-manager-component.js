@@ -17,9 +17,16 @@
 
     function Controller($q, ProjectConfigurationService, $mdToast, $mdDialog) {
         var self = this;
+        var deleteConfirmDialog;
 
         this.$onInit = function() {
             _getTemplatesList();
+            deleteConfirmDialog = $mdDialog.confirm()
+                .title('Exclusão de Formulário')
+                .textContent('Você tem certeza que deseja excluir esse Formulário?')
+                .ariaLabel('exclusão de formulário')
+                .ok('Sim')
+                .cancel('Não');
         };
 
         /* Public Interface*/
@@ -37,7 +44,7 @@
 
         function _getTemplatesList() {
             ProjectConfigurationService.fetchSurveysManagerConfiguration()
-            .then(function(data) {
+                .then(function(data) {
                     self.surveyTemplatesList = data;
                     if (self.surveyTemplatesList.length === 0) {
                         self.noListInfo = 'Nenhum formulário adicionado';
@@ -74,13 +81,6 @@
         }
 
         function deleteSurveyTemplate(index) {
-            var deleteConfirmDialog = $mdDialog.confirm()
-                .title('Exclusão de Formulário')
-                .textContent('Você tem certeza que deseja excluir esse Formulário?')
-                .ariaLabel('exclusão de formulário')
-                .ok('Sim')
-                .cancel('Não');
-
             $mdDialog.show(deleteConfirmDialog).then(function() {
                 ProjectConfigurationService.deleteSurveyTemplate(self.surveyTemplatesList[index].surveyTemplate.identity.acronym)
                     .then(function() {
@@ -117,7 +117,7 @@
 
         function publishTemplate() {
             ProjectConfigurationService.publishTemplate(self.uploadedFile)
-                .then(function(surveyTemplate) {
+                .then(function(surveyTemplate) {                   
                     successfullPublishCallback(surveyTemplate);
                 })
                 .catch(function(message) {
