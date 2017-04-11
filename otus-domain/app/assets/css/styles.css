@@ -1,0 +1,37 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+.toolbar-icon {
+    float: right;
+    width: 45px;
+    height: 45px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.image-brand {
+    border-radius: 25px;
+    height: 47px;
+    padding: 1px;
+    margin: 10px;
+    min-width: 45px;
+    min-height: 45px;
+}
+.icon-clickable {
+    cursor: pointer;
+}
+md-input-container.md-input-invalid>md-icon {
+    color: red;
+}
+.offline-card:hover {
+    cursor: pointer;
+    background-color: rgba(158, 158, 158, 0.2) !important;
+}
+.offline {
+    color: red !important;
+}
+#logo-image {
+    border-radius: 120px;
+    width: 120px;
+    height: 120px;
+}

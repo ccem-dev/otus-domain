@@ -1,0 +1,36 @@
+<md-card flex layout="column">
+    <md-card-title layout="row" layout-align="space-between">
+        <md-card-title-text>
+            <span class="md-body-2">Identidade visual do projeto</span>
+            <span class="md-subheader" ng-show="$ctrl.data.sendingDate">Última alteração:
+                {{$ctrl.data.sendingDate}}</span>
+            <span class="md-caption" ng-show="$ctrl.changed">* não salvo</span>
+        </md-card-title-text>
+        <md-button class="md-icon-button md-primary" ng-disabled="!$ctrl.changed" ng-click="$ctrl.save()">
+            <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
+        </md-button>
+    </md-card-title>
+    <md-content layout-gt-md="row" layout="column" layout-wrap>
+        <md-content flex="15" layout-gt-md="column" layout="row" layout-align="top center" layout-padding layout-wrap>
+            <div layout="row" layout-align="start center">
+                <span class="md-title">Logo</span>
+                <md-button class="md-icon-button md-primary" ng-hide="$ctrl.progressLogo" upload-tool="$ctrl.uploadLogo">
+                    <md-icon flex md-font-library="material-icons" aria-label="Logo">autorenew</md-icon>
+                </md-button>
+                <md-progress-circular ng-if="$ctrl.progressLogo" md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <img id="logo-image" ng-src="{{$ctrl.data.files.logoURL}}"></img>
+        </md-content>
+
+        <md-content flex="85" layout-gt-md="column" layout="row" layout-padding layout-wrap>
+            <div layout="row" layout-align="start center">
+                <span class="md-title">Banner</span>
+                <md-button class="md-icon-button md-primary" ng-if="!$ctrl.progressBanner" upload-tool="$ctrl.uploadBanner">
+                    <md-icon md-font-library="material-icons" aria-label="Banner">autorenew</md-icon>
+                </md-button>
+                <md-progress-circular ng-show="$ctrl.progressBanner" md-mode="indeterminate"></md-progress-circular>
+            </div>
+            <img flex="nogrow" ng-src="{{$ctrl.data.files.bannerURL}}"></img>
+        </md-content>
+    </md-content>
+</md-card>

@@ -1,0 +1,40 @@
+<md-content class="box-page" flex>
+    <div class="header-banner">
+        <h2 class="name-project project-name">
+			      <span class="md-display-1">Otus Domain</span>
+		</h2>
+        <div class="center">
+            <div>
+                <img src="app/assets/img/domainImage.png" class="logo" media="screen and (max-width: 1280px) and (min-width: 800px)"></img>
+            </div>
+            <form name="loginForm" novalidate>
+                <div class="content" layout="column">
+                    <md-input-container class="md-block">
+                        <label>Email</label>
+                        <input name="userEmail" ng-model="user.email" required />
+
+                        <div ng-messages="loginForm.userEmail.$error">
+                            <div ng-message="required">Obrigatório</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Senha</label>
+                        <input name="userPassword" ng-model="user.password" type="password" required />
+
+                        <div ng-messages="loginForm.userPassword.$error">
+                            <div ng-message="required">Obrigatório</div>
+                        </div>
+                    </md-input-container>
+
+                    <div layout="row" layout-sm="column">
+                        <md-button type="submit" class="md-raised md-accent" ng-click="authenticate(user)"
+                        ng-disabled="loginForm.$invalid">Logar
+                        </md-button>
+                        <md-button class="md-raised md-accent" ng-click="register()">Cadastrar-se</md-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</md-content>

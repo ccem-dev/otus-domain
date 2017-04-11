@@ -1,0 +1,61 @@
+.box-page {
+    position: relative;
+}
+.box-page .center {
+    width: 55%;
+    top: 60%;
+    margin: 0 auto;
+    background-color: white;
+    position: relative;
+    border: 2px solid #E6E6E6;
+}
+.box-page .header-banner {
+    background-color: #448AFF;
+    height: 25%;
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+}
+.box-page .name-project {
+    text-align: left;
+    top: 58%;
+    position: relative;
+    margin: 0 auto;
+}
+.box-page .name-project span {
+    margin-left: 23%;
+}
+.box-page h1 {
+    margin: 0 auto;
+    width: 110px;
+    display: block;
+}
+.box-page .logo {
+    width: 27%;
+    position: absolute;
+    left: 40%;
+    transform: translate(-30%, -30%);
+}
+@media screen and (max-width: 1280px) and (min-width: 800px) {
+    .box-page .logo {
+        width: 35%;
+        position: absolute;
+        left: 45%;
+        transform: translate(-30%, -30%);
+    }
+}
+/** This style is to fix float label 'celular'! Do NOT remove**/
+label[for="phonenumber"] {
+    -webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
+}
+.box-page .content {
+    margin-top: 10%;
+}
+.box-page .md-block {
+    width: 80%;
+    left: 10%;
+    right: 10%
+}
+.project-name {
+    color: white;
+}

@@ -1,0 +1,49 @@
+<md-content>
+    <div layout layout-sm="column">
+        <md-input-container flex>
+            <label>Nome Base de Dados</label>
+            <input name="repositoryDatabase" ng-model="systemConf.repositoryConnection.database" type="text" ng-required="true" />
+
+            <div ng-messages="initialConfigSystemForm.database.$error">
+                <div ng-message="required">Obrigatório</div>
+                <div ng-message="databaseAlreadyExist">Já existe uma base de dados com esse nome</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex>
+            <label>Servidor</label>
+            <input name="repositoryHost" ng-model="systemConf.repositoryConnection.host" type="text" ng-required="true" />
+
+            <div ng-messages="initialConfigSystemForm.repositoryHost.$error">
+                <div ng-message="required">Obrigatório</div>
+                <div ng-message="connection">Problema ao conectar. Verifique os dados do servidor.</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex="30">
+            <label>Porta</label>
+            <input name="repositoryPort" ng-blur="initialConfigController.validateRepositoryConnection(systemConf.repositoryConnection)" ng-model="systemConf.repositoryConnection.port" type="number" ng-required="true" />
+
+            <div ng-messages="initialConfigSystemForm.repositoryPort.$error">
+                <div ng-message="connection">Problema ao conectar. Verifique os dados do servidor.</div>
+                <div ng-message="required">Obrigatório</div>
+            </div>
+        </md-input-container>
+    </div>
+    <md-input-container class="md-block">
+        <label>Usuário</label>
+        <input name="repositoryUsername" ng-model="systemConf.repositoryConnection.username" type="text" ng-required="true" />
+
+        <div ng-messages="initialConfigSystemForm.repositoryUsername.$error">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="credentials">Problema na autenticação. Verifique se os dados estão corretos.</div>
+        </div>
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>Senha</label>
+        <input name="repositoryPassword" ng-blur="initialConfigController.validateCredentials(systemConf.repositoryConnection)" ng-model="systemConf.repositoryConnection.password" ng-required="true" type="password" />
+
+        <div ng-messages="initialConfigSystemForm.repositoryPassword.$error">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="credentials">Problema na autenticação. Verifique se os dados estão corretos.</div>
+        </div>
+    </md-input-container>
+</md-content>

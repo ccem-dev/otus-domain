@@ -1,0 +1,88 @@
+<md-content class="box-page" flex>
+    <div class="header-banner">
+        <h2 class="name-project project-name">
+			      <span class="md-display-1">Otus Domain</span>
+		</h2>
+        <div class="center">
+            <div>
+                <img src="app/assets/img/domainImage.png" class="logo" media="screen and (max-width: 1280px)"
+                />
+            </div>
+            <form name="registerUserForm" novalidate>
+                <div class="content" layout="column">
+                    <md-input-container class="md-block">
+                        <label>Nome</label>
+                        <input name="name" ng-model="user.name" type="text" ng-required="true" />
+
+                        <div ng-messages="registerUserForm.name.$error">
+                            <div ng-message="required">Obrigatório</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Sobrenome</label>
+                        <input name="surname" ng-model="user.surname" type="text" ng-required="true" />
+
+                        <div ng-messages="registerUserForm.surname.$error">
+                            <div ng-message="required">Obrigatório</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <md-icon md-font-set="material-icons">phone</md-icon>
+                        <input name="phone" aria-label="Telefone" id="phonenumber" ng-model="user.phone"
+                        type="text" ui-options={clearOnBlur:false} ui-mask="(99) 99999999?9"
+                        ng-required="true" />
+
+                        <div ng-messages="registerUserForm.phone.$error">
+                            <div ng-message="required">Obrigatório</div>
+                            <div ng-message="mask">Insira um número válido.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <md-icon md-font-set="material-icons">email</md-icon>
+                        <input name="email" aria-label="Email" ng-model="user.email" type="email" unique
+                        ng-required="true" />
+
+                        <div ng-messages="registerUserForm.email.$error">
+                            <div ng-message="required">Obrigatório</div>
+                            <div ng-message="emailInUse">E-mail já em uso.</div>
+                            <div ng-message="email">Insira um e-mail válido.</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Senha</label>
+                        <input name="password" ng-model="user.password" type="password" ng-required="true"
+                        />
+
+                        <div ng-messages="registerUserForm.password.$error">
+                            <div ng-message="required" ng-show="registerUserForm.password.$error.required">Obrigatório</div>
+                        </div>
+                    </md-input-container>
+
+                    <md-input-container class="md-block">
+                        <label>Confirmação de Senha</label>
+                        <input name="passwordConfirmation" st-password-match="user.password" ng-model="user.passwordConfirmation"
+                        type="password" ng-required="true" />
+
+                        <div ng-messages="registerUserForm.passwordConfirmation.$error">
+                            <div ng-message="required" ng-show="registerUserForm.passwordConfirmation.$error.required">
+                                Obrigatório
+                            </div>
+                            <div ng-message="passwordMatch">Suas senhas não coincidem.</div>
+                        </div>
+                    </md-input-container>
+
+                    <div layout="row" layout-sm="column">
+                        <md-button class="md-raised md-accent" type="submit" ng-disabled="registerUserForm.$invalid"
+                        ng-click="userRegisterController.register(user)">Cadastrar
+                        </md-button>
+                        <md-button class="md-raised md-accent" ng-click="userRegisterController.back()">Voltar</md-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</md-content>

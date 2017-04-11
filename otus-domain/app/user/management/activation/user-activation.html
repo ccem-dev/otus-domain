@@ -1,0 +1,43 @@
+<md-content flex>
+    <md-subheader class="md-primary" ng-show="headerDomain">Usuários Domain</md-subheader>
+    <md-subheader class="md-primary" ng-show="headerOtus">Usuários Otus</md-subheader>
+
+    <md-content layout="row" layout-align-gt-md="center center" flex=100>
+        <md-input-container flex-gt-md=50 flex=90>
+            <md-icon md-font-library="material-icons">search</md-icon>
+            <input ng-model="query" placeholder="Buscar por Nome ou Email"></input>
+        </md-input-container>
+    </md-content>
+
+    <div>
+        <div layout-align="center center" layout="row">
+            <md-list flex="60">
+                <md-content>
+                    <md-list-item ng-repeat="user in users | orderBy:['name', 'email'] | filter : query ">
+                        <md-card flex layout="row">
+                            <md-card-title>
+                                <md-card-title-media>
+                                    <div class="md-media-sm card-media" layout layout-align="center center">
+                                        <md-icon md-font-set="material-icons">face</md-icon>
+                                    </div>
+                                </md-card-title-media>
+                                <md-card-title-text layout="row">
+                                    <div layout="column">
+                                        <span class="md-headline">{{user.name}}</span>
+                                        <span class="md-subhead description">{{user.email}}</span>
+                                        <span ng-show="user.admin" class="md-subhead description">Administrador</span>
+                                    </div>
+                                    <span flex></span>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <md-action>
+                                <md-switch ng-disabled="user.admin" aria-label="Estatus" ng-model="user.enable"
+                                class="md-primary" md-no-ink ng-change="confirmDialog(user, user.enable)"></md-switch>
+                            </md-action>
+                        </md-card>
+                    </md-list-item>
+                </md-content>
+            </md-list>
+        </div>
+    </div>
+</md-content>
