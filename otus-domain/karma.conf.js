@@ -25,7 +25,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
-            NODE_MODULES_ROOT_PATH + 'angular-ui-router/build/angular-ui-router.min.js',
+            NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
             /* Otus platform */
             NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
             NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
