@@ -1,94 +1,74 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusDomain.user.management')
-        .controller('UserActivationController', UserActivationController);
+  angular
+    .module('otusDomain.user.management')
+    .controller('UserActivationController', UserActivationController);
 
-    UserActivationController.$inject = ['$http', '$scope', '$filter', 'RestResourceService', 'OtusRestResourceService', '$mdDialog', '$mdToast', 'userManagementType'];
+  UserActivationController.$inject = ['RestResourceService', '$mdDialog', '$mdToast'];
 
-    function UserActivationController($http, $scope, $filter, RestResourceService, OtusRestResourceService, $mdDialog, $mdToast, userManagementType) {
-        var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário ?';
-        var DIALOG_TITLE = 'Mudança de Estatus';
-        var clientSelected = null;
+  function UserActivationController(RestResourceService, $mdDialog, $mdToast) {
+    var self = this;
 
-        $scope.users = [];
-        $scope.loadUsers = loadUsers;
-        $scope.changeStatus = changeStatus;
-        $scope.confirmDialog = confirmDialog;
-        $scope.headerDomain = false;
-        $scope.headerOtus = false;
+    var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário ?';
+    var DIALOG_TITLE = 'Mudança de Status';
+    var _domainUserResource;
 
-        _init();
+    self.users = [];
+    self.confirmDialog = confirmDialog;
 
-        function _init() {
-            if (userManagementType === 'domain') {
-                clientSelected = RestResourceService;
-                buildHeaderDomain();
-            } else {
-                clientSelected = OtusRestResourceService;
-                buildHeaderOtus();
-            }
-            loadUsers();
-        }
+    _init();
 
-        function buildHeaderDomain() {
-            $scope.headerDomain = true;
-            $scope.headerOtus = false;
-        }
-
-        function buildHeaderOtus() {
-            $scope.headerDomain = false;
-            $scope.headerOtus = true;
-        }
-
-        function changeStatus(user) {
-            if (!user.enable) {
-                disable(user);
-            } else {
-                enable(user);
-            }
-        }
-
-        function confirmDialog(user) {
-            var dialog = $mdDialog.confirm()
-                .title(DIALOG_TITLE)
-                .textContent(DIALOG_TEXT_CONTENT)
-                .ok('Sim')
-                .cancel('Cancelar');
-
-            $mdDialog.show(dialog).then(function() {
-                changeStatus(user);
-            }, function() {
-                user.enable = !user.enable;
-            });
-        }
-
-        function enable(user) {
-            var userResource = clientSelected.getUserResource();
-            userResource.enable(user, function() {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Usuário habilitado.')
-                );
-            });
-        }
-
-        function disable(user) {
-            var userResource = clientSelected.getUserResource();
-            userResource.disable(user, function() {
-                $mdToast.show(
-                    $mdToast.simple()
-                    .textContent('Usuário desabilitado.')
-                );
-            });
-        }
-
-        function loadUsers() {
-            var userResource = clientSelected.getUserResource();
-            userResource.list(function(response) {
-                $scope.users = response.data;
-            });
-        }
+    function _init() {
+      _domainUserResource = RestResourceService.getUserResource();
+      _loadUsers();
     }
+
+    function _changeStatus(user) {
+      if (!user.enable) {
+        disable(user);
+      } else {
+        enable(user);
+      }
+    }
+
+    function confirmDialog(user) {
+      var dialog = $mdDialog.confirm()
+        .title(DIALOG_TITLE)
+        .textContent(DIALOG_TEXT_CONTENT)
+        .ok('Sim')
+        .cancel('Cancelar');
+
+      $mdDialog.show(dialog).then(function() {
+        _changeStatus(user);
+      }, function() {
+        user.enable = !user.enable;
+      });
+    }
+
+    function enable(user) {
+      _domainUserResource.enable(user, function() {
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent('Usuário habilitado.')
+        );
+      });
+    }
+
+    function disable(user) {
+      _domainUserResource.disable(user, function() {
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent('Usuário desabilitado.')
+        );
+      });
+    }
+
+    function _loadUsers() {
+      _domainUserResource.list(function(response) {
+        self.users = response.data;
+      });
+    }
+  }
+
 }());
