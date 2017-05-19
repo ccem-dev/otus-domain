@@ -1,5 +1,4 @@
-<md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left"
-                                                                          ng-cloak style="z-index: 1000 !important">
+<md-sidenav layout="column" flex class="md-sidenav-left md-whiteframe-z2" md-component-id="left" ng-cloak style="z-index: 1000 !important">
     <md-content ui-view="dashboard-menu"></md-content>
 </md-sidenav>
 
@@ -21,11 +20,11 @@
 
             <md-whiteframe class="md-whiteframe-10dp image-brand icon-clickable">
                 <a class="navbar-brand">
-                    <img ng-src="app/assets/img/user_model.png" class="md-avatar toolbar-icon icon-clickable" />
+                    <img ng-src="app/assets/img/user.png" class="md-avatar toolbar-icon icon-clickable" />
                 </a>
             </md-whiteframe>
 
         </div>
     </md-toolbar>
-    <md-content ui-view="system-content" layout="row" flex></md-content>
+    <md-content ui-view="system-content" layout-align="center start" layout="row" flex></md-content>
 </md-content>
