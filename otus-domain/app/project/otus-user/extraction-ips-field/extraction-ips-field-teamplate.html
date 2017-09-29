@@ -1,0 +1,9 @@
+<div layout="row" layout-xs="column" layout-align="center center" flex>
+  <div layout="column" flex="15" flex-xs="80" layout-align="center center">
+    <md-subheader class="md-subhead description backgroud-color-default">Ip's de Extração: </md-subheader>
+  </div>
+  <md-chips ng-model="$ctrl.user.extractionIps" readonly="!$ctrl.user.extraction" md-removable="$ctrl.user.extraction" md-on-add="$ctrl.onIpChange()"
+    md-on-remove="$ctrl.onIpChange()" flex>
+    <input id="{{'userIp'+$ctrl.userIndex}}" type="text" placeholder="Insira aqui">
+  </md-chips>
+</div>
