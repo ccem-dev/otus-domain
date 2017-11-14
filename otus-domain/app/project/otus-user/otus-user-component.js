@@ -5,18 +5,27 @@
     .module('otusDomain.project')
     .component('otusUser', {
       templateUrl: 'app/project/otus-user/otus-user-template.html',
-      controller: OtusUserController
+      controller: Controller
     });
 
-  OtusUserController.$inject = ['OtusRestResourceService', 'UserManagerFactory', '$mdDialog', '$mdToast'];
+    Controller.$inject = [
+      'OtusRestResourceService',
+      'ExtractionRestService',
+      'UserManagerFactory',
+      '$mdDialog',
+      '$mdToast'
+    ];
 
-  function OtusUserController(OtusRestResourceService, UserManagerFactory, $mdDialog, $mdToast) {
+  function Controller(OtusRestResourceService, ExtractionRestService, UserManagerFactory, $mdDialog, $mdToast) {
     var self = this;
     var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário?';
     var DIALOG_TITLE = 'Mudança de Status';
+    var EXTRACTION_DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status de Extração do usuário?';
+    var EXTRACTION_DIALOG_TITLE = 'Mudança de Status para Extração de Dados';
     var _userResource;
     var _fieldCenterResource;
     var _confirmDialog;
+    var _confirmExtractionDialog;
     var _UserManager;
 
     self.users = [];
@@ -25,6 +34,7 @@
     self.$onInit = onInit;
     self.enableDisable = enableDisable;
     self.updateFieldCenter = updateFieldCenter;
+    self.enableDisableExtraction = enableDisableExtraction;
 
     function onInit() {
       _userResource = OtusRestResourceService.getUserResource();
@@ -36,10 +46,6 @@
     }
 
     function enableDisable(user) {
-      /*  When the user clicks on button the view already updated the model value.
-          This occurs due the ng-model (data-binding).
-          Then the logic of if-clause needs to be inverted.
-      **/
       $mdDialog.show(_confirmDialog).then(function() {
         if (!user.enable) {
           _disable(user);
@@ -48,6 +54,18 @@
         }
       }, function() {
         user.enable = !user.enable;
+      });
+    }
+
+    function enableDisableExtraction(user) {
+      $mdDialog.show(_confirmExtractionDialog).then(function() {
+        if (!user.extraction) {
+          _disableExtraction(user);
+        } else {
+          _enableExtraction(user);
+        }
+      }, function() {
+        user.extraction = !user.extraction;
       });
     }
 
@@ -65,6 +83,10 @@
 
     function _disable(user) {
       _UserManager.disable(user).then(function(httpResponse) {
+        if(user.extraction) {
+          user.extraction = false;
+          _disableExtraction(user);
+        }
         _showToast('Usuário desabilitado.');
       });
     }
@@ -72,6 +94,18 @@
     function _loadUsers() {
       _UserManager.list().then(function(httpResponse) {
         self.users = httpResponse.data;
+      });
+    }
+
+    function _enableExtraction(user) {
+      ExtractionRestService.enableExtraction(user).then(function(httpResponse) {
+        _showToast('Extração habilitada.');
+      });
+    }
+
+    function _disableExtraction(user) {
+      ExtractionRestService.disableExtraction(user).then(function(httpResponse) {
+        _showToast('Extração desabilitada.');
       });
     }
 
@@ -85,6 +119,12 @@
       _confirmDialog = $mdDialog.confirm()
         .title(DIALOG_TITLE)
         .textContent(DIALOG_TEXT_CONTENT)
+        .ok('Sim')
+        .cancel('Cancelar');
+
+      _confirmExtractionDialog = $mdDialog.confirm()
+        .title(EXTRACTION_DIALOG_TITLE)
+        .textContent(EXTRACTION_DIALOG_TEXT_CONTENT)
         .ok('Sim')
         .cancel('Cancelar');
     }

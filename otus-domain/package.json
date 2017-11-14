@@ -25,8 +25,6 @@
         "replace-env": "gulp replace-env"
     },
     "dependencies": {
-        "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#dev",
-        "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#dev",
         "angular": "1.6.4",
         "angular-animate": "1.6.4",
         "angular-aria": "1.6.4",
@@ -36,7 +34,9 @@
         "angular-ui-mask": "1.8.7",
         "moment": "2.12.0",
         "jquery": "2.2.0",
-        "angular-resource": "1.5.3"
+        "angular-resource": "1.5.3",
+        "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
+        "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#v1.3"
     },
     "devDependencies": {
         "gulp-replace-task": "0.11.0",

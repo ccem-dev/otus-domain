@@ -35,3 +35,26 @@ md-input-container.md-input-invalid>md-icon {
     width: 120px;
     height: 120px;
 }
+
+.margin-zero{
+    margin:0px;
+}
+
+.field-user-position{
+    position: relative;
+    top: 8px;
+}
+
+.user-title-position{
+    position: relative;
+    top: 2.5px;
+    left: 5px;
+}
+
+.user-ips-opacity{
+  opacity: 0.5;
+}
+
+.md-subheader.md-layoutTheme-theme.backgroud-color-default{
+    background-color: unset;
+}
