@@ -1,0 +1,29 @@
+<md-card style="width:230px;height:190px;">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline" ng-if="!$ctrl.onUpdate">{{$ctrl.categoryData.label}}</span>
+      <span class="md-subheader md-layoutTheme-theme backgroud-color-default">{{$ctrl.categoryData.name}}</span>
+      <div ng-if="$ctrl.onUpdate">
+        <md-input-container class="removeMarginBottom remove-errors-spacer" ng-if="$ctrl.onUpdate">
+          <input type="text" ng-model="$ctrl.categoryData.label" placeholder="Nova label" flex>
+        </md-input-container>
+      </div>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.saveCategory()" ng-if="$ctrl.onUpdate"><md-icon>save</md-icon></md-button>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-actions layout="row" layout-align="end center" ng-if="!$ctrl.onUpdate">
+    <md-switch class="md-primary" md-invert ng-model="$ctrl.categoryData.isDefault" aria-label="Catecoria padrão" ng-click="$ctrl.saveDefault()">Padrão</md-switch>
+    <md-button class="md-icon-button md-primary" ng-click="$ctrl.categoryUpdate()">
+      <md-tooltip md-direction="top">
+        Editar
+      </md-tooltip>
+      <md-icon md-font-set="material-icons">mode_edit</md-icon>
+    </md-button>
+    <md-button class="md-icon-button md-primary" ng-click="$ctrl.removeCategory()">
+      <md-tooltip md-direction="top">
+        remover
+      </md-tooltip>
+      <md-icon md-font-set="material-icons">delete</md-icon>
+    </md-button>
+  </md-card-actions>
+</md-card>
