@@ -31,13 +31,13 @@ pipeline {
 
     stage('Publish Nexus') {
       steps {
-        sh "npm publish otus/ --registry ${repository_npm}"
+        sh "npm publish otus-domain/ --registry ${repository_npm}"
       }
     }
 
     stage('Update Docs') {
       steps {
-        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}' --prefix otus/"
+        sh "npm run gulp sonar --sonarUrl='${URL_SONAR}' --sonarDatabaseUsername='${USER_SONAR}' --sonarDatabasePassword='${PWD_SONAR}' --prefix otus-domain/"
       }
     }
 
