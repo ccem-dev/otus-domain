@@ -58,3 +58,11 @@ md-input-container.md-input-invalid>md-icon {
 .md-subheader.md-layoutTheme-theme.backgroud-color-default{
     background-color: unset;
 }
+
+.removeMarginBottom{
+  margin-bottom: 0px;
+}
+
+md-input-container.remove-errors-spacer .md-errors-spacer {
+  min-height: 0;
+}

@@ -10,7 +10,7 @@
         'DashboardStateService',
         '$mdSidenav',
         'ProjectSelectionService',
-        'ProjectContext',
+        'ProjectContext'
     ];
 
     function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav, ProjectSelectionService, ProjectContext) {
@@ -27,6 +27,7 @@
         self.openProjectCenters = openProjectCenters;
         self.openUserActivationInProject = openUserActivationInProject;
         self.openProjectConfiguration = openProjectConfiguration;
+        self.openProjectActivityConfiguration =openProjectActivityConfiguration;
 
         function getSelectedSystemArea() {
             return DashboardStateService.currentState;
@@ -58,6 +59,11 @@
         function openUserActivationInProject() {
             DashboardStateService.goToUserActivationInProject();
             close();
+        }
+
+        function openProjectActivityConfiguration() {
+          DashboardStateService.goToProjectActivityConfiguration();
+          close();
         }
 
         function openProjectCenters() {
