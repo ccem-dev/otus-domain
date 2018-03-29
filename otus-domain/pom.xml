@@ -194,6 +194,14 @@
 							<squash>true</squash>
 							<scmCommentPrefix>[RELEASE]</scmCommentPrefix>
 						</configuration>
+
+						<dependencies>
+							<dependency>
+								<groupId>org.apache.maven.wagon</groupId>
+								<artifactId>wagon-ssh</artifactId>
+								<version>2.12</version>
+							</dependency>
+						</dependencies>
 					</plugin>
 				</plugins>
 			</build>
