@@ -12,7 +12,7 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['browserify', 'jasmine'],
 
         // list of files / patterns to load in the browser
         files: [
@@ -24,6 +24,7 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
+	NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
             NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
             /* Otus platform */
@@ -32,11 +33,13 @@ module.exports = function(config) {
             COMPONENTS_ROOT_PATH + 'st-utils/**/*-module.js',
             /* Application files */
             APP_ROOT_PATH + 'app.js',
+		APP_ROOT_PATH + 'app/config/env.js',
             APP_ROOT_PATH + 'config/**/*-configuration.js',
             APP_ROOT_PATH + '**/*-module.js',
             APP_ROOT_PATH + '**/*.js', {
                 pattern: 'tests/unit/**/*-spec.js',
-                included: true
+                included: true,
+		    load: false
             }
         ],
 
@@ -47,8 +50,13 @@ module.exports = function(config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-            'app/**/*.js': ['coverage']
+       preprocessors: {
+	      './app/**/*.js': ['browserify', 'coverage'],
+	      './tests/unit/**/*-spec.js': ['browserify', 'coverage']
+	},
+        browserify: {
+            debug: true,
+            transform: ['babelify', 'stringify']
         },
 
         coverageReporter: {

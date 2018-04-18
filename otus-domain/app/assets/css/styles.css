@@ -1,68 +1,106 @@
 * {
-    padding: 0;
-    box-sizing: border-box;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 .toolbar-icon {
-    float: right;
-    width: 45px;
-    height: 45px;
-    margin-left: 0px;
-    margin-right: 0px;
+  float: right;
+  width: 45px;
+  height: 45px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
+
 .image-brand {
-    border-radius: 25px;
-    height: 47px;
-    padding: 1px;
-    margin: 10px;
-    min-width: 45px;
-    min-height: 45px;
+  border-radius: 25px;
+  height: 47px;
+  padding: 1px;
+  margin: 10px;
+  min-width: 45px;
+  min-height: 45px;
 }
+
 .icon-clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
+
 md-input-container.md-input-invalid>md-icon {
-    color: red;
+  color: red;
 }
+
 .offline-card:hover {
-    cursor: pointer;
-    background-color: rgba(158, 158, 158, 0.2) !important;
+  cursor: pointer;
+  background-color: rgba(158, 158, 158, 0.2) !important;
 }
+
 .offline {
-    color: red !important;
+  color: red !important;
 }
+
 #logo-image {
-    border-radius: 120px;
-    width: 120px;
-    height: 120px;
+  border-radius: 120px;
+  width: 120px;
+  height: 120px;
 }
 
-.margin-zero{
-    margin:0px;
+.margin-zero {
+  margin: 0px;
 }
 
-.field-user-position{
-    position: relative;
-    top: 8px;
+.margin-small-top {
+  top:-2px !important;
+  margin: 10px;
 }
 
-.user-title-position{
-    position: relative;
-    top: 2.5px;
-    left: 5px;
+.iconBigger {
+  font-size: 4.5vw !important;
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.54) !important;
 }
 
-.user-ips-opacity{
+.field-user-position {
+  position: relative;
+  top: 8px;
+}
+
+.user-title-position {
+  position: relative;
+  top: 2.5px;
+  left: 5px;
+}
+
+.user-ips-opacity {
   opacity: 0.5;
 }
 
-.md-subheader.md-layoutTheme-theme.backgroud-color-default{
-    background-color: unset;
+.md-subheader.md-layoutTheme-theme.backgroud-color-default {
+  background-color: unset;
 }
 
-.removeMarginBottom{
+.removeMarginBottom {
   margin-bottom: 0px;
 }
 
 md-input-container.remove-errors-spacer .md-errors-spacer {
   min-height: 0;
+}
+
+.md-fab-bottom-right {
+  top: auto !important;
+  right: 20px !important;
+  bottom: 20px !important;
+  left: auto !important;
+  position: fixed !important;
+}
+
+.select-multiple-centers {
+  width: 280px;
+  margin: 15px;
+  /* padding: 20px; */
+}
+
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

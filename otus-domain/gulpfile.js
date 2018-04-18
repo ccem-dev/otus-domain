@@ -6,6 +6,8 @@
     var bump = require('gulp-bump');
     var uglify = require("gulp-uglify");
     var minify = require('gulp-minify');
+    var gulpif = require('gulp-if');
+    var babel = require('gulp-babel');
     var concat = require('gulp-concat');
     var sonar = require('gulp-sonar');
     var packageJson = require('./package.json');
@@ -40,7 +42,12 @@
     gulp.task('compress', function() {
         gulp.src('app/**/*.js')
             .pipe(concat('otus-domain.js'))
-            .pipe(uglify())
+	    .pipe(gulpif('*.js',
+		babel({
+		  presets: ['es2015']
+		      })
+		))
+	     .pipe(uglify())
             .pipe(minify())
             .pipe(gulp.dest('dist'));
     });

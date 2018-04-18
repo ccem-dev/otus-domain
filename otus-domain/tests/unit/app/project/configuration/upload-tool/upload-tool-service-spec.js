@@ -3,7 +3,7 @@
     var service;
 
     beforeEach(function() {
-        module('otusDomain.project.configuration');
+        angular.mock.module('otusDomain.project.configuration');
 
         inject(function(_$injector_) {
             service = _$injector_.get('otusjs.otus-domain.project.configuration.UploadToolService');

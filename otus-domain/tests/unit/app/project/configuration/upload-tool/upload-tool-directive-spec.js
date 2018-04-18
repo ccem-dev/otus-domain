@@ -8,7 +8,7 @@ describe('uploadTool', function() {
         scope;
 
     beforeEach(function() {
-        module('otusDomain.project.configuration');
+        angular.mock.module('otusDomain.project.configuration');
 
         inject(function(_$compile_, _$rootScope_, _$injector_) {
             $compile = _$compile_;
