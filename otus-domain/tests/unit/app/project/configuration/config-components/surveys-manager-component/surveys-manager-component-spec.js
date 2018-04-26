@@ -21,7 +21,8 @@ describe('project praticipant register', function() {
             'surveyTemplate': {
                 'identity': {
                     'name': 'Toda vez que eu viajava pela estrada de ouro fino',
-                    'acronym': 'ZEZE'
+                    'acronym': 'ZEZE',
+                    'version': 1
                 }
             }
               }, {
@@ -31,7 +32,8 @@ describe('project praticipant register', function() {
             'surveyTemplate': {
                 'identity': {
                     'name': 'Elegibilidade',
-                    'acronym': 'ELEA'
+                    'acronym': 'ELEA',
+                    'version': 1
                 }
             }
   }, {
@@ -41,7 +43,8 @@ describe('project praticipant register', function() {
             'surveyTemplate': {
                 'identity': {
                     'name': 'INT',
-                    'acronym': 'Integração'
+                    'acronym': 'Integração',
+                    'version': 1
                 }
             }
   }];
