@@ -18,33 +18,36 @@ describe('project praticipant register', function() {
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
             'surveyFormType': "FORM_INTERVIEW",
+            'version': 1,
+            'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
                     'name': 'Toda vez que eu viajava pela estrada de ouro fino',
                     'acronym': 'ZEZE',
-                    'version': 1
                 }
             }
               }, {
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
             'surveyFormType': "PROFILE",
+            'version': 1,
+            'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
                     'name': 'Elegibilidade',
-                    'acronym': 'ELEA',
-                    'version': 1
+                    'acronym': 'ELEA'
                 }
             }
   }, {
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
             'surveyFormType': "FORM_INTERVIEW",
+            'version': 1,
+            'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
                     'name': 'INT',
-                    'acronym': 'Integração',
-                    'version': 1
+                    'acronym': 'Integração'
                 }
             }
   }];
@@ -76,7 +79,7 @@ describe('project praticipant register', function() {
 
         });
 
-        xit('should initialize the survey list', function() {
+        it('should initialize the survey list', function() {
             deferred.resolve(surveyList);
             var result;
             Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration()
