@@ -22,8 +22,8 @@ describe('project praticipant register', function() {
             'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
-                    'name': 'Toda vez que eu viajava pela estrada de ouro fino',
-                    'acronym': 'ZEZE',
+                    'name': 'DIARIO DE SONO',
+                    'acronym': 'DSO',
                 }
             }
               }, {
