@@ -9,7 +9,7 @@ xdescribe('project visual identity component', function() {
         $scope;
 
     beforeEach(function() {
-        module('otusDomain.project.configuration');
+        angular.mock.module('otusDomain.project.configuration');
 
         inject(function(_$componentController_, _$injector_, _$q_, _$rootScope_, _$mdToast_) {
             $mdToast = _$mdToast_;

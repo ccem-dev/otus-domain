@@ -4,7 +4,7 @@ describe('UserActivationController', function() {
     var controller;
 
     beforeEach(function() {
-        module('otusDomain');
+        angular.mock.module('otusDomain');
 
         inject(function(_$controller_, _$injector_, $http, $scope, $filter, $mdDialog, $mdToast) {
             controller = _$controller_('UserActivationController', {

@@ -6,7 +6,7 @@ xdescribe('project configuration service', function() {
         $http;
 
     beforeEach(function() {
-        module('otusDomain');
+        angular.mock.module('otusDomain');
 
         inject(function(_$injector_, _$q_) {
             $q = _$q_;

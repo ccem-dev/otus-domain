@@ -3,7 +3,7 @@
 	<groupId>org.ccem.domain</groupId>
 	<artifactId>otus-domain</artifactId>
 	<packaging>war</packaging>
-	<version>1.4</version>
+	<version>1.5</version>
 
 	<scm>
 		<connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>
@@ -191,9 +191,16 @@
 								<hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
 								<versionTagPrefix>v</versionTagPrefix>
 							</flowInitContext>
-							<squash>true</squash>
 							<scmCommentPrefix>[RELEASE]</scmCommentPrefix>
 						</configuration>
+
+						<dependencies>
+							<dependency>
+								<groupId>org.apache.maven.wagon</groupId>
+								<artifactId>wagon-ssh</artifactId>
+								<version>2.12</version>
+							</dependency>
+						</dependencies>
 					</plugin>
 				</plugins>
 			</build>

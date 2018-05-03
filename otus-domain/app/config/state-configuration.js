@@ -13,7 +13,8 @@
       'PROJECT_CENTER': 'field-center',
       'PROJECT_ACTIVITY_CONFIGURATION':'activity_configuration',
       'ERROR_OFFLINE': 'offline',
-      'PROJECT_CONFIGURATION': 'configuration-center'
+      'PROJECT_CONFIGURATION': 'configuration-center',
+      'REPORT_MANAGER':'report_manager'
     });
 
   stateConfiguration.$inject = [
@@ -176,6 +177,33 @@
           },
           'system-content@activity_configuration': {
             template: '<activity-configuration flex="80"></activity-configuration>'
+          }
+        }
+      })
+      .state({
+        name: 'report_manager',
+        url: '/project/report_manager',
+        resolve: {
+          loggedUser: function(RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function(RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function(ReportRestService){
+            ReportRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: mainDashBoardTemplate,
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@report_manager': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@report_manager': {
+            template: '<report-manager flex="80"></report-manager>'
           }
         }
       })
