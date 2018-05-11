@@ -18,16 +18,20 @@ describe('project praticipant register', function() {
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
             'surveyFormType': "FORM_INTERVIEW",
+            'version': 1,
+            'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
-                    'name': 'Toda vez que eu viajava pela estrada de ouro fino',
-                    'acronym': 'ZEZE'
+                    'name': 'DIARIO DE SONO',
+                    'acronym': 'DSO',
                 }
             }
               }, {
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
             'surveyFormType': "PROFILE",
+            'version': 1,
+            'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
                     'name': 'Elegibilidade',
@@ -38,6 +42,8 @@ describe('project praticipant register', function() {
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
             'surveyFormType': "FORM_INTERVIEW",
+            'version': 1,
+            'isDiscarded': false,
             'surveyTemplate': {
                 'identity': {
                     'name': 'INT',
@@ -73,7 +79,7 @@ describe('project praticipant register', function() {
 
         });
 
-        xit('should initialize the survey list', function() {
+        it('should initialize the survey list', function() {
             deferred.resolve(surveyList);
             var result;
             Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration()
