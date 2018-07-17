@@ -1,6 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('otusDomain.project', ['ngMaterial']);
+    angular.module('otusDomain.project', ['ngMaterial','mdColorPicker']);
 
 })();

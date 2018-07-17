@@ -12,15 +12,27 @@
         <div class="md-dialog-content">
             <form name="createForm" novalidate>
                 <div layout="row">
-
+                  <div label="Background" icon="format_color_fill" open-on-input="true" md-color-picker
+                       ng-model="controller.currentBackgroundColor"></div>
+                  <div label="Texto" icon="brush" open-on-input="true" md-color-picker ng-model="controller.currentTextColor"></div>
                     <md-input-container>
                         <label>Sigla</label>
                         <input name="acronym" ng-change="createFieldCenter.resetValidation()" ng-model="fieldCenter.acronym" required/>
 
                         <div ng-messages="createForm.acronym.$error">
                             <div ng-message="required">Obrigatório</div>
-                            <div ng-message="ALREADY_EXIST">Centro já existente</div>
+                            <div ng-message="ACRONYM_EXIST">Centro já existente</div>
                         </div>
+                    </md-input-container>
+
+                    <md-input-container>
+                      <label>Código</label>
+                      <input name="code" ng-change="createFieldCenter.resetValidationCode()" ng-model="fieldCenter.code" required/>
+
+                      <div ng-messages="createForm.code.$error">
+                        <div ng-message="required">Obrigatório</div>
+                        <div ng-message="CODE_EXIST">Código já existente</div>
+                      </div>
                     </md-input-container>
 
 

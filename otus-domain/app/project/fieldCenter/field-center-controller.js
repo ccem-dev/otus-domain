@@ -37,7 +37,7 @@
         function create() {
             $mdDialog.show({
                 templateUrl: 'app/project/fieldCenter/dialog/create-field-center-template.html',
-                clickOutsideToClose: true,
+                clickOutsideToClose: false,
                 controller: 'CreateFieldCenterController',
                 controllerAs: 'createFieldCenter'
             });
