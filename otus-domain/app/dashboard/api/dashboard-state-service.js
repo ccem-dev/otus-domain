@@ -24,6 +24,7 @@
     self.goToUserActivation = goToUserActivation;
     self.goToUserActivationInProject = goToUserActivationInProject;
     self.goToProjectCenters = goToProjectCenters;
+    self.goToProjectCentersAdd = goToProjectCentersAdd;
     self.goToProjectConfiguration = goToProjectConfiguration;
     self.goToErrorOffline = goToErrorOffline;
     self.goToProjectActivityConfiguration = goToProjectActivityConfiguration;
@@ -69,6 +70,11 @@
     function goToProjectCenters() {
       self.currentState = 'Centros';
       $state.go(APP_STATE.PROJECT_CENTER);
+    }
+
+    function goToProjectCentersAdd() {
+      self.currentState = 'Adição de Centros';
+      $state.go(APP_STATE.PROJECT_CENTER_ADD);
     }
 
     function goToProjectActivityConfiguration() {

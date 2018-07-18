@@ -24,9 +24,9 @@
         function create(fieldCenter) {
             ProjectFieldCenterService.create(fieldCenter, function(response) {
 
-                if (!response.data.isValid) {
+                if (!response.CONTENT.isValid) {
                     showErrorMessage(fieldCenter, response);
-                    response.data.value.forEach(function (error) {
+                    response.CONTENT.value.forEach(function (error) {
                       switch (error){
                         case "acronym":
                           $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);

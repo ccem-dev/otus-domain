@@ -30,12 +30,12 @@
         function create(fieldCenter, callback) {
             var otusFieldCenter = OtusRestResourceService.getOtusFieldCenterResource();
             otusFieldCenter.create(fieldCenter, function(response) {
-                response.data = {};
-                response.data.isValid = false;
-                response.data.value = [];
-                response.data.value.push("acronym");
-                response.data.value.push("code");
-                if(response.data.isValid)
+                response.CONTENT = {};
+                response.CONTENT.isValid = false;
+                response.CONTENT.value = [];
+                response.CONTENT.value.push("acronym");
+                response.CONTENT.value.push("code");
+                if(response.CONTENT.isValid)
                 {
                   loadCenters();
                 }
