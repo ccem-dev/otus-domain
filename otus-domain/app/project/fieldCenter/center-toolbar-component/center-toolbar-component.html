@@ -1,0 +1,16 @@
+<md-toolbar class="md-primary md-hue-3">
+  <div class="md-toolbar-tools">
+    <h2 style="color: white">Centros</h2>
+    <span flex></span>
+    <div class="layout-row" layout-align="end center">
+      <md-button class="md-raised md-icon-button" ng-click="$ctrl.cancel()" style="background-color: grey" aria-label="Cancelar" ng-if="">
+        <md-icon style="color: white">clear</md-icon>
+        <md-tooltip md-direction="bottom">Cancelar</md-tooltip>
+      </md-button>
+      <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary md-icon-button" ng-click="$ctrl.create(fieldCenter)" ng-if="">
+        <md-icon style="color: white">add</md-icon>
+        <md-tooltip md-direction="bottom">Criar</md-tooltip>
+      </md-button>
+    </div>
+  </div>
+</md-toolbar>

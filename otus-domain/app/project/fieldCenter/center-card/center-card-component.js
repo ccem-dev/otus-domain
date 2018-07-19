@@ -15,7 +15,7 @@
     var ERROR_MESSAGE = 'Invalido';
     var self = this;
 
-    self.close = close;
+    self.cancel = cancel;
     self.create = create;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
@@ -59,5 +59,8 @@
         $mdToast.simple().textContent(SUCCESS_MESSAGE)
       );
     }
+      function cancel() {
+        // $mdDialog.cancel();
+      }
   }
 }());
