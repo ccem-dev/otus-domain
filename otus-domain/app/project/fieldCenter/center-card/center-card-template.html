@@ -24,8 +24,8 @@
         <form name="createForm" novalidate>
           <div layout="row" layout-align="space-around center">
             <div label="Cor de fundo*" icon="format_color_fill" open-on-input="true" md-color-picker
-                 ng-model="fieldCenter.backgroundColor" required></div>
-            <div label="Cor da borda*" icon="format_color_fill" open-on-input="true" md-color-picker ng-model="fieldCenter.borderColor" required></div>
+                 ng-model="fieldCenter.backgroundColor" md-color-history="false" type=1 required></div>
+            <div label="Cor da borda*" icon="format_color_fill" open-on-input="true" md-color-picker type=1 ng-model="fieldCenter.borderColor" required></div>
           </div>
           <div layout="row">
             <md-input-container>

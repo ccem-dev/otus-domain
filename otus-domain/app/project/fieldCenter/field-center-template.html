@@ -16,6 +16,9 @@
             <div flex="95">
               <md-card-title>
                 <md-card-title-text>
+                  <div ng-if="fieldCenter.editMode" label="Cor de fundo*" icon="format_color_fill" open-on-input="true" md-color-picker
+                       ng-model="fieldCenter.backgroundColor" md-color-history="false" type=1 required></div>
+                  <div ng-if="fieldCenter.editMode" label="Cor da borda*" icon="format_color_fill" open-on-input="true" md-color-picker type=1 ng-model="fieldCenter.borderColor" required></div>
                   <div layout="row">
                     <md-input-container flex md-no-float>
                       <label>Sigla</label>

@@ -22,7 +22,7 @@
 
     function create(fieldCenter) {
       ProjectFieldCenterService.create(fieldCenter, function(response) {
-        if (!response.CONTENT.isValid) {
+        if (response.CONTENT && response.CONTENT.valid === false) {
           showErrorMessage(fieldCenter, response);
           response.CONTENT.value.forEach(function (error) {
             switch (error){
@@ -36,6 +36,7 @@
           })
         } else {
           showSuccessMessage();
+          DashboardStateService.goToProjectCenters();
         }
       });
     }
