@@ -176,7 +176,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@field-center-add': {
-            template:"<center-card></center-card>"
+            template:"<otus-painel header-label='Novo Centro'><center-card></center-card></otus-painel>"
           }
         }
       })
