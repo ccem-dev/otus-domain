@@ -1,12 +1,6 @@
 <md-content flex>
-<center-toolbar></center-toolbar>
   <div otus-waiting-project layout-padding layout-margin layout-align="center top" layout="row" flex>
-    <md-button class="md-raised" ng-click="fieldCenterController.create()">
-      <md-tooltip md-direction="bottom">
-        Criar Novo
-      </md-tooltip>
-      <md-icon md-font-set="material-icons">add</md-icon>
-    </md-button>
+    <h1>Centros Cadastrados</h1>
   </div>
   <div>
     <div layout-align="center center" layout="row">
@@ -16,21 +10,32 @@
             <div flex="95">
               <md-card-title>
                 <md-card-title-text>
-                  <div ng-if="fieldCenter.editMode" label="Cor de fundo*" icon="format_color_fill" open-on-input="true" md-color-picker
-                       ng-model="fieldCenter.backgroundColor" md-color-history="false" type=1 required></div>
-                  <div ng-if="fieldCenter.editMode" label="Cor da borda*" icon="format_color_fill" open-on-input="true" md-color-picker type=1 ng-model="fieldCenter.borderColor" required></div>
+                  <div ng-if="fieldCenter.editMode">
+                    <div label="Cor de fundo*" icon="format_color_fill" open-on-input="true"
+                         md-color-picker
+                         ng-model="fieldCenter.backgroundColor" md-color-history="false" type=1 required></div>
+                    <div label="Cor da borda*" icon="border_color" open-on-input="true"
+                         md-color-picker type=1 ng-model="fieldCenter.borderColor" required></div>
+                  </div>
+                  <div ng-if="!fieldCenter.editMode" layout="row">
+                    <md-subheader class="backgroud-color-default">Cor de fundo</md-subheader>
+                    <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.backgroundColor}};" flex="20"></div>
+                    <md-subheader class="backgroud-color-default">Cor da borda</md-subheader>
+                    <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.borderColor}};" flex="20"></div>
+                  </div>
+
                   <div layout="row">
                     <md-input-container flex md-no-float>
                       <label>Sigla</label>
                       <input disabled ng-model="fieldCenter.acronym">
                     </md-input-container>
                     <md-input-container flex md-no-float>
-                      <label>Nome</label>
-                      <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.name" type="text">
+                      <label>Código</label>
+                      <input disabled ng-model="fieldCenter.code" type="text">
                     </md-input-container>
                     <md-input-container flex md-no-float>
-                      <label>Código</label>
-                      <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.code" type="text">
+                      <label>Nome</label>
+                      <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.name" type="text">
                     </md-input-container>
                   </div>
                   <div layout="row">
@@ -59,7 +64,8 @@
                     </md-input-container>
                     <md-input-container md-no-float>
                       <md-icon md-font-set="material-icons">phone</md-icon>
-                      <input aria-label="Telefone" ui-mask="(99) 99999999?9" ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.phone" type="phone">
+                      <input aria-label="Telefone" ui-mask="(99) 99999999?9" ng-disabled="!fieldCenter.editMode"
+                             ng-model="fieldCenter.phone" type="phone">
                     </md-input-container>
                   </div>
                 </md-card-title-text>
@@ -67,7 +73,8 @@
             </div>
             <div>
               <div flex>
-                <md-button ng-disabled="!fieldCenter.editMode" class="md-icon-button md-primary" ng-click="fieldCenterController.update(fieldCenter)">
+                <md-button ng-disabled="!fieldCenter.editMode" class="md-icon-button md-primary"
+                           ng-click="fieldCenterController.update(fieldCenter)">
                   <md-tooltip md-direction="left">
                     Atualizar
                   </md-tooltip>
@@ -87,14 +94,14 @@
         </md-list-item>
       </md-list>
     </div>
-  </div>
-  <div>
+
     <div layout-padding layout-margin ng-show="!fieldCenterController.getAllCenters().length">
       <h2>
-                <span ng-style="{'font-size' : '48px'}" class="material-icons">place</span>
-                <span class="md-display-2">Centros de Pesquisa</span>
-            </h2>
-      <span class="md-body-1">O projeto selecionado não possui nenhum centro cadastrado. Utilize o botão <md-icon md-font-set="material-icons">add</md-icon> para cadastrar novos centros.</span>
+        <span ng-style="{'font-size' : '48px'}" class="material-icons">place</span>
+        <span class="md-display-2">Centros de Pesquisa</span>
+      </h2>
+      <span class="md-body-1">O projeto selecionado não possui nenhum centro cadastrado. Utilize o botão <md-icon
+        md-font-set="material-icons">add</md-icon> para cadastrar novos centros.</span>
     </div>
   </div>
   <center-add-button></center-add-button>

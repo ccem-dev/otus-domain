@@ -13,7 +13,6 @@
 
         self.getAllCenters = getAllCenters;
         self.edit = edit;
-        self.create = create;
         self.update = update;
 
         function getAllCenters() {
@@ -31,15 +30,6 @@
                         $mdToast.simple().textContent(SUCCESS_MESSAGE)
                     );
                 }
-            });
-        }
-
-        function create() {
-            $mdDialog.show({
-                templateUrl: 'app/project/fieldCenter/dialog/create-field-center-template.html',
-                clickOutsideToClose: false,
-                controller: 'CreateFieldCenterController',
-                controllerAs: 'createFieldCenter'
             });
         }
     }
