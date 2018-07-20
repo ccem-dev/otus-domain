@@ -1,0 +1,11 @@
+<div>
+  <div class="otus-panel md-whiteframe-1dp" flex="90" flex-offset="5" layout="column">
+    <div layout-padding layout="column">
+      <div class="otus-panel-subheader" ng-style="{'background':'linear-gradient(to right, {{$ctrl.colorLeft}}, {{$ctrl.colorRight}})'}">
+        <h3 ng-bind="$ctrl.headerLabel"></h3>
+      </div>
+    </div>
+    <div layout-align="{{$ctrl.align}}" layout-wrap layout="column" flex style="margin:10px" ng-transclude>
+    </div>
+  </div>
+</div>

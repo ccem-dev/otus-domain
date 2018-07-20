@@ -19,6 +19,7 @@
     self.create = create;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
+    self.nameLabel = 'Novo Centro';
 
     function create(fieldCenter) {
       ProjectFieldCenterService.create(fieldCenter, function(response) {

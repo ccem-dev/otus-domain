@@ -176,7 +176,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@field-center-add': {
-            template:"<center-card flex></center-card>"
+            template:"<center-card></center-card>"
           }
         }
       })
