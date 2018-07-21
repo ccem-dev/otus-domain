@@ -7,7 +7,7 @@
       controller: Controller,
       templateUrl: 'app/project/otus-painel/otus-painel-template.html',
       bindings: {
-        headerLabel: '@',
+        headerLabel: '<',
         colorLeft: '<',
         colorRight: '<',
         align: '<'

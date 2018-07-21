@@ -11,7 +11,6 @@
       'USER_ACTIVATION': 'user-activation',
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
-      'PROJECT_CENTER_ADD': 'field-center-add',
       'PROJECT_ACTIVITY_CONFIGURATION':'activity_configuration',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
@@ -151,32 +150,6 @@
             templateUrl: 'app/project/fieldCenter/field-center-template.html',
             controller: 'FieldCenterController',
             controllerAs: 'fieldCenterController'
-          }
-        }
-      })
-      .state('field-center-add', {
-        url: '/project/centers/add',
-        resolve: {
-          loggedUser: function(RouteRulesResolver) {
-            return RouteRulesResolver.loggedUser();
-          },
-          selectedProject: function(RouteRulesResolver) {
-            return RouteRulesResolver.selectedProject();
-          },
-          loadCenters: function(ProjectFieldCenterService) {
-            ProjectFieldCenterService.loadCenters();
-          }
-        },
-        views: {
-          'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
-            controller: 'DashboardMenuController as dashboardMenu'
-          },
-          'dashboard-menu@field-center-add': {
-            templateUrl: dashboardMenu
-          },
-          'system-content@field-center-add': {
-            template:"<otus-painel header-label='Novo Centro'><center-card></center-card></otus-painel>"
           }
         }
       })

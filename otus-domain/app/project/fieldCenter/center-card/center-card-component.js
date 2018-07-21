@@ -5,21 +5,23 @@
     .module('otusDomain.project.fieldCenter')
     .component('centerCard', {
       controller: Controller,
-      templateUrl: 'app/project/fieldCenter/center-card/center-card-template.html'
+      templateUrl: 'app/project/fieldCenter/center-card/center-card-template.html',
+      bindings: {
+        showTab: '='
+      }
     });
 
   Controller.$inject = ['DashboardStateService', '$scope', 'ProjectFieldCenterService', '$mdToast'];
 
   function Controller(DashboardStateService, $scope, ProjectFieldCenterService, $mdToast) {
     var SUCCESS_MESSAGE = 'Centro Adicionado com Sucesso';
-    var ERROR_MESSAGE = 'Invalido';
+    var ERROR_MESSAGE = 'Dados Invalidos';
     var self = this;
 
-    self.cancel = cancel;
+    self.nameLabel = 'Novo Centro';
     self.create = create;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
-    self.nameLabel = 'Novo Centro';
 
     function create(fieldCenter) {
       ProjectFieldCenterService.create(fieldCenter, function(response) {
@@ -37,7 +39,8 @@
           })
         } else {
           showSuccessMessage();
-          DashboardStateService.goToProjectCenters();
+          ProjectFieldCenterService.loadCenters();
+          self.showTab = false;
         }
       });
     }
@@ -61,8 +64,5 @@
         $mdToast.simple().textContent(SUCCESS_MESSAGE)
       );
     }
-      function cancel() {
-        // $mdDialog.cancel();
-      }
   }
 }());
