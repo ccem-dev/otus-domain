@@ -6,9 +6,8 @@
         <div layout="column" ng-hide="$ctrl.disableSaving">
           <span class="md-subhead">Template Escolhido:</span>
           <span class="md-subhead">
-                        {{$ctrl.uploadedObject.identity.acronym}}
-                        -
-                        {{$ctrl.uploadedObject.identity.name}}</span>
+            {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}
+          </span>
         </div>
       </md-card-title-text>
       <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
@@ -45,12 +44,13 @@
                       <span class="md-subheader" ng-if='surveyForm.version'>versão: {{surveyForm.version}}</span>
                     </div>
                     <span class="md-body-2">
-                                            {{surveyForm.surveyTemplate.identity.name}}</span>
+                      {{surveyForm.surveyTemplate.identity.name}}</span>
                   </div>
                 </div>
                 <div layout="column">
                   <div class="md-secondary-container">
-                    <md-checkbox class="md-primary" ng-change="$ctrl.updateSurveyFormType($index)" ng-model="surveyForm.surveyFormType" aria-label="Tipo de formulário" ng-false-value="'FORM_INTERVIEW'" ng-true-value="'PROFILE'">
+                    <md-checkbox class="md-primary" ng-change="$ctrl.updateSurveyFormType($index)" ng-model="surveyForm.surveyFormType" aria-label="Tipo de formulário"
+                      ng-false-value="'FORM_INTERVIEW'" ng-true-value="'PROFILE'">
                       Perfil
                     </md-checkbox>
                     <md-button class="md-icon-button md-primary" ng-click="$ctrl.deleteSurveyTemplate($index)">
