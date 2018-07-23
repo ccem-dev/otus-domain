@@ -23,8 +23,8 @@
     function onInit() {
       self.title = self.title || '';
       self.align = self.align || 'center end';
-      self.colorLeft = self.colorLeft || '#299288';
-      self.colorRight = self.colorRight || '#24baaa';
+      self.colorLeft = self.colorLeft || '#0092F8';
+      self.colorRight = self.colorRight || '#7FC8FB';
     }
   }
 }());
