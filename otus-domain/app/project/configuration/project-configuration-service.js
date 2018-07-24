@@ -14,9 +14,9 @@
         var self = this;
         var configurationResource;
         var projectConfiguration;
-        _init();
 
         /* Public methods */
+        self.$onInit = onInit;
         self.fetchSurveysManagerConfiguration = fetchSurveysManagerConfiguration;
         self.publishTemplate = publishTemplate;
         self.updateSurveyTemplateType = updateSurveyTemplateType;
@@ -24,9 +24,11 @@
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
         self.getProjectConfiguration = getProjectConfiguration;
+        self.allowNewParticipants = allowNewParticipants;
 
-        function _init() {
-            // TODO: refatorar
+        onInit();
+
+        function onInit() {
             configurationResource = OtusRestResourceService.getConfigurationResource();
             projectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
         }
@@ -107,22 +109,27 @@
             return defer.promise;
         }
 
-        /* participant registration*/
+        /* participant registration */
         function getProjectConfiguration() {
-            var data = {};
             var defer = $q.defer();
+            if (!projectConfiguration) {
+                throw new Error('REST resource is not initialized.');
+            }
             projectConfiguration.getProjectConfiguration(function (response) {
-                defer.resolve();
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
             });
             return defer.promise;
         }
 
         function allowNewParticipants(permission) {
-            //TODO:
-            projectConfiguration.allowNewParticipants(files, function () {
-                defer.resolve();
-            });
-            return defer.promise;
+            if (!projectConfiguration) {
+                throw new Error('REST resource is not initialized.');
+            }
+            return projectConfiguration.allowNewParticipants({ 'permission': permission }).$promise;
         }
     }
 }());

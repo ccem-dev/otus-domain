@@ -7,7 +7,7 @@
 
   <md-card-content>
     <md-input-container class="md-block">
-      <md-checkbox name="tos" ng-model="$ctrl.participantRegister" aria-label="Não permitir o cadastro de novos participantes">
+      <md-checkbox ng-disabled="$ctrl.error" ng-model="$ctrl.participantRegistration" ng-change="$ctrl.setAllowNewParticipants()" aria-label="Não permitir o cadastro de novos participantes">
         Não permitir o cadastro de novos participantes
       </md-checkbox>
     </md-input-container>
