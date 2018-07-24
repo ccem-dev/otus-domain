@@ -2,12 +2,10 @@
   <md-card flex layout="column" layout-margin>
     <md-card-title layout="row" style="height: 95px">
       <md-card-title-text>
+        <span class="md-headline">Configurações dos formulários disponíveis</span>
         <span class="md-body-2">Formulários do Projeto</span>
         <div layout="column" ng-hide="$ctrl.disableSaving">
-          <span class="md-subhead">Template Escolhido:</span>
-          <span class="md-subhead">
-            {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}
-          </span>
+          <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}</span>
         </div>
       </md-card-title-text>
       <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">

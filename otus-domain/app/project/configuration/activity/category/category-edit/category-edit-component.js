@@ -5,7 +5,7 @@
     .module('otusDomain.dashboard')
     .component('categoryEdit', {
       controller: Controller,
-      templateUrl: 'app/project/activity/category/category-edit/category-edit-template.html',
+      templateUrl: 'app/project/configuration/activity/category/category-edit/category-edit-template.html',
       bindings:{
         categoryData: '<',
         reloadCategories: '&'

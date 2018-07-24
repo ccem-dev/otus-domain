@@ -5,7 +5,7 @@
     .module('otusDomain.project.configuration')
     .component('otusParticipantRegistration', {
       controller: Controller,
-      templateUrl: 'app/project/configuration/config-components/participant-registration/participant-registration-template.html'
+      templateUrl: 'app/project/configuration/participant-registration/participant-registration-template.html'
     });
 
   Controller.$inject = [

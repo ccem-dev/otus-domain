@@ -1,11 +1,11 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('otusDomain.dashboard')
     .component('activityCategoryConfiguration', {
       controller: Controller,
-      templateUrl: 'app/project/activity/category/category-configuration-template.html'
+      templateUrl: 'app/project/configuration/activity/category/category-configuration-template.html'
     });
 
   Controller.$inject = [
@@ -15,11 +15,9 @@
 
   function Controller($mdToast, ActivityRestService) {
     var self = this;
-
     self.newCategoryLabel = "";
 
     self.$onInit = onInit;
-
     self.newCategory = newCategory;
     self.listCategories = listCategories;
 
@@ -28,7 +26,7 @@
     }
 
     function newCategory() {
-      if(self.newCategoryLabel) {
+      if (self.newCategoryLabel) {
         ActivityRestService.save(self.newCategoryLabel).then(function (newCat) {
           self.newCategoryLabel = "";
           self.categories.push(newCat.data);
