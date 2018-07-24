@@ -18,7 +18,6 @@
     var ERROR_MESSAGE = 'Dados Invalidos';
     var self = this;
 
-    self.nameLabel = 'Novo Centro';
     self.create = create;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
@@ -29,10 +28,10 @@
           showErrorMessage(fieldCenter, response);
           response.CONTENT.value.forEach(function (error) {
             switch (error){
-              case "acronym":
+              case 'acronym':
                 $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);
                 break;
-              case "code":
+              case 'code':
                 $scope.createForm.code.$setValidity('CODE_EXIST', false);
                 break;
             }
@@ -52,11 +51,25 @@
     }
 
     function resetValidation(){
-      $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', true);
+      var contais = ProjectFieldCenterService.getCenters().find(function(element) {
+        return element.acronym == $scope.createForm.acronym.$modelValue;
+      });
+
+      if(contais)
+        $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);
+      else
+        $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', true);
     }
 
     function resetValidationCode(){
-      $scope.createForm.code.$setValidity('CODE_EXIST', true);
+      var contais = ProjectFieldCenterService.getCenters().find(function(element) {
+        return element.code == $scope.createForm.code.$modelValue;
+      });
+
+      if(contais)
+        $scope.createForm.code.$setValidity('CODE_EXIST', false);
+      else
+        $scope.createForm.code.$setValidity('CODE_EXIST', true);
     }
 
     function showSuccessMessage() {

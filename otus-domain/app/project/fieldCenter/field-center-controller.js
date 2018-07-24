@@ -10,14 +10,15 @@
   function FieldCenterController(ProjectFieldCenterService, $mdDialog, $mdToast) {
     var SUCCESS_MESSAGE = 'Centro atualizado';
     var self = this;
-    self.centerAddAling = "center center";
-    self.centerAddheaderLabel = "Novo Centro";
+    self.centerAddAling = 'center center';
+    self.centerAddheaderLabel = 'Novo Centro';
 
     self.getAllCenters = getAllCenters;
     self.edit = edit;
     self.update = update;
     self.showCreationTab = showCreationTab;
     self.$onInit = onInit;
+
 
     function onInit() {
       self.showAddCenterTab = false;
