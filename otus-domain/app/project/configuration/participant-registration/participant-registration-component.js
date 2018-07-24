@@ -15,8 +15,8 @@
   ];
 
   function Controller($q, $mdToast, ProjectConfigurationService) {
-    const ERROR_MESSAGE = 'Erro de comunicação com servidor';
-    const SUCCESS_MESSAGE = 'Alteração realizada com sucesso';
+    var ERROR_MESSAGE = 'Erro de comunicação com servidor';
+    var SUCCESS_MESSAGE = 'Alteração realizada com sucesso';
     var self = this;
     self.participantRegistration;
     self.error;
