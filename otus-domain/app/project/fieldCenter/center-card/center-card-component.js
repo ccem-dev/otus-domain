@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -17,19 +17,23 @@
     var SUCCESS_MESSAGE = 'Centro Adicionado com Sucesso';
     var ERROR_MESSAGE = 'Dados Invalidos';
     var self = this;
+    self.backgroundColorIsInvalid = true;
+    self.borderColorIsInvalid = true;
+    $scope.master = {};
 
+    /* Public methods */
     self.create = create;
     self.reset = reset;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
-    $scope.master = {};
+    self.validation = validation;
 
     function create(fieldCenter) {
-      ProjectFieldCenterService.create(fieldCenter, function(response) {
+      ProjectFieldCenterService.create(fieldCenter, function (response) {
         if (response.CONTENT && response.CONTENT.valid === false) {
           showErrorMessage(fieldCenter, response);
           response.CONTENT.value.forEach(function (error) {
-            switch (error){
+            switch (error) {
               case 'acronym':
                 $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);
                 break;
@@ -44,6 +48,7 @@
           self.showTab = false;
         }
       });
+      reset();
     }
 
     function showErrorMessage() {
@@ -52,26 +57,39 @@
       );
     }
 
-    function resetValidation(){
-      var contais = ProjectFieldCenterService.getCenters().find(function(element) {
+    function resetValidation() {
+      var contais = ProjectFieldCenterService.getCenters().find(function (element) {
         return element.acronym == $scope.createForm.acronym.$modelValue;
       });
 
-      if(contais)
+      if (contais)
         $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);
       else
         $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', true);
     }
 
-    function resetValidationCode(){
-      var contais = ProjectFieldCenterService.getCenters().find(function(element) {
+    function resetValidationCode() {
+      var pattern = new RegExp("^[0-9]*$");
+      if (!pattern.test($scope.createForm.code.$modelValue))
+        $scope.createForm.code.$setValidity('NUMBER', false);
+      else
+        $scope.createForm.code.$setValidity('NUMBER', true);
+
+      var contais = ProjectFieldCenterService.getCenters().find(function (element) {
         return element.code == $scope.createForm.code.$modelValue;
       });
 
-      if(contais)
+      if (contais)
         $scope.createForm.code.$setValidity('CODE_EXIST', false);
       else
         $scope.createForm.code.$setValidity('CODE_EXIST', true);
+    }
+
+    function validation() {
+      if ($scope.createForm.backgroundColor.$modelValue)
+        self.backgroundColorIsInvalid = false;
+      if ($scope.createForm.borderColor.$modelValue)
+        self.borderColorIsInvalid = false;
     }
 
     function showSuccessMessage() {
@@ -83,6 +101,5 @@
     function reset() {
       $scope.fieldCenter = angular.copy($scope.master);
     }
-    reset();
   }
 }());
