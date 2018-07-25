@@ -19,8 +19,10 @@
     var self = this;
 
     self.create = create;
+    self.reset = reset;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
+    $scope.master = {};
 
     function create(fieldCenter) {
       ProjectFieldCenterService.create(fieldCenter, function(response) {
@@ -77,5 +79,10 @@
         $mdToast.simple().textContent(SUCCESS_MESSAGE)
       );
     }
+
+    function reset() {
+      $scope.fieldCenter = angular.copy($scope.master);
+    }
+    reset();
   }
 }());

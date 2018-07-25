@@ -4,9 +4,19 @@
       <div class="md-dialog-content">
         <form name="createForm" novalidate>
           <div layout="row" layout-align="start center" layout-padding>
-            <div label="Cor de fundo*" icon="format_color_fill" open-on-input="true" md-color-picker
+            <div>
+            <div label="Cor de fundo*" icon="format_color_fill" open-on-input="true" md-color-picker name="backgroundColor"
                  ng-model="fieldCenter.backgroundColor" md-color-history="false" type=1 required></div>
-            <div label="Cor da borda*" icon="format_color_fill" open-on-input="true" md-color-picker type=1 ng-model="fieldCenter.borderColor" required></div>
+               <div ng-messages="createForm.backgroundColor.$error">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+          </div>
+            <div>
+            <div label="Cor da borda*" icon="format_color_fill" open-on-input="true" md-color-picker type=1 name="borderColor" ng-model="fieldCenter.borderColor" required></div>
+              <div ng-messages="createForm.borderColor.$error">
+                <div ng-message="required">Obrigatório</div>
+              </div>
+            </div>
           </div>
           <div layout="row" layout-padding>
             <md-input-container>
@@ -81,4 +91,5 @@
   <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create(fieldCenter)">
     Criar
   </md-button>
+  <md-button class="md-raised md-no-focus" ng-click="$ctrl.reset()">Limpar</md-button>
 </div>
