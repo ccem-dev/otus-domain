@@ -4,16 +4,13 @@
       <div class="md-dialog-content">
         <form name="createForm" novalidate>
           <div layout="row" flex layout-align="start center">
-            <div>
               <div label="Cor de fundo*" name="backgroundColor" md-color-picker 
               ng-model="fieldCenter.backgroundColor" open-on-input="false" 
               md-color-clear-button="false" md-color-history="false"></div>
-            </div>
-            <div>
+
               <div label="Cor da borda*" name="borderColor" md-color-picker 
               ng-model="fieldCenter.borderColor" open-on-input="true" 
                 md-color-history="false" md-color-clear-button="false"></div>
-            </div>
           </div>
           <div layout="row" layout-padding>
             <md-input-container>
@@ -69,13 +66,15 @@
             </md-input-container>
 
             <md-input-container>
+              <label>Cep</label>
               <md-icon md-font-set="material-icons">markunread_mailbox</md-icon>
               <input aria-label="Cep" ui-mask="99999-999" ng-model="fieldCenter.zip"></input>
             </md-input-container>
 
             <md-input-container md-no-float>
+              <label>Fone</label>
               <md-icon md-font-set="material-icons">phone</md-icon>
-              <input aria-label="Telefone" ui-mask="(99) 99999999?9" ng-model="fieldCenter.phone"></input>
+              <input aria-label="Telefone" ui-mask="99 99999 999?9" ng-model="fieldCenter.phone"></input>
             </md-input-container>
           </div>
         </form>

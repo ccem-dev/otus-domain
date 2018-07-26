@@ -8,8 +8,8 @@
       templateUrl: 'app/project/otus-painel/otus-painel-template.html',
       bindings: {
         headerLabel: '<',
-        colorTop: '<',
-        colorBottom: '<',
+        colorLeft: '<',
+        colorRight: '<',
         align: '<'
       },
       transclude: true
@@ -23,8 +23,8 @@
     function onInit() {
       self.title = self.title || '';
       self.align = self.align || 'center end';
-      self.colorTop = self.colorTop || '#0092F8';
-      self.colorBottom = self.colorBottom || '#215AAE';
+      self.colorLeft = self.colorLeft || '#0092F8';
+      self.colorRight = self.colorRight || '#4db5ff';
     }
   }
 }());
