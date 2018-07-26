@@ -5,12 +5,14 @@
         <form name="createForm" novalidate>
           <div layout="row" flex layout-align="start center">
             <div>
-              <div label="Cor de fundo*" name="backgroundColor" md-color-picker ng-change="$ctrl.validation()" ng-model="fieldCenter.backgroundColor"
-                md-color-history="false"></div>
+              <div label="Cor de fundo*" name="backgroundColor" md-color-picker 
+              ng-model="fieldCenter.backgroundColor" open-on-input="false" 
+              md-color-clear-button="false" md-color-history="false"></div>
             </div>
             <div>
-              <div label="Cor da borda*" name="borderColor" md-color-picker ng-change="$ctrl.validation()" ng-model="fieldCenter.borderColor"
-                md-color-history="false"></div>
+              <div label="Cor da borda*" name="borderColor" md-color-picker 
+              ng-model="fieldCenter.borderColor" open-on-input="true" 
+                md-color-history="false" md-color-clear-button="false"></div>
             </div>
           </div>
           <div layout="row" layout-padding>

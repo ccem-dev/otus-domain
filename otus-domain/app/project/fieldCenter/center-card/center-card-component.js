@@ -26,7 +26,6 @@
     self.reset = reset;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
-    self.validation = validation;
 
     function create(fieldCenter) {
       ProjectFieldCenterService.create(fieldCenter, function (response) {
@@ -84,13 +83,15 @@
       else
         $scope.createForm.code.$setValidity('CODE_EXIST', true);
     }
-
-    function validation() {
-      if ($scope.createForm.backgroundColor.$modelValue)
-        self.backgroundColorIsInvalid = false;
-      if ($scope.createForm.borderColor.$modelValue)
-        self.borderColorIsInvalid = false;
-    }
+    //TODO: REMOVER
+    // function validation() {
+    //   self.backgroundColorIsInvalid = true;
+    //   $scope.createForm.backgroundColor.$setValidity('text', false);
+    //   if ($scope.createForm.backgroundColor.$modelValue)
+    //   self.backgroundColorIsInvalid = false;
+    //   if ($scope.createForm.borderColor.$modelValue)
+    //     self.borderColorIsInvalid = false;
+    // }
 
     function showSuccessMessage() {
       $mdToast.show(
