@@ -17,18 +17,24 @@
     var SUCCESS_MESSAGE = 'Centro Adicionado com Sucesso';
     var ERROR_MESSAGE = 'Dados Invalidos';
     var self = this;
-    $scope.master = {};
 
     /* Public methods */
+    self.$onInit = onInit;
     self.create = create;
     self.reset = reset;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
 
-    function create(fieldCenter) {
-      ProjectFieldCenterService.create(fieldCenter, function (response) {
+    function onInit() {
+      self.fieldCenter = {};
+      self.fieldCenter.backgroundColor = 'rgba(54, 162, 235, 1)';
+      self.fieldCenter.borderColor = 'rgba(54, 162, 235, 1)';
+    }
+
+    function create() {
+      ProjectFieldCenterService.create(self.fieldCenter, function (response) {
         if (response.CONTENT && response.CONTENT.valid === false) {
-          showErrorMessage(fieldCenter, response);
+          showErrorMessage(self.fieldCenter, response);
           response.CONTENT.value.forEach(function (error) {
             switch (error) {
               case 'acronym':
@@ -43,9 +49,9 @@
           showSuccessMessage();
           ProjectFieldCenterService.loadCenters();
           self.showTab = false;
+          reset();
         }
       });
-      reset();
     }
 
     function showErrorMessage() {
@@ -69,7 +75,7 @@
     }
 
     function reset() {
-      $scope.fieldCenter = angular.copy($scope.master);
+      self.fieldCenter = angular.copy({});
     }
   }
 }());

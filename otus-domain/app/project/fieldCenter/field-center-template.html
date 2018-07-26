@@ -13,20 +13,18 @@
           <div flex="95">
             <md-card-title>
               <md-card-title-text>
-                <div ng-if="fieldCenter.editMode">
-                  <div label="Cor de fundo*" icon="format_color_fill" open-on-input="true"
-                       md-color-picker
-                       ng-model="fieldCenter.backgroundColor" md-color-history="false" type=1 required></div>
-                  <div label="Cor da borda*" icon="border_color" open-on-input="true"
-                       md-color-picker type=1 ng-model="fieldCenter.borderColor" required></div>
+                <div layout="row">
+                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.backgroundColor}}; height: 36px; border-radius: 15px 15px 15px 15px;" flex="5"></div>
+                  <md-input-container md-no-float>
+                    <label>Cor de fundo</label>
+                    <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.backgroundColor">
+                  </md-input-container>
+                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.borderColor}}; height: 36px; border-radius:  15px 15px 15px 15px" flex="5"></div>
+                  <md-input-container md-no-float>
+                    <label>Cor da borda</label>
+                    <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.borderColor">
+                  </md-input-container>
                 </div>
-                <div ng-if="!fieldCenter.editMode" layout="row">
-                  <md-subheader class="backgroud-color-default">Cor de fundo</md-subheader>
-                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.backgroundColor}};" flex="20"></div>
-                  <md-subheader class="backgroud-color-default">Cor da borda</md-subheader>
-                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.borderColor}};" flex="20"></div>
-                </div>
-
                 <div layout="row">
                   <md-input-container flex md-no-float>
                     <label>Sigla</label>
