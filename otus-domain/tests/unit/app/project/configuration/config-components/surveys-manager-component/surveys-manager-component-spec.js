@@ -13,6 +13,12 @@ describe('project praticipant register', function() {
         runAnimation;
 
     beforeEach(angular.mock.module('otusDomain'));
+    beforeEach(angular.mock.module(function ($provide) {
+        $provide.value('OtusRestResourceService', {
+          getConfigurationResource: function () { return {} },
+          getProjectConfigurationResource: function () { return {} }
+        });
+      }));
     beforeEach(inject(function(_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
         surveyList = [{
             'sender': "brenoscheffer@gmail.com",

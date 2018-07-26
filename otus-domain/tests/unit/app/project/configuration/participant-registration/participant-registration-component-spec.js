@@ -13,6 +13,12 @@ describe('participant registration', function () {
     response;
 
   beforeEach(angular.mock.module('otusDomain'));
+  beforeEach(angular.mock.module(function ($provide) {
+    $provide.value('OtusRestResourceService', {
+      getConfigurationResource: function () { return {} },
+      getProjectConfigurationResource: function () { return {} }
+    });
+  }));
   beforeEach(inject(function (_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
     $componentController = _$componentController_;
     $mdToast = _$mdToast_;
@@ -65,6 +71,7 @@ describe('participant registration', function () {
   describe('method setAllowNewParticipants', function () {
     beforeEach(function () {
       deferred = $q.defer();
+      spyOn(Mock.ProjectConfigurationService, 'getProjectConfiguration').and.returnValue(deferred.promise);
       spyOn(Mock.ProjectConfigurationService, 'allowNewParticipants').and.returnValue(deferred.promise);
       deferred.resolve(Mock.projectConfiguration);
       var result;
@@ -78,7 +85,7 @@ describe('participant registration', function () {
       ctrl.$onInit();
     });
 
-    it('should call method getProjectConfiguration', function () {
+    it('should call method allowNewParticipants', function () {
 
       ctrl.setAllowNewParticipants();
 
@@ -90,9 +97,9 @@ describe('participant registration', function () {
       ctrl.setAllowNewParticipants();
 
       Mock.ProjectConfigurationService.getProjectConfiguration()
-      .then(function () {
-        expect(ctrl.participantRegistration).toEqual(false);
-      });
+        .then(function () {
+          expect(ctrl.participantRegistration).toEqual(false);
+        });
 
     });
   });
