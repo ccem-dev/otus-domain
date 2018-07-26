@@ -17,8 +17,6 @@
     var SUCCESS_MESSAGE = 'Centro Adicionado com Sucesso';
     var ERROR_MESSAGE = 'Dados Invalidos';
     var self = this;
-    self.backgroundColorIsInvalid = true;
-    self.borderColorIsInvalid = true;
     $scope.master = {};
 
     /* Public methods */
@@ -56,42 +54,13 @@
       );
     }
 
-    function resetValidation() {
-      var contais = ProjectFieldCenterService.getCenters().find(function (element) {
-        return element.acronym == $scope.createForm.acronym.$modelValue;
-      });
-
-      if (contais)
-        $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);
-      else
-        $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', true);
+    function resetValidation(){
+      $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', true);
     }
 
     function resetValidationCode() {
-      var pattern = new RegExp("^[0-9]*$");
-      if (!pattern.test($scope.createForm.code.$modelValue))
-        $scope.createForm.code.$setValidity('NUMBER', false);
-      else
-        $scope.createForm.code.$setValidity('NUMBER', true);
-
-      var contais = ProjectFieldCenterService.getCenters().find(function (element) {
-        return element.code == $scope.createForm.code.$modelValue;
-      });
-
-      if (contais)
-        $scope.createForm.code.$setValidity('CODE_EXIST', false);
-      else
-        $scope.createForm.code.$setValidity('CODE_EXIST', true);
+      $scope.createForm.code.$setValidity('CODE_EXIST', true);
     }
-    //TODO: REMOVER
-    // function validation() {
-    //   self.backgroundColorIsInvalid = true;
-    //   $scope.createForm.backgroundColor.$setValidity('text', false);
-    //   if ($scope.createForm.backgroundColor.$modelValue)
-    //   self.backgroundColorIsInvalid = false;
-    //   if ($scope.createForm.borderColor.$modelValue)
-    //     self.borderColorIsInvalid = false;
-    // }
 
     function showSuccessMessage() {
       $mdToast.show(

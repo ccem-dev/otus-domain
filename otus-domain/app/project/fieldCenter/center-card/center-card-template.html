@@ -28,12 +28,11 @@
 
             <md-input-container>
               <label>Código</label>
-              <input name="code" ng-change="$ctrl.resetValidationCode()" ng-model="fieldCenter.code" required/>
+              <input numbers-only name="code" ng-change="$ctrl.resetValidationCode()" ng-model="fieldCenter.code" required/>
 
               <div ng-messages="createForm.code.$error">
                 <div ng-message="required">Obrigatório</div>
                 <div ng-message="CODE_EXIST">Código já existente</div>
-                <div ng-message="NUMBER">Deve possuir somente números</div>
               </div>
             </md-input-container>
 
@@ -85,7 +84,6 @@
   </md-content>
 </div>
 <div class="layout-row" layout-align="end center" layout-margin>
-  <md-button ng-disabled="(createForm.$invalid && $ctrl.backgroundColorIsInvalid && $ctrl.borderColorIsInvalid) || (!createForm.$invalid && $ctrl.backgroundColorIsInvalid && $ctrl.borderColorIsInvalid)"
-    type="submit" class="md-raised md-primary" ng-click="$ctrl.create(fieldCenter)">Criar</md-button>
+  <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create(fieldCenter)">Criar</md-button>
   <md-button class="md-raised md-no-focus" ng-click="$ctrl.reset()">Limpar</md-button>
 </div>
