@@ -26,10 +26,10 @@
     self.setAllowNewParticipants = setAllowNewParticipants;
 
     function onInit() {
-      _isAllowNewParticipants();
+    _checkIfAllowNewParticipants();
     }
 
-    function _isAllowNewParticipants() {
+    function _checkIfAllowNewParticipants() {
       ProjectConfigurationService.getProjectConfiguration()
         .then(function (data) {
           self.participantRegistration = data.participantRegistration;

@@ -13,7 +13,7 @@
     function ProjectConfigurationService(OtusRestResourceService, $q) {
         var self = this;
         var configurationResource;
-        var projectConfiguration;
+        var projectConfigurationResource;
 
         /* Public methods */
         self.$onInit = onInit;
@@ -30,7 +30,7 @@
 
         function onInit() {
             configurationResource = OtusRestResourceService.getConfigurationResource();
-            projectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+            projectConfigurationResource = OtusRestResourceService.getProjectConfigurationResource();
         }
 
         /* Surveys Manager Section */
@@ -112,10 +112,10 @@
         /* participant registration */
         function getProjectConfiguration() {
             var defer = $q.defer();
-            if (!projectConfiguration) {
+            if (!projectConfigurationResource) {
                 throw new Error('REST resource is not initialized.');
             }
-            projectConfiguration.getProjectConfiguration(function (response) {
+            projectConfigurationResource.getProjectConfiguration(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {
@@ -126,10 +126,10 @@
         }
 
         function allowNewParticipants(permission) {
-            if (!projectConfiguration) {
+            if (!projectConfigurationResource) {
                 throw new Error('REST resource is not initialized.');
             }
-            return projectConfiguration.allowNewParticipants({ 'permission': permission }).$promise;
+            return projectConfigurationResource.allowNewParticipants({ 'permission': permission }).$promise;
         }
     }
 }());
