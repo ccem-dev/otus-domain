@@ -4,7 +4,7 @@
       <div class="md-dialog-content">
         <form name="createForm" novalidate>
           <div layout="row">
-            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{$ctrl.fieldCenter.backgroundColor}}; height: 36px; border-radius: 15px 15px 15px 15px;" flex="5"></div>
+            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center" style="background: {{$ctrl.fieldCenter.backgroundColor}};"></div>
             <md-input-container md-no-float>
               <label>Cor de fundo</label>
               <input name="backgroundColor" required ng-model="$ctrl.fieldCenter.backgroundColor">
@@ -12,7 +12,7 @@
                 <div ng-message="required">Obrigatório</div>
               </div>
             </md-input-container>
-            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{$ctrl.fieldCenter.borderColor}}; height: 36px; border-radius:  15px 15px 15px 15px" flex="5"></div>
+            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center" style="background: {{$ctrl.fieldCenter.borderColor}};"></div>
             <md-input-container md-no-float>
               <label>Cor da borda</label>
               <input name="borderColor" required ng-model="$ctrl.fieldCenter.borderColor">
@@ -92,6 +92,6 @@
   </md-content>
 </div>
 <div class="layout-row" layout-align="end center" layout-margin>
-  <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create(fieldCenter)">Criar</md-button>
   <md-button class="md-raised md-no-focus" ng-click="$ctrl.reset()">Limpar</md-button>
+  <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create(fieldCenter)">Criar</md-button>
 </div>

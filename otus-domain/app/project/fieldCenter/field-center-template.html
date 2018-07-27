@@ -14,12 +14,12 @@
             <md-card-title>
               <md-card-title-text>
                 <div layout="row">
-                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.backgroundColor}}; height: 36px; border-radius: 15px 15px 15px 15px;" flex="5"></div>
+                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center" style="background: {{fieldCenter.backgroundColor}};"></div>
                   <md-input-container md-no-float>
                     <label>Cor de fundo</label>
                     <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.backgroundColor">
                   </md-input-container>
-                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" style="background: {{fieldCenter.borderColor}}; height: 36px; border-radius:  15px 15px 15px 15px" flex="5"></div>
+                  <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center" style="background: {{fieldCenter.borderColor}};"></div>
                   <md-input-container md-no-float>
                     <label>Cor da borda</label>
                     <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.borderColor">
