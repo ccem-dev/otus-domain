@@ -21,7 +21,7 @@
     /* Public methods */
     self.$onInit = onInit;
     self.create = create;
-    self.reset = reset;
+    self.cleanFields = cleanFields;
     self.resetValidation = resetValidation;
     self.resetValidationCode = resetValidationCode;
 
@@ -74,7 +74,7 @@
       );
     }
 
-    function reset() {
+    function cleanFields() {
       self.fieldCenter = angular.copy({});
     }
   }
