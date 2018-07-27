@@ -95,9 +95,13 @@ md-input-container.md-input-invalid>md-icon {
 }
 
 .color-center{
-  height: 26px;
   border-radius: 50%;
-  width: 26px;
+  width: 35px;
+  height: 35px;
+  border: 4px solid #fff;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+  box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
 }
 
 .removeMarginBottom {
