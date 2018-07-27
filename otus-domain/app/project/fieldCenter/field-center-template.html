@@ -22,7 +22,7 @@
                   </md-input-container>
                   <md-input-container md-no-float ng-if="fieldCenter.editMode">
                     <label>Cor de fundo</label>
-                    <input  name="backgroundColor" required colorpicker ng-model="fieldCenter.backgroundColor">
+                    <input  name="backgroundColor" required colorpicker="rgba"  ng-model="fieldCenter.backgroundColor">
                     <div ng-messages="updateForm.backgroundColor.$error">
                       <div ng-message="required">Obrigatório</div>
                     </div>
@@ -32,9 +32,9 @@
                     <label>Cor da borda</label>
                     <input disabled name="borderColor" ng-model="fieldCenter.borderColor">
                   </md-input-container>
-                  <md-input-container md-no-float ng-if="fieldCenter.editMode">
+                  <md-input-container md-no-float ng-if="fieldCenter.editMode" >
                     <label>Cor da borda</label>
-                    <input name="borderColor" required colorpicker ng-model="fieldCenter.borderColor">
+                    <input name="borderColor" class="form-control" required colorpicker="rgba"  ng-model="fieldCenter.borderColor">
                     <div ng-messages="updateForm.borderColor.$error">
                       <div ng-message="required">Obrigatório</div>
                     </div>
@@ -85,7 +85,7 @@
                   <md-input-container md-no-float>
                     <label>Fone</label>
                     <md-icon md-font-set="material-icons">phone</md-icon>
-                    <input aria-label="Telefone" ui-mask="99 99999 999?9" ng-disabled="!fieldCenter.editMode"
+                    <input aria-label="Telefone" ui-mask="99 9999?9 9999" ng-disabled="!fieldCenter.editMode"
                            ng-model="fieldCenter.phone" type="phone">
                   </md-input-container>
                 </div>

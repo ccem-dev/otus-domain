@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+.close-colorpicker {
+  display: none;
+}
+
 .toolbar-icon {
   float: right;
   width: 45px;
