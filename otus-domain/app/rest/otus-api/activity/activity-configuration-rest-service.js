@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -15,14 +15,16 @@
     var _rest = null;
 
     /* Public methods */
-    self.initialize = initialize;
+    self.$onInit = onInit;
     self.update = update;
     self.setDefault = setDefault;
     self.list = list;
     self.save = save;
     self.remove = remove;
 
-    function initialize() {
+    onInit();
+
+    function onInit() {
       _rest = OtusRestResourceService.getActivityConfigurationResource();
     }
 
@@ -37,14 +39,14 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.create({label : data}).$promise
+      return _rest.create({ label: data }).$promise
     }
 
     function setDefault(data) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.setDefault({id : data.name}).$promise
+      return _rest.setDefault({ id: data.name }).$promise
     }
 
     function list() {
@@ -57,7 +59,7 @@
       _rest
         .listAll()
         .$promise
-        .then(function(response) {
+        .then(function (response) {
           if (response.data && response.data.length) {
             request.resolve(response.data);
           } else {
@@ -72,7 +74,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.delete({id : data.name}).$promise;
+      return _rest.delete({ id: data.name }).$promise;
     }
   }
 }());
