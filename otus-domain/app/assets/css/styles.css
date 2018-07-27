@@ -95,9 +95,9 @@ md-input-container.md-input-invalid>md-icon {
 }
 
 .color-center{
-  height: 36px;
-  border-radius: 15px 15px 15px 15px;
-  width: 50px;
+  height: 26px;
+  border-radius: 50%;
+  width: 26px;
 }
 
 .removeMarginBottom {

@@ -34,7 +34,6 @@
     "angular-ui-mask": "1.8.7",
     "angular-ui-router": "^0.3.1",
     "jquery": "2.2.0",
-    "md-color-picker": "0.2.6",
     "moment": "2.12.0",
     "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#v1.8",
     "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
