@@ -7,7 +7,7 @@
             <div layout-padding layout-margin  md-colors="{background: 'default-accent'}" class="color-center" style="background: {{$ctrl.fieldCenter.backgroundColor}};"></div>
             <md-input-container md-no-float>
               <label>Cor de fundo</label>
-              <input name="backgroundColor" required ng-model="$ctrl.fieldCenter.backgroundColor">
+<input name="backgroundColor" colorpicker required ng-model="$ctrl.fieldCenter.backgroundColor">
               <div ng-messages="createForm.backgroundColor.$error">
                 <div ng-message="required">Obrigatório</div>
               </div>
@@ -15,7 +15,7 @@
             <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center" style="background: {{$ctrl.fieldCenter.borderColor}};"></div>
             <md-input-container md-no-float>
               <label>Cor da borda</label>
-              <input name="borderColor" required ng-model="$ctrl.fieldCenter.borderColor">
+<input name="borderColor" colorpicker="rgba" required ng-model="$ctrl.fieldCenter.borderColor">
               <div ng-messages="createForm.borderColor.$error">
                 <div ng-message="required">Obrigatório</div>
               </div>
