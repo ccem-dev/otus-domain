@@ -35,7 +35,7 @@
       ProjectFieldCenterService.create(self.fieldCenter, function (response) {
         if (response.CONTENT && response.CONTENT.valid === false) {
           showErrorMessage(self.fieldCenter, response);
-          response.CONTENT.value.forEach(function (error) {
+          response.CONTENT.conflicts.forEach(function (error) {
             switch (error) {
               case 'acronym':
                 $scope.createForm.acronym.$setValidity('ACRONYM_EXIST', false);
