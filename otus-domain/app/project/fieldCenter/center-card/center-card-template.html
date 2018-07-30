@@ -83,7 +83,7 @@
             <md-input-container md-no-float>
               <label>Fone</label>
               <md-icon md-font-set="material-icons">phone</md-icon>
-              <input aria-label="Telefone" ui-mask="99 9999?9 9999" ng-model="$ctrl.fieldCenter.phone"></input>
+              <input aria-label="Telefone" ui-mask="99 99999 999?9" ng-model="$ctrl.fieldCenter.phone"></input>
             </md-input-container>
           </div>
         </form>
@@ -92,6 +92,6 @@
   </md-content>
 </div>
 <div class="layout-row" layout-align="end center" layout-margin>
-  <md-button class="md-raised md-no-focus" ng-click="$ctrl.cleanFields()">Limpar</md-button>
   <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create()">Criar</md-button>
+  <md-button class="md-raised md-no-focus" ng-click="$ctrl.cleanFields()">Limpar</md-button>
 </div>
