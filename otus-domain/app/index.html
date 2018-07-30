@@ -18,6 +18,9 @@
     <link href="app/assets/css/initial-config.css" rel="stylesheet" />
     <!-- library -->
     <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
+    <link href="node_modules/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet" />
+
+
 </head>
 
 <body layout="row" flex class="md-body-2" md-theme="layoutTheme">
@@ -37,6 +40,8 @@
 <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
+<!-- ************************************* Color Picker ************************************* -->
+<script src="node_modules/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
 <!-- ************************************* Angular Material ************************************* -->
 <script src="node_modules/angular-material/angular-material.min.js"></script>
 
@@ -103,6 +108,7 @@
 
 <!-- PROJECT -->
 <script src="app/project/project-module.js"></script>
+<script src="app/project/commons/numbers-only/numbers-only-directive.js"></script>
 
 <!-- PROJECT -->
 <script src="app/project/selection/model/project-factory.js"></script>
@@ -115,10 +121,11 @@
 
 <!-- PROJECT-FIELD_CENTER -->
 <script src="app/project/fieldCenter/field-center-module.js"></script>
+<script src="app/project/fieldCenter/center-card/center-card-component.js"></script>
 <script src="app/project/fieldCenter/field-center-service.js"></script>
 <script src="app/project/fieldCenter/field-center-controller.js"></script>
 <script src="app/project/fieldCenter/field-center-context.js"></script>
-<script src="app/project/fieldCenter/dialog/create-field-center-controller.js"></script>
+<script src="app/project/otus-painel/otus-painel-component.js"></script>
 
 <!-- PROJECT-OTUS-USER -->
 <script src="app/project/otus-user/otus-user-component.js"></script>

@@ -28,6 +28,7 @@
     "angular": "1.6.4",
     "angular-animate": "1.6.4",
     "angular-aria": "1.6.4",
+    "angular-bootstrap-colorpicker": "3.0.32",
     "angular-material": "1.1.3",
     "angular-messages": "1.6.4",
     "angular-resource": "1.5.3",
@@ -36,7 +37,7 @@
     "jquery": "2.2.0",
     "moment": "2.12.0",
     "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#dev",
-    "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0"
+    "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#dev"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.9",
