@@ -16,8 +16,7 @@
             'otus.domain.client',
             'otus.client',
             'otusDomain.user',
-            'utils',
-            'colorpicker.module'
+            'utils'
         ]);
 
 }());
