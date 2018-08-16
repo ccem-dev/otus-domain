@@ -4,9 +4,10 @@
   angular
     .module('otusDomain.project.configuration')
     .component('otusParticipantRegistration', {
-      controller: Controller,
+      controller: "otusParticipantRegistrationCtrl as $ctrl",
       templateUrl: 'app/project/configuration/participant-registration/participant-registration-template.html'
-    });
+    })
+    .controller('otusParticipantRegistrationCtrl', Controller);
 
   Controller.$inject = [
     '$q',

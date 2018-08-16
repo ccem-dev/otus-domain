@@ -1,6 +1,6 @@
 describe('project praticipant register', function() {
     var Mock = {};
-    var $componentController,
+    var $controller,
         $injector,
         $mdToast,
         $q,
@@ -19,7 +19,7 @@ describe('project praticipant register', function() {
           getProjectConfigurationResource: function () { return {} }
         });
       }));
-    beforeEach(inject(function(_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
+    beforeEach(inject(function(_$controller_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
         surveyList = [{
             'sender': "brenoscheffer@gmail.com",
             'sendingDate': "Oct 6, 2016 10:56:46 PM",
@@ -58,7 +58,7 @@ describe('project praticipant register', function() {
             }
   }];
 
-        $componentController = _$componentController_;
+        $controller = _$controller_;
         $mdToast = _$mdToast_;
         $q = _$q_;
         scope = _$rootScope_.$new();
@@ -73,7 +73,7 @@ describe('project praticipant register', function() {
             '$mdDialog': mockDialog($injector)
         };
 
-        ctrl = $componentController('otusSurveysManager', Injections, Bindings);
+        ctrl = $controller('otusSurveysManagerCtrl', Injections, Bindings);
     }));
 
 

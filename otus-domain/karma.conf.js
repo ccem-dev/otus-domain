@@ -22,7 +22,7 @@ module.exports = function(config) {
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
-      NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',	    
+      NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
       NODE_MODULES_ROOT_PATH + 'angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js',
       NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
@@ -34,7 +34,7 @@ module.exports = function(config) {
       COMPONENTS_ROOT_PATH + 'st-utils/**/*-module.js',
       /* Application files */
       APP_ROOT_PATH + 'app.js',
-      APP_ROOT_PATH + 'app/config/env.js',
+      APP_ROOT_PATH + 'config/env.js',
       APP_ROOT_PATH + 'config/**/*-configuration.js',
       APP_ROOT_PATH + '**/*-module.js',
       APP_ROOT_PATH + '**/*.js', {

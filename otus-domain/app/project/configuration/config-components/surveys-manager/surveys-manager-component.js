@@ -5,8 +5,9 @@
         .module('otusDomain.project.configuration')
         .component('otusSurveysManager', {
             templateUrl: 'app/project/configuration/config-components/surveys-manager/surveys-manager-template.html',
-            controller: Controller
-        });
+            controller: "otusSurveysManagerCtrl as $ctrl"
+        })
+        .controller('otusSurveysManagerCtrl', Controller);
 
     Controller.$inject = [
         '$q',
@@ -117,7 +118,7 @@
 
         function publishTemplate() {
             ProjectConfigurationService.publishTemplate(self.uploadedFile)
-                .then(function(surveyTemplate) {                   
+                .then(function(surveyTemplate) {
                     successfullPublishCallback(surveyTemplate);
                 })
                 .catch(function(message) {

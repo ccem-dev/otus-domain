@@ -40,7 +40,7 @@
     "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#dev"
   },
   "devDependencies": {
-    "angular-mocks": "^1.4.9",
+    "angular-mocks": "1.4.9",
     "browserify": "^14.4.0",
     "babelify": "^7.3.0",
     "babel-plugin-es6-promise": "^1.1.1",
@@ -58,7 +58,7 @@
     "browser-sync": "2.11.2",
     "browser-sync-middleware-spa": "^1.0.0",
     "concurrently": "^1.0.0",
-    "jasmine-core": "^2.4.1",
+    "jasmine-core": "^2.8.0",
     "karma": "^0.13.19",
     "karma-browserify": "^5.1.1",
     "karma-chrome-launcher": "^0.2.2",

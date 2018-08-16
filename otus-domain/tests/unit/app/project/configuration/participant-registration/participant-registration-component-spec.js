@@ -1,7 +1,7 @@
 describe('participant registration', function () {
   var Mock = {};
 
-  var $componentController,
+  var $controller,
     $injector,
     $mdToast,
     $q,
@@ -19,8 +19,8 @@ describe('participant registration', function () {
       getProjectConfigurationResource: function () { return {} }
     });
   }));
-  beforeEach(inject(function (_$componentController_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
-    $componentController = _$componentController_;
+  beforeEach(inject(function (_$controller_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
+    $controller = _$controller_;
     $mdToast = _$mdToast_;
     $q = _$q_;
     scope = _$rootScope_.$new();
@@ -34,7 +34,7 @@ describe('participant registration', function () {
       '$mdDialog': mockDialog($injector)
     };
     mockResponse();
-    ctrl = $componentController('otusParticipantRegistration', Injections, Bindings);
+    ctrl = $controller('otusParticipantRegistrationCtrl', Injections, Bindings);
   }));
 
   describe('method onInit', function () {
