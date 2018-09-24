@@ -3,7 +3,7 @@
 	<groupId>org.ccem.domain</groupId>
 	<artifactId>otus-domain</artifactId>
 	<packaging>war</packaging>
-	<version>1.6</version>
+	<version>1.7</version>
 
 	<scm>
 		<connection>scm:git:git@github.com:ccem-dev/otus-domain.git</connection>

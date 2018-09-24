@@ -1,0 +1,15 @@
+<md-card flex layout="column">
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Configurações dos participantes</span>
+    </md-card-title-text>
+  </md-card-title>
+
+  <md-card-content>
+    <md-input-container class="md-block">
+      <md-checkbox ng-disabled="$ctrl.error" ng-model="$ctrl.participantRegistration" ng-change="$ctrl.setAllowNewParticipants()" aria-label="Não permitir o cadastro de novos participantes">
+        Permitir o cadastro de novos participantes
+      </md-checkbox>
+    </md-input-container>
+  </md-card-content>
+</md-card>

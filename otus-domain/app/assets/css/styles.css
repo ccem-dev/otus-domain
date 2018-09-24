@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+.close-colorpicker {
+  display: none;
+}
+
 .toolbar-icon {
   float: right;
   width: 45px;
@@ -75,6 +79,33 @@ md-input-container.md-input-invalid>md-icon {
 
 .md-subheader.md-layoutTheme-theme.backgroud-color-default {
   background-color: unset;
+}
+
+.otus-panel{
+  margin-top: 80px;
+  margin-bottom: 20px;
+  background-color: #f5f7f9;
+  padding: 10px;
+}
+
+.otus-panel-subheader{
+  color:white;
+  font-size: 1.2em;
+  border-radius: 3px;
+  position: relative;
+  top: -50px;
+  margin-bottom: -60px;
+  padding: 20px;
+}
+
+.color-center{
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border: 4px solid #fff;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+  box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
 }
 
 .removeMarginBottom {

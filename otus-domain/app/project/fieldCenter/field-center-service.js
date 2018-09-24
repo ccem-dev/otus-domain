@@ -29,10 +29,7 @@
 
         function create(fieldCenter, callback) {
             var otusFieldCenter = OtusRestResourceService.getOtusFieldCenterResource();
-            otusFieldCenter.create(fieldCenter, function(response) {
-                loadCenters();
-                callback(response);
-            });
+            otusFieldCenter.create(fieldCenter, function(response) {callback(response);});
         }
 
         function update(fieldCenter, callback){

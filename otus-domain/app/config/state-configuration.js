@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
   angular
     .module('otusDomain')
@@ -11,10 +11,9 @@
       'USER_ACTIVATION': 'user-activation',
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
-      'PROJECT_ACTIVITY_CONFIGURATION':'activity_configuration',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
-      'REPORT_MANAGER':'report_manager'
+      'REPORT_MANAGER': 'report_manager'
     });
 
   stateConfiguration.$inject = [
@@ -31,7 +30,7 @@
       .state('installer', {
         url: '/installer',
         resolve: {
-          onlyOneConfiguration: function(RouteRulesResolver) {
+          onlyOneConfiguration: function (RouteRulesResolver) {
             return RouteRulesResolver.onlyOneConfiguration();
           }
         },
@@ -49,10 +48,10 @@
       .state('login', {
         url: '/login',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.alreadyLogged();
           },
-          initialConfiguration: function(RouteRulesResolver) {
+          initialConfiguration: function (RouteRulesResolver) {
             return RouteRulesResolver.initialConfiguration();
           }
         },
@@ -67,7 +66,7 @@
       .state('user-register', {
         url: '/user/register',
         resolve: {
-          initialConfiguration: function(RouteRulesResolver) {
+          initialConfiguration: function (RouteRulesResolver) {
             return RouteRulesResolver.initialConfiguration();
           }
         },
@@ -82,7 +81,7 @@
       .state('user-activation', {
         url: '/user/activation',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
           }
         },
@@ -105,10 +104,10 @@
       .state('user-otus-management', {
         url: '/project/user',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
           },
-          selectedProject: function(RouteRulesResolver) {
+          selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           }
         },
@@ -128,13 +127,13 @@
       .state('field-center', {
         url: '/project/centers',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
           },
-          selectedProject: function(RouteRulesResolver) {
+          selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          loadCenters: function(ProjectFieldCenterService) {
+          loadCenters: function (ProjectFieldCenterService) {
             ProjectFieldCenterService.loadCenters();
           }
         },
@@ -152,45 +151,17 @@
             controllerAs: 'fieldCenterController'
           }
         }
-      })
-      .state({
-        name: 'activity_configuration',
-        url: '/project/activity_configuration',
-        resolve: {
-          loggedUser: function(RouteRulesResolver) {
-            return RouteRulesResolver.loggedUser();
-          },
-          selectedProject: function(RouteRulesResolver) {
-            return RouteRulesResolver.selectedProject();
-          },
-          initialize: function(ActivityRestService){
-            ActivityRestService.initialize();
-          }
-        },
-        views: {
-          'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
-            controller: 'DashboardMenuController as dashboardMenu'
-          },
-          'dashboard-menu@activity_configuration': {
-            templateUrl: dashboardMenu
-          },
-          'system-content@activity_configuration': {
-            template: '<activity-configuration flex="80"></activity-configuration>'
-          }
-        }
-      })
-      .state({
+      }).state({
         name: 'report_manager',
         url: '/project/report_manager',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
           },
-          selectedProject: function(RouteRulesResolver) {
+          selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function(ReportRestService){
+          initialize: function (ReportRestService) {
             ReportRestService.initialize();
           }
         },
@@ -210,7 +181,7 @@
       .state('home', {
         url: '/home',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
           }
         },
@@ -239,10 +210,10 @@
       .state('configuration-center', {
         url: '/project/configuration',
         resolve: {
-          loggedUser: function(RouteRulesResolver) {
+          loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
           },
-          selectedProject: function(RouteRulesResolver) {
+          selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           }
         },

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -12,27 +12,31 @@
 
     function ProjectConfigurationService(OtusRestResourceService, $q) {
         var self = this;
-        var ProjectConfiguration;
-        _init();
+        var configurationResource;
+        var projectConfigurationResource;
 
-        /* Public Interface */
+        /* Public methods */
+        self.$onInit = onInit;
         self.fetchSurveysManagerConfiguration = fetchSurveysManagerConfiguration;
         self.publishTemplate = publishTemplate;
         self.updateSurveyTemplateType = updateSurveyTemplateType;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
-
         self.fetchProjectsVisualIdentity = fetchProjectsVisualIdentity;
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
+        self.getProjectConfiguration = getProjectConfiguration;
+        self.allowNewParticipants = allowNewParticipants;
 
-        function _init() {
-            ProjectConfiguration = OtusRestResourceService.getProjectConfigurationResource();
+        onInit();
+
+        function onInit() {
+            configurationResource = OtusRestResourceService.getConfigurationResource();
+            projectConfigurationResource = OtusRestResourceService.getProjectConfigurationResource();
         }
-
 
         /* Surveys Manager Section */
         function fetchSurveysManagerConfiguration() {
             var defer = $q.defer();
-            ProjectConfiguration.getSurveys(function(response) {
+            configurationResource.getSurveys(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {
@@ -44,11 +48,11 @@
 
         function updateSurveyTemplateType(updateObject) {
             var defer = $q.defer();
-            ProjectConfiguration.updateSurveyTemplateType({
-                    'acronym': updateObject.acronym,
-                    'newSurveyFormType': updateObject.type
-                },
-                function(response) {
+            configurationResource.updateSurveyTemplateType({
+                'acronym': updateObject.acronym,
+                'newSurveyFormType': updateObject.type
+            },
+                function (response) {
                     if (response.data) {
                         defer.resolve(true);
                     } else {
@@ -60,10 +64,10 @@
 
         function deleteSurveyTemplate(acronym) {
             var defer = $q.defer();
-            ProjectConfiguration.deleteSurveyTemplate({
-                    'acronym': acronym,
-                },
-                function(response) {
+            configurationResource.deleteSurveyTemplate({
+                'acronym': acronym,
+            },
+                function (response) {
                     if (response.data) {
                         defer.resolve(true);
                     } else {
@@ -76,8 +80,8 @@
 
         function publishTemplate(template) {
             var defer = $q.defer();
-            ProjectConfiguration.publishTemplate(template,
-                function(response) {                   
+            configurationResource.publishTemplate(template,
+                function (response) {
                     if ('data' in response) {
                         defer.resolve(response.data);
                     } else {
@@ -91,7 +95,7 @@
         function fetchProjectsVisualIdentity() {
             var data = {};
             var defer = $q.defer();
-            ProjectConfiguration.getVisualIdentity(function(response) {
+            configurationResource.getVisualIdentity(function (response) {
                 defer.resolve();
             });
             return defer.promise;
@@ -99,10 +103,33 @@
 
         function updateVisualIdentityConfiguration(files) {
             var defer = $q.defer();
-            ProjectConfiguration.updateVisualIdentity(files, function() {
-               defer.resolve();
+            configurationResource.updateVisualIdentity(files, function () {
+                defer.resolve();
             });
             return defer.promise;
+        }
+
+        /* participant registration */
+        function getProjectConfiguration() {
+            var defer = $q.defer();
+            if (!projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            projectConfigurationResource.getProjectConfiguration(function (response) {
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
+            });
+            return defer.promise;
+        }
+
+        function allowNewParticipants(permission) {
+            if (!projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            return projectConfigurationResource.allowNewParticipants({ 'permission': permission }).$promise;
         }
     }
 }());
