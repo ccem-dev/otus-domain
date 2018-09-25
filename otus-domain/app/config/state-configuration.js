@@ -11,6 +11,7 @@
       'USER_ACTIVATION': 'user-activation',
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
+      'PROJECT_ACTIVITY_CONFIGURATION': 'activity_configuration',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
       'REPORT_MANAGER': 'report_manager'
@@ -151,7 +152,35 @@
             controllerAs: 'fieldCenterController'
           }
         }
-      }).state({
+      })
+      .state({
+        name: 'activity_configuration',
+        url: '/project/activity_configuration',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityRestService) {
+            ActivityRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: mainDashBoardTemplate,
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@activity_configuration': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@activity_configuration': {
+            template: '<activity-configuration flex="80"></activity-configuration>'
+          }
+        }
+      })
+      .state({
         name: 'report_manager',
         url: '/project/report_manager',
         resolve: {

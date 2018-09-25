@@ -15,16 +15,14 @@
     var _rest = null;
 
     /* Public methods */
-    self.$onInit = onInit;
+    self.initialize = initialize;
     self.update = update;
     self.setDefault = setDefault;
     self.list = list;
     self.save = save;
     self.remove = remove;
 
-    onInit();
-
-    function onInit() {
+    function initialize() {
       _rest = OtusRestResourceService.getActivityConfigurationResource();
     }
 
