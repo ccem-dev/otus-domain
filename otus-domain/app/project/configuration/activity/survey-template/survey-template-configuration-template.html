@@ -1,0 +1,35 @@
+<div layout="column">
+  <div flex>
+    <div layout="row">
+      <p>{{$ctrl.surveyTemplateData.surveyTemplate.identity.acronym}}</p>
+      <md-button class="md-icon-button md-secondary" ng-click="$ctrl.showActivitySettings()">
+        <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
+        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+          Configurações
+        </md-tooltip>
+      </md-button>
+      <md-button class="md-icon-button md-secondary" ng-click="$ctrl.deleteSurveyTemplate($index)">
+        <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
+        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+          Excluir
+        </md-tooltip>
+      </md-button>
+    </div>
+  </div>
+  <div flex ng-if="$ctrl.showSettings">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Configuração individula do formulário</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <h2 class="md-title">Disjunção exclusiva de acesso</h2>
+        <md-contact-chips ng-model="$ctrl.usersList" md-contact-name="name" md-contact-email="email" md-require-match="true" md-highlight-flags="i"
+          placeholder="To">
+        </md-contact-chips>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
+<md-divider inset></md-divider>

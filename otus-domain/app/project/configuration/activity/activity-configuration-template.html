@@ -1,0 +1,10 @@
+<md-content class="md-padding" layout="column">
+  <h2 class="md-title">Configurações sobre as atividades</h2>
+  <md-list ng-cloak>
+    <md-subheader class="md-no-sticky">Lista de formulários disponíveis no sistema</md-subheader>
+    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)" ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index"
+      aria-label="formulário">
+      <survey-form-configuration survey-template-data="surveyForm"></survey-form-configuration>
+    </md-list-item>
+  </md-list>
+</md-content>
