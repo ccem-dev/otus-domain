@@ -14,6 +14,7 @@
     function ProjectConfigurationService(OtusRestResourceService, UserManagerFactory, $q) {
         var _configurationResource;
         var _projectConfigurationResource;
+        var _permissionConfiguration;
         var _userResource;
         var _userManager;
         var self = this;
@@ -29,12 +30,16 @@
         self.getProjectConfiguration = getProjectConfiguration;
         self.allowNewParticipants = allowNewParticipants;
         self.getUsersList = getUsersList;
+        self.setUsersExclusiveDisjunction = setUsersExclusiveDisjunction;
+        self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
+        self.getCollectionOfPermissions = getCollectionOfPermissions;
 
         onInit();
 
         function onInit() {
             _configurationResource = OtusRestResourceService.getConfigurationResource();
             _projectConfigurationResource = OtusRestResourceService.getProjectConfigurationResource();
+            _permissionConfiguration = OtusRestResourceService.getPermissionConfigurationResource();
             _userResource = OtusRestResourceService.getUserResource();
             _userManager = UserManagerFactory.create(_userResource);
         }
@@ -143,7 +148,45 @@
             if (!_userManager) {
                 throw new Error('REST resource is not initialized.');
             }
-            _userManager.list(function (response) {
+            _userManager.list().then(function (response) {
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
+            });
+            return defer.promise;
+        }
+
+        /* survey template settings */
+        function setUsersExclusiveDisjunction() {
+            var defer = $q.defer();
+            if (!_permissionConfiguration) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _permissionConfiguration.create(users, function () {
+                defer.resolve();
+            });
+            return defer.promise;
+        }
+
+        function updateUsersExclusiveDisjunction(users) {
+            var defer = $q.defer();
+            if (!_permissionConfiguration) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _permissionConfiguration.update(users, function () {
+                defer.resolve();
+            });
+            return defer.promise;
+        }
+
+        function getCollectionOfPermissions() {
+            var defer = $q.defer();
+            if (!_permissionConfiguration) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _permissionConfiguration.getAll(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {

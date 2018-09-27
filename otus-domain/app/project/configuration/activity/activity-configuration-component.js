@@ -15,6 +15,7 @@
   function Controller(ProjectConfigurationService) {
     var self = this;
     self.surveyTemplatesList = [];
+    self.usersList = [];
 
     /* Public methods */
     self.$onInit = onInit;

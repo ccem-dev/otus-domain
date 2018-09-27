@@ -1,14 +1,16 @@
 <div layout="column">
   <div flex>
     <div layout="row">
-      <p>{{$ctrl.surveyTemplateData.surveyTemplate.identity.acronym}}</p>
-      <md-button class="md-icon-button md-secondary" ng-click="$ctrl.showActivitySettings()">
+      <p> {{$ctrl.surveyTemplateData.surveyTemplate.identity.acronym}} 
+          - {{$ctrl.surveyTemplateData.surveyTemplate.identity.name}} 
+          - Versão: {{$ctrl.surveyTemplateData.version}} </p>
+      <md-button class="md-secondary" ng-click="$ctrl.showActivitySettings()">
         <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Configurações
         </md-tooltip>
       </md-button>
-      <md-button class="md-icon-button md-secondary" ng-click="$ctrl.deleteSurveyTemplate($index)">
+      <md-button class="md-secondary" ng-click="$ctrl.deleteSurveyTemplate($index)">
         <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Excluir
@@ -24,9 +26,15 @@
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
-        <h2 class="md-title">Disjunção exclusiva de acesso</h2>
-        <md-contact-chips ng-model="$ctrl.usersList" md-contact-name="name" md-contact-email="email" md-require-match="true" md-highlight-flags="i"
-          placeholder="To">
+        <h2 class="md-title">Disjunção exclusiva de acesso do formulário</h2>
+        <md-contact-chips 
+          ng-model="$ctrl.usersList"
+          ng-change="ctrl.onModelChange(ctrl.contacts)"
+          md-contacts="ctrl.querySearch($query)" 
+          md-contact-name="email" 
+          md-require-match="true" 
+          md-highlight-flags="i"
+          placeholder="e-mail do usuário">
         </md-contact-chips>
       </md-card-content>
     </md-card>
