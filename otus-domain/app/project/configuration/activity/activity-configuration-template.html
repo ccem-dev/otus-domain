@@ -4,7 +4,7 @@
     <md-subheader class="md-no-sticky">Lista de formulários disponíveis no sistema</md-subheader>
     <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)" ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index"
       aria-label="formulário">
-      <survey-template-configuration survey-template-data="surveyForm"></survey-template-configuration>
+      <survey-template-configuration survey-form="surveyForm" survey-templates="surveyTemplatesList"></survey-template-configuration>
     </md-list-item>
   </md-list>
 </md-content>

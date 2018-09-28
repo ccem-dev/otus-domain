@@ -9,10 +9,13 @@
     });
 
   Controller.$inject = [
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
+    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    '$mdToast'
   ];
 
-  function Controller(ProjectConfigurationService) {
+  function Controller(ProjectConfigurationService, $mdToast) {
+    const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
+    var timeShowMsg = 5000;
     var self = this;
     self.surveyTemplatesList = [];
     self.usersList = [];
@@ -28,14 +31,9 @@
       ProjectConfigurationService.fetchSurveysManagerConfiguration()
         .then(function (data) {
           self.surveyTemplatesList = data;
-          if (self.surveyTemplatesList.length === 0) {
-            self.noListInfo = 'Nenhum formulário adicionado';
-          } else {
-            self.noListInfo = '';
-          }
         }).catch(function () {
           self.surveyTemplatesList = [];
-          self.noListInfo = 'Erro de comunicação com servidor';
+          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
         });
     }
 

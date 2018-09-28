@@ -1,16 +1,15 @@
 <div layout="column">
   <div flex>
     <div layout="row">
-      <p> {{$ctrl.surveyTemplateData.surveyTemplate.identity.acronym}} 
-          - {{$ctrl.surveyTemplateData.surveyTemplate.identity.name}} 
-          - Versão: {{$ctrl.surveyTemplateData.version}} </p>
+      <p> {{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}} - Versão:
+        {{$ctrl.surveyForm.version}} </p>
       <md-button class="md-secondary" ng-click="$ctrl.showActivitySettings()">
         <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Configurações
         </md-tooltip>
       </md-button>
-      <md-button class="md-secondary" ng-click="$ctrl.deleteSurveyTemplate($index)">
+      <md-button class="md-secondary" ng-click="$ctrl.deleteSurveyTemplate()">
         <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Excluir
@@ -27,15 +26,11 @@
       </md-card-title>
       <md-card-content>
         <h2 class="md-title">Disjunção exclusiva de acesso do formulário</h2>
-        <md-contact-chips 
-          ng-model="$ctrl.usersList"
-          ng-change="ctrl.onModelChange(ctrl.contacts)"
-          md-contacts="ctrl.querySearch($query)" 
-          md-contact-name="email" 
-          md-require-match="true" 
-          md-highlight-flags="i"
-          placeholder="e-mail do usuário">
-        </md-contact-chips>
+        <md-content class="md-padding autocomplete" layout="column">
+          <md-contact-chips ng-model="$ctrl.usersList" ng-change="$ctrl.onModelChange($ctrl.usersList)" md-contacts="$ctrl.querySearch($query)"
+            md-contact-name="name" md-contact-email="email" md-require-match="true" md-highlight-flags="i" placeholder="e-mail do usuário">
+          </md-contact-chips>
+        </md-content>
       </md-card-content>
     </md-card>
   </div>

@@ -7,26 +7,35 @@
       controller: Controller,
       templateUrl: 'app/project/configuration/activity/survey-template/survey-template-configuration-template.html',
       bindings: {
-        surveyTemplateData: '<'
+        surveyForm: '<',
+        surveyTemplates: '='
       }
     });
 
   Controller.$inject = [
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    'UserManagerFactory',
     '$mdDialog',
     '$mdToast'
   ];
 
-  function Controller(ProjectConfigurationService, $mdDialog, $mdToast) {
-    var _permissionList = [];
+  function Controller(ProjectConfigurationService, UserManagerFactory, $mdDialog, $mdToast) {
+    const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
+    var timeShowMsg = 5000;
+    var _userManager;
     var _deleteConfirmDialog;
+    var _permissionList = [];
+    var _allUsersList = [];
     var self = this;
     self.showSettings;
+    self.usersList = [];
 
     /* Public methods */
     self.$onInit = onInit;
     self.showActivitySettings = showActivitySettings;
     self.deleteSurveyTemplate = deleteSurveyTemplate;
+    self.onModelChange = onModelChange;
+    self.querySearch = querySearch;
 
     function onInit() {
       self.showSettings = false;
@@ -36,97 +45,106 @@
     function showActivitySettings() {
       // self.showSettings === false ? true : false;
       self.showSettings = true;
-      _getUsersList();
+      _getAllUsers();
       _getCollectionOfPermissions();
       _filterUsersWithPermissionExclusiveDisjunction();
     }
 
-    // TODO: Acabou parando de funcionar!
-    function deleteSurveyTemplate(index) {
+    // TODO:
+    function deleteSurveyTemplate() {
       $mdDialog.show(_deleteConfirmDialog).then(function () {
-        ProjectConfigurationService.deleteSurveyTemplate(self.surveyTemplatesList[index].surveyTemplate.identity.acronym)
+        var current = self.surveyTemplates.filter(function (current, index) {
+          if (current.surveyTemplate.identity.acronym === self.surveyForm.surveyTemplate.identity.acronym && current.version === self.surveyForm.version) {
+            return current;
+          }
+        });
+
+        ProjectConfigurationService.deleteSurveyTemplate(acronym)
           .then(function () {
-            self.surveyTemplatesList.splice(index, 1);
-            $mdToast.show($mdToast.simple().textContent('Template excluído').hideDelay(2000));
+            self.surveyTemplates.splice(index, 1);
+            $mdToast.show($mdToast.simple().textContent('Template excluído com sucesso').hideDelay(timeShowMsg));
           })
           .catch(function () {
-            $mdToast.show($mdToast.simple().textContent('Ocorreu algum problema, tente novamente mais tarde').hideDelay(2000));
+            $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
           });
       }, function () { });
     }
 
-    function setUsersExclusiveDisjunction(users) {
-      ProjectConfigurationService.setUsersExclusiveDisjunction(users)
+    function onModelChange(user) {
+      // TODO: Neste momento deve ser chamado o modelo para criar o objeto
+      var permission = {
+        'objectType': 'ActivityPermission',
+        'acronym': self.surveyForm.surveyTemplate.identity.acronym,
+        'version': self.surveyForm.version,
+        'exclusiveDisjunction': users
+      }
+      ProjectConfigurationService.setUsersExclusiveDisjunction(permission)
         .then(function () {
           // TODO:
-          $mdToast.show($mdToast.simple().textContent('Usuários atualizados com sucesso').hideDelay(2000));
+          $mdToast.show($mdToast.simple().textContent('Usuário(s) atualizado(s) com sucesso').hideDelay(timeShowMsg));
         })
         .catch(function () {
-          $mdToast.show($mdToast.simple().textContent('Ocorreu algum problema, tente novamente mais tarde').hideDelay(2000));
+          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
         });
+    }
+
+    function querySearch(criteria) {
+      var list = _ignoreAlreadySelectedUsers();
+      return criteria ? list.filter(_createFilterFor(criteria)) : [];
+    }
+
+    function _createFilterFor(query) {
+      var lowercaseQuery = query.toLowerCase();
+      return function filterFn(user) {
+        return (user.email.indexOf(lowercaseQuery) !== -1);
+      };
+    }
+
+    function _ignoreAlreadySelectedUsers() {
+      var list = [];
+      self.usersList.filter(function (alreadyRegistered) {
+        _allUsersList.filter(function (user) {
+          if (user.email !== alreadyRegistered.email) {
+            list.push(user);
+          }
+        });
+      });
+      return list;
+    }
+
+    // TODO: Problema na exibição
+    function _filterUsersWithPermissionExclusiveDisjunction() {
+      var permission = _permissionList.find(function (permission) {
+        if (permission.acronym === self.surveyForm.surveyTemplate.identity.acronym && permission.version == self.surveyForm.version) {
+          permission.exclusiveDisjunction.filter(function (email) {
+            _allUsersList.filter(function (user) {
+              if (user.email === email) {
+                self.usersList.push(user);
+              }
+            });
+          });
+        }
+      });
     }
 
     function _getCollectionOfPermissions() {
       ProjectConfigurationService.getCollectionOfPermissions()
         .then(function (data) {
-          console.log(data);
-          // TODO:
+          _permissionList = data;
         }).catch(function () {
-          // TODO:
+          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
         });
-
-
-      // TODO: Utilizado para realização de teste
-      _permissionList = [{
-        "_id": "5ba297053a55f6694cba663c",
-        "objectType": "ActivityPermission",
-        "version": 1,
-        "acronym": "CSJ",
-        "exclusiveDisjunction": [
-          "vianna.emanoel@gmail.com",
-          "pedro.silva@gmail.com"
-        ]
-      },
-      {
-        "_id": "5ba297053a55f6694cba663c",
-        "objectType": "ActivityPermission",
-        "version": 5,
-        "acronym": "RCPC",
-        "exclusiveDisjunction": [
-          "vianna.emanoel@gmail.com",
-          "pedro.silva@gmail.com"
-        ]
-      }]
     }
 
-    // TODO:
-    function _getUsersList() {
-      self.usersList = ProjectConfigurationService.getUsersList();
-
-      // TODO: Utilizado para realização de teste
-      self.usersList = [{
-        "_id": "5a29599b44824e71119a2adb",
-        "password": "TXUEOePzmEg0XG73TvPXGeNOcRE=",
-        "phone": "51999999999",
-        "enable": true,
-        "surname": "Vianna",
-        "name": "Emanoel",
-        "adm": true,
-        "uuid": "83230951-49bb-4ad8-b566-6a1da3dc8282",
-        "email": "vianna.emanoel@gmail.com",
-        "fieldCenter": null,
-        "extraction": true,
-        "extractionToken": "4c28d25f-1feb-4fbf-9c77-2425c13a7e71",
-        "extractionIps": []
-      }]
-    }
-
-    function _filterUsersWithPermissionExclusiveDisjunction() {
-      self.usersList = _permissionList.find(function (permission) {
-        if (permission.acronym === self.surveyTemplateData.surveyTemplate.identity.acronym && permission.version === self.surveyTemplateData.version)
-          return permission.exclusiveDisjunction;
+    function _getAllUsers() {
+      _userManager = UserManagerFactory.create(ProjectConfigurationService.getUserResource());
+      _userManager.list().then(function (response) {
+        if ('data' in response) {
+          _allUsersList = response.data;
+        } else {
+          $mdToast.show($mdToast.simple().textContent('Ocorreu algum problema, tente novamente mais tarde').hideDelay(timeShowMsg));
+        }
       });
-      console.log(self.usersList);
     }
 
     function _dialogs() {

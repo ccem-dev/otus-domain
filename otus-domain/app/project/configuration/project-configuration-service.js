@@ -7,16 +7,14 @@
 
     ProjectConfigurationService.$inject = [
         'OtusRestResourceService',
-        'UserManagerFactory',
         '$q'
     ];
 
-    function ProjectConfigurationService(OtusRestResourceService, UserManagerFactory, $q) {
+    function ProjectConfigurationService(OtusRestResourceService, $q) {
         var _configurationResource;
         var _projectConfigurationResource;
         var _permissionConfiguration;
         var _userResource;
-        var _userManager;
         var self = this;
 
         /* Public methods */
@@ -29,7 +27,7 @@
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
         self.getProjectConfiguration = getProjectConfiguration;
         self.allowNewParticipants = allowNewParticipants;
-        self.getUsersList = getUsersList;
+        self.getUserResource = getUserResource;
         self.setUsersExclusiveDisjunction = setUsersExclusiveDisjunction;
         self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
         self.getCollectionOfPermissions = getCollectionOfPermissions;
@@ -41,7 +39,6 @@
             _projectConfigurationResource = OtusRestResourceService.getProjectConfigurationResource();
             _permissionConfiguration = OtusRestResourceService.getPermissionConfigurationResource();
             _userResource = OtusRestResourceService.getUserResource();
-            _userManager = UserManagerFactory.create(_userResource);
         }
 
         /* Surveys Manager Section */
@@ -143,19 +140,11 @@
             return _projectConfigurationResource.allowNewParticipants({ 'permission': permission }).$promise;
         }
 
-        function getUsersList() {
-            var defer = $q.defer();
-            if (!_userManager) {
+        function getUserResource() {
+            if (!_userResource) {
                 throw new Error('REST resource is not initialized.');
             }
-            _userManager.list().then(function (response) {
-                if ('data' in response) {
-                    defer.resolve(response.data);
-                } else {
-                    defer.reject(true);
-                }
-            });
-            return defer.promise;
+            return _userResource;
         }
 
         /* survey template settings */
