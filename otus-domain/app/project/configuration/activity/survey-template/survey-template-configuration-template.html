@@ -1,38 +1,21 @@
-<div layout="column">
-  <div flex>
-    <div layout="row">
-      <p> {{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}} - Versão:
-        {{$ctrl.surveyForm.version}} </p>
-      <md-button class="md-secondary" ng-click="$ctrl.showActivitySettings()">
-        <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
-        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-          Configurações
-        </md-tooltip>
-      </md-button>
-      <md-button class="md-secondary" ng-click="$ctrl.deleteSurveyTemplate()">
-        <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
-        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-          Excluir
-        </md-tooltip>
-      </md-button>
-    </div>
+<div layout="row" flex layout-align="center center">
+  <div layout="column" flex>
+    <span>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}}</span>
+    <span class="md-caption">Versão: {{$ctrl.surveyForm.version}}</span>
   </div>
-  <div flex ng-if="$ctrl.showSettings">
-    <md-card>
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Configuração individula do formulário</span>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        <h2 class="md-title">Disjunção exclusiva de acesso do formulário</h2>
-        <md-content class="md-padding autocomplete" layout="column">
-          <md-contact-chips ng-model="$ctrl.usersList" ng-change="$ctrl.onModelChange($ctrl.usersList)" md-contacts="$ctrl.querySearch($query)"
-            md-contact-name="name" md-contact-email="email" md-require-match="true" md-highlight-flags="i" placeholder="e-mail do usuário">
-          </md-contact-chips>
-        </md-content>
-      </md-card-content>
-    </md-card>
+  <div layout="row" flex="20" layout-align="end end">
+    <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">
+      <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Configurações
+      </md-tooltip>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteSurveyTemplate()">
+      <md-icon md-font-library="material-icons">delete</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Excluir
+      </md-tooltip>
+    </md-button>
   </div>
 </div>
 <md-divider inset></md-divider>

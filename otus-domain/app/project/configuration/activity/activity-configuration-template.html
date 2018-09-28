@@ -1,10 +1,21 @@
 <md-content class="md-padding" layout="column">
-  <h2 class="md-title">Configurações sobre as atividades</h2>
-  <md-list ng-cloak>
-    <md-subheader class="md-no-sticky">Lista de formulários disponíveis no sistema</md-subheader>
-    <md-list-item class="secondary-button-padding" ng-click="doPrimaryAction($event)" ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index"
-      aria-label="formulário">
-      <survey-template-configuration survey-form="surveyForm" survey-templates="surveyTemplatesList"></survey-template-configuration>
-    </md-list-item>
-  </md-list>
+  <h2 class="md-title">Lista de formulários disponíveis no sistema</h2>
+  <div layout="row" layout-align="end end">
+    <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
+      <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Enviar Template
+      </md-tooltip>
+    </md-button>
+    <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.disableSaving" ng-click="$ctrl.publishTemplate()">
+      <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Salvar
+      </md-tooltip>
+    </md-button>
+  </div>
+  <md-subheader>Lista de templates disponíveis no sistema</md-subheader>
+  <md-list-item ng-click="doPrimaryAction($event)" ng-repeat="surveyForm in $ctrl.surveyTemplatesList track by $index" aria-label="formulário">
+    <survey-template-configuration flex survey-form="surveyForm" survey-templates="surveyTemplatesList"></survey-template-configuration>
+  </md-list-item>
 </md-content>
