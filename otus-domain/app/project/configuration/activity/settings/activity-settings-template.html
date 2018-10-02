@@ -1,0 +1,19 @@
+<md-content class="md-padding" layout="column">
+  <h2 class="md-title">Configurar Atividade</h2>
+
+  <md-subheader>Sigla: {{$ctrl.permission.acronym}}</md-subheader>
+  <md-subheader>Versão: {{$ctrl.permission.version}}</md-subheader>
+  <md-subheader>Users: {{$ctrl.permission.exclusiveDisjunction}}</md-subheader>
+
+  <md-contact-chips
+    ng-model="$ctrl.contacts"
+    ng-change="$ctrl.onModelChange($ctrl.contacts)"
+    md-contacts="$ctrl.querySearch($query)"
+    md-contact-name="name"
+    md-contact-email="email"
+    md-require-match="true"
+    md-highlight-flags="i"
+    placeholder="To">
+  </md-contact-chips>
+
+</md-content>

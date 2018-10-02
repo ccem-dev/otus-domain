@@ -1,7 +1,16 @@
-<div layout="row" flex layout-align="center center">
+<div layout="row" flex layout-align="center center" layout-padding>
   <div layout="column" flex>
-    <span>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}}</span>
-    <span class="md-caption">Versão: {{$ctrl.surveyForm.version}}</span>
+    <div layout="row" class="layout-wrap" id="header" layout-align="start center">
+
+      <md-chips>
+        <md-chip><strong>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</strong></md-chip>
+      </md-chips>
+
+        <span>{{$ctrl.surveyForm.surveyTemplate.identity.name}}</span>
+
+      <span class="md-caption" layout-margin="">(Versão: {{$ctrl.surveyForm.version}})</span>
+    </div>
+
   </div>
   <div layout="row" flex="20" layout-align="end end">
     <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">

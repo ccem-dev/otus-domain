@@ -12,6 +12,7 @@
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
       'PROJECT_ACTIVITY_CONFIGURATION': 'activity_configuration',
+      'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
       'REPORT_MANAGER': 'report_manager'
@@ -163,8 +164,8 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityRestService) {
-            ActivityRestService.initialize();
+          initialize: function (ActivityConfigurationRestService) {
+            ActivityConfigurationRestService.initialize();
           }
         },
         views: {
@@ -177,6 +178,39 @@
           },
           'system-content@activity_configuration': {
             template: '<activity-configuration flex="80"></activity-configuration>'
+          }
+        }
+      })
+      .state({
+        name: 'activity_settings',
+        url: '/project/activity_configuration/settings',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService) {
+            ActivityConfigurationRestService.initialize();
+
+          },
+          permission: function() {
+            var permission = localStorage.getItem('selectedPermission');
+            localStorage.removeItem('selectedPermission');
+            return JSON.parse(permission);
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: mainDashBoardTemplate,
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@activity_settings': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@activity_settings': {
+            template: '<activity-settings permission="$resolve.permission" flex="80"></activity-settings>'
           }
         }
       })

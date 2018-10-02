@@ -17,10 +17,11 @@
     'UserManagerFactory',
     '$mdDialog',
     '$mdToast',
-    'otusjs.model.activity.ActivityPermissionFactory'
+    'otusjs.model.activity.ActivityPermissionFactory',
+    'DashboardStateService'
   ];
 
-  function Controller(ProjectConfigurationService, UserManagerFactory, $mdDialog, $mdToast, ActivityPermissionFactory) {
+  function Controller(ProjectConfigurationService, UserManagerFactory, $mdDialog, $mdToast, ActivityPermissionFactory, DashboardStateService) {
     const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
     var _userManager;
@@ -41,14 +42,20 @@
     function onInit() {
       self.showSettings = false;
       _dialogs();
+      _getCollectionOfPermissions();
+      self.permission = ActivityPermissionFactory.create(self.surveyForm);
     }
 
     function showActivitySettings() {
       // self.showSettings === false ? true : false;
+
       self.showSettings = true;
       _getAllUsers();
-      _getCollectionOfPermissions();
+
       _filterUsersWithPermissionExclusiveDisjunction();
+      localStorage.removeItem('selectedPermission');
+      localStorage.setItem('selectedPermission', JSON.stringify(self.permission));
+      DashboardStateService.goToActivitySettings();
     }
 
     // TODO:
@@ -72,14 +79,7 @@
     }
 
     function onModelChange(user) {
-      // TODO: Neste momento deve ser chamado o modelo para criar o objeto
-      var permission = {
-        'objectType': 'ActivityPermission',
-        'acronym': self.surveyForm.surveyTemplate.identity.acronym,
-        'version': self.surveyForm.version,
-        'exclusiveDisjunction': users
-      };
-      permission = ActivityPermissionFactory.create(permission);
+      // self.permission.
       ProjectConfigurationService.setUsersExclusiveDisjunction(permission.toJSON())
         .then(function () {
           // TODO:
@@ -116,15 +116,9 @@
 
     // TODO: Problema na exibição
     function _filterUsersWithPermissionExclusiveDisjunction() {
-      var permission = _permissionList.find(function (permission) {
-        if (permission.acronym === self.surveyForm.surveyTemplate.identity.acronym && permission.version == self.surveyForm.version) {
-          permission.exclusiveDisjunction.filter(function (email) {
-            _allUsersList.filter(function (user) {
-              if (user.email === email) {
-                self.usersList.push(user);
-              }
-            });
-          });
+      _permissionList.forEach(function (permission) {
+        if (permission.acronym === self.permission.acronym && permission.version == self.permission.version) {
+          self.permission.exclusiveDisjunction = permission.exclusiveDisjunction;
         }
       });
     }
@@ -157,6 +151,7 @@
         .ok('Sim')
         .cancel('Não');
     }
+
 
   }
 }());

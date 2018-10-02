@@ -25,6 +25,8 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
+    getCollectionOfPermissions();
+
     function onInit() {
       _getTemplatesList();
       deleteConfirmDialog = $mdDialog.confirm()
@@ -144,6 +146,14 @@
         .catch(function(message) {
           publishFailureMessenger(message);
         });
+    }
+
+    function getCollectionOfPermissions() {
+      ProjectConfigurationService.getCollectionOfPermissions()
+        .then(function (permissions) {
+          console.log(permissions)
+          self.permissionList = angular.copy(permissions);
+        })
     }
 
     function successfullPublishCallback(surveyTemplate) {

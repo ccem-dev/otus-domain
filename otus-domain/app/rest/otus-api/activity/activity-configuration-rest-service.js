@@ -3,7 +3,7 @@
 
   angular
     .module('otusDomain')
-    .service('ActivityRestService', Service);
+    .service('ActivityConfigurationRestService', Service);
 
   Service.$inject = [
     '$q',
