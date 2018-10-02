@@ -16,10 +16,11 @@
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
     'UserManagerFactory',
     '$mdDialog',
-    '$mdToast'
+    '$mdToast',
+    'otusjs.model.activity.ActivityPermissionFactory'
   ];
 
-  function Controller(ProjectConfigurationService, UserManagerFactory, $mdDialog, $mdToast) {
+  function Controller(ProjectConfigurationService, UserManagerFactory, $mdDialog, $mdToast, ActivityPermissionFactory) {
     const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
     var _userManager;
@@ -77,8 +78,9 @@
         'acronym': self.surveyForm.surveyTemplate.identity.acronym,
         'version': self.surveyForm.version,
         'exclusiveDisjunction': users
-      }
-      ProjectConfigurationService.setUsersExclusiveDisjunction(permission)
+      };
+      permission = ActivityPermissionFactory.create(permission);
+      ProjectConfigurationService.setUsersExclusiveDisjunction(permission.toJSON())
         .then(function () {
           // TODO:
           $mdToast.show($mdToast.simple().textContent('Usuário(s) atualizado(s) com sucesso').hideDelay(timeShowMsg));

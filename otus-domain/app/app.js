@@ -5,18 +5,19 @@
             /* External modules */
             'dependencies',
             /* Application modules */
-            'otusDomain.dashboard',
-            'otusDomain.authenticator',
-            'otusDomain.installer',
-            'otusDomain.repository',
-            'otusDomain.project',
-            'otusDomain.project.fieldCenter',
+          'otusjs',
+          'otusDomain.dashboard',
+          'otusDomain.authenticator',
+          'otusDomain.installer',
+          'otusDomain.repository',
+          'otusDomain.project',
+          'otusDomain.project.fieldCenter',
+          /* Possibly shared modules */
             'otusDomain.project.configuration',
-            /* Possibly shared modules */
-            'otus.domain.client',
-            'otus.client',
-            'otusDomain.user',
-            'utils'
+          'otus.domain.client',
+          'otus.client',
+          'otusDomain.user',
+          'utils'
         ]);
 
 }());
