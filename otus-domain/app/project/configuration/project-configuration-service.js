@@ -31,6 +31,7 @@
         self.setUsersExclusiveDisjunction = setUsersExclusiveDisjunction;
         self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
         self.getCollectionOfPermissions = getCollectionOfPermissions;
+        self.fetchUsers = fetchUsers;
 
         onInit();
 
@@ -40,6 +41,18 @@
             _permissionConfiguration = OtusRestResourceService.getPermissionConfigurationResource();
             _userResource = OtusRestResourceService.getUserResource();
         }
+
+      function fetchUsers() {
+        var defer = $q.defer();
+        _userResource.list(function (response) {
+          if ('data' in response) {
+            defer.resolve(response.data);
+          } else {
+            defer.reject(true);
+          }
+        });
+        return defer.promise;
+      }
 
         /* Surveys Manager Section */
         function fetchSurveysManagerConfiguration() {
@@ -148,7 +161,7 @@
         }
 
         /* survey template settings */
-        function setUsersExclusiveDisjunction() {
+        function setUsersExclusiveDisjunction(users) {
             var defer = $q.defer();
             if (!_permissionConfiguration) {
                 throw new Error('REST resource is not initialized.');

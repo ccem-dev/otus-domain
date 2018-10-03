@@ -1,19 +1,43 @@
-<md-content class="md-padding" layout="column">
-  <h2 class="md-title">Configurar Atividade</h2>
+<md-content class="md-padding autocomplete" layout="column" flex>
+  <h2 class="md-title">Configuração de Atividade</h2>
+  <md-card layout="column" class="md-whiteframe-2dp">
 
-  <md-subheader>Sigla: {{$ctrl.permission.acronym}}</md-subheader>
-  <md-subheader>Versão: {{$ctrl.permission.version}}</md-subheader>
-  <md-subheader>Users: {{$ctrl.permission.exclusiveDisjunction}}</md-subheader>
+    <md-content layout="column" class="md-padding autocomplete">
+      <md-card-title-text layout="row">
+        <div layout="column">
+          <span class="md-headline">Sigla: {{$ctrl.permission.acronym}}</span>
+          <span class="md-subhead">Versão: {{$ctrl.permission.version}}</span>
+        </div>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()">
+          <md-icon>help</md-icon>
+          <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
+        </md-button>
+      </md-card-title-text>
 
-  <md-contact-chips
-    ng-model="$ctrl.contacts"
-    ng-change="$ctrl.onModelChange($ctrl.contacts)"
-    md-contacts="$ctrl.querySearch($query)"
-    md-contact-name="name"
-    md-contact-email="email"
-    md-require-match="true"
-    md-highlight-flags="i"
-    placeholder="To">
-  </md-contact-chips>
+      <div layout="column" layout-margin>
+        <span class="md-subhead">Usuários com restrições:</span>
+        <div layout="row" flex>
+          <md-chips ng-model="$ctrl.users" md-autocomplete-snap flex
+                    md-transform-chip="ctrl.transformChip($chip)"
+                    md-require-match="true" md-on-add="$ctrl.onAdd($chip)" md-on-remove="$ctrl.onRemove($chip)">
+            <md-autocomplete
+              md-selected-item="$ctrl.selectedItem"
+              md-search-text="$ctrl.searchText"
+              md-items="item in $ctrl.querySearch($ctrl.searchText)"
+              md-item-text="item.name"
 
+              placeholder="Digite o nome do usuário">
+              <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
+            </md-autocomplete>
+            <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}</strong>
+        </span>
+            </md-chip-template>
+          </md-chips>
+        </div>
+      </div>
+    </md-content>
+  </md-card>
 </md-content>

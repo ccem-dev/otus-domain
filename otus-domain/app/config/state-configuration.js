@@ -193,12 +193,6 @@
           },
           initialize: function (ActivityConfigurationRestService) {
             ActivityConfigurationRestService.initialize();
-
-          },
-          permission: function() {
-            var permission = localStorage.getItem('selectedPermission');
-            localStorage.removeItem('selectedPermission');
-            return JSON.parse(permission);
           }
         },
         views: {
@@ -210,7 +204,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@activity_settings': {
-            template: '<activity-settings permission="$resolve.permission" flex="80"></activity-settings>'
+            template: '<activity-settings flex="80"></activity-settings>'
           }
         }
       })

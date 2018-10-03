@@ -54,17 +54,6 @@
     self.uploadedFile = {};
     self.disableSaving = true;
 
-    // function _getTemplatesList() {
-    //   ProjectConfigurationService.fetchSurveysManagerConfiguration()
-    //     .then(function (data) {
-    //       self.surveyTemplatesList = data;
-    //     }).catch(function () {
-    //     self.surveyTemplatesList = [];
-    //     $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
-    //   });
-    // }
-
-
     function _getTemplatesList() {
       ProjectConfigurationService.fetchSurveysManagerConfiguration()
         .then(function(data) {
@@ -151,9 +140,8 @@
     function getCollectionOfPermissions() {
       ProjectConfigurationService.getCollectionOfPermissions()
         .then(function (permissions) {
-          console.log(permissions)
           self.permissionList = angular.copy(permissions);
-        })
+        });
     }
 
     function successfullPublishCallback(surveyTemplate) {

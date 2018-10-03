@@ -24,14 +24,10 @@
       <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}</span>
     </div>
 
-  <md-list>
-      <md-list-item ng-click="doPrimaryAction($event)" ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search"  aria-label="formulário">
-    <survey-template-configuration flex survey-form="surveyForm" survey-templates="surveyTemplatesList"></survey-template-configuration>
-    <md-divider></md-divider>
-
-
-  </md-list-item>
-  </md-list>
-
-
+    <md-list>
+      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search"  aria-label="formulário">
+        <survey-template-configuration flex survey-form="surveyForm" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
 </md-content>

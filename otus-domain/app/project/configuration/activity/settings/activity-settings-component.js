@@ -5,18 +5,16 @@
     .module('otusDomain.dashboard')
     .component('activitySettings', {
       controller: Controller,
-      templateUrl: 'app/project/configuration/activity/settings/activity-settings-template.html',
-      bindings:{
-        permission: '<'
-      }
+      templateUrl: 'app/project/configuration/activity/settings/activity-settings-template.html'
     });
 
   Controller.$inject = [
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
-    '$mdToast'
+    '$mdToast',
+    'ActivityConfigurationManagerService'
   ];
 
-  function Controller(ProjectConfigurationService, $mdToast) {
+  function Controller(ProjectConfigurationService, $mdToast, ActivityConfigurationManagerService) {
     const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
     var self = this;
@@ -25,69 +23,81 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.onModelChange = onModelChange;
     self.querySearch = querySearch;
-
-    self.allContacts = loadContacts();
+    self.saveSettings = saveSettings;
+    self.transformChip = transformChip;
+    self.onAdd = onAdd;
+    self.onRemove = onRemove;
 
     function onInit() {
-      self.contacts = [self.allContacts[0]]
-      console.log(self.acronym)
+      self.users= [];
+      self.AllUsers= [];
+      self.permission = ActivityConfigurationManagerService.getSurveyToSettings()
+      ProjectConfigurationService.fetchUsers().then(function (users) {
+        _constructorUsers(users);
+        self.permission.exclusiveDisjunction.forEach(function (email) {
+          self.AllUsers.forEach(function (user) {
+            if (user.email === email){
+              self.users.push(user);
+            }
+          })
+        })
+      });
+    }
 
+    function _showMessage(msg, time) {
+      $mdToast.show($mdToast.simple().textContent(msg).position('right bottom').hideDelay(time));
+    }
+
+    function saveSettings() {
+      if(!self.permission._id){
+        ProjectConfigurationService.setUsersExclusiveDisjunction(self.permission).then(function (response) {
+          _showMessage('Configurações atualizadas.', 2000);
+        }).catch(function (err) {
+          _showMessage('Não foi possível atualizar configurações',3000);
+        });
+      } else {
+        ProjectConfigurationService.updateUsersExclusiveDisjunction(self.permission).then(function (response) {
+          _showMessage('Configurações atualizadas.', 2000);
+        }).catch(function (err) {
+          _showMessage('Não foi possível atualizar configurações',3000);
+        });
+      }
     }
 
 
-    function onModelChange(user) {
-      // self.permission.
-      // ProjectConfigurationService.setUsersExclusiveDisjunction(permission.toJSON())
-      //   .then(function () {
-      //     // TODO:
-      //     $mdToast.show($mdToast.simple().textContent('Usuário(s) atualizado(s) com sucesso').hideDelay(timeShowMsg));
-      //   })
-      //   .catch(function () {
-      //     $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
-      //   });
+    function transformChip(chip) {
+      if (angular.isObject(chip)) {
+        return chip;
+      }
+      return { name: chip, type: 'new' };
+    }
+
+    function onAdd(user) {
+      self.permission.addUser(user.email);
+      saveSettings();
+    }
+
+    function onRemove(user) {
+      self.permission.removeUser(user.email);
+      saveSettings();
+    }
+
+    function _constructorUsers(users) {
+      users.forEach(function (user) {
+        self.AllUsers.push({name:user.name,email: user.email})
+      });
     }
 
     function querySearch (criteria) {
-      // var list = _ignoreAlreadySelectedUsers();
-      return criteria ? self.allContacts.filter(createFilterFor(criteria)) : [];
+      return criteria ? self.AllUsers.filter(createFilterFor(criteria)) : [];
     }
 
     function createFilterFor(query) {
       var lowercaseQuery = query.toLowerCase();
-
-      return function filterFn(contact) {
-        return (contact.name.indexOf(lowercaseQuery) !== -1);
+      return function filterFn(user) {
+        return (user.name.toLowerCase().indexOf(lowercaseQuery) !== -1);
       };
-
-    }
-
-
-    function loadContacts() {
-      var contacts = [
-        'Marina Augustine',
-        'Oddr Sarno',
-        'Nick Giannopoulos',
-        'Narayana Garner',
-        'Anita Gros',
-        'Megan Smith',
-        'Tsvetko Metzger',
-        'Hector Simek',
-        'Some-guy withalongalastaname'
-      ];
-
-      return contacts.map(function (c, index) {
-        var cParts = c.split(' ');
-        var email = cParts[0][0].toLowerCase() + '.' + cParts[1].toLowerCase() + '@example.com';
-
-        var contact = {
-          name: c,
-          email: email
-        };
-        contact._lowername = contact.name.toLowerCase();
-        return contact;
-      });
     }
 
 
