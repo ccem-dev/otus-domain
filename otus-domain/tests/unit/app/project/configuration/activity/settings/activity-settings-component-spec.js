@@ -18,6 +18,7 @@ describe("Activity Settings Component Test", function () {
       $provide.value("otusjs.otus-domain.project.configuration.ProjectConfigurationService", Mock.ProjectConfigurationService)
       $provide.value("$mdToast",Mock.mdToast)
       $provide.value("ActivityConfigurationManagerService", Mock.ActivityConfigurationManagerService)
+      $provide.value('otusjs.model.activity.ActivityPermissionFactory', Mock.ActivityPermissionFactory);
     });
 
     inject(function (_$controller_) {
@@ -42,7 +43,7 @@ describe("Activity Settings Component Test", function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
-  it('should test', function (done) {
+  it('should list users', function (done) {
     Mock.ProjectConfigurationService.fetchUsers().then(function () {
       expect(controller.permission).toBeDefined();
       expect(controller.AllUsers).toBeDefined();
@@ -83,13 +84,37 @@ describe("Activity Settings Component Test", function () {
   it('should add user on create', function (done) {
     controller.permission._id = null;
     spyOn(Mock.ProjectConfigurationService, "setUsersExclusiveDisjunction").and.returnValue(Promise.resolve({}));
+    spyOn(Mock.ActivityPermissionFactory, "fromJsonObject").and.callThrough();
+    spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.returnValue(Promise.resolve([
+      {
+        "_id": "5bb3d272cc5fe80077b11615",
+        "objectType": "ActivityAccessPermission",
+        "version": 2,
+        "acronym": "OTUS",
+        "exclusiveDisjunction": [
+          "pedro.silva@gmail.com"
+        ]
+      },
+      {
+        "_id": "5bb3d8ebcc5fe80077b11616",
+        "objectType": "ActivityAccessPermission",
+        "version": 2,
+        "acronym": "CSJ",
+        "exclusiveDisjunction": [
+          "pedro.silva@gmail.com"
+        ]
+      }
+    ]));
     controller.onAdd({email: "beltrano@gmail.com"});
     expect(Mock.ProjectConfigurationService.setUsersExclusiveDisjunction).toHaveBeenCalledTimes(1);
     Mock.ProjectConfigurationService.setUsersExclusiveDisjunction().then(function () {
-      expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
-      setTimeout(function () {
-        done();
-      },200);
+      Mock.ProjectConfigurationService.getCollectionOfPermissions().then(function () {
+        expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
+        expect(Mock.ActivityPermissionFactory.fromJsonObject).toHaveBeenCalledTimes(1);
+        setTimeout(function () {
+          done();
+        },100);
+      })
     });
     done();
   });
@@ -170,6 +195,9 @@ describe("Activity Settings Component Test", function () {
       updateUsersExclusiveDisjunction: function () {
         return Promise.resolve([]);
       },
+      getCollectionOfPermissions: function () {
+        return Promise.resolve();
+      }
     };
 
     Mock.mdToast = {
@@ -204,6 +232,19 @@ describe("Activity Settings Component Test", function () {
       "exclusiveDisjunction": [
         "fulano@gmail.com"
       ]
-    }
+    };
+
+    Mock.ActivityPermissionFactory= {
+      create: function() {},
+      fromJsonObject: function(obj) {
+        return{
+          _id: null,
+          objectType: "ActivityPermission",
+          acronym: obj.acronym,
+          version: obj.version,
+          exclusiveDisjunction: [],
+        }
+      }
+    };
   }
 });

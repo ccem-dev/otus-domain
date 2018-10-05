@@ -5,19 +5,15 @@
         .module('otusDomain')
         .service('RouteRulesResolver', RouteRulesResolver);
 
-    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService', 'ActivityConfigurationManagerService'];
+    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService'];
 
-    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService, ActivityConfigurationManagerService) {
+    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService) {
         var self = this;
         self.loggedUser = loggedUser;
         self.alreadyLogged = alreadyLogged;
         self.selectedProject = selectedProject;
         self.initialConfiguration = initialConfiguration;
         self.onlyOneConfiguration = onlyOneConfiguration;
-
-        self.getSurvey = function () {
-          return ActivityConfigurationManagerService.getSelectSurvey();
-        }
 
         function loggedUser() {
             var deferred = $q.defer();

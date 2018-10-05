@@ -11,10 +11,11 @@
   Controller.$inject = [
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
     '$mdToast',
-    'ActivityConfigurationManagerService'
+    'ActivityConfigurationManagerService',
+    'otusjs.model.activity.ActivityPermissionFactory'
   ];
 
-  function Controller(ProjectConfigurationService, $mdToast, ActivityConfigurationManagerService) {
+  function Controller(ProjectConfigurationService, $mdToast, ActivityConfigurationManagerService, ActivityPermissionFactory) {
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
     var DELAY = 2000;
@@ -52,7 +53,11 @@
 
     function saveSettings(MSG) {
       if(!self.permission._id){
-        ProjectConfigurationService.setUsersExclusiveDisjunction(self.permission).then(function (response) {
+        ProjectConfigurationService.setUsersExclusiveDisjunction(self.permission).then(function (data) {
+          ProjectConfigurationService.getCollectionOfPermissions().then(function (response) {
+            self.permissionList = angular.copy(response);
+            _filterUsersWithPermissionExclusiveDisjunction();
+          });
           _showMessage(MSG, DELAY);
         }).catch(function (err) {
           _showMessage('Não foi possível atualizar configurações',DELAY);
@@ -64,6 +69,14 @@
           _showMessage('Não foi possível atualizar configurações',DELAY);
         });
       }
+    }
+
+    function _filterUsersWithPermissionExclusiveDisjunction() {
+      self.permissionList.forEach(function (permission) {
+        if (permission.acronym === self.permission.acronym && permission.version == self.permission.version) {
+          self.permission = ActivityPermissionFactory.fromJsonObject(permission);
+        }
+      });
     }
 
 

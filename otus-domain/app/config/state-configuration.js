@@ -272,6 +272,9 @@
           },
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService) {
+            ActivityConfigurationRestService.initialize();
           }
         },
         views: {

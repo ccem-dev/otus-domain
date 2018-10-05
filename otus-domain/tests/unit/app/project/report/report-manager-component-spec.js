@@ -217,7 +217,9 @@ xdescribe('Report Manager Component', function() {
   var mockGetReportList;
   var injections;
 
-  beforeEach(angular.mock.module('otusDomain.dashboard'));
+  beforeEach(function (){
+      angular.mock.module('otusDomain.dashboard');
+  });
 
   beforeEach(inject(function(_$injector_, _$rootScope_, _$compile_, _$controller_, $templateCache, $q) {
     /* Injectable mocks */

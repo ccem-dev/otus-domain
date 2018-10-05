@@ -17,7 +17,8 @@
           'otus.domain.client',
           'otus.client',
           'otusDomain.user',
-          'utils'
+          'utils',
+          'ngMaterial'
         ]);
 
 }());
