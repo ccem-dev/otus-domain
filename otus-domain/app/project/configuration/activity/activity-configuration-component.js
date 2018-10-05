@@ -1,12 +1,13 @@
-(function () {
+(function() {
   'use strict';
 
   angular
     .module('otusDomain.dashboard')
     .component('activityConfiguration', {
-      controller: Controller,
+      controller: 'activityConfigurationCtrl as $ctrl',
       templateUrl: 'app/project/configuration/activity/activity-configuration-template.html'
-    });
+    })
+    .controller('activityConfigurationCtrl', Controller);
 
   Controller.$inject = [
     '$q',
@@ -19,27 +20,14 @@
     var self = this;
     var deleteConfirmDialog;
 
-    const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
+    // var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
-
-    getCollectionOfPermissions();
-
-    function onInit() {
-      _getTemplatesList();
-      deleteConfirmDialog = $mdDialog.confirm()
-        .title('Exclusão de Formulário')
-        .textContent('Você tem certeza que deseja excluir esse Formulário?')
-        .ariaLabel('exclusão de formulário')
-        .ok('Sim')
-        .cancel('Não');    }
-
-
     self.surveyTemplatesList = [];
+    self.permissionList = [];
     self.usersList = [];
-
 
     /* Public Interface*/
     self.publishTemplate = publishTemplate;
@@ -53,6 +41,19 @@
     self.uploadedObject = {};
     self.uploadedFile = {};
     self.disableSaving = true;
+
+    function onInit() {
+      getCollectionOfPermissions();
+      _getTemplatesList();
+      deleteConfirmDialog = $mdDialog.confirm()
+        .title('Exclusão de Formulário')
+        .textContent('Você tem certeza que deseja excluir esse Formulário?')
+        .ariaLabel('exclusão de formulário')
+        .ok('Sim')
+        .cancel('Não');
+    }
+
+
 
     function _getTemplatesList() {
       ProjectConfigurationService.fetchSurveysManagerConfiguration()
@@ -88,6 +89,7 @@
       reader.onload = function() {
         deferred.resolve(reader.result);
       };
+
       reader.readAsText(file);
       return deferred.promise;
     }
@@ -110,9 +112,9 @@
       var selectedAcronym = self.surveyTemplatesList[index].surveyTemplate.identity.acronym;
       var newType = self.surveyTemplatesList[index].surveyFormType;
       ProjectConfigurationService.updateSurveyTemplateType({
-        'acronym': selectedAcronym,
-        'type': newType
-      })
+          'acronym': selectedAcronym,
+          'type': newType
+        })
         .then(function() {
           $mdToast.show($mdToast.simple().textContent('Alterado com sucesso').hideDelay(2000));
 
@@ -139,7 +141,7 @@
 
     function getCollectionOfPermissions() {
       ProjectConfigurationService.getCollectionOfPermissions()
-        .then(function (permissions) {
+        .then(function(permissions) {
           self.permissionList = angular.copy(permissions);
         });
     }

@@ -4,9 +4,9 @@
   angular
     .module('otusDomain.dashboard')
     .component('activitySettings', {
-      controller: Controller,
+      controller: "activitySettingsCtrl as $ctrl",
       templateUrl: 'app/project/configuration/activity/settings/activity-settings-template.html'
-    });
+    }).controller("activitySettingsCtrl", Controller);
 
   Controller.$inject = [
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
@@ -15,8 +15,9 @@
   ];
 
   function Controller(ProjectConfigurationService, $mdToast, ActivityConfigurationManagerService) {
-    const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
-    var timeShowMsg = 5000;
+    var USER_ADD = "Usuário adicionado com sucesso.";
+    var USER_DEL = "Usuário removido com sucesso.";
+    var DELAY = 2000;
     var self = this;
     self.surveyTemplatesList = [];
     self.usersList = [];
@@ -49,18 +50,18 @@
       $mdToast.show($mdToast.simple().textContent(msg).position('right bottom').hideDelay(time));
     }
 
-    function saveSettings() {
+    function saveSettings(MSG) {
       if(!self.permission._id){
         ProjectConfigurationService.setUsersExclusiveDisjunction(self.permission).then(function (response) {
-          _showMessage('Configurações atualizadas.', 2000);
+          _showMessage(MSG, DELAY);
         }).catch(function (err) {
-          _showMessage('Não foi possível atualizar configurações',3000);
+          _showMessage('Não foi possível atualizar configurações',DELAY);
         });
       } else {
         ProjectConfigurationService.updateUsersExclusiveDisjunction(self.permission).then(function (response) {
-          _showMessage('Configurações atualizadas.', 2000);
+          _showMessage(MSG, DELAY);
         }).catch(function (err) {
-          _showMessage('Não foi possível atualizar configurações',3000);
+          _showMessage('Não foi possível atualizar configurações',DELAY);
         });
       }
     }
@@ -75,12 +76,12 @@
 
     function onAdd(user) {
       self.permission.addUser(user.email);
-      saveSettings();
+      saveSettings(USER_ADD);
     }
 
     function onRemove(user) {
       self.permission.removeUser(user.email);
-      saveSettings();
+      saveSettings(USER_DEL);
     }
 
     function _constructorUsers(users) {

@@ -1,22 +1,28 @@
 <md-content class="md-padding autocomplete" layout="column" flex>
   <h2 class="md-title">Configuração de Atividade</h2>
-  <md-card layout="column" class="md-whiteframe-2dp">
+  <div layout="column" layout-margin>
+    <span class="md-headline">Sigla: {{$ctrl.permission.acronym}}</span>
+    <span class="md-subhead">Versão: {{$ctrl.permission.version}}</span>
+  </div>
+  <md-card layout="column" flex>
 
-    <md-content layout="column" class="md-padding autocomplete">
-      <md-card-title-text layout="row">
-        <div layout="column">
-          <span class="md-headline">Sigla: {{$ctrl.permission.acronym}}</span>
-          <span class="md-subhead">Versão: {{$ctrl.permission.version}}</span>
-        </div>
+    <md-content layout="column" class="autocomplete">
+          <md-card-title layout="row" layout-align="start center" flex>
+
+
+          <span class="md-title">Cegamento entre usuários</span>
+
+
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()">
-          <md-icon>help</md-icon>
-          <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
+        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
+        <md-icon>help</md-icon>
+        <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
         </md-button>
-      </md-card-title-text>
+      </md-card-title>
 
       <div layout="column" layout-margin>
-        <span class="md-subhead">Usuários com restrições:</span>
+        <span class="md-subhead">Caso algum dos usuários listados abaixo realize a edição da atividade os demais, pertencentes ao grupo, perderam o acesso a ela.</span>
+        <span class="md-caption remove-errors-spacer">Cegar esta atividade entre os seguintes usuários:</span>
         <div layout="row" flex>
           <md-chips ng-model="$ctrl.users" md-autocomplete-snap flex
                     md-transform-chip="ctrl.transformChip($chip)"

@@ -4,13 +4,13 @@
   angular
     .module('otusDomain.dashboard')
     .component('surveyTemplateConfiguration', {
-      controller: Controller,
+      controller: "surveyTemplateConfigurationCtrl as $ctrl",
       templateUrl: 'app/project/configuration/activity/survey-template/survey-template-configuration-template.html',
       bindings: {
         surveyForm: '<',
         surveyTemplates: '='
       }
-    });
+    }).controller('surveyTemplateConfigurationCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
@@ -22,20 +22,20 @@
   ];
 
   function Controller(ProjectConfigurationService, $mdDialog, $mdToast, ActivityPermissionFactory, DashboardStateService, ActivityConfigurationManagerService) {
-    const ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
+    var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
     var _deleteConfirmDialog;
-    var _permissionList = [];
     var self = this;
     self.showSettings;
     self.usersList = [];
-
     /* Public methods */
     self.$onInit = onInit;
+
     self.showActivitySettings = showActivitySettings;
     self.deleteSurveyTemplate = deleteSurveyTemplate;
-
     function onInit() {
+
+      self.permissionList = [];
       _dialogs();
       _getCollectionOfPermissions();
       self.permission = ActivityPermissionFactory.fromJsonObject({acronym: self.surveyForm.surveyTemplate.identity.acronym, version: self.surveyForm.version});
@@ -63,7 +63,7 @@
     }
 
     function _filterUsersWithPermissionExclusiveDisjunction() {
-      _permissionList.forEach(function (permission) {
+      self.permissionList.forEach(function (permission) {
         if (permission.acronym === self.surveyForm.surveyTemplate.identity.acronym && permission.version == self.surveyForm.version) {
           self.permission = ActivityPermissionFactory.fromJsonObject(permission);
         }
@@ -73,7 +73,7 @@
     function _getCollectionOfPermissions() {
       ProjectConfigurationService.getCollectionOfPermissions()
         .then(function (data) {
-          _permissionList = data;
+          self.permissionList = data;
         }).catch(function () {
           $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
         });

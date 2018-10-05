@@ -4,7 +4,7 @@ describe('Report Manager Service', function () {
   var service;
 
   beforeEach(function () {
-    angular.mock.module('otusDomain', function ($provide) {
+    angular.mock.module('otusDomain.dashboard', function ($provide) {
       $provide.value('ReportRestService', mockReportRestService());
     })
   });
