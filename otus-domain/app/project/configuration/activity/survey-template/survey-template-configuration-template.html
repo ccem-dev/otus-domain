@@ -1,0 +1,28 @@
+<div layout="row" flex layout-align="center center" layout-padding>
+  <div layout="column" flex>
+    <div layout="row" class="layout-wrap" id="header" layout-align="start center">
+      <md-chips>
+        <md-chip><strong>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</strong></md-chip>
+      </md-chips>
+      <div layout-wrap layout="column" layout-align="start start">
+        {{$ctrl.surveyForm.surveyTemplate.identity.name}} <br>
+        <em class="md-caption remove-errors-spacer">Versão: {{$ctrl.surveyForm.version}}</em>
+      </div>
+    </div>
+  </div>
+  <div layout="row" flex="20" layout-align="end end">
+    <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">
+      <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Configurações
+      </md-tooltip>
+    </md-button>
+    <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteSurveyTemplate()">
+      <md-icon md-font-library="material-icons">delete</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Excluir
+      </md-tooltip>
+    </md-button>
+  </div>
+</div>
+<md-divider inset></md-divider>

@@ -34,17 +34,10 @@
       <md-subheader class="md-no-sticky">Projeto Selecionado</md-subheader>
       <md-list-item>
         <div layout-align="start center">
-          <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
-          <md-button id="project-user-management-menu" ng-click="dashboardMenu.openUserActivationInProject()">
-            Usuários
+          <md-icon aria-label="Atividades">assignment</md-icon>
+          <md-button id="activity-menu" ng-click="dashboardMenu.openProjectActivityConfiguration()">
+            Atividades
           </md-button>
-        </div>
-      </md-list-item>
-      <md-list-item>
-        <div layout-align="start center">
-          <md-icon md-font-library="material-icons" aria-label="Relatórios">chrome_reader_mode
-          </md-icon>
-          <md-button ng-click="dashboardMenu.openReportManager()">Relatórios</md-button>
         </div>
       </md-list-item>
       <md-list-item>
@@ -59,6 +52,21 @@
         <div layout-align="start center">
           <md-icon md-font-library="material-icons" aria-label="Configuração">settings</md-icon>
           <md-button ng-click="dashboardMenu.openProjectConfiguration()">Configuração</md-button>
+        </div>
+      </md-list-item>
+      <md-list-item>
+        <div layout-align="start center">
+          <md-icon md-font-library="material-icons" aria-label="Relatórios">chrome_reader_mode
+          </md-icon>
+          <md-button ng-click="dashboardMenu.openReportManager()">Relatórios</md-button>
+        </div>
+      </md-list-item>
+      <md-list-item>
+        <div layout-align="start center">
+          <md-icon md-svg-icon="account" aria-label="Usuários"></md-icon>
+          <md-button id="project-user-management-menu" ng-click="dashboardMenu.openUserActivationInProject()">
+            Usuários
+          </md-button>
         </div>
       </md-list-item>
     </div>

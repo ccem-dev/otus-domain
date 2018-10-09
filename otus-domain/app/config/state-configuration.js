@@ -11,6 +11,8 @@
       'USER_ACTIVATION': 'user-activation',
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
+      'PROJECT_ACTIVITY_CONFIGURATION': 'activity_configuration',
+      'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
       'REPORT_MANAGER': 'report_manager'
@@ -151,7 +153,62 @@
             controllerAs: 'fieldCenterController'
           }
         }
-      }).state({
+      })
+      .state({
+        name: 'activity_configuration',
+        url: '/project/activity_configuration',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService) {
+            ActivityConfigurationRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: mainDashBoardTemplate,
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@activity_configuration': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@activity_configuration': {
+            template: '<activity-configuration flex="80"></activity-configuration>'
+          }
+        }
+      })
+      .state({
+        name: 'activity_settings',
+        url: '/project/activity_configuration/settings',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService) {
+            ActivityConfigurationRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: mainDashBoardTemplate,
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@activity_settings': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@activity_settings': {
+            template: '<activity-settings flex="80"></activity-settings>'
+          }
+        }
+      })
+      .state({
         name: 'report_manager',
         url: '/project/report_manager',
         resolve: {
@@ -215,6 +272,9 @@
           },
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService) {
+            ActivityConfigurationRestService.initialize();
           }
         },
         views: {

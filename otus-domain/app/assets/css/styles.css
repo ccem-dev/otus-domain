@@ -135,3 +135,7 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+#header .md-chips{
+  box-shadow: 0 0px !important;
+}
