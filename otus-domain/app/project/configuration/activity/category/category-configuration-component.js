@@ -10,10 +10,10 @@
 
   Controller.$inject = [
     '$mdToast',
-    'ActivityRestService'
+    'ActivityConfigurationRestService'
   ];
 
-  function Controller($mdToast, ActivityRestService) {
+  function Controller($mdToast, ActivityConfigurationRestService) {
     var self = this;
     self.newCategoryLabel = "";
 
@@ -27,7 +27,7 @@
 
     function newCategory() {
       if (self.newCategoryLabel) {
-        ActivityRestService.save(self.newCategoryLabel).then(function (newCat) {
+        ActivityConfigurationRestService.save(self.newCategoryLabel).then(function (newCat) {
           self.newCategoryLabel = "";
           self.categories.push(newCat.data);
         });
@@ -37,7 +37,7 @@
     }
 
     function listCategories() {
-      ActivityRestService.list().then(function (result) {
+      ActivityConfigurationRestService.list().then(function (result) {
         self.categories = result;
       });
     }

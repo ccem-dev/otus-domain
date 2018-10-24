@@ -26,6 +26,8 @@
     self.goToProjectCenters = goToProjectCenters;
     self.goToProjectConfiguration = goToProjectConfiguration;
     self.goToErrorOffline = goToErrorOffline;
+    self.goToProjectActivityConfiguration = goToProjectActivityConfiguration;
+    self.goToActivitySettings = goToActivitySettings;
     self.goToProjectReportManager = goToProjectReportManager;
     self.logout = logout;
 
@@ -68,6 +70,16 @@
     function goToProjectCenters() {
       self.currentState = 'Centros';
       $state.go(APP_STATE.PROJECT_CENTER);
+    }
+
+    function goToProjectActivityConfiguration() {
+      self.currentState = 'Configurações de atividades';
+      $state.go(APP_STATE.PROJECT_ACTIVITY_CONFIGURATION);
+    }
+
+    function goToActivitySettings() {
+      self.currentState = 'Configuração de atividade';
+      $state.go(APP_STATE.ACTIVITY_SETTINGS);
     }
 
     function goToProjectReportManager() {

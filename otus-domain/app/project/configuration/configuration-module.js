@@ -1,9 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('otusDomain.project.configuration', [
-      'ngMaterial',
-      // 'ngAnimate'
-   ]);
+    angular.module('otusDomain.project.configuration', []);
 
 })();

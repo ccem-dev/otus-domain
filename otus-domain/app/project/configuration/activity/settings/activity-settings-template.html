@@ -1,0 +1,49 @@
+<md-content class="md-padding autocomplete" layout="column" flex>
+  <h2 class="md-title">Configuração de Atividade</h2>
+  <div layout="column" layout-margin>
+    <span class="md-headline">Sigla: {{$ctrl.permission.acronym}}</span>
+    <span class="md-subhead">Versão: {{$ctrl.permission.version}}</span>
+  </div>
+  <md-card layout="column" flex>
+
+    <md-content layout="column" class="autocomplete">
+          <md-card-title layout="row" layout-align="start center" flex>
+
+
+          <span class="md-title">Cegamento entre usuários</span>
+
+
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
+        <md-icon>help</md-icon>
+        <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
+        </md-button>
+      </md-card-title>
+
+      <div layout="column" layout-margin>
+        <span class="md-subhead">Caso algum dos usuários listados abaixo realize a edição da atividade os demais, pertencentes ao grupo, perderam o acesso a ela.</span>
+        <span class="md-caption remove-errors-spacer">Cegar esta atividade entre os seguintes usuários:</span>
+        <div layout="row" flex>
+          <md-chips ng-model="$ctrl.users" md-autocomplete-snap flex
+                    md-transform-chip="ctrl.transformChip($chip)"
+                    md-require-match="true" md-on-add="$ctrl.onAdd($chip)" md-on-remove="$ctrl.onRemove($chip)">
+            <md-autocomplete
+              md-selected-item="$ctrl.selectedItem"
+              md-search-text="$ctrl.searchText"
+              md-items="item in $ctrl.querySearch($ctrl.searchText)"
+              md-item-text="item.name"
+
+              placeholder="Digite o nome do usuário">
+              <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
+            </md-autocomplete>
+            <md-chip-template>
+        <span>
+          <strong>{{$chip.name}}</strong>
+        </span>
+            </md-chip-template>
+          </md-chips>
+        </div>
+      </div>
+    </md-content>
+  </md-card>
+</md-content>

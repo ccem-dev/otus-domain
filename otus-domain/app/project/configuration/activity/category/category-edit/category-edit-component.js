@@ -15,10 +15,10 @@
   Controller.$inject = [
     '$mdToast',
     '$mdDialog',
-    'ActivityRestService'
+    'ActivityConfigurationRestService'
   ];
 
-  function Controller($mdToast, $mdDialog, ActivityRestService) {
+  function Controller($mdToast, $mdDialog, ActivityConfigurationRestService) {
     var self = this;
     var _confirmRemoval;
 
@@ -41,7 +41,7 @@
 
     function saveCategory() {
       if(self.categoryData.label) {
-        ActivityRestService.update(self.categoryData).then(function () {
+        ActivityConfigurationRestService.update(self.categoryData).then(function () {
           self.onUpdate = false;
           _confirmRemoval.textContent('A categoria '+self.categoryData.label+' sera removida');
         });
@@ -53,7 +53,7 @@
     function saveDefault() {
       if(!self.categoryData.isDefault)
       {
-        ActivityRestService.setDefault(self.categoryData).then(function () {
+        ActivityConfigurationRestService.setDefault(self.categoryData).then(function () {
           self.reloadCategories();
         });
       } else {
@@ -66,7 +66,7 @@
       if(!self.categoryData.isDefault)
       {
         $mdDialog.show(_confirmRemoval).then(function() {
-          ActivityRestService.remove(self.categoryData).then(function () {
+          ActivityConfigurationRestService.remove(self.categoryData).then(function () {
             self.reloadCategories();
           });
         });

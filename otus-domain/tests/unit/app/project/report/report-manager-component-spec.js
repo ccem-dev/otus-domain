@@ -217,18 +217,28 @@ describe('Report Manager Component', function() {
   var mockGetReportList;
   var injections;
 
-  beforeEach(angular.mock.module('otusDomain'));
+  mockInjections();
+  beforeEach(function (){
+      angular.mock.module('otusDomain.dashboard', function ($provide) {
+        $provide.value("ReportManagerService", Mock.ReportManagerService);
+        $provide.value("$mdDialog", Mock.mdDialog);
+        $provide.value("OtusRestResourceService", Mock.OtusRestResourceService);
+        $provide.value("$mdToast", Mock.mdToast);
+      });
+  });
+
+
 
   beforeEach(inject(function(_$injector_, _$rootScope_, _$compile_, _$controller_, $templateCache, $q) {
     /* Injectable mocks */
 
 
     injections = {
-      ReportManagerService: _$injector_.get('ReportManagerService'),
+      ReportManagerService: Mock.ReportManagerService,
       $http: _$injector_.get('$http'),
-      $mdDialog: _$injector_.get('$mdDialog'),
-      OtusRestResourceService: _$injector_.get('OtusRestResourceService'),
-      $mdToast: _$injector_.get('$mdToast')
+      $mdDialog: Mock.mdDialog,
+      OtusRestResourceService: Mock.OtusRestResourceService,
+      $mdToast: Mock.mdToast
     };
     mockReport(_$injector_);
 
@@ -240,12 +250,14 @@ describe('Report Manager Component', function() {
     scope = _$rootScope_.$new();
     element = angular.element('<report-manager flex="80"></report-manager>');
     component = _$compile_(element)(scope);
-    scope.$digest();
+
   }));
 
   describe('Test render report component', function() {
     it('should render the component', function() {
+      scope.$digest();
       expect(element[0]).toEqual(component[0]);
+
 
     });
   });
@@ -253,7 +265,6 @@ describe('Report Manager Component', function() {
   describe("Test for component controller", function() {
     var reports = [];
     beforeEach(function() {
-    // console.log($controller);
     spyOn($controller, 'exportReport');
     $controller.exportReport(Mock.report);
     });
@@ -262,7 +273,10 @@ describe('Report Manager Component', function() {
       expect($controller.$onInit).toBeDefined();
       expect(injections.ReportManagerService.getReportList()).toBeDefined();
       expect($controller.reports).toEqual($controller.reportsOld);
-      expect($controller.ready).toEqual(true);
+      Mock.ReportManagerService.getReportList().then(function () {
+
+        expect($controller.ready).toEqual(true);
+      })
     });
 
     it("should call uploadReport method", function() {
@@ -283,6 +297,11 @@ describe('Report Manager Component', function() {
     it("should call deleteReport method", function() {
       expect($controller.deleteReport).toBeDefined();
       expect(injections.ReportManagerService.deleteReport(Mock.report)).toBeDefined();
+    });
+
+    it('should destroy reports', function () {
+      $controller.$onDestroy();
+      expect($controller.reports).toBeNull();
     });
   });
 
@@ -342,12 +361,77 @@ describe('Report Manager Component', function() {
 
   }
 
-
-
   function mockReport($injetor) {
     Mock.reportFactory = $injetor.get('ReportFactory');
     Mock.report = Mock.reportFactory.create(reportData);
-
   }
+
+
+
+  function mockInjections() {
+    Mock.ReportManagerService = {
+      getReportList: function () { return Promise.resolve()},
+      updateReport: function () { return Promise.resolve()},
+      uploadReport: function () { return Promise.resolve()},
+      deleteReport: function () { return Promise.resolve()}
+    };
+
+    Mock.mdDialog = {
+      show: function(){
+        return Promise.resolve();
+      },
+      confirm: function () {
+        var self = this;
+        self.title = function () {
+          return self;
+        };
+        self.textContent = function () {
+          return self;
+        };
+        self.ariaLabel = function () {
+          return self;
+        };
+        self.ok = function () {
+          return self;
+        };
+        self.cancel = function () {
+          return self;
+        };
+        return self;
+      }
+    };
+
+    Mock.mdToast = {
+      show: function(){},
+      simple: function(){
+        var self = this;
+        self.title = function () {
+          return self;
+        };
+        self.textContent = function () {
+          return self;
+        };
+        self.position = function () {
+          return self;
+        };
+        self.hideDelay = function () {
+          return self;
+        };
+        return self;
+      }
+    }
+
+
+    Mock.OtusRestResourceService =  {
+      getConfigurationResource: function () { return {} },
+      getProjectConfigurationResource: function () { return {} },
+      getOtusFieldCenterResource: function () { return {getAll: function(){}} }
+    };
+  }
+});
+
+
+describe('Report Manager Controller Test', function () {
+  var Mock
 
 });
