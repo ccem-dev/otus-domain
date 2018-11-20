@@ -11,5 +11,10 @@
         Permitir o cadastro de novos participantes
       </md-checkbox>
     </md-input-container>
+    <md-input-container class="md-block">
+      <md-checkbox ng-disabled="$ctrl.error" ng-model="$ctrl.autoGenerateRecruitmentNumber" ng-change="$ctrl.setAutoGenerateRecruitmentNumber()" aria-label="Gerar automaticamente o número de recrutamento dos participantes">
+        Gerar automaticamente o número de recrutamento dos participantes
+      </md-checkbox>
+    </md-input-container>
   </md-card-content>
 </md-card>

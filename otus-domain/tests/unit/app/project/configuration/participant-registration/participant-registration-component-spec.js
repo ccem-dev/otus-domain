@@ -150,8 +150,73 @@ describe('participant registration', function () {
   });
 
 
+  describe('method setAutoGenerateRecruitmentNumber enable', function(){
+    beforeEach(function () {
+      spyOn(Mock.mdToast, "show").and.callThrough();
+    });
 
+    it('should enable Auto Generate Recruitment Number', function (done) {
+      spyOn(Mock.ProjectConfigurationService, 'autoGenerateRecruitmentNumber').and.returnValue(Promise.resolve());
+      ctrl.autoGenerateRecruitmentNumber = true;
+      ctrl.setAutoGenerateRecruitmentNumber();
+      Mock.ProjectConfigurationService.autoGenerateRecruitmentNumber().then(function () {
+        setTimeout(function () {
+          expect(ctrl.autoGenerateRecruitmentNumber).toEqual(true);
+          expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
+          done();
+        })
+      })
+    });
 
+    it('should not enable Auto Generate Recruitment Number', function (done) {
+      spyOn(Mock.ProjectConfigurationService, 'autoGenerateRecruitmentNumber').and.returnValue(Promise.reject());
+      ctrl.autoGenerateRecruitmentNumber = true;
+      ctrl.setAutoGenerateRecruitmentNumber();
+      Mock.ProjectConfigurationService.autoGenerateRecruitmentNumber().then(function () {
+      }).catch(function () {
+        setTimeout(function () {
+          expect(ctrl.autoGenerateRecruitmentNumber).toEqual(true);
+          expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
+          done();
+        })
+      })
+    });
+
+  });
+
+  describe('method setAutoGenerateRecruitmentNumber disable', function(){
+    beforeEach(function () {
+      spyOn(Mock.mdToast, "show").and.callThrough();
+    });
+
+    it('should disable Auto Generate Recruitment Number', function (done) {
+      spyOn(Mock.ProjectConfigurationService, 'autoGenerateRecruitmentNumber').and.returnValue(Promise.resolve());
+      ctrl.autoGenerateRecruitmentNumber = false;
+      ctrl.setAutoGenerateRecruitmentNumber();
+      Mock.ProjectConfigurationService.autoGenerateRecruitmentNumber().then(function () {
+        setTimeout(function () {
+          expect(ctrl.autoGenerateRecruitmentNumber).toEqual(false);
+          expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
+          done();
+        })
+      })
+    });
+
+    it('should not disable Auto Generate Recruitment Number', function (done) {
+      spyOn(Mock.ProjectConfigurationService, 'autoGenerateRecruitmentNumber').and.returnValue(Promise.reject());
+      ctrl.autoGenerateRecruitmentNumber = false;
+      ctrl.setAutoGenerateRecruitmentNumber();
+      Mock.ProjectConfigurationService.autoGenerateRecruitmentNumber().then(function () {
+      }).catch(function () {
+        setTimeout(function () {
+          expect(ctrl.autoGenerateRecruitmentNumber).toEqual(false);
+          expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
+          done();
+        })
+      })
+    });
+
+  });
 
 
   function mockDialog($injector) {
@@ -165,6 +230,9 @@ describe('participant registration', function () {
         return Promise.resolve();
       },
       getProjectConfiguration:function () {
+        return Promise.resolve()
+      },
+      autoGenerateRecruitmentNumber:function () {
         return Promise.resolve()
       }
     }
