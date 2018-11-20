@@ -20,20 +20,23 @@
     var SUCCESS_MESSAGE = 'Alteração realizada com sucesso';
     var self = this;
     self.participantRegistration;
+    self.autoGenerateRecruitmentNumber;
     self.error;
 
     /* Public methods */
     self.$onInit = onInit;
     self.setAllowNewParticipants = setAllowNewParticipants;
+    self.setAutoGenerateRecruitmentNumber = setAutoGenerateRecruitmentNumber;
 
     function onInit() {
-    _checkIfAllowNewParticipants();
+     _getProjectConfiguration();
     }
 
-    function _checkIfAllowNewParticipants() {
+    function _getProjectConfiguration() {
       ProjectConfigurationService.getProjectConfiguration()
         .then(function (data) {
           self.participantRegistration = data.participantRegistration;
+          self.autoGenerateRecruitmentNumber = data.autoGenerateRecruitmentNumber;
         }).catch(function () {
           self.error = true;
           $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
@@ -57,6 +60,26 @@
           }).catch(function () {
             $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
           });
+      }
+    }
+
+    function setAutoGenerateRecruitmentNumber() {
+      if (self.autoGenerateRecruitmentNumber) {
+        ProjectConfigurationService.autoGenerateRecruitmentNumber(true)
+          .then(function (data) {
+            self.autoGenerateRecruitmentNumber = true;
+            $mdToast.show($mdToast.simple().textContent(SUCCESS_MESSAGE).hideDelay(5000));
+          }).catch(function () {
+          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
+        });
+      } else {
+        ProjectConfigurationService.autoGenerateRecruitmentNumber(false)
+          .then(function (data) {
+            self.autoGenerateRecruitmentNumber = false;
+            $mdToast.show($mdToast.simple().textContent(SUCCESS_MESSAGE).hideDelay(5000));
+          }).catch(function () {
+          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
+        });
       }
     }
   }

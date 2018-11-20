@@ -27,6 +27,7 @@
         self.updateVisualIdentityConfiguration = updateVisualIdentityConfiguration;
         self.getProjectConfiguration = getProjectConfiguration;
         self.allowNewParticipants = allowNewParticipants;
+        self.autoGenerateRecruitmentNumber = autoGenerateRecruitmentNumber;
         self.getUserResource = getUserResource;
         self.setUsersExclusiveDisjunction = setUsersExclusiveDisjunction;
         self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
@@ -151,6 +152,13 @@
                 throw new Error('REST resource is not initialized.');
             }
             return _projectConfigurationResource.allowNewParticipants({ 'permission': permission }).$promise;
+        }
+
+        function autoGenerateRecruitmentNumber(permission) {
+            if (!_projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            return _projectConfigurationResource.autoGenerateRecruitmentNumber({ 'permission': permission }).$promise;
         }
 
         function getUserResource() {
