@@ -29,6 +29,7 @@
     self.goToProjectActivityConfiguration = goToProjectActivityConfiguration;
     self.goToActivitySettings = goToActivitySettings;
     self.goToProjectReportManager = goToProjectReportManager;
+    self.goToProjectDatasourceManager = goToProjectDatasourceManager;
     self.logout = logout;
 
     init();
@@ -85,6 +86,11 @@
     function goToProjectReportManager() {
       self.currentState = 'Gerenciador de relatórios';
       $state.go(APP_STATE.REPORT_MANAGER);
+    }
+
+    function goToProjectDatasourceManager() {
+      self.currentState = 'Gerenciador de dados';
+      $state.go(APP_STATE.DATASOURCE_MANAGER);
     }
 
 

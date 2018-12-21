@@ -15,6 +15,7 @@
       'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
+      'DATASOURCE_MANAGER':'datasource_manager',
       'REPORT_MANAGER': 'report_manager'
     });
 
@@ -232,6 +233,33 @@
           },
           'system-content@report_manager': {
             template: '<report-manager flex="80"></report-manager>'
+          }
+        }
+      })
+      .state({
+        name: 'datasource_manager',
+        url: '/project/datasource_manager',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (DatasourceRestService) {
+            DatasourceRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: mainDashBoardTemplate,
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@datasource_manager': {
+            templateUrl: dashboardMenu
+          },
+          'system-content@datasource_manager': {
+            template: '<datasource-manager flex="80"></datasource-manager>'
           }
         }
       })
