@@ -50,20 +50,5 @@
           return $q.reject(e);
         });
     }
-
-    // function _updateDatasource(datasource) {
-    //   return DatasourceRestService.update(datasource)
-    //     .then(function (response) {
-    //       if (response.data) {
-    //         datasource.refresh(response.data);
-    //         return response.data;
-    //       } else {
-    //         return $q.reject(response.MESSAGE);
-    //       }
-    //     })
-    //     .catch(function (e) {
-    //       return $q.reject(e);
-    //     });
-    // }
   }
 }());

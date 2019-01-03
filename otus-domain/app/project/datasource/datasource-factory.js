@@ -18,12 +18,6 @@
     return self;
   }
 
-  function insertData(file) {
-
-    return;
-
-  }
-
   function Datasource(datasourceData) {
     var self = this;
 

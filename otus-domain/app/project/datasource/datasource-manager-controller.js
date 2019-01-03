@@ -17,6 +17,8 @@
 
     self.ready = false;
     self.error = false;
+    self.pointAndComma = ';';
+    self.comma = ',';
     self.datasources = [];
     self.uploadDatasource = {
       'callback': uploadDatasource,
@@ -46,10 +48,12 @@
     }
 
     function uploadDatasource(file) {
+      self.delimiterv = self.pointAndComma;
       var formFile = {
         file : file,
         id : self.id,
-        name : self.name};
+        name : self.name,
+        delimiter : self.delimiter};
 
       DatasourceManagerService.uploadDatasource(formFile)
         .then(function (datasource) {
