@@ -6,19 +6,17 @@
     .controller('datasourceManagerController', Controller);
 
   Controller.$inject = [
+    '$timeout',
     'DatasourceManagerService',
-    '$mdDialog',
     'OtusRestResourceService',
     '$mdToast'
   ];
 
-  function Controller(DatasourceManagerService, $mdDialog, OtusRestResourceService, $mdToast) {
+  function Controller($timeout,DatasourceManagerService, OtusRestResourceService, $mdToast) {
     var self = this;
-    var confirmDialog;
 
     self.ready = false;
     self.error = false;
-    self.disableSaving = true;
     self.datasources = [];
     self.uploadDatasource = {
       'callback': uploadDatasource,
@@ -27,7 +25,7 @@
 
     self.$onInit = onInit;
     self.exportDatasource = exportDatasource;
-    self.publishDatasource = publishDatasource;
+    self.identificationData = identificationData;
 
     function onInit() {
       _getDatasourceList();
@@ -38,7 +36,7 @@
         .then(function (datasourceList) {
           self.ready = true;
           self.datasources = datasourceList;
-           if (self.datasources.length === 0) {
+          if (self.datasources.length === 0) {
             _messages('Nenhuma fonte de dados adicionado');
           }
         })
@@ -48,10 +46,14 @@
     }
 
     function uploadDatasource(file) {
-      DatasourceManagerService.uploadDatasources(file)
+      var formFile = {
+        file : file,
+        id : self.id,
+        name : self.name};
+
+      DatasourceManagerService.uploadDatasource(formFile)
         .then(function (datasource) {
           self.datasources.push(datasource);
-          self.disableSaving = false;
           _messages("Dados salvo com sucesso.");
         })
         .catch(function (err) {
@@ -59,23 +61,14 @@
         });
     }
 
-    function publishDatasource() {
-
+    function identificationData(datasource) {
+      self.id = datasource.id;
+      self.name = datasource.name;
     }
 
     function exportDatasource(datasource) {
       var name = datasource.name+'_'.concat(new Date().toLocaleDateString());
-      alasql('SELECT [value] AS [Nome] INTO CSV("'+name+'.csv",{headers:true}) FROM ?', [datasource.data]);
-    }
-
-    function _confirmUpdateDialog() {
-      confirmDialog = $mdDialog.confirm()
-        .title('Atualizar Dados')
-        .textContent('Você tem certeza que deseja atualizar esse Dados?')
-        .ariaLabel('atualização de dados')
-        .ok('Sim')
-        .cancel('Não');
-      return confirmDialog;
+      alasql('SELECT * INTO CSV("'+name+'.csv",{headers:false}) FROM ?', [datasource.data]);
     }
 
     function _messages(msg) {

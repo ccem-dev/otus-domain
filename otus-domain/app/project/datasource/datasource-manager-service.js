@@ -15,7 +15,7 @@
     var self = this;
 
     self.getDatasourceList = getDatasourceList;
-    self.uploadDatasources = uploadDatasources;
+    self.uploadDatasource = uploadDatasource;
 
     onInit();
 
@@ -36,19 +36,8 @@
         });
     }
 
-    function uploadDatasources(file) {
-      try {
-        var datasource = DatasourceFactory.fromCSVFile(file);
-      } catch (err) {
-        return $q.reject(err);
-      }
-
-      _updateDatasource(datasource);
-
-    }
-
-    function _updateDatasource(datasource) {
-      return DatasourceRestService.update(datasource)
+    function uploadDatasource(datasource) {
+     return DatasourceRestService.update(datasource)
         .then(function (response) {
           if (response.data) {
             datasource.refresh(response.data);
@@ -61,5 +50,20 @@
           return $q.reject(e);
         });
     }
+
+    // function _updateDatasource(datasource) {
+    //   return DatasourceRestService.update(datasource)
+    //     .then(function (response) {
+    //       if (response.data) {
+    //         datasource.refresh(response.data);
+    //         return response.data;
+    //       } else {
+    //         return $q.reject(response.MESSAGE);
+    //       }
+    //     })
+    //     .catch(function (e) {
+    //       return $q.reject(e);
+    //     });
+    // }
   }
 }());

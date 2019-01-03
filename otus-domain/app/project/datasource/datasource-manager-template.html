@@ -5,18 +5,6 @@
       <input type="text" ng-model="search.name" placeholder="Buscar por nome da fonte de dado" />
     </md-input-container>
     <span flex></span>
-    <md-button class="md-icon-button md-primary" md-tooltip="Enviar" datasource-upload="$ctrl.uploadDatasource">
-      <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
-      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-        Enviar
-      </md-tooltip>
-    </md-button>
-    <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.disableSaving" ng-click="$ctrl.publishDatasource()">
-      <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
-      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-        Salvar
-      </md-tooltip>
-    </md-button>
   </div>
   <md-card-title-text>
     <span class="md-body-2">Fonte de dados</span>
@@ -27,7 +15,14 @@
               <span flex> {{ datasource.name }}</span>
               <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">{{datasource.name}}</md-tooltip>
             </div>
-            <div layout="column">
+            <div layout="row">
+              <md-button class="md-icon-button md-default-theme" md-tooltip="Enviar" ng-click="$ctrl.
+identificationData(datasource)" datasource-upload="$ctrl.uploadDatasource">
+                <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
+                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                  Enviar
+                </md-tooltip>
+              </md-button>
               <md-button class="md-icon-button md-default-theme" md-tooltip="Baixar" ng-click="$ctrl.exportDatasource(datasource)">
                 <md-icon md-font-library="material-icons" aria-label="Load">file_download</md-icon>
                 <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">
