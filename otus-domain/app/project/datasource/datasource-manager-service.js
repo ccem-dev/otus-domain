@@ -26,7 +26,7 @@
     function getDatasourceList() {
       return DatasourceRestService.list()
         .then(function (response) {
-          var datasourceList = response.data;
+          var datasourceList = response.data.data;
           return datasourceList.map(function (datasourceData) {
             return DatasourceFactory.create(datasourceData);
           });
@@ -36,8 +36,9 @@
         });
     }
 
+    // TODO:
     function uploadDatasource(datasource) {
-     return DatasourceRestService.update(datasource)
+      return DatasourceRestService.update(datasource)
         .then(function (response) {
           if (response.data) {
             datasource.refresh(response.data);

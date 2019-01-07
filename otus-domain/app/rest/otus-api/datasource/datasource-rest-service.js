@@ -15,33 +15,41 @@
 
     /* Public methods */
     self.initialize = initialize;
+    self.create = create;
     self.update = update;
-    self.getById = getById;
     self.list = list;
+    self.getById = getById;
 
     function initialize() {
       _rest = OtusRestResourceService.getDatasourceResourceFactory();
     }
 
-    function list() {
+    function create(data) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.list().$promise
-    }
+      };
+      return _rest.create(data);
+    };
 
     function update(data) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.update(data).$promise;
-    }
+      };
+      return _rest.update(data);
+    };
+
+    function list() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      };
+      return _rest.list();
+    };
 
     function getById(id) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getById({id: id}).$promise
-    }
+      };
+      return _rest.getById({ id: id });
+    };
   }
 }());
