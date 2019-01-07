@@ -15,12 +15,20 @@
 
     /* Public methods */
     self.initialize = initialize;
+    self.create = create;
     self.update = update;
     self.getById = getById;
     self.list = list;
 
     function initialize() {
       _rest = OtusRestResourceService.getDatasourceResourceFactory();
+    }
+
+    function create(data) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.create(data).$promise
     }
 
     function list() {

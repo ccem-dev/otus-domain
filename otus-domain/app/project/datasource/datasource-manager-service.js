@@ -15,7 +15,8 @@
     var self = this;
 
     self.getDatasourceList = getDatasourceList;
-    self.uploadDatasource = uploadDatasource;
+    self.updateDatasource = updateDatasource;
+    self.createDatasource = createDatasource;
 
     onInit();
 
@@ -36,8 +37,23 @@
         });
     }
 
-    function uploadDatasource(datasource) {
+    function updateDatasource(datasource) {
      return DatasourceRestService.update(datasource)
+        .then(function (response) {
+          if (response.data) {
+            datasource.refresh(response.data);
+            return response.data;
+          } else {
+            return $q.reject(response.MESSAGE);
+          }
+        })
+        .catch(function (e) {
+          return $q.reject(e);
+        });
+    }
+
+    function createDatasource(datasource) {
+      return DatasourceRestService.create(datasource)
         .then(function (response) {
           if (response.data) {
             datasource.refresh(response.data);

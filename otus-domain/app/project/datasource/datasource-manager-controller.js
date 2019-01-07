@@ -20,6 +20,8 @@
     self.pointAndComma = ';';
     self.comma = ',';
     self.datasources = [];
+    self.disableSaving = true;
+    self.identification = false;
     self.uploadDatasource = {
       'callback': uploadDatasource,
       'type': '.csv'
@@ -28,6 +30,7 @@
     self.$onInit = onInit;
     self.exportDatasource = exportDatasource;
     self.identificationData = identificationData;
+    self.publishDatasource = publishDatasource;
 
     function onInit() {
       _getDatasourceList();
@@ -48,26 +51,48 @@
     }
 
     function uploadDatasource(file) {
-      self.delimiterv = self.pointAndComma;
-      var formFile = {
-        file : file,
-        id : self.id,
-        name : self.name,
-        delimiter : self.delimiter};
+      var formdata = new FormData();
+      self.delimiter = self.pointAndComma;
 
-      DatasourceManagerService.uploadDatasource(formFile)
-        .then(function (datasource) {
-          self.datasources.push(datasource);
-          _messages("Dados salvo com sucesso.");
-        })
-        .catch(function (err) {
-          _messages("Não foi possível salvar o dado: " + err);
-        });
+      formdata.append('file',file);
+      formdata.append('id ',self.id);
+      formdata.append('name',self.name);
+      formdata.append('delimiter',self.delimiter);
+
+      if(self.identification){
+        self.identification = false;
+
+        DatasourceManagerService.updateDatasource(formdata)
+          .then(function (datasource) {
+            // self.datasources.push(datasource);
+            // _getDatasourceList();
+            _messages("Dados salvo com sucesso.");
+          })
+          .catch(function (err) {
+            _messages("Não foi possível salvar o dado: " + err);
+          });
+      }else {
+        console.log('Passou');
+        DatasourceManagerService.createDatasource(formdata)
+          .then(function (datasource) {
+            // self.datasources.push(datasource);
+            _messages("Dados salvo com sucesso.");
+          })
+          .catch(function (err) {
+            _messages("Não foi possível salvar o dado: " + err);
+          });
+      }
+
     }
 
     function identificationData(datasource) {
       self.id = datasource.id;
       self.name = datasource.name;
+      self.identification = true;
+    }
+
+    function publishDatasource() {
+
     }
 
     function exportDatasource(datasource) {

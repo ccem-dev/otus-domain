@@ -29,13 +29,9 @@
           for (var i = 0; i < files.length; i++) {
             var file = files[i];
             if (!file.type.match('csv')) continue;
-            var picReader = new FileReader();
-            picReader.addEventListener("load", function(event) {
-              var textFile = event.target;
-
-              callback(textFile.result);
-            });
-            picReader.readAsText(file);
+            if (file.length !== 0) {
+              callback(file);
+            }
           }
         });
       });
