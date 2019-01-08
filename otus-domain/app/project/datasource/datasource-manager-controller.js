@@ -83,12 +83,11 @@
 
       formdata.append('file', file);
       formdata.append('delimiter', DELIMITER);
-      formdata.append('id', self.createFile);
+      formdata.append('id', self.createFile.toLowerCase());
       formdata.append('name', self.createFile.toUpperCase());
 
       DatasourceManagerService.createDatasource(formdata)
         .then(function (datasource) {
-          console.log(datasource);
           if (datasource.data) {
             _messages("Dados salvo com sucesso.");
           } else if (datasource.MESSAGE) {
