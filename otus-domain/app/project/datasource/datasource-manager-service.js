@@ -32,13 +32,11 @@
           return datasourceList.map(function (datasourceData) {
             return DatasourceFactory.create(datasourceData);
           });
-        })
-        .catch(function (e) {
+        }).catch(function (e) {
           throw e;
         });
     }
 
-    // TODO:
     function updateDatasource(datasource) {
       return DatasourceRestService.update(datasource)
         .then(function (response) {
@@ -47,8 +45,7 @@
           } else {
             return $q.reject(response.MESSAGE);
           }
-        })
-        .catch(function (e) {
+        }).catch(function (e) {
           return $q.reject(e);
         });
     }
@@ -61,8 +58,7 @@
           } else {
             return $q.reject(response.MESSAGE);
           }
-        })
-        .catch(function (e) {
+        }).catch(function (e) {
           return $q.reject(e);
         });
     }

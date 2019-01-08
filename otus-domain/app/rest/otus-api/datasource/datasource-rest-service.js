@@ -49,7 +49,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       };
-      return _rest.getById({ id: id });
+      return _rest.getById(id);
     };
   }
 }());
