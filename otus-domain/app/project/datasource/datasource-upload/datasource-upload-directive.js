@@ -28,10 +28,7 @@
           var files = event.target.files;
           for (var i = 0; i < files.length; i++) {
             var file = files[i];
-            if (!file.type.match('csv')) continue;
-            if (file.length !== 0) {
               callback(file);
-            }
           }
         });
       });

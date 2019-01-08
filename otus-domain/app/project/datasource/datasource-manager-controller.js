@@ -6,19 +6,17 @@
     .controller('datasourceManagerController', Controller);
 
   Controller.$inject = [
-    '$timeout',
     'DatasourceManagerService',
     'OtusRestResourceService',
     '$mdToast'
   ];
 
-  function Controller($timeout,DatasourceManagerService, OtusRestResourceService, $mdToast) {
+  function Controller(DatasourceManagerService, OtusRestResourceService, $mdToast) {
     var self = this;
 
     self.ready = false;
     self.error = false;
-    self.pointAndComma = ';';
-    self.comma = ',';
+    self.delimiter = ';';
     self.datasources = [];
     self.disableSaving = true;
     self.identification = false;
@@ -30,7 +28,6 @@
     self.$onInit = onInit;
     self.exportDatasource = exportDatasource;
     self.identificationData = identificationData;
-    self.publishDatasource = publishDatasource;
 
     function onInit() {
       _getDatasourceList();
@@ -52,31 +49,43 @@
 
     function uploadDatasource(file) {
       var formdata = new FormData();
-      self.delimiter = self.pointAndComma;
 
       formdata.append('file',file);
-      formdata.append('id ',self.id);
+      formdata.append('id',self.id);
       formdata.append('name',self.name);
       formdata.append('delimiter',self.delimiter);
 
-      if(self.identification){
+      if (!file.type.match('csv')) {
+        _messages('Nenhuma fonte de dados adicionado, arquivo diferente de csv!');
+      } else if(self.identification){
         self.identification = false;
 
         DatasourceManagerService.updateDatasource(formdata)
           .then(function (datasource) {
+            console.log(datasource);
+            if(datasource.data){
+              _messages("Dados salvo com sucesso.");
+            } else if(datasource.MESSAGE.includes('same')){
+              _messages("Existem mesmos elementos na fonte de dados");
+            } else if(datasource.MESSAGE.includes('missing')){
+              _messages("Há elementos ausentes na fonte de dados.");
+            }
             // self.datasources.push(datasource);
             // _getDatasourceList();
-            _messages("Dados salvo com sucesso.");
           })
           .catch(function (err) {
             _messages("Não foi possível salvar o dado: " + err);
           });
       }else {
-        console.log('Passou');
         DatasourceManagerService.createDatasource(formdata)
           .then(function (datasource) {
-            // self.datasources.push(datasource);
-            _messages("Dados salvo com sucesso.");
+            if(datasource.data){
+              _messages("Dados salvo com sucesso.");
+            } else if(datasource.MESSAGE.includes('same')){
+              _messages("Existem mesmos elementos na fonte de dados");
+            } else if(datasource.MESSAGE.includes('missing')){
+              _messages("Há elementos ausentes na fonte de dados.");
+            }
           })
           .catch(function (err) {
             _messages("Não foi possível salvar o dado: " + err);
@@ -89,10 +98,6 @@
       self.id = datasource.id;
       self.name = datasource.name;
       self.identification = true;
-    }
-
-    function publishDatasource() {
-
     }
 
     function exportDatasource(datasource) {
@@ -108,6 +113,5 @@
           .hideDelay(3000)
       );
     }
-
   }
 }());

@@ -18,6 +18,7 @@
     self.updateDatasource = updateDatasource;
     self.createDatasource = createDatasource;
 
+
     onInit();
 
     function onInit() {
@@ -27,7 +28,7 @@
     function getDatasourceList() {
       return DatasourceRestService.list()
         .then(function (response) {
-          var datasourceList = response.data;
+          var datasourceList = response.data.data;
           return datasourceList.map(function (datasourceData) {
             return DatasourceFactory.create(datasourceData);
           });
@@ -37,11 +38,11 @@
         });
     }
 
+    // TODO:
     function updateDatasource(datasource) {
-     return DatasourceRestService.update(datasource)
+      return DatasourceRestService.update(datasource)
         .then(function (response) {
           if (response.data) {
-            datasource.refresh(response.data);
             return response.data;
           } else {
             return $q.reject(response.MESSAGE);
@@ -56,7 +57,6 @@
       return DatasourceRestService.create(datasource)
         .then(function (response) {
           if (response.data) {
-            datasource.refresh(response.data);
             return response.data;
           } else {
             return $q.reject(response.MESSAGE);

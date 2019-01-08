@@ -5,32 +5,15 @@
       <input type="text" ng-model="search.name" placeholder="Buscar por nome da fonte de dado" />
     </md-input-container>
     <span flex></span>
+    <md-card-title-text>
+      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" datasource-upload="$ctrl.uploadDatasource">
+        <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
+        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+          Enviar
+        </md-tooltip>
+      </md-button>
+    </md-card-title-text>
   </div>
-  <md-card-title layout="column">
-    <span class="md-body-2">Nova Fonte de dados</span>
-    <div>
-      <form>
-        <md-input-container flex-gt-md="50" flex="80">
-          <label>Nome da fonte:</label>
-          <input ng-model="$ctrl.newDatasource">
-        </md-input-container>
-
-        <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.disableSaving" ng-click="$ctrl.publishDatasource()">
-          <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
-          <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-            Salvar
-          </md-tooltip>
-        </md-button>
-
-        <md-button class="md-icon-button md-primary" md-tooltip="Enviar" datasource-upload="$ctrl.uploadDatasource">
-          <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
-          <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-            Enviar
-          </md-tooltip>
-        </md-button>
-      </form>
-    </div>
-  </md-card-title>
   <md-card-title-text>
     <span class="md-body-2">Fonte de dados</span>
     <md-list>
