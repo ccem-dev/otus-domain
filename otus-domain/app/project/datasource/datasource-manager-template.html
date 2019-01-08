@@ -6,7 +6,7 @@
     </md-input-container>
     <span flex></span>
     <md-card-title-text>
-      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" datasource-upload="$ctrl.uploadDatasource">
+      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" datasource-upload="$ctrl.action">
         <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Enviar
@@ -17,14 +17,16 @@
   <md-card-title-text>
     <span class="md-body-2">Fonte de dados</span>
     <md-list>
-      <md-list-item  ng-if="$ctrl.ready" ng-repeat="datasource in $ctrl.datasources | orderBy: datasource.name | filter : search" aria-label="fonte de dado">
+      <md-list-item ng-if="$ctrl.ready" ng-repeat="datasource in $ctrl.datasources | orderBy: datasource.name | filter : search"
+        aria-label="fonte de dado">
         <div layout="row" layout-align="space-between center" flex>
           <div layout="column">
             <span flex> {{ datasource.name }}</span>
             <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">{{ datasource.name }}</md-tooltip>
           </div>
           <div layout="row">
-            <md-button class="md-icon-button md-default-theme" md-tooltip="Enviar" ng-click="$ctrl.identificationData(datasource)" datasource-upload="$ctrl.uploadDatasource">
+            <md-button class="md-icon-button md-default-theme" md-tooltip="Enviar" ng-click="$ctrl.updateAction(datasource)"
+              datasource-upload="$ctrl.action">
               <md-icon md-font-library="material-icons" aria-label="Load">create</md-icon>
               <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
                 Editar

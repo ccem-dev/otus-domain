@@ -12,26 +12,24 @@
   ];
 
   function Controller(DatasourceManagerService, OtusRestResourceService, $mdToast) {
+    const DELIMITER = ';';
     var self = this;
 
     self.ready = false;
-    self.error = false;
-    self.delimiter = ';';
+    self.isUpdate = false;
     self.datasources = [];
-    self.disableSaving = true;
-    self.identification = false;
-    self.uploadDatasource = {
-      'callback': uploadDatasource,
+    self.action = {
+      'callback': action,
       'type': '.csv'
     };
 
     self.$onInit = onInit;
     self.exportDatasource = exportDatasource;
-    self.identificationData = identificationData;
+    self.updateAction = updateAction;
 
     function onInit() {
       _getDatasourceList();
-    };
+    }
 
     function _getDatasourceList() {
       DatasourceManagerService.getDatasourceList()
@@ -39,69 +37,78 @@
           self.ready = true;
           self.datasources = datasourceList;
           if (self.datasources.length === 0) {
-            _messages('Nenhuma fonte de dados adicionado');
-          };
-        })
-        .catch(function (err) {
-          self.error = true;
+            _messages('Nenhuma fonte de dados adicionado.');
+          }
+        }).catch(function (err) {
+          _messages('Ocorreu um erro. Tente novamente mais tarde.');
         });
-    };
+    }
 
-    function uploadDatasource(file) {
+    function action(file) {
+      if (!file.type.match('csv')) {
+        _messages('Arquivo incompatível, o formato do arquivo deve csv.');
+      } else if (self.isUpdate) {
+        _update(file);
+      } else {
+        _create(file);
+      }
+    }
+
+    function _update(file) {
+      self.isUpdate = false;
       var formdata = new FormData();
       formdata.append('file', file);
+      formdata.append('delimiter', DELIMITER);
       formdata.append('id', self.id);
       formdata.append('name', self.name);
-      formdata.append('delimiter', self.delimiter);
 
-      if (!file.type.match('csv')) {
-        _messages('Nenhuma fonte de dados adicionado, arquivo diferente de csv!');
-      } else if (self.identification) {
-        self.identification = false;
+      DatasourceManagerService.updateDatasource(formdata)
+        .then(function (datasource) {
+          if (datasource.data) {
+            _messages("Dados salvo com sucesso.");
+          } else if (datasource.MESSAGE.includes('same')) {
+            _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
+          } else if (datasource.MESSAGE.includes('missing')) {
+            _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
+          }
+          _getDatasourceList();
+        }).catch(function (err) {
+          _messages("Não foi possível salvar o dado: " + err);
+        });
+    }
 
-        DatasourceManagerService.updateDatasource(formdata)
-          .then(function (datasource) {
-            console.log(datasource);
-            if (datasource.data) {
-              _messages("Dados salvo com sucesso.");
-            } else if (datasource.MESSAGE.includes('same')) {
-              _messages("Existem mesmos elementos na fonte de dados");
-            } else if (datasource.MESSAGE.includes('missing')) {
-              _messages("Há elementos ausentes na fonte de dados.");
-            }
-            // self.datasources.push(datasource);
-            // _getDatasourceList();
-          })
-          .catch(function (err) {
-            _messages("Não foi possível salvar o dado: " + err);
-          });
-      } else {
-        DatasourceManagerService.createDatasource(formdata)
-          .then(function (datasource) {
-            if (datasource.data) {
-              _messages("Dados salvo com sucesso.");
-            } else if (datasource.MESSAGE.includes('same')) {
-              _messages("Existem mesmos elementos na fonte de dados");
-            } else if (datasource.MESSAGE.includes('missing')) {
-              _messages("Há elementos ausentes na fonte de dados.");
-            }
-          })
-          .catch(function (err) {
-            _messages("Não foi possível salvar o dado: " + err);
-          });
-      };
-    };
+    function _create(file) {
+      self.createFile = file.name.replace(".csv", "");
+      formdata.append('file', file);
+      formdata.append('delimiter', DELIMITER);
+      formdata.append('id', self.createFile);
+      formdata.append('name', self.createFile.toUpperCase());
 
-    function identificationData(datasource) {
+      DatasourceManagerService.createDatasource(formdata)
+        .then(function (datasource) {
+          if (datasource.data) {
+            _messages("Dados salvo com sucesso.");
+          } else if (datasource.MESSAGE.includes('same')) {
+            _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
+          } else if (datasource.MESSAGE.includes('missing')) {
+            _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
+          }
+          _getDatasourceList();
+        }).catch(function (err) {
+          _messages("Não foi possível salvar o dado: " + err);
+        });
+    }
+
+    function updateAction(datasource) {
       self.id = datasource.id;
       self.name = datasource.name;
-      self.identification = true;
-    };
+      self.isUpdate = true;
+    }
 
     function exportDatasource(datasource) {
       var name = datasource.name + '_'.concat(new Date().toLocaleDateString());
       alasql('SELECT * INTO CSV("' + name + '.csv",{headers:false}) FROM ?', [datasource.data]);
-    };
+    }
 
     function _messages(msg) {
       $mdToast.show(
@@ -110,6 +117,6 @@
           .position('bottom left')
           .hideDelay(3000)
       );
-    };
+    }
   }
 }());
