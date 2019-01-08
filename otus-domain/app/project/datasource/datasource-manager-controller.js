@@ -78,7 +78,9 @@
     }
 
     function _create(file) {
+      var formdata = new FormData();
       self.createFile = file.name.replace(".csv", "");
+
       formdata.append('file', file);
       formdata.append('delimiter', DELIMITER);
       formdata.append('id', self.createFile);
@@ -86,12 +88,11 @@
 
       DatasourceManagerService.createDatasource(formdata)
         .then(function (datasource) {
+          console.log(datasource);
           if (datasource.data) {
             _messages("Dados salvo com sucesso.");
-          } else if (datasource.MESSAGE.includes('same')) {
-            _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
-          } else if (datasource.MESSAGE.includes('missing')) {
-            _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
+          } else if (datasource.MESSAGE) {
+            _messages("Fonte de dados já existente.");
           }
           _getDatasourceList();
         }).catch(function (err) {
