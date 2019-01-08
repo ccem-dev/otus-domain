@@ -49,16 +49,16 @@
 
     function uploadDatasource(file) {
       var formdata = new FormData();
-
       formdata.append('file',file);
-      formdata.append('id',self.id);
-      formdata.append('name',self.name);
       formdata.append('delimiter',self.delimiter);
 
       if (!file.type.match('csv')) {
-        _messages('Nenhuma fonte de dados adicionado, arquivo diferente de csv!');
+        _messages('Arquivo incompatível, o formato do arquivo deve csv.');
       } else if(self.identification){
         self.identification = false;
+
+        formdata.append('id',self.id);
+        formdata.append('name',self.name);
 
         DatasourceManagerService.updateDatasource(formdata)
           .then(function (datasource) {
@@ -66,9 +66,9 @@
             if(datasource.data){
               _messages("Dados salvo com sucesso.");
             } else if(datasource.MESSAGE.includes('same')){
-              _messages("Existem mesmos elementos na fonte de dados");
+              _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
             } else if(datasource.MESSAGE.includes('missing')){
-              _messages("Há elementos ausentes na fonte de dados.");
+              _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
             }
             // self.datasources.push(datasource);
             // _getDatasourceList();
@@ -77,15 +77,23 @@
             _messages("Não foi possível salvar o dado: " + err);
           });
       }else {
+        self.createFile = file.name.replace(".csv","");
+        console.log(self.createFile);
+        formdata.append('id',self.createFile);
+        formdata.append('name',self.createFile.toUpperCase());
+
+        console.log(self.createFile.toUpperCase());
+
         DatasourceManagerService.createDatasource(formdata)
           .then(function (datasource) {
             if(datasource.data){
               _messages("Dados salvo com sucesso.");
             } else if(datasource.MESSAGE.includes('same')){
-              _messages("Existem mesmos elementos na fonte de dados");
+              _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
             } else if(datasource.MESSAGE.includes('missing')){
-              _messages("Há elementos ausentes na fonte de dados.");
+              _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
             }
+            _getDatasourceList();
           })
           .catch(function (err) {
             _messages("Não foi possível salvar o dado: " + err);

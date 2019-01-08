@@ -38,7 +38,6 @@
         });
     }
 
-    // TODO:
     function updateDatasource(datasource) {
       return DatasourceRestService.update(datasource)
         .then(function (response) {
