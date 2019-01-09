@@ -12,7 +12,7 @@
   ];
 
   function Controller(DatasourceManagerService, OtusRestResourceService, $mdToast) {
-    const DELIMITER = ';';
+    var DELIMITER = ';';
     var self = this;
 
     self.ready = false;
