@@ -79,12 +79,12 @@
 
     function _create(file) {
       var formdata = new FormData();
-      self.createFile = file.name.replace(".csv", "");
+      self.createFileName = file.name.replace(".csv", "");
 
       formdata.append('file', file);
       formdata.append('delimiter', DELIMITER);
-      formdata.append('id', self.createFile.toLowerCase());
-      formdata.append('name', self.createFile.toUpperCase());
+      formdata.append('id', self.createFileName.toLowerCase());
+      formdata.append('name', self.createFileName.toUpperCase());
 
       DatasourceManagerService.createDatasource(formdata)
         .then(function (datasource) {
@@ -106,7 +106,7 @@
     }
 
     function exportDatasource(datasource) {
-      var name = datasource.name + '_'.concat(new Date().toLocaleDateString());
+      var name = datasource.name;
       alasql('SELECT * INTO CSV("' + name + '.csv",{headers:false}) FROM ?', [datasource.data]);
     }
 
