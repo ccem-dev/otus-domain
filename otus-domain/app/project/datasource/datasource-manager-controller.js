@@ -3,7 +3,7 @@
 
   angular
     .module('otusDomain.dashboard')
-    .controller('datasourceManagerController', Controller);
+    .controller('DatasourceManagerController', Controller);
 
   Controller.$inject = [
     'DatasourceManagerService',

@@ -1,7 +1,5 @@
 describe('Datasource Manager Controller', function() {
   const FILE = 'fake1;extraction';
-  const ID = 'medicamentos';
-  const NAME = 'MEDICAMENTOS';
 
   var controller;
   var Mock = [];
@@ -21,14 +19,21 @@ describe('Datasource Manager Controller', function() {
         $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
         $provide.value("$mdToast", Mock.mdToast);
       });
+    });
 
-      inject(function (_$injector_, _$controller_) {
+    beforeEach(function () {
+
+      inject(function (_$controller_) {
         Injections = {
           $mdToast: Mock.mdToast,
           DatasourceManagerService: Mock.DatasourceManagerService,
           OtusRestResourceService: Mock.OtusRestResourceService
         };
-        controller = _$controller_('datasourceManagerController', Injections);
+        controller = _$controller_('DatasourceManagerController', Injections);
+        spyOn(Injections.DatasourceManagerService, "getDatasourceList").and.callThrough();
+        spyOn(Injections.DatasourceManagerService, "createDatasource").and.callThrough();
+        spyOn(Injections.DatasourceManagerService, "updateDatasource").and.callThrough();
+        controller.$onInit();
       });
 
     });
@@ -37,21 +42,47 @@ describe('Datasource Manager Controller', function() {
       expect(controller).toBeDefined();
     });
 
-    it('onInit check and test return', function () {
-      expect(controller.$onInit).toBeDefined();
-      expect(Injections.DatasourceManagerService._getDatasourceList()).toBeDefined();
-      // Mock.DatasourceManagerService._getDatasourceList().then(function () {
-      //   expect(controller.ready).toBeTruthy();
-      // });
-    });
-    it('updateAction check and test return', function () {
-      expect(controller.updateAction).toBeDefined();
-      expect(Injections.DatasourceManagerService._updateDatasource(FILE)).toBeDefined();
+    describe("Test for controller", function() {
+
+      beforeEach(function() {
+        spyOn(controller, "exportDatasource");
+        controller.exportDatasource(Mock.datasourceList);
+      });
+
+      it('onInit check and test return', function () {
+        expect(controller.$onInit).toBeDefined();
+        expect(Injections.DatasourceManagerService.getDatasourceList()).toBeDefined();
+        Mock.DatasourceManagerService.getDatasourceList().then(function () {
+          expect(controller.ready).toBeTruthy();
+        });
+      });
+
+      it('updateAction check', function () {
+        expect(controller.updateAction).toBeDefined();
+      });
+
+      it("action check method", function() {
+        expect(controller.action).toBeDefined();
+        expect(Injections.DatasourceManagerService.createDatasource(FILE)).toBeDefined();
+        expect(Injections.DatasourceManagerService.updateDatasource(Mock.datasourceList)).toBeDefined();
+      });
+
+      it('exportDatasource check and test return', function () {
+        expect(controller.exportDatasource).toBeDefined();
+        expect(controller.exportDatasource).toHaveBeenCalledWith(Mock.datasourceList);
+      });
+
     });
 
   });
 
   function mockInjections() {
+    Mock.datasourceList = {
+      "id": "medicamentos",
+      "name": "MEDICAMENTOS",
+      "data": "fake1;extraction"
+    }
+
     Mock.mdToast = {
       show: function(){},
       simple: function(){
@@ -73,9 +104,9 @@ describe('Datasource Manager Controller', function() {
     }
 
     Mock.DatasourceManagerService = {
-      _getDatasourceList: function () { return Promise.resolve()},
-      _updateDatasource: function () { return Promise.resolve()},
-      _createDatasource: function () { return Promise.resolve()}
+      getDatasourceList: function () { return Promise.resolve()},
+      updateDatasource: function () { return Promise.resolve()},
+      createDatasource: function () { return Promise.resolve()}
     };
     Mock.OtusRestResourceService =  {
       getConfigurationResource: function () { return {} },
