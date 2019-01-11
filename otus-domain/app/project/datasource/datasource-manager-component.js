@@ -1,9 +1,14 @@
-(function () {
+(function() {
   'use strict';
 
   angular
     .module('otusDomain.dashboard')
-    .controller('DatasourceManagerController', Controller);
+    .component('datasourceManager', {
+      controller: 'datasourceManagerController as $ctrl',
+      templateUrl: 'app/project/datasource/datasource-manager-template.html'
+    })
+
+  .controller('datasourceManagerController', Controller);
 
   Controller.$inject = [
     'DatasourceManagerService',
@@ -40,13 +45,13 @@
             _messages('Nenhuma fonte de dados adicionado.');
           }
         }).catch(function (err) {
-          _messages('Ocorreu um erro. Tente novamente mais tarde.');
-        });
+        _messages('Ocorreu um erro. Tente novamente mais tarde.');
+      });
     }
 
     function action(file) {
       if (!file.type.match('csv')) {
-        _messages('Arquivo incompatível, o formato do arquivo deve csv.');
+        _messages('Arquivo incompatível, o formato do arquivo deve ser csv.');
       } else if (self.isUpdate) {
         _update(file);
       } else {
@@ -73,8 +78,8 @@
           }
           _getDatasourceList();
         }).catch(function (err) {
-          _messages("Não foi possível salvar o dado: " + err);
-        });
+        _messages("Não foi possível salvar o dado: " + err);
+      });
     }
 
     function _create(file) {
@@ -95,8 +100,8 @@
           }
           _getDatasourceList();
         }).catch(function (err) {
-          _messages("Não foi possível salvar o dado: " + err);
-        });
+        _messages("Não foi possível salvar o dado: " + err);
+      });
     }
 
     function updateAction(datasource) {
@@ -119,4 +124,5 @@
       );
     }
   }
+
 }());

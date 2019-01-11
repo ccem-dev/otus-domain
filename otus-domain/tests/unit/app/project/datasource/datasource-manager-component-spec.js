@@ -1,4 +1,4 @@
-describe('Datasource Manager Controller', function() {
+describe('Datasource Manager Component', function() {
   const FILE = 'fake1;extraction';
 
   var controller;
@@ -9,7 +9,7 @@ describe('Datasource Manager Controller', function() {
     angular.mock.module('otusDomain.dashboard');
   });
 
-  describe('controllerInstance', function () {
+  describe('componentInstance', function () {
 
     beforeEach(function () {
       mockInjections();
@@ -24,12 +24,13 @@ describe('Datasource Manager Controller', function() {
     beforeEach(function () {
 
       inject(function (_$controller_) {
+
         Injections = {
           $mdToast: Mock.mdToast,
           DatasourceManagerService: Mock.DatasourceManagerService,
           OtusRestResourceService: Mock.OtusRestResourceService
         };
-        controller = _$controller_('DatasourceManagerController', Injections);
+        controller = _$controller_('datasourceManagerController', Injections);
         spyOn(Injections.DatasourceManagerService, "getDatasourceList").and.callThrough();
         spyOn(Injections.DatasourceManagerService, "createDatasource").and.callThrough();
         spyOn(Injections.DatasourceManagerService, "updateDatasource").and.callThrough();

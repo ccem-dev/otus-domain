@@ -1,10 +1,9 @@
 describe('Datasource Upload Directive', function() {
   var Mock = {};
-  var directive,
-    element,
+  var FILE = 'fake1;extraction';
+  var element,
     $compile,
     $rootScope,
-    $injector,
     scope;
 
 
@@ -18,37 +17,33 @@ describe('Datasource Upload Directive', function() {
       $rootScope = _$rootScope_;
 
       Mock.uploadConfig = {
-        'callback': function(file) {return file},
+        'callback': function (file) {return file},
         'type': 'csv'
       };
-
     });
-
   });
 
   describe('parameters passing - ', function() {
     beforeEach(function() {
       scope = $rootScope.$new();
       scope.datasourceUpload = Mock.uploadConfig;
-
       spyOn(scope.datasourceUpload, 'callback').and.callThrough();
 
     });
 
-    it('should call the type resolver', function() {
-      var $element = '<button datasource-upload="datasourceUpload"></button>';
-      element = $compile($element)(scope);
-      element[0].click();
-      scope.$digest();
+    it('should call check', function() {
+      element = angular.element( '<md-button datasource-upload="datasourceUpload"></md-button>');
+      element = $compile(element)(scope);
 
       expect(element).toBeDefined();
-      expect(element.html()).toEqual('');
       expect(scope.datasourceUpload).toEqual(Mock.uploadConfig);
       expect(typeof(scope.datasourceUpload.callback)).toEqual('function');
-      // toHaveBeenCalled();
+      expect(scope.datasourceUpload.type).toEqual('csv');
+      expect(element.scope().datasourceUpload.callback(FILE)).toEqual(FILE);
+      expect(scope.datasourceUpload.callback).toHaveBeenCalled();
+      expect(Mock.uploadConfig.callback).toHaveBeenCalled();
+
     });
 
   });
-
-
 });
