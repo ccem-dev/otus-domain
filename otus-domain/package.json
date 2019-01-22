@@ -39,8 +39,7 @@
     "moment": "2.12.0",
     "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#v1.11.1",
     "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
-    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#v1.16",
-    "xlsx-core": "^1.0.3"
+    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#v1.16"
   },
   "devDependencies": {
     "angular-mocks": "1.4.9",

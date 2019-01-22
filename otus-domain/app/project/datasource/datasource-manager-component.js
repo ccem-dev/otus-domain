@@ -78,20 +78,20 @@
           }
           _getDatasourceList();
         }).catch(function (err) {
-        _messages("Não foi possível salvar o dado: " + err);
+        _messages("Não foi possível salvar o datasource: " + err);
       });
     }
 
     function _create(file) {
-      var formdata = new FormData();
+      var formData = new FormData();
       self.createFileName = file.name.replace(".csv", "");
 
-      formdata.append('file', file);
-      formdata.append('delimiter', DELIMITER);
-      formdata.append('id', self.createFileName.toLowerCase());
-      formdata.append('name', self.createFileName.toUpperCase());
+      formData.append('file', file);
+      formData.append('delimiter', DELIMITER);
+      formData.append('id', self.createFileName.toLowerCase());
+      formData.append('name', self.createFileName.toUpperCase());
 
-      DatasourceManagerService.createDatasource(formdata)
+      DatasourceManagerService.createDatasource(formData)
         .then(function (datasource) {
           if (datasource.data) {
             _messages("Dados salvo com sucesso.");
@@ -100,7 +100,7 @@
           }
           _getDatasourceList();
         }).catch(function (err) {
-        _messages("Não foi possível salvar o dado: " + err);
+        _messages("Não foi possível salvar o datasource: " + err);
       });
     }
 
