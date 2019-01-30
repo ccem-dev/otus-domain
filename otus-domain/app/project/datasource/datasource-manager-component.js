@@ -8,7 +8,7 @@
       templateUrl: 'app/project/datasource/datasource-manager-template.html'
     })
 
-  .controller('datasourceManagerController', Controller);
+    .controller('datasourceManagerController', Controller);
 
   Controller.$inject = [
     'DatasourceManagerService',
@@ -84,7 +84,8 @@
 
     function _create(file) {
       var formData = new FormData();
-      self.createFileName = file.name.replace(".csv", "");
+
+      self.createFileName = file.name.replace(/\.csv/gi, "").replace(/ \([0-9]\)/gi, "");
 
       formData.append('file', file);
       formData.append('delimiter', DELIMITER);
