@@ -97,7 +97,11 @@
           if (datasource.data) {
             _messages("Dados salvo com sucesso.");
           } else if (datasource.MESSAGE) {
-            _messages("Fonte de dados já existente.");
+            if(datasource.MESSAGE.match("duplicated")){
+              _messages("Existem elementos duplicados na fonte de dados.");
+            } else {
+              _messages("Fonte de dados já existente.");
+            }
           }
           _getDatasourceList();
         }).catch(function (err) {
