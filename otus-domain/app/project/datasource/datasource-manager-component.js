@@ -13,10 +13,11 @@
   Controller.$inject = [
     'DatasourceManagerService',
     'OtusRestResourceService',
+    "$mdDialog",
     '$mdToast'
   ];
 
-  function Controller(DatasourceManagerService, OtusRestResourceService, $mdToast) {
+  function Controller(DatasourceManagerService, OtusRestResourceService,$mdDialog, $mdToast) {
     var DELIMITER = ';';
     var self = this;
 
@@ -98,7 +99,13 @@
             _messages("Dados salvo com sucesso.");
           } else if (datasource.MESSAGE) {
             if(datasource.MESSAGE.match("duplicated")){
-              _messages("Existem elementos duplicados na fonte de dados.");
+              var alertContent = "";
+              datasource.CONTENT.forEach((element) => {
+                alertContent = alertContent.concat(" " + element.concat(" <br> "));
+              });
+              var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
+              $mdDialog
+                .show(alert)
             } else {
               _messages("Fonte de dados já existente.");
             }
