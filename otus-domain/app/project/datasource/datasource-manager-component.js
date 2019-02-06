@@ -50,13 +50,13 @@
       });
     }
 
-    function action(file) {
+    function action(file,ev) {
       if (!file.type.match('csv')) {
         _messages('Arquivo incompatível, o formato do arquivo deve ser csv.');
       } else if (self.isUpdate) {
         _update(file);
       } else {
-        _create(file);
+        _create(ev,file);
       }
     }
 
@@ -76,50 +76,66 @@
             _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
           } else if (datasource.MESSAGE.includes('missing')) {
             _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
+          } else if(datasource.MESSAGE.includes("Data Validation Fail: ID")){
+            var alert = $mdDialog.alert().title("Não foi possível salvar o datasource").content("Entre em contato com o suporte").ok('ok');
+            $mdDialog
+              .show(alert)
           }
           _getDatasourceList();
         }).catch(function (err) {
-        _messages("Não foi possível salvar o datasource: " + err);
+          _messages("Não foi possível salvar o datasource: " + err);
       });
     }
 
-    function _create(file) {
+    function _create(ev,file) {
       var formData = new FormData();
 
-      self.createFileName = file.name.replace(/\.csv/gi, "").replace(/ \([0-9]\)/gi, "");
+      var confirm = $mdDialog.prompt()
+        .title('Qual sera o nome da fonte de dados?')
+        .placeholder('Nome da fonte de dados')
+        .ariaLabel('Nome da fonte de dados')
+        .targetEvent(ev)
+        .ok('Salvar')
+        .cancel('Voltar');
 
-      formData.append('file', file);
-      formData.append('delimiter', DELIMITER);
-      formData.append('id', self.createFileName.toLowerCase());
-      formData.append('name', self.createFileName.toUpperCase());
+      $mdDialog.show(confirm).then(function(result) {
+        self.createFileName = file.name.replace(/\.csv/gi, "").replace(/ \([0-9]\)/gi, "");
 
-      DatasourceManagerService.createDatasource(formData)
-        .then(function (datasource) {
-          if (datasource.data) {
-            _messages("Dados salvo com sucesso.");
-          } else if (datasource.MESSAGE) {
-            if(datasource.MESSAGE.match("duplicated")){
-              var alertContent = "";
-              datasource.CONTENT.forEach((element) => {
-                if(element.match("extraction")){
-                  var  extractionValue = element.split(":");
-                  alertContent = alertContent.concat("Valor de extração: "+extractionValue[1].concat(" <br> "));
-                }
-                if(element.match("value")){
-                  var  value = element.split(":");
-                  alertContent = alertContent.concat("Valor: "+value[1].concat(" <br> "));
-                }
-              });
-              var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
-              $mdDialog
-                .show(alert)
-            } else {
-              _messages("Fonte de dados já existente.");
+        formData.append('file', file);
+        formData.append('delimiter', DELIMITER);
+        formData.append('id', result.toLowerCase());
+        formData.append('name', result.toUpperCase());
+
+        DatasourceManagerService.createDatasource(formData)
+          .then(function (datasource) {
+            if (datasource.data) {
+              _messages("Dados salvo com sucesso.");
+            } else if (datasource.MESSAGE) {
+              if(datasource.MESSAGE.match("duplicated")){
+                var alertContent = "";
+                datasource.CONTENT.forEach((element) => {
+                  if(element.match("extraction")){
+                    var  extractionValue = element.split(":");
+                    alertContent = alertContent.concat("Valor de extração: "+extractionValue[1].concat(" <br> "));
+                  }
+                  if(element.match("value")){
+                    var  value = element.split(":");
+                    alertContent = alertContent.concat("Valor: "+value[1].concat(" <br> "));
+                  }
+                });
+                var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
+                $mdDialog
+                  .show(alert)
+              } else {
+                _messages("Fonte de dados já existente.");
+              }
             }
-          }
-          _getDatasourceList();
-        }).catch(function (err) {
-        _messages("Não foi possível salvar o datasource: " + err);
+            _getDatasourceList();
+          }).catch(function (err) {
+          _messages("Não foi possível salvar o datasource: " + err);
+        });
+      }, function() {
+        $scope.status = 'You didn\'t name your dog.';
       });
     }
 

@@ -28,7 +28,7 @@
           var files = event.target.files;
           for (var i = 0; i < files.length; i++) {
             var file = files[i];
-              callback(file);
+              callback(file,event);
           }
         });
       });
