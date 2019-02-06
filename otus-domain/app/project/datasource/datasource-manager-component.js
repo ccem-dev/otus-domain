@@ -101,7 +101,14 @@
             if(datasource.MESSAGE.match("duplicated")){
               var alertContent = "";
               datasource.CONTENT.forEach((element) => {
-                alertContent = alertContent.concat(" " + element.concat(" <br> "));
+                if(element.match("extraction")){
+                  var  extractionValue = element.split(":");
+                  alertContent = alertContent.concat("Valor de extração: "+extractionValue[1].concat(" <br> "));
+                }
+                if(element.match("value")){
+                  var  value = element.split(":");
+                  alertContent = alertContent.concat("Valor: "+value[1].concat(" <br> "));
+                }
               });
               var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
               $mdDialog
