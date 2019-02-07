@@ -80,7 +80,7 @@
             _messages("Fonte de dados já existente, você tem a opção de editar caso desejar.");
           } else if (datasource.MESSAGE.includes('missing')) {
             _messages("Não foi possível atualizar a fonte de dados. Há elementos ausentes em comparação ao arquivo anterior.");
-          } else if(datasource.MESSAGE.includes("Data Validation Fail: ID")){
+          } else if(datasource.MESSAGE.includes("Data Validation Fail: ID")) {
             var alert = $mdDialog.alert().title("Não foi possível salvar o datasource").content("Entre em contato com o suporte").ok('ok');
             $mdDialog
               .show(alert)
@@ -125,8 +125,6 @@
         .then(function (datasource) {
           if (datasource.data) {
             _messages("Dados salvo com sucesso.");
-            self.newDatasourceFile = null;
-            self.insertingNewDatasource = false;
           } else if (datasource.MESSAGE) {
             if(datasource.MESSAGE.match("duplicated")){
               var alertContent = "";
@@ -143,16 +141,25 @@
               var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
               $mdDialog
                 .show(alert)
+                .then(function () {
+                })
             } else {
               _messages("Fonte de dados já existente.");
             }
           }
+          _exitNewDatasourceState();
           _getDatasourceList();
         }).catch(function (err) {
         _messages("Não foi possível salvar o datasource: " + err);
+        _exitNewDatasourceState();
       });
     }
 
+    function _exitNewDatasourceState(){
+      self.newDatasourceFile = null;
+      self.insertingNewDatasource = false;
+      self.newDatasourceName = "";
+    }
     function updateAction(datasource) {
       self.id = datasource.id;
       self.name = datasource.name;
