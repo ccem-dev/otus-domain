@@ -31,9 +31,13 @@
 
     self.$onInit = onInit;
     self.exportDatasource = exportDatasource;
+    self.saveNewDatasource = saveNewDatasource;
     self.updateAction = updateAction;
+    self.newDatasourceAction = newDatasourceAction;
+    self.datasourceNameFilter = datasourceNameFilter;
 
     function onInit() {
+      self.newDatasourceName = "";
       _getDatasourceList();
     }
 
@@ -50,13 +54,13 @@
       });
     }
 
-    function action(file,ev) {
+    function action(file) {
       if (!file.type.match('csv')) {
         _messages('Arquivo incompatível, o formato do arquivo deve ser csv.');
       } else if (self.isUpdate) {
         _update(file);
       } else {
-        _create(ev,file);
+        _create(file);
       }
     }
 
@@ -87,55 +91,65 @@
       });
     }
 
-    function _create(ev,file) {
+    function _create(file) {
+      self.newDatasourceFile = file;
+    }
+    
+    function datasourceNameFilter(e) {
+      var keyCode = event.keyCode;
+      var smallLetters = (keyCode >= 97 && keyCode <= 122);
+      var capitalLetters = (keyCode >= 65 && keyCode <= 90);
+      var numbers = (keyCode >= 48 && keyCode <= 57);
+      var underLine = (keyCode === 95);
+
+      if (!(smallLetters || capitalLetters || numbers || underLine)){
+        e.preventDefault();
+      }
+    }
+
+    function newDatasourceAction() {
+      self.insertingNewDatasource = true;
+    }
+
+    function saveNewDatasource(){
       var formData = new FormData();
 
-      var confirm = $mdDialog.prompt()
-        .title('Qual sera o nome da fonte de dados?')
-        .placeholder('Nome da fonte de dados')
-        .ariaLabel('Nome da fonte de dados')
-        .targetEvent(ev)
-        .ok('Salvar')
-        .cancel('Voltar');
+      self.createFileName = self.newDatasourceName.replace(/\.csv/gi, "").replace(/ \([0-9]\)/gi, "");
 
-      $mdDialog.show(confirm).then(function(result) {
-        self.createFileName = file.name.replace(/\.csv/gi, "").replace(/ \([0-9]\)/gi, "");
+      formData.append('file', self.newDatasourceFile);
+      formData.append('delimiter', DELIMITER);
+      formData.append('id', self.createFileName.toLowerCase());
+      formData.append('name', self.createFileName.toUpperCase());
 
-        formData.append('file', file);
-        formData.append('delimiter', DELIMITER);
-        formData.append('id', result.toLowerCase());
-        formData.append('name', result.toUpperCase());
-
-        DatasourceManagerService.createDatasource(formData)
-          .then(function (datasource) {
-            if (datasource.data) {
-              _messages("Dados salvo com sucesso.");
-            } else if (datasource.MESSAGE) {
-              if(datasource.MESSAGE.match("duplicated")){
-                var alertContent = "";
-                datasource.CONTENT.forEach((element) => {
-                  if(element.match("extraction")){
-                    var  extractionValue = element.split(":");
-                    alertContent = alertContent.concat("Valor de extração: "+extractionValue[1].concat(" <br> "));
-                  }
-                  if(element.match("value")){
-                    var  value = element.split(":");
-                    alertContent = alertContent.concat("Valor: "+value[1].concat(" <br> "));
-                  }
-                });
-                var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
-                $mdDialog
-                  .show(alert)
-              } else {
-                _messages("Fonte de dados já existente.");
-              }
+      DatasourceManagerService.createDatasource(formData)
+        .then(function (datasource) {
+          if (datasource.data) {
+            _messages("Dados salvo com sucesso.");
+            self.newDatasourceFile = null;
+            self.insertingNewDatasource = false;
+          } else if (datasource.MESSAGE) {
+            if(datasource.MESSAGE.match("duplicated")){
+              var alertContent = "";
+              datasource.CONTENT.forEach(function(element){
+                if(element.match("extraction")){
+                  var  extractionValue = element.split(":");
+                  alertContent = alertContent.concat("Valor de extração: "+extractionValue[1].concat(" <br> "));
+                }
+                if(element.match("value")){
+                  var  value = element.split(":");
+                  alertContent = alertContent.concat("Valor: "+value[1].concat(" <br> "));
+                }
+              });
+              var alert = $mdDialog.alert().title("Existem elementos duplicados na fonte de dados: ").htmlContent(alertContent).ok('ok');
+              $mdDialog
+                .show(alert)
+            } else {
+              _messages("Fonte de dados já existente.");
             }
-            _getDatasourceList();
-          }).catch(function (err) {
-          _messages("Não foi possível salvar o datasource: " + err);
-        });
-      }, function() {
-        $scope.status = 'You didn\'t name your dog.';
+          }
+          _getDatasourceList();
+        }).catch(function (err) {
+        _messages("Não foi possível salvar o datasource: " + err);
       });
     }
 

@@ -18,6 +18,7 @@ describe('Datasource Manager Component', function() {
         $provide.value('DatasourceManagerService', Mock.DatasourceManagerService);
         $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
         $provide.value("$mdToast", Mock.mdToast);
+        $provide.value("$mdDialog", Mock.mdDialog);
       });
     });
 
