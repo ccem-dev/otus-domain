@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusDomain')
+    .module('otusDomain.rest')
     .service('DatasourceRestService', Service);
 
   Service.$inject = [

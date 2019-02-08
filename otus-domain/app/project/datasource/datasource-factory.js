@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusDomain.dashboard')
+    .module('otusDomain.project.datasource')
     .factory('DatasourceFactory', factory);
 
   function factory() {

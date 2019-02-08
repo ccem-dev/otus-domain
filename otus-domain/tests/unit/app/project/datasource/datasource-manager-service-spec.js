@@ -4,7 +4,7 @@ describe('Datasource Manager Service', function() {
   var service;
 
   beforeEach(function () {
-    angular.mock.module('otusDomain.dashboard');
+    angular.mock.module('otusDomain.project.datasource');
   });
 
   describe('serviceInstance', function () {
@@ -12,7 +12,7 @@ describe('Datasource Manager Service', function() {
     beforeEach(function () {
       mockInjections();
 
-      angular.mock.module('otusDomain.dashboard', function ($provide) {
+      angular.mock.module('otusDomain.rest', function ($provide) {
         $provide.value('DatasourceRestService', Mock.DatasourceRestService);
       });
     });
@@ -71,7 +71,7 @@ describe('Datasource Manager Service', function() {
       "id": "medicamentos",
       "name": "MEDICAMENTOS",
       "data": "fake1;extraction"
-    }
+    };
 
     Mock.DatasourceRestService = {
       initialize: function () {

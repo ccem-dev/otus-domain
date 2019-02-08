@@ -7,7 +7,7 @@ describe('Datasource Rest Service', function() {
 
 
   beforeEach(function () {
-    angular.mock.module('otusDomain');
+    angular.mock.module('otusDomain.rest');
   });
 
   describe('serviceInstance', function () {
@@ -15,7 +15,7 @@ describe('Datasource Rest Service', function() {
     beforeEach(function () {
       mockInjections();
 
-      angular.mock.module('otusDomain', function ($provide) {
+      angular.mock.module('otusDomain.rest', function ($provide) {
         $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
       });
     });

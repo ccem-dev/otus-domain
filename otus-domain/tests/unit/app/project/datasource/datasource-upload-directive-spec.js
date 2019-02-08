@@ -8,7 +8,7 @@ describe('Datasource Upload Directive', function() {
 
 
   beforeEach(function () {
-    angular.mock.module('otusDomain.dashboard');
+    angular.mock.module('otusDomain.project.datasource');
   });
 
   beforeEach(function() {

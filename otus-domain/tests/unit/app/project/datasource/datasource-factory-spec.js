@@ -2,7 +2,7 @@ describe('Datasource Factory', function () {
   var factory;
 
   beforeEach(function () {
-    angular.mock.module('otusDomain.dashboard');
+    angular.mock.module('otusDomain.project.datasource');
   });
 
   describe('The creation method', function () {

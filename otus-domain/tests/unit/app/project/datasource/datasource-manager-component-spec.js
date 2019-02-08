@@ -6,7 +6,7 @@ describe('Datasource Manager Component', function() {
   var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('otusDomain.dashboard');
+    angular.mock.module('otusDomain.project.datasource');
   });
 
   describe('componentInstance', function () {
@@ -14,22 +14,25 @@ describe('Datasource Manager Component', function() {
     beforeEach(function () {
       mockInjections();
 
-      angular.mock.module('otusDomain.dashboard', function ($provide) {
+      angular.mock.module('otusDomain.project.datasource', function ($provide) {
         $provide.value('DatasourceManagerService', Mock.DatasourceManagerService);
-        $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
         $provide.value("$mdToast", Mock.mdToast);
-        $provide.value("$mdDialog", Mock.mdDialog);
+        $provide.value("$mdDialog", Mock.$mdDialog);
+      });
+
+      angular.mock.module('otusDomain.rest', function ($provide) {
+        $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
       });
     });
 
     beforeEach(function () {
 
-      inject(function (_$controller_) {
+      inject(function (_$controller_,_$injector_) {
 
         Injections = {
           $mdToast: Mock.mdToast,
-          DatasourceManagerService: Mock.DatasourceManagerService,
-          OtusRestResourceService: Mock.OtusRestResourceService
+          DatasourceManagerService: _$injector_.get('DatasourceManagerService'),
+          OtusRestResourceService: _$injector_.get('OtusRestResourceService')
         };
         controller = _$controller_('datasourceManagerController', Injections);
         spyOn(Injections.DatasourceManagerService, "getDatasourceList").and.callThrough();
