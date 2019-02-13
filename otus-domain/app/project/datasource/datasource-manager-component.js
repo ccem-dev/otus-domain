@@ -12,22 +12,25 @@
 
   Controller.$inject = [
     'DatasourceManagerService',
-    'OtusRestResourceService',
     "$mdDialog",
     '$mdToast'
   ];
 
-  function Controller(DatasourceManagerService, OtusRestResourceService,$mdDialog, $mdToast) {
+  function Controller(DatasourceManagerService, $mdDialog, $mdToast) {
     var DELIMITER = ';';
     var self = this;
 
     self.ready = false;
     self.loadFile = false;
-    self.isLoading = function () {
+    self.isLoading = isLoading;
+    
+    function isLoading() {
      return self.loadFile;
     };
 
-    self.initLoadFile = function(){
+    self.initLoadFile = initLoadFile;
+    
+    function initLoadFile(){
       self.loadFile = !self.loadFile;
     }
 

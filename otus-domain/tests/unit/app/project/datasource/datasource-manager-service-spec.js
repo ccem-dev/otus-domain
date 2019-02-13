@@ -2,9 +2,12 @@ describe('Datasource Manager Service', function() {
   var Mock = {};
   var Injections = {};
   var service;
+  var originalTimeout;
 
   beforeEach(function () {
     angular.mock.module('otusDomain.project.datasource');
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   });
 
   describe('serviceInstance', function () {
@@ -14,6 +17,7 @@ describe('Datasource Manager Service', function() {
 
       angular.mock.module('otusDomain.rest', function ($provide) {
         $provide.value('DatasourceRestService', Mock.DatasourceRestService);
+        $provide.value('DatasourceFactory', {create:()=>{}})
       });
     });
 
@@ -39,39 +43,61 @@ describe('Datasource Manager Service', function() {
     });
 
     describe("Test for service", function() {
-      it('createDatasource check and test return', function () {
+      it('createDatasource check and test return', function (done) {
         expect(service.createDatasource).toBeDefined();
-        expect(Injections.DatasourceRestService.create()).toBeDefined();
-        Mock.DatasourceRestService.create(Mock.datasourceList).then(function (data) {
-          expect(data.data).toEqual(Mock.datasourceList);
+        service.createDatasource(jasmine.any(Object)).then(function(){
+          expect(Injections.DatasourceRestService.create()).toBeDefined();
+          Mock.DatasourceRestService.create(Mock.datasourceList).then(function (data) {
+            expect(data.data).toEqual(Mock.datasourceList);
+            done();
+          });
+          done();
         });
+        done();
       });
 
-      it('getDatasourceList check and test return', function () {
+      it('getDatasourceList check and test return', function (done) {
         expect(service.getDatasourceList).toBeDefined();
-        expect(Injections.DatasourceRestService.list()).toBeDefined();
-        Mock.DatasourceRestService.list().then(function (data) {
-          expect(data.data).toEqual(Mock.datasourceList);
+        service.getDatasourceList().then(function(){
+          expect(Injections.DatasourceRestService.list()).toBeDefined();
+          Mock.DatasourceRestService.list().then(function (response) {
+            expect(response.data.data).toEqual(Mock.datasourceList);
+            done();
+          });
+          done();
         });
+        done();
       });
 
-      it('updateDatasource check and test return', function () {
+      it('updateDatasource check and test return', function (done) {
         expect(service.updateDatasource).toBeDefined();
-        expect(Injections.DatasourceRestService.update()).toBeDefined();
-        Mock.DatasourceRestService.update(Mock.datasourceList).then(function (data) {
-          expect(data.data).toEqual(Mock.datasourceList);
+        service.updateDatasource(Mock.datasourceList).then(function(){
+          expect(Injections.DatasourceRestService.update()).toBeDefined();
+          Mock.DatasourceRestService.update(Mock.datasourceList).then(function (data) {
+            expect(data.data).toEqual(Mock.datasourceList);
+            done();
+          });
+          done();
         });
+        done();
       });
     });
 
   });
 
   function mockInjections() {
-    Mock.datasourceList = {
+    Mock.datasourceList = [
+      {
       "id": "medicamentos",
       "name": "MEDICAMENTOS",
       "data": "fake1;extraction"
-    };
+      },
+      {
+        "id": "teste",
+        "name": "TESTE",
+        "data": "fake1;extraction"
+      }
+  ];
 
     Mock.DatasourceRestService = {
       initialize: function () {
@@ -80,7 +106,7 @@ describe('Datasource Manager Service', function() {
         return Promise.resolve({data:datasource});
       },
       list: function () {
-        return Promise.resolve({data: Mock.datasourceList});
+        return Promise.resolve({data: {data:Mock.datasourceList}});
       },
       update: function (datasource) {
         return Promise.resolve({data:datasource});

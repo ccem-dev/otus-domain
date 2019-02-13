@@ -3,7 +3,6 @@ describe('Datasource Manager Component', function() {
 
   var controller;
   var Mock = [];
-  var Injections = {};
 
   beforeEach(function () {
     angular.mock.module('otusDomain.project.datasource');
@@ -29,15 +28,10 @@ describe('Datasource Manager Component', function() {
 
       inject(function (_$controller_,_$injector_) {
 
-        Injections = {
-          $mdToast: Mock.mdToast,
-          DatasourceManagerService: _$injector_.get('DatasourceManagerService'),
-          OtusRestResourceService: _$injector_.get('OtusRestResourceService')
-        };
-        controller = _$controller_('datasourceManagerController', Injections);
-        spyOn(Injections.DatasourceManagerService, "getDatasourceList").and.callThrough();
-        spyOn(Injections.DatasourceManagerService, "createDatasource").and.callThrough();
-        spyOn(Injections.DatasourceManagerService, "updateDatasource").and.callThrough();
+        controller = _$controller_('datasourceManagerController');
+        spyOn(Mock.DatasourceManagerService, "getDatasourceList").and.callThrough();
+        spyOn(Mock.DatasourceManagerService, "createDatasource").and.callThrough();
+        spyOn(Mock.DatasourceManagerService, "updateDatasource").and.callThrough();
         controller.$onInit();
       });
 
@@ -56,10 +50,18 @@ describe('Datasource Manager Component', function() {
 
       it('onInit check and test return', function () {
         expect(controller.$onInit).toBeDefined();
-        expect(Injections.DatasourceManagerService.getDatasourceList()).toBeDefined();
+        expect(Mock.DatasourceManagerService.getDatasourceList()).toBeDefined();
         Mock.DatasourceManagerService.getDatasourceList().then(function () {
           expect(controller.ready).toBeTruthy();
         });
+      });
+
+      it('isLoading check', function(){
+        expect(controller.loadFile).toBeFalsy();
+        expect(typeof controller.isLoading).toEqual("function");
+        expect(controller.isLoading()).toEqual(false);
+        controller.initLoadFile();
+        expect(controller.isLoading()).toEqual(true);
       });
 
       it('updateAction check', function () {
@@ -68,8 +70,8 @@ describe('Datasource Manager Component', function() {
 
       it("action check method", function() {
         expect(controller.action).toBeDefined();
-        expect(Injections.DatasourceManagerService.createDatasource(FILE)).toBeDefined();
-        expect(Injections.DatasourceManagerService.updateDatasource(Mock.datasourceList)).toBeDefined();
+        expect(Mock.DatasourceManagerService.createDatasource(FILE)).toBeDefined();
+        expect(Mock.DatasourceManagerService.updateDatasource(Mock.datasourceList)).toBeDefined();
       });
 
       it('exportDatasource check and test return', function () {
