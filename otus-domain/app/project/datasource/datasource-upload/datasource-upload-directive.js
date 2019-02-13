@@ -25,11 +25,13 @@
         fileUploadElement = _createInput();
         fileUploadElement.click();
         fileUploadElement.addEventListener('change', function(event) {
+          $scope.datasourceUpload.loading();
           var files = event.target.files;
           for (var i = 0; i < files.length; i++) {
             var file = files[i];
               callback(file,event);
           }
+          $scope.datasourceUpload.loading();
         });
       });
 

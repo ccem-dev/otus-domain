@@ -22,11 +22,21 @@
     var self = this;
 
     self.ready = false;
+    self.loadFile = false;
+    self.isLoading = function () {
+     return self.loadFile;
+    };
+
+    self.initLoadFile = function(){
+      self.loadFile = !self.loadFile;
+    }
+
     self.isUpdate = false;
     self.datasources = [];
     self.action = {
       'callback': action,
-      'type': '.csv'
+      'type': '.csv',
+      'loading' : self.initLoadFile
     };
 
     self.$onInit = onInit;
@@ -60,7 +70,9 @@
       } else if (self.isUpdate) {
         _update(file);
       } else {
+
         _create(file);
+        $("#newDatasourceName").focus();
       }
     }
 
@@ -109,6 +121,12 @@
 
     function newDatasourceAction() {
       self.insertingNewDatasource = true;
+
+    }
+    self.cancelUpload = cancelUpload;
+    function cancelUpload() {
+      delete self.newDatasourceFile;
+      delete self.insertingNewDatasource;
     }
 
     function saveNewDatasource(){

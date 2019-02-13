@@ -1,4 +1,5 @@
 <md-content class="md-padding" layout="column">
+    
   <h2 class="md-headline">Configuração de fonte de dados</h2>
   <div layout="row" layout-align="end center" ng-show="!$ctrl.insertingNewDatasource">
     <md-input-container flex-gt-md="50" flex="60">
@@ -6,7 +7,7 @@
     </md-input-container>
     <span flex></span>
     <md-card-title-text>
-      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" ng-click="$ctrl.newDatasourceAction()" datasource-upload="$ctrl.action">
+      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" ng-click="$ctrl.newDatasourceAction()" ng-disabled="$ctrl.isLoading()" datasource-upload="$ctrl.action">
         <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Enviar
@@ -19,19 +20,31 @@
     <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
       <input type="text" ng-model="$ctrl.newDatasourceFile.name" placeholder="Nome do arquivo" disabled/>
     </md-input-container>
-    <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
-      <input type="text" ng-model="$ctrl.newDatasourceName" placeholder="Nome da fonte de dados" ng-keypress="$ctrl.datasourceNameFilter($event)"/>
-    </md-input-container>
-    <span flex></span>
-    <md-card-title-text>
-      <md-button class="md-icon-button md-primary" ng-click="$ctrl.saveNewDatasource()">
-        <md-icon md-font-library="material-icons" aria-label="Load">save</md-icon>
-        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-          Salvar
+    <md-card-title-text ng-show="$ctrl.newDatasourceFile.name">
+      <md-button class="md-icon-button md-primary" ng-click="$ctrl.cancelUpload()">
+        <md-icon md-font-library="material-icons" aria-label="Cancel">close</md-icon>
+        <md-tooltip md-visible="false" md-delay="200" md-direction="down" md-autohide="true">
+          Cancelar
         </md-tooltip>
       </md-button>
     </md-card-title-text>
+    <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
+      <input type="text" ng-model="$ctrl.newDatasourceName" id="newDatasourceName" placeholder="Nome da fonte de dados" ng-keypress="$ctrl.datasourceNameFilter($event)"/>
+    </md-input-container>
+    <span flex></span>
+    <md-card-title-text>
+      <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.isLoading()" ng-click="$ctrl.saveNewDatasource()">
+        <md-icon md-font-library="material-icons" aria-label="Load">save</md-icon>
+        <md-tooltip md-visible="false" md-delay="200" md-direction="down" md-autohide="true">
+          Salvar
+        </md-tooltip>
+      </md-button>
+      </md-card-title-text>
+
   </div>
+  <div layout="row" ng-show="$ctrl.isLoading()" flex layout-sm="column" layout-align="center center">
+      <md-progress-linear md-mode="indeterminate"  md-diameter="96"></md-progress-linear>
+    </div>
   <md-card-title-text>
     <span class="md-body-2">Fonte de dados</span>
     <md-list>
