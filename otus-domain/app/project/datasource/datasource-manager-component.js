@@ -24,16 +24,15 @@
     self.loadFile = false;
     self.isLoading = isLoading;
     
-    function isLoading() {
-     return self.loadFile;
-    };
-
+    self.$onInit = onInit;
+    self.exportDatasource = exportDatasource;
+    self.saveNewDatasource = saveNewDatasource;
+    self.updateAction = updateAction;
+    self.newDatasourceAction = newDatasourceAction;
+    self.datasourceNameFilter = datasourceNameFilter;
+    self.cancelUpload = cancelUpload;
     self.initLoadFile = initLoadFile;
     
-    function initLoadFile(){
-      self.loadFile = !self.loadFile;
-    }
-
     self.isUpdate = false;
     self.datasources = [];
     self.action = {
@@ -41,19 +40,20 @@
       'type': '.csv',
       'loading' : self.initLoadFile
     };
-
-    self.$onInit = onInit;
-    self.exportDatasource = exportDatasource;
-    self.saveNewDatasource = saveNewDatasource;
-    self.updateAction = updateAction;
-    self.newDatasourceAction = newDatasourceAction;
-    self.datasourceNameFilter = datasourceNameFilter;
-
+    
     function onInit() {
       self.newDatasourceName = "";
       _getDatasourceList();
     }
-
+    
+    function initLoadFile(){
+      self.loadFile = !self.loadFile;
+    }
+    
+    function isLoading() {
+     return self.loadFile;
+    };
+    
     function _getDatasourceList() {
       DatasourceManagerService.getDatasourceList()
         .then(function (datasourceList) {
@@ -126,7 +126,7 @@
       self.insertingNewDatasource = true;
 
     }
-    self.cancelUpload = cancelUpload;
+    
     function cancelUpload() {
       delete self.newDatasourceFile;
       delete self.insertingNewDatasource;
