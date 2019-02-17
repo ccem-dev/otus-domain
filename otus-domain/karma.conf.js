@@ -19,6 +19,7 @@ module.exports = function(config) {
       /* External dependencies */
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-resource/angular-resource.min.js',
+      NODE_MODULES_ROOT_PATH + 'alasql/dist/alasql.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
