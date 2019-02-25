@@ -33,6 +33,10 @@
         self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
         self.getCollectionOfPermissions = getCollectionOfPermissions;
         self.fetchUsers = fetchUsers;
+        self.getListOfSurveyGroups = getListOfSurveyGroups;
+        self.addNewGroup = addNewGroup;
+        self.editGroup = editGroup;
+        self.deleteGroup = deleteGroup;
 
         onInit();
 
@@ -43,17 +47,17 @@
             _userResource = OtusRestResourceService.getUserResource();
         }
 
-      function fetchUsers() {
-        var defer = $q.defer();
-        _userResource.list(function (response) {
-          if ('data' in response) {
-            defer.resolve(response.data);
-          } else {
-            defer.reject(true);
-          }
-        });
-        return defer.promise;
-      }
+        function fetchUsers() {
+            var defer = $q.defer();
+            _userResource.list(function (response) {
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
+            });
+            return defer.promise;
+        }
 
         /* Surveys Manager Section */
         function fetchSurveysManagerConfiguration() {
@@ -202,6 +206,55 @@
                 } else {
                     defer.reject(true);
                 }
+            });
+            return defer.promise;
+        }
+
+        /* survey group configuration */
+        function getListOfSurveyGroups() {
+            var defer = $q.defer();
+            if (!_projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _projectConfigurationResource.getListOfSurveyGroups(function (response) {
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
+            });
+            return defer.promise;
+        }
+
+        function addNewGroup(group) {
+            var defer = $q.defer();
+            if (!_projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _projectConfigurationResource.addNewGroup(group, function () {
+                defer.resolve();
+            });
+            return defer.promise;
+        }
+
+        function editGroup(group) {
+            var defer = $q.defer();
+            if (!_projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _projectConfigurationResource.editGroup(group, function () {
+                defer.resolve();
+            });
+            return defer.promise;
+        }
+
+        function deleteGroup(group) {
+            var defer = $q.defer();
+            if (!_projectConfigurationResource) {
+                throw new Error('REST resource is not initialized.');
+            }
+            _projectConfigurationResource.deleteGroup(group, function () {
+                defer.resolve();
             });
             return defer.promise;
         }

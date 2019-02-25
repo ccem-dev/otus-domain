@@ -1,0 +1,32 @@
+<md-card>
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Configurações de grupo de atividades</span>
+      <div>
+        <md-input-container flex class="remove-errors-spacer">
+          <input type="text" ng-model="$ctrl.newGroup" placeholder="Inserir um novo grupo" flex>
+        </md-input-container>
+        <md-button class="md-raised" ng-click="$ctrl.addNewGroup()" type="button">Adicionar</md-button>
+      </div>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content layout="row">
+    <md-content>
+      <md-list-item ng-repeat="group in $ctrl.groups" class="noright">
+        <p>{{ group.name }}</p>
+        <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.editGroup(group, index)">
+          <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
+          <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+            Editar
+          </md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteGroup(group, index)">
+          <md-icon md-font-library="material-icons">delete</md-icon>
+          <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+            Excluir
+          </md-tooltip>
+        </md-button>
+      </md-list-item>
+    </md-content>
+  </md-card-content>
+</md-card>
