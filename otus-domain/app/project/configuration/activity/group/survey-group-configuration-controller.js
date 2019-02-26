@@ -11,8 +11,10 @@
     var self = this;
     self.newGroup = '';
     self.groups = [
-      { name: 'group_1' },
-      { name: 'group_2' }
+      { name: 'RECRUTAMENTO' },
+      { name: 'CHAMADAS INICIAIS' },
+      { name: 'APÓS CHAMADAS' },
+      { name: 'CHAMADAS DE AGENDA' }
     ];
 
     /* Public methods */
@@ -51,7 +53,7 @@
     }
 
     function editGroup(group) {
-
+      // TODO:
     }
 
     function deleteGroup(group, index) {
@@ -60,8 +62,7 @@
           .then(function () {
             self.surveyTemplatesList.splice(index, 1);
             $mdToast.show($mdToast.simple().textContent('Excluído').hideDelay(2000));
-          })
-          .catch(function () {
+          }).catch(function () {
             $mdToast.show($mdToast.simple().textContent('Erro ao excluir').hideDelay(2000));
           });
       }, function () { });
