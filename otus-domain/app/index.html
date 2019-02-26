@@ -19,8 +19,12 @@
     <!-- library -->
     <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
     <link href="node_modules/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet" />
-
-
+    <!-- uncache(rename:true, append:hash) -->
+    <!-- build:css css/otus.min.css -->
+    <link href="app/assets/css/please-wait-style.css" rel="stylesheet">
+    <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
+    <!-- endbuild -->
+    <!-- enduncache -->
 </head>
 
 <body layout="row" flex class="md-body-2" md-theme="layoutTheme">
@@ -54,6 +58,9 @@
 
 <!-- ************************************* Moment ************************************* -->
 <script src="node_modules/moment/moment.js"></script>
+
+<!-- ************************************** Please-wait ************************************** -->
+<script src="node_modules/please-wait/build/please-wait.min.js"></script>
 
 <!-- ***************************************** Utils ***************************************** -->
 <!-- Utils -->
@@ -193,5 +200,8 @@
 <!-- UPLOAD TOOL -->
 <script src="app/project/configuration/upload-tool/upload-tool-directive.js"></script>
 <script src="app/project/configuration/upload-tool/upload-tool-service.js"></script>
+
+<!-- # Deploy > Loading Screen -->
+<script src="app/utils/loading-screen/loading-screen-service.js"></script>
 
 </html>
