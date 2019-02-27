@@ -1,13 +1,13 @@
 <div layout="row" flex layout-align="center center" layout-padding>
   <div layout="column" flex>
     <div layout="row" class="layout-wrap" id="header" layout-align="start center">
-      <md-chips>
-        <md-chip><strong>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</strong></md-chip>
-      </md-chips>
+      <strong>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</strong>
+      -
       <div layout-wrap layout="column" layout-align="start start">
         {{$ctrl.surveyForm.surveyTemplate.identity.name}} <br>
-        <em class="md-caption remove-errors-spacer">Versão: {{$ctrl.surveyForm.version}}</em>
       </div>
+      -
+      <em class="md-caption remove-errors-spacer">Versão: {{$ctrl.surveyForm.version}}</em>
     </div>
   </div>
   <div layout="row" flex="20" layout-align="end end">
@@ -38,5 +38,3 @@
     secondary-placeholder="Adicionar outros grupos"
     input-aria-label="Grupos pretendidos">
 </md-contact-chips>
-<br/>
-<md-divider inset></md-divider>
