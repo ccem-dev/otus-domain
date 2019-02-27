@@ -28,17 +28,23 @@
     var self = this;
     self.showSettings;
     self.usersList = [];
+
+    self.groups = [
+      { name: 'RECRUTAMENTO' }
+    ];
+
     /* Public methods */
     self.$onInit = onInit;
-
     self.showActivitySettings = showActivitySettings;
     self.deleteSurveyTemplate = deleteSurveyTemplate;
-    function onInit() {
+    self.querySearch = querySearch;
+    self.onModelChange = onModelChange;
 
+    function onInit() {
       self.permissionList = [];
       _dialogs();
       _getCollectionOfPermissions();
-      self.permission = ActivityPermissionFactory.fromJsonObject({acronym: self.surveyForm.surveyTemplate.identity.acronym, version: self.surveyForm.version});
+      self.permission = ActivityPermissionFactory.fromJsonObject({ acronym: self.surveyForm.surveyTemplate.identity.acronym, version: self.surveyForm.version });
     }
 
     function showActivitySettings() {
@@ -48,18 +54,25 @@
     }
 
     function deleteSurveyTemplate() {
-      $mdDialog.show(_deleteConfirmDialog).then(function() {
+      $mdDialog.show(_deleteConfirmDialog).then(function () {
         var index = self.surveyTemplates.indexOf(self.surveyForm);
         ProjectConfigurationService.deleteSurveyTemplate(self.surveyForm.surveyTemplate.identity.acronym)
-          .then(function() {
+          .then(function () {
             self.surveyTemplates.splice(index, 1);
             $mdToast.show($mdToast.simple().textContent('Excluído').hideDelay(2000));
           })
-          .catch(function() {
+          .catch(function () {
             $mdToast.show($mdToast.simple().textContent('Erro ao excluir').hideDelay(2000));
           });
-      }, function() {});
+      }, function () { });
+    }
 
+    function querySearch(criteria) {
+      return criteria ? self.allContacts.filter(createFilterFor(criteria)) : [];
+    }
+
+    function onModelChange(newModel) {
+      $log.log('The model has changed to ' + JSON.stringify(newModel) + '.');
     }
 
     function _filterUsersWithPermissionExclusiveDisjunction() {

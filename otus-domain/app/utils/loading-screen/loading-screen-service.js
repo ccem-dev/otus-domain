@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -8,7 +8,7 @@
     Service.$inject = [];
 
     function Service() {
-        const LOGO_SOURCE = "app/static-resource/image/coruja_pesquisadora.png";
+        const LOGO_SOURCE = "app/assets/img/coruja_neutra.png";
         const BACKGROUND_COLOR = "#009688";
         const MESSAGE = "Por favor, aguarde o carregamento.";
         const LOCKED_MESSAGE = "Loading bloqueado pela chave: ";

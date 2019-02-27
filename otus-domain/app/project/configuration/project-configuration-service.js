@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -33,10 +33,6 @@
         self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
         self.getCollectionOfPermissions = getCollectionOfPermissions;
         self.fetchUsers = fetchUsers;
-        self.getListOfSurveyGroups = getListOfSurveyGroups;
-        self.addNewGroup = addNewGroup;
-        self.editGroup = editGroup;
-        self.deleteGroup = deleteGroup;
 
         onInit();
 
@@ -49,7 +45,7 @@
 
         function fetchUsers() {
             var defer = $q.defer();
-            _userResource.list(function(response) {
+            _userResource.list(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {
@@ -62,7 +58,7 @@
         /* Surveys Manager Section */
         function fetchSurveysManagerConfiguration() {
             var defer = $q.defer();
-            _configurationResource.getSurveys(function(response) {
+            _configurationResource.getSurveys(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {
@@ -75,10 +71,10 @@
         function updateSurveyTemplateType(updateObject) {
             var defer = $q.defer();
             _configurationResource.updateSurveyTemplateType({
-                    'acronym': updateObject.acronym,
-                    'newSurveyFormType': updateObject.type
-                },
-                function(response) {
+                'acronym': updateObject.acronym,
+                'newSurveyFormType': updateObject.type
+            },
+                function (response) {
                     if (response.data) {
                         defer.resolve(true);
                     } else {
@@ -91,9 +87,9 @@
         function deleteSurveyTemplate(acronym) {
             var defer = $q.defer();
             _configurationResource.deleteSurveyTemplate({
-                    'acronym': acronym,
-                },
-                function(response) {
+                'acronym': acronym,
+            },
+                function (response) {
                     if (response.data) {
                         defer.resolve(true);
                     } else {
@@ -107,7 +103,7 @@
         function publishTemplate(template) {
             var defer = $q.defer();
             _configurationResource.publishTemplate(template,
-                function(response) {
+                function (response) {
                     if ('data' in response) {
                         defer.resolve(response.data);
                     } else {
@@ -121,7 +117,7 @@
         function fetchProjectsVisualIdentity() {
             var data = {};
             var defer = $q.defer();
-            _configurationResource.getVisualIdentity(function(response) {
+            _configurationResource.getVisualIdentity(function (response) {
                 defer.resolve();
             });
             return defer.promise;
@@ -129,7 +125,7 @@
 
         function updateVisualIdentityConfiguration(files) {
             var defer = $q.defer();
-            _configurationResource.updateVisualIdentity(files, function() {
+            _configurationResource.updateVisualIdentity(files, function () {
                 defer.resolve();
             });
             return defer.promise;
@@ -141,7 +137,7 @@
             if (!_projectConfigurationResource) {
                 throw new Error('REST resource is not initialized.');
             }
-            _projectConfigurationResource.getProjectConfiguration(function(response) {
+            _projectConfigurationResource.getProjectConfiguration(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {
@@ -178,7 +174,7 @@
             if (!_permissionConfiguration) {
                 throw new Error('REST resource is not initialized.');
             }
-            _permissionConfiguration.create(users, function() {
+            _permissionConfiguration.create(users, function () {
                 defer.resolve();
             });
             return defer.promise;
@@ -189,7 +185,7 @@
             if (!_permissionConfiguration) {
                 throw new Error('REST resource is not initialized.');
             }
-            _permissionConfiguration.update(users, function() {
+            _permissionConfiguration.update(users, function () {
                 defer.resolve();
             });
             return defer.promise;
@@ -200,61 +196,12 @@
             if (!_permissionConfiguration) {
                 throw new Error('REST resource is not initialized.');
             }
-            _permissionConfiguration.getAll(function(response) {
+            _permissionConfiguration.getAll(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {
                     defer.reject(true);
                 }
-            });
-            return defer.promise;
-        }
-
-        /* survey group configuration */
-        function getListOfSurveyGroups() {
-            var defer = $q.defer();
-            if (!_projectConfigurationResource) {
-                throw new Error('REST resource is not initialized.');
-            }
-            _projectConfigurationResource.getListOfSurveyGroups(function(response) {
-                if ('data' in response) {
-                    defer.resolve(response.data);
-                } else {
-                    defer.reject(true);
-                }
-            });
-            return defer.promise;
-        }
-
-        function addNewGroup(group) {
-            var defer = $q.defer();
-            if (!_projectConfigurationResource) {
-                throw new Error('REST resource is not initialized.');
-            }
-            _projectConfigurationResource.addNewGroup(group, function() {
-                defer.resolve();
-            });
-            return defer.promise;
-        }
-
-        function editGroup(group) {
-            var defer = $q.defer();
-            if (!_projectConfigurationResource) {
-                throw new Error('REST resource is not initialized.');
-            }
-            _projectConfigurationResource.editGroup(group, function() {
-                defer.resolve();
-            });
-            return defer.promise;
-        }
-
-        function deleteGroup(group) {
-            var defer = $q.defer();
-            if (!_projectConfigurationResource) {
-                throw new Error('REST resource is not initialized.');
-            }
-            _projectConfigurationResource.deleteGroup(group, function() {
-                defer.resolve();
             });
             return defer.promise;
         }
