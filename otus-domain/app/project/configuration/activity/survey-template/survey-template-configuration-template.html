@@ -18,8 +18,15 @@
 </div>
 <div layout="row" layout-align="start center">
   <label>Grupos: </label>
-  <md-contact-chips ng-model="$ctrl.groups" ng-change="$ctrl.onModelChange($ctrl.contacts)" md-contacts="$ctrl.querySearch($query)"
-    md-contact-name="name" md-require-match="true" md-separator-keys="$ctrl.keys" md-highlight-flags="i" placeholder="Digite um nome de grupo"
-    secondary-placeholder="Adicionar outros grupos" input-aria-label="Grupos pretendidos">
+  <md-contact-chips ng-model="$ctrl.groups" 
+    ng-change="$ctrl.onModelChange($ctrl.contacts)" 
+    md-contacts="$ctrl.querySearch($query)"
+    md-contact-name="name" 
+    md-require-match="true" 
+    md-separator-keys="$ctrl.keys" 
+    md-highlight-flags="i" 
+    placeholder="Digite um nome de grupo"
+    secondary-placeholder="Adicionar outros grupos" 
+    input-aria-label="Grupos pretendidos">
   </md-contact-chips>
 </div>

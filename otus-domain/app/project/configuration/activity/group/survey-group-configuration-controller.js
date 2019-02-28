@@ -2,17 +2,16 @@
   'use strict';
 
   angular
-    .module('otusDomain.dashboard')
+    .module('otusDomain.project')
     .controller('surveyGroupConfigurationCtrl', Controller);
 
   Controller.$inject = [
     '$mdToast',
     '$mdDialog',
-    'otusDomain.LoadingScreenService',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    'otusDomain.project.activity.SurveyGroupConfigurationService'
   ];
 
-  function Controller($mdToast, $mdDialog, LoadingScreenService, ProjectConfigurationService) {
+  function Controller($mdToast, $mdDialog, SurveyGroupConfigurationService) {
     var self = this;
     self.newGroup = '';
     self.groups = [
@@ -34,21 +33,24 @@
     }
 
     function _getListOfSurveyGroups() {
-      ProjectConfigurationService.getListOfSurveyGroups()
+      SurveyGroupConfigurationService.getListOfSurveyGroups()
         .then(function (data) {
-          self.groups = data;
+          self.groups = data.getGroupList();
           if (self.groups.length === 0)
+            // TODO: Onde está informação será exibida?
+            // TODO: QUem sabe trocar para um $mdToast?
             self.information = 'Nenhum formulário adicionado';
         }).catch(function () {
           self.groups = [];
+          // TODO: Onde está informação será exibida?
+          // TODO: QUem sabe trocar para um $mdToast?
           self.information = 'Erro de comunicação com servidor';
         });
     }
 
     function addNewGroup() {
-      ProjectConfigurationService.addNewGroup(self.newGroup)
+      SurveyGroupConfigurationService.addNewGroup(self.newGroup)
         .then(function () {
-          // TODO: O que deve ser realizado quando obtiver sucesso?
           _getListOfSurveyGroups();
         }).catch(function () {
           // TODO: O que deve ser realizando quando ocorrer um erro?

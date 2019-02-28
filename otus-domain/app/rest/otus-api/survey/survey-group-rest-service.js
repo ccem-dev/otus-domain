@@ -3,7 +3,7 @@
 
   angular
     .module('otusDomain')
-    .service('SurveyRestService', Service);
+    .service('SurveyGroupRestService', Service);
 
   Service.$inject = [
     '$q',
