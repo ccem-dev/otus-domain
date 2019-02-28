@@ -1,15 +1,6 @@
-<div layout="row" flex layout-align="center center" layout-padding>
-  <div layout="column" flex>
-    <div layout="row" class="layout-wrap" id="header" layout-align="start center">
-      <strong>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</strong>
-      -
-      <div layout-wrap layout="column" layout-align="start start">
-        {{$ctrl.surveyForm.surveyTemplate.identity.name}} <br>
-      </div>
-      -
-      <em class="md-caption remove-errors-spacer">Versão: {{$ctrl.surveyForm.version}}</em>
-    </div>
-  </div>
+<div layout="row" layout-align="start center">
+  <label flex>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}}
+    - versão: {{$ctrl.surveyForm.version}}</label>
   <div layout="row" flex="20" layout-align="end end">
     <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">
       <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
@@ -25,16 +16,10 @@
     </md-button>
   </div>
 </div>
-<label id="toLabel">Grupos:</label>
-<md-contact-chips
-    ng-model="$ctrl.groups"
-    ng-change="$ctrl.onModelChange($ctrl.contacts)"
-    md-contacts="$ctrl.querySearch($query)"
-    md-contact-name="name"
-    md-require-match="true"
-    md-separator-keys="$ctrl.keys"
-    md-highlight-flags="i"
-    placeholder="Digite um nome de grupo"
-    secondary-placeholder="Adicionar outros grupos"
-    input-aria-label="Grupos pretendidos">
-</md-contact-chips>
+<div layout="row" layout-align="start center">
+  <label>Grupos: </label>
+  <md-contact-chips ng-model="$ctrl.groups" ng-change="$ctrl.onModelChange($ctrl.contacts)" md-contacts="$ctrl.querySearch($query)"
+    md-contact-name="name" md-require-match="true" md-separator-keys="$ctrl.keys" md-highlight-flags="i" placeholder="Digite um nome de grupo"
+    secondary-placeholder="Adicionar outros grupos" input-aria-label="Grupos pretendidos">
+  </md-contact-chips>
+</div>
