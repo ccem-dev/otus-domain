@@ -13,6 +13,7 @@
     }).controller('surveyTemplateConfigurationCtrl', Controller);
 
   Controller.$inject = [
+    'otusDomain.project.activity.SurveyGroupConfigurationService',
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
     '$mdDialog',
     '$mdToast',
@@ -21,7 +22,7 @@
     'ActivityConfigurationManagerService'
   ];
 
-  function Controller(ProjectConfigurationService, $mdDialog, $mdToast, ActivityPermissionFactory, DashboardStateService, ActivityConfigurationManagerService) {
+  function Controller(SurveyGroupConfigurationService,ProjectConfigurationService, $mdDialog, $mdToast, ActivityPermissionFactory, DashboardStateService, ActivityConfigurationManagerService) {
     var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
     var _deleteConfirmDialog;
@@ -43,6 +44,7 @@
     function onInit() {
       self.permissionList = [];
       _dialogs();
+      _fetchGroups();
       _getCollectionOfPermissions();
       self.permission = ActivityPermissionFactory.fromJsonObject({ acronym: self.surveyForm.surveyTemplate.identity.acronym, version: self.surveyForm.version });
     }
@@ -68,7 +70,7 @@
     }
 
     function querySearch(criteria) {
-      return criteria ? self.allContacts.filter(createFilterFor(criteria)) : [];
+      return criteria ? self.groupsManager.getGroupList().filter((group)=>{group.getName() == criteria}) : [];
     }
 
     function onModelChange(newModel) {
@@ -90,6 +92,16 @@
         }).catch(function () {
           $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(timeShowMsg));
         });
+    }
+
+    function _fetchGroups() {
+      SurveyGroupConfigurationService.getListOfSurveyGroups()
+        .then(function(data) {
+          self.surveyForm.groups = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym)
+          self.groupsManager = data;
+        }).catch(function() {
+        self.groups = [];
+      });
     }
 
     function _dialogs() {

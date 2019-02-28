@@ -39,9 +39,9 @@
         "jquery": "2.2.0",
         "moment": "2.12.0",
         "please-wait": "0.0.5",
-        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#dev",
+        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-15",
         "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
-        "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#v1.16"
+        "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#feature-OMJ-42"
     },
     "devDependencies": {
         "angular-mocks": "1.4.9",
