@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -13,13 +13,9 @@
 
   function Controller($mdToast, $mdDialog, SurveyGroupConfigurationService) {
     var self = this;
+    self.groups = [];
     self.newGroup = '';
-    self.groups = [
-      { name: 'RECRUTAMENTO' },
-      { name: 'CHAMADAS INICIAIS' },
-      { name: 'APÓS CHAMADAS' },
-      { name: 'CHAMADAS DE AGENDA' }
-    ];
+    self.information;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -34,26 +30,23 @@
 
     function _getListOfSurveyGroups() {
       SurveyGroupConfigurationService.getListOfSurveyGroups()
-        .then(function (data) {
+        .then(function(data) {
           self.groups = data.getGroupList();
           if (self.groups.length === 0)
-            // TODO: Onde está informação será exibida?
-            // TODO: QUem sabe trocar para um $mdToast?
-            self.information = 'Nenhum formulário adicionado';
-        }).catch(function () {
+            self.information = 'Ainda não existem grupos, para criar você deve definir um nome e clicar em adicionar.';
+        }).catch(function() {
           self.groups = [];
-          // TODO: Onde está informação será exibida?
-          // TODO: QUem sabe trocar para um $mdToast?
-          self.information = 'Erro de comunicação com servidor';
+          self.information = 'Erro de comunicação com servidor, tente novamente mais tarder.';
         });
     }
 
     function addNewGroup() {
       SurveyGroupConfigurationService.addNewGroup(self.newGroup)
-        .then(function () {
+        .then(function(data) {
+          $mdToast.show($mdToast.simple().textContent('O novo grupo foi adicionado na lista.').hideDelay(2000));
           _getListOfSurveyGroups();
-        }).catch(function () {
-          // TODO: O que deve ser realizando quando ocorrer um erro?
+        }).catch(function() {
+          $mdToast.show($mdToast.simple().textContent('Ocorreu um erro, tente novamente mais tarde.').hideDelay(2000));
         });
     }
 
@@ -62,12 +55,12 @@
     }
 
     function update(group) {
-      SurveyGroupConfigurationService.editGroup(group)
-        .then(function () {
-          // TODO: O que deve ser realizado quando obtiver sucesso?
+      SurveyGroupConfigurationService.updateGroup(group)
+        .then(function(data) {
+          $mdToast.show($mdToast.simple().textContent('O novo grupo foi adicionado na lista.').hideDelay(2000));
           _getListOfSurveyGroups();
-        }).catch(function () {
-          // TODO: O que deve ser realizando quando ocorrer um erro?
+        }).catch(function() {
+          $mdToast.show($mdToast.simple().textContent('Ocorreu um erro, tente novamente mais tarde.').hideDelay(2000));
         });
     }
 
@@ -77,16 +70,16 @@
         .textContent('Você tem certeza que deseja excluir esse grupo?')
         .ariaLabel('exclusão do grupo')
         .ok('Sim')
-        .cancel('Não')).then(function () {
-          SurveyGroupConfigurationService.deleteGroup(group).then(function () {
-            _getListOfSurveyGroups();
-            $mdToast.show($mdToast.simple().textContent('O grupo foi excluído.').hideDelay(2000));
-          }).catch(function () {
-            $mdToast.show($mdToast.simple().textContent('Ocorreu um erro. tente novamente mais tarde.').hideDelay(2000));
-          });
-        }).catch(function () {
-
+        .cancel('Não')).then(function() {
+        SurveyGroupConfigurationService.deleteGroup(group).then(function() {
+          _getListOfSurveyGroups();
+          $mdToast.show($mdToast.simple().textContent('O grupo foi excluído.').hideDelay(2000));
+        }).catch(function() {
+          $mdToast.show($mdToast.simple().textContent('Ocorreu um erro, tente novamente mais tarde.').hideDelay(2000));
         });
+      }).catch(function() {
+
+      });
     }
   }
 }());

@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -28,10 +28,10 @@
 
     function getListOfSurveyGroups() {
       return SurveyGroupRestService.getListOfSurveyGroups()
-        .then(function (response) {
+        .then(function(response) {
           groupManagerFactory = GroupManagerFactory.create(response);
           return groupManagerFactory;
-        }).catch(function (e) {
+        }).catch(function(e) {
           return $q.reject(e);
         });
     }
@@ -39,21 +39,27 @@
     function addNewGroup(group) {
       var newGroup = groupManagerFactory.createGroup(group, []);
       return SurveyGroupRestService.addNewGroup(newGroup)
-        .then(function (response) {
-          // TODO:
-        }).catch(function (e) {
+        .then(function(response) {
+          return response;
+        }).catch(function(e) {
           return $q.reject(e);
         });
     }
 
     function updateGroup(group) {
-
+      return SurveyGroupRestService.updateGroup(newGroup)
+        .then(function(response) {
+          return response;
+        }).catch(function(e) {
+          return $q.reject(e);
+        });
     }
 
     function deleteGroup(group) {
       return SurveyGroupRestService.deleteGroup(group.getName())
-        .then(function (response) {
-        }).catch(function (e) {
+        .then(function(response) {
+          return response;
+        }).catch(function(e) {
           return $q.reject(e);
         });
     }

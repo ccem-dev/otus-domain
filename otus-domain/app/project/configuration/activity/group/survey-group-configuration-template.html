@@ -4,7 +4,7 @@
       <span class="md-headline">Configurações de grupo de atividades</span>
     </md-card-title-text>
   </md-card-title>
-  <md-card-content>
+  <md-card-content ng-if="!$ctrl.information">
     <div layout-gt-sm="row">
       <md-input-container class="removeMarginBottom remove-errors-spacer" flex-gt-sm>
         <label>Adicionar um novo grupo</label>
@@ -28,8 +28,7 @@
                 Editar
               </md-tooltip>
             </md-button>
-            <md-button ng-if="group.editMode" ng-disabled="updateForm.$invalid" class="md-icon-button md-primary"
-              ng-click="$ctrl.update(group)">
+            <md-button ng-if="group.editMode" ng-disabled="updateForm.$invalid" class="md-icon-button md-primary" ng-click="$ctrl.update(group)">
               <md-tooltip md-direction="left">
                 Atualizar
               </md-tooltip>
@@ -46,5 +45,8 @@
         <md-divider></md-divider>
       </md-list-item>
     </md-list>
+  </md-card-content>
+  <md-card-content ng-if="self.information" flex layout-align="center center">
+    <label>{{$ctrl.information}}</label>
   </md-card-content>
 </md-card>
