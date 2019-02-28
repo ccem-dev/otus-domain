@@ -17,7 +17,7 @@
     /* Public methods */
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewGroup = addNewGroup;
-    self.update = update;
+    self.updateGroup = updateGroup;
     self.deleteGroup = deleteGroup;
 
     onInit();
@@ -40,17 +40,22 @@
       var newGroup = groupManagerFactory.createGroup(group, []);
       return SurveyGroupRestService.addNewGroup(newGroup)
         .then(function (response) {
+          // TODO:
         }).catch(function (e) {
           return $q.reject(e);
         });
     }
 
-    function update(group) {
+    function updateGroup(group) {
 
     }
 
     function deleteGroup(group) {
-
+      return SurveyGroupRestService.deleteGroup(group.getName())
+        .then(function (response) {
+        }).catch(function (e) {
+          return $q.reject(e);
+        });
     }
   }
 }());

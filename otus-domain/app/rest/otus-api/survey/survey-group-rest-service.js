@@ -18,7 +18,7 @@
     self.initialize = initialize;
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewGroup = addNewGroup;
-    self.editGroup = editGroup;
+    self.updateGroup = updateGroup;
     self.deleteGroup = deleteGroup;
 
     function initialize() {
@@ -51,12 +51,12 @@
       return defer.promise;
     }
 
-    function editGroup(group) {
+    function updateGroup(group) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.editGroup(group, function () {
+      _rest.updateGroup(group, function () {
         defer.resolve();
       });
       return defer.promise;

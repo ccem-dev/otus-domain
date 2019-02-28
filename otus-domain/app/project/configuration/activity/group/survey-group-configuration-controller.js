@@ -62,7 +62,7 @@
     }
 
     function update(group) {
-      ProjectConfigurationService.editGroup(group)
+      SurveyGroupConfigurationService.editGroup(group)
         .then(function () {
           // TODO: O que deve ser realizado quando obtiver sucesso?
           _getListOfSurveyGroups();
@@ -71,14 +71,15 @@
         });
     }
 
-    function deleteGroup(group, index) {
+    function deleteGroup(group) {
       $mdDialog.show($mdDialog.confirm()
         .title('Exclusão do grupo')
         .textContent('Você tem certeza que deseja excluir esse grupo?')
         .ariaLabel('exclusão do grupo')
         .ok('Sim')
         .cancel('Não')).then(function () {
-          ProjectConfigurationService.deleteGroup(group, index).then(function () {
+          SurveyGroupConfigurationService.deleteGroup(group).then(function () {
+            _getListOfSurveyGroups();
             $mdToast.show($mdToast.simple().textContent('O grupo foi excluído.').hideDelay(2000));
           }).catch(function () {
             $mdToast.show($mdToast.simple().textContent('Ocorreu um erro. tente novamente mais tarde.').hideDelay(2000));
