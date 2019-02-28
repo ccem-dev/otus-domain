@@ -56,7 +56,7 @@
         gulp.src('app/config/env.js')
             .pipe(replaceTask({
                 patterns: [{
-                    match: /http:\/\/api\-domain\.localhost:8080/g,
+                    match: /https:\/\/api\-domain\.localhost/g,
                     replacement: process.env.npm_config_apiUrl,
                 }]
             }))

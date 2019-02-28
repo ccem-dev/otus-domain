@@ -7,6 +7,7 @@
           /* Application modules */
           'otusjs',
           'otusDomain.dashboard',
+          'otusDomain.rest',
           'otusDomain.authenticator',
           'otusDomain.installer',
           'otusDomain.repository',
@@ -14,6 +15,7 @@
           'otusDomain.project.fieldCenter',
           /* Possibly shared modules */
           'otusDomain.project.configuration',
+          'otusDomain.project.datasource',
           'otus.domain.client',
           'otus.client',
           'otusDomain.user',
