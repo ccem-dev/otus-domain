@@ -18,7 +18,8 @@
     self.initialize = initialize;
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewGroup = addNewGroup;
-    self.updateGroup = updateGroup;
+    self.updateGroupName = updateGroupName;
+    self.updateGroupSurveyAcronyms = updateGroupSurveyAcronyms;
     self.deleteGroup = deleteGroup;
 
     function initialize() {
@@ -51,26 +52,29 @@
       return defer.promise;
     }
 
-    function updateGroup(group) {
+    function updateGroupName(oldName, newName) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getByRecruitmentNumber({ old: oldName, new: newName }).$promise;
+    }
+
+    function updateGroupSurveyAcronyms(group) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.updateGroup(group, function () {
+      _rest.updateGroupSurveyAcronyms(group, function () {
         defer.resolve();
       });
       return defer.promise;
     }
 
-    function deleteGroup(group) {
-      var defer = $q.defer();
+    function deleteGroup(name) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.deleteGroup(group, function () {
-        defer.resolve();
-      });
-      return defer.promise;
+      return _rest.deleteGroup({ name: name }).$promise;
     }
 
   }

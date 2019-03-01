@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,18 +6,19 @@
     .service('otusDomain.project.activity.SurveyGroupConfigurationService', Service);
 
   Service.$inject = [
+    '$q',
     'SurveyGroupRestService',
     'otusjs.survey.GroupManagerFactory'
   ];
 
-  function Service(SurveyGroupRestService, GroupManagerFactory) {
+  function Service($q, SurveyGroupRestService, GroupManagerFactory) {
     var groupManagerFactory
     var self = this;
 
     /* Public methods */
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewGroup = addNewGroup;
-    self.updateGroup = updateGroup;
+    self.updateGroupName = updateGroupName;
     self.deleteGroup = deleteGroup;
 
     onInit();
@@ -28,38 +29,42 @@
 
     function getListOfSurveyGroups() {
       return SurveyGroupRestService.getListOfSurveyGroups()
-        .then(function(response) {
+        .then(function (response) {
           groupManagerFactory = GroupManagerFactory.create(response);
           return groupManagerFactory;
-        }).catch(function(e) {
+        }).catch(function (e) {
           return $q.reject(e);
         });
     }
 
     function addNewGroup(group) {
-      var newGroup = groupManagerFactory.createGroup(group, []);
-      return SurveyGroupRestService.addNewGroup(newGroup)
-        .then(function(response) {
-          return response;
-        }).catch(function(e) {
-          return $q.reject(e);
-        });
+      try {
+        var newGroup = groupManagerFactory.createGroup(group, []);
+        return SurveyGroupRestService.addNewGroup(newGroup)
+          .then(function (response) {
+            return response;
+          }).catch(function (e) {
+            return $q.reject(e);
+          });
+      } catch (e) {
+        return $q.reject(e);
+      }
     }
 
-    function updateGroup(group) {
-      return SurveyGroupRestService.updateGroup(newGroup)
-        .then(function(response) {
+    function updateGroupName(oldName, newName) {
+      return SurveyGroupRestService.updateGroupName(oldName, newName)
+        .then(function (response) {
           return response;
-        }).catch(function(e) {
+        }).catch(function (e) {
           return $q.reject(e);
         });
     }
 
     function deleteGroup(group) {
       return SurveyGroupRestService.deleteGroup(group.getName())
-        .then(function(response) {
+        .then(function (response) {
           return response;
-        }).catch(function(e) {
+        }).catch(function (e) {
           return $q.reject(e);
         });
     }
