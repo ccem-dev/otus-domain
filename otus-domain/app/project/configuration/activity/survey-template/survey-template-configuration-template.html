@@ -29,4 +29,19 @@
     secondary-placeholder="Adicionar outros grupos" 
     input-aria-label="Grupos pretendidos">
   </md-contact-chips>
+  <div layout="row" flex="20" layout-align="end end">
+    <!--<md-button ng-if="!group.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.surveyGroupsEdit()">-->
+      <!--<md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>-->
+      <!--<md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">-->
+        <!--Editar-->
+      <!--</md-tooltip>-->
+    <!--</md-button>-->
+    <md-button ng-if="!group.surveyGroupsEditMode" class="md-icon-button md-primary"
+               ng-click="$ctrl.updateSurveyGroups()">
+      <md-tooltip md-direction="left">
+        Atualizar
+      </md-tooltip>
+      <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
+    </md-button>
+  </div>
 </div>

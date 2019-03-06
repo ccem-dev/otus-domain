@@ -19,7 +19,7 @@
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewGroup = addNewGroup;
     self.updateGroupName = updateGroupName;
-    self.updateGroupSurveyAcronyms = updateGroupSurveyAcronyms;
+    self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
     self.deleteGroup = deleteGroup;
 
     function initialize() {
@@ -59,12 +59,12 @@
       return _rest.getByRecruitmentNumber({ old: oldName, new: newName }).$promise;
     }
 
-    function updateGroupSurveyAcronyms(group) {
+    function updateSurveyGroupAcronyms(group) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.updateGroupSurveyAcronyms(group, function () {
+      _rest.updateSurveyGroupAcronyms(group, function () {
         defer.resolve();
       });
       return defer.promise;

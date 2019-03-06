@@ -40,6 +40,8 @@
     self.deleteSurveyTemplate = deleteSurveyTemplate;
     self.querySearch = querySearch;
     self.onModelChange = onModelChange;
+    self.surveyGroupsEdit = surveyGroupsEdit;
+    self.updateSurveyGroups = updateSurveyGroups;
 
     function onInit() {
       self.permissionList = [];
@@ -53,6 +55,58 @@
       _filterUsersWithPermissionExclusiveDisjunction();
       ActivityConfigurationManagerService.setSurveyToSettings(self.permission);
       DashboardStateService.goToActivitySettings();
+    }
+
+    function surveyGroupsEdit() {
+      self.surveyGroupsEditMode = true;
+    }
+
+    function updateSurveyGroups() {
+      var oldGroups = self.groupsManager.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
+      var removedGroups = _getRemovedGroups(oldGroups);
+      var newGroups = _getNewGroups(oldGroups);
+
+      removedGroups.forEach((groupName) => {
+        SurveyGroupConfigurationService.getListOfSurveyGroups()
+          .then(function(data) {
+            var group = data.getGroup(groupName);
+            group.removeSurvey(self.surveyForm.surveyTemplate.identity.acronym);
+            SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
+          });
+      });
+
+      newGroups.forEach((newGroup) => {
+        SurveyGroupConfigurationService.getListOfSurveyGroups()
+          .then(function(data) {
+              var group = data.getGroup(newGroup.getName());
+              group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
+              SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
+          });
+      });
+
+      console.log(1);
+    }
+
+    function _getRemovedGroups(oldGroups){
+      return oldGroups.filter((groupName) => {
+        var foundGroup = self.surveyForm.groups.filter((newGroup) => {
+          if(newGroup.getName() === groupName){
+            return true
+          }
+        });
+        return foundGroup.length <= 0;
+      });
+    }
+
+    function _getNewGroups(oldGroups) {
+      return self.surveyForm.groups.filter((newGroup) => {
+        var foundGroup = oldGroups.filter((groupName) => {
+          if(newGroup.getName() === groupName){
+            return true
+          }
+        });
+        return foundGroup.length <= 0;
+      });
     }
 
     function deleteSurveyTemplate() {
@@ -70,7 +124,16 @@
     }
 
     function querySearch(criteria) {
-      return criteria ? self.groupsManager.getGroupList().filter((group)=>{group.getName() == criteria}) : [];
+      return criteria ? self.groupsManager.getGroupList().filter(_createFilterFor(criteria)) : [];
+    }
+
+    function _createFilterFor(query) {
+      var lowercaseQuery = query.toLowerCase();
+
+      return function filterFn(group) {
+        return (group.getName().toLowerCase().indexOf(lowercaseQuery) !== -1);
+      };
+
     }
 
     function onModelChange(newModel) {
@@ -97,11 +160,15 @@
     function _fetchGroups() {
       SurveyGroupConfigurationService.getListOfSurveyGroups()
         .then(function(data) {
-          self.surveyForm.groups = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym)
+          var groupNames = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
+          self.surveyForm.groups = [];
+          groupNames.forEach((groupName) => {
+            self.surveyForm.groups.push(data.getGroup(groupName))
+          });
           self.groupsManager = data;
         }).catch(function() {
-        self.groups = [];
-      });
+          self.groups = [];
+        });
     }
 
     function _dialogs() {
