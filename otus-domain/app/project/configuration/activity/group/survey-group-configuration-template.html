@@ -10,7 +10,7 @@
         <label>Adicionar um novo grupo</label>
         <input ng-model="$ctrl.newGroup">
       </md-input-container>
-      <md-button class="md-primary md-raised" ng-click="$ctrl.addNewGroup()">Adicionar</md-button>
+      <md-button class="md-primary md-raised" ng-click="$ctrl.addNewSurveyGroup()">Adicionar</md-button>
     </div>
     <md-list ng-if="!$ctrl.error">
       <md-list-item ng-repeat="group in $ctrl.groups track by $index" aria-label="grupos de atividades">
@@ -30,13 +30,13 @@
               </md-tooltip>
             </md-button>
             <md-button ng-if="group.editMode" ng-disabled="updateForm.$invalid" class="md-icon-button md-primary"
-              ng-click="$ctrl.update(group)">
+              ng-click="$ctrl.updateSurveyGroupName(group)">
               <md-tooltip md-direction="left">
                 Atualizar
               </md-tooltip>
               <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
             </md-button>
-            <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteGroup(group, $index)">
+            <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteSurveyGroup(group, $index)">
               <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
               <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
                 Excluir

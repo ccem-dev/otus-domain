@@ -17,9 +17,9 @@
 
     /* Public methods */
     self.getListOfSurveyGroups = getListOfSurveyGroups;
-    self.addNewGroup = addNewGroup;
-    self.updateGroupName = updateGroupName;
-    self.deleteGroup = deleteGroup;
+    self.addNewSurveyGroup = addNewSurveyGroup;
+    self.updateSurveyGroupName = updateSurveyGroupName;
+    self.deleteSurveyGroup = deleteSurveyGroup;
     self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
 
     onInit();
@@ -38,10 +38,10 @@
         });
     }
 
-    function addNewGroup(group) {
+    function addNewSurveyGroup(group) {
       try {
         var newGroup = groupManagerFactory.createGroup(group, []);
-        return SurveyGroupRestService.addNewGroup(newGroup)
+        return SurveyGroupRestService.addNewSurveyGroup(newGroup)
           .then(function (response) {
             return response;
           }).catch(function (e) {
@@ -52,8 +52,12 @@
       }
     }
 
-    function updateGroupName(oldName, newName) {
-      return SurveyGroupRestService.updateGroupName(oldName, newName)
+    function updateSurveyGroupName(oldName, newName) {
+      var update = {
+        oldName: oldName,
+        newName: newName
+      };
+      return SurveyGroupRestService.updateSurveyGroupName(update)
         .then(function (response) {
           return response;
         }).catch(function (e) {
@@ -61,8 +65,8 @@
         });
     }
 
-    function deleteGroup(group) {
-      return SurveyGroupRestService.deleteGroup(group.getName())
+    function deleteSurveyGroup(group) {
+      return SurveyGroupRestService.deleteSurveyGroup(group.getName())
         .then(function (response) {
           return response;
         }).catch(function (e) {

@@ -17,10 +17,10 @@
     /* Public methods */
     self.initialize = initialize;
     self.getListOfSurveyGroups = getListOfSurveyGroups;
-    self.addNewGroup = addNewGroup;
-    self.updateGroupName = updateGroupName;
+    self.addNewSurveyGroup = addNewSurveyGroup;
+    self.updateSurveyGroupName = updateSurveyGroupName;
     self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
-    self.deleteGroup = deleteGroup;
+    self.deleteSurveyGroup = deleteSurveyGroup;
 
     function initialize() {
       _rest = OtusRestResourceService.getSurveyGroupResource();
@@ -41,22 +41,26 @@
       return defer.promise;
     }
 
-    function addNewGroup(group) {
+    function addNewSurveyGroup(group) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.addNewGroup(group, function () {
+      _rest.addNewSurveyGroup(group, function () {
         defer.resolve();
       });
       return defer.promise;
     }
 
-    function updateGroupName(oldName, newName) {
+    function updateSurveyGroupName(update) {
+      var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getByRecruitmentNumber({ old: oldName, new: newName }).$promise;
+      _rest.updateSurveyGroupName(update, function () {
+        defer.resolve();
+      });
+      return defer.promise;
     }
 
     function updateSurveyGroupAcronyms(group) {
@@ -70,11 +74,11 @@
       return defer.promise;
     }
 
-    function deleteGroup(name) {
+    function deleteSurveyGroup(name) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.deleteGroup({ name: name }).$promise;
+      return _rest.deleteSurveyGroup({ name: name }).$promise;
     }
 
   }

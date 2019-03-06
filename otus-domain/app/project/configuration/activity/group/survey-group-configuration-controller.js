@@ -21,10 +21,10 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.addNewGroup = addNewGroup;
+    self.addNewSurveyGroup = addNewSurveyGroup;
     self.edit = edit;
-    self.update = update;
-    self.deleteGroup = deleteGroup;
+    self.updateSurveyGroupName = updateSurveyGroupName;
+    self.deleteSurveyGroup = deleteSurveyGroup;
 
     function onInit() {
       _getListOfSurveyGroups();
@@ -44,8 +44,8 @@
         });
     }
 
-    function addNewGroup() {
-      SurveyGroupConfigurationService.addNewGroup(self.newGroup)
+    function addNewSurveyGroup() {
+      SurveyGroupConfigurationService.addNewSurveyGroup(self.newGroup)
         .then(function (response) {
           $mdToast.show($mdToast.simple().textContent('O novo grupo foi adicionado na lista.').hideDelay(2000));
           _getListOfSurveyGroups();
@@ -64,8 +64,8 @@
       group.editMode = !group.editMode;
     }
 
-    function update(group) {
-      SurveyGroupConfigurationService.updateGroupName(oldName, group.getName())
+    function updateSurveyGroupName(group) {
+      SurveyGroupConfigurationService.updateSurveyGroupName(oldName, group.getName())
         .then(function (response) {
           $mdToast.show($mdToast.simple().textContent('O nome do grupo foi atualizado.').hideDelay(2000));
           _getListOfSurveyGroups();
@@ -74,14 +74,14 @@
         });
     }
 
-    function deleteGroup(group) {
+    function deleteSurveyGroup(group) {
       $mdDialog.show($mdDialog.confirm()
         .title('Exclusão do grupo')
         .textContent('Você tem certeza que deseja excluir esse grupo?')
         .ariaLabel('exclusão do grupo')
         .ok('Sim')
         .cancel('Não')).then(function () {
-          SurveyGroupConfigurationService.deleteGroup(group)
+          SurveyGroupConfigurationService.deleteSurveyGroup(group)
             .then(function (response) {
               _getListOfSurveyGroups();
               $mdToast.show($mdToast.simple().textContent('O grupo foi excluído.').hideDelay(2000));
