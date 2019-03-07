@@ -1,17 +1,13 @@
 describe('SurveyGroupRestService', function () {
-  const ID = 'medicamentos';
-
   var Mock = {};
   var service;
   var Injections = {};
-
 
   beforeEach(function () {
     angular.mock.module('otusDomain.rest');
   });
 
   describe('serviceInstance', function () {
-
     beforeEach(function () {
       mockInjections();
 
@@ -21,18 +17,16 @@ describe('SurveyGroupRestService', function () {
     });
 
     beforeEach(function () {
-
       inject(function (_$injector_) {
         Injections = {
           OtusRestResourceService: Mock.OtusRestResourceService
         };
         service = _$injector_.get('SurveyGroupRestService', Injections);
         service.initialize();
-
       });
     });
 
-    describe('initialize method', function () {
+    fdescribe('initialize method', function () {
       beforeEach(function () {
         spyOn(service, 'initialize').and.callThrough();
         spyOn(Injections.OtusRestResourceService, 'getSurveyGroupResource').and.callThrough();
@@ -44,77 +38,10 @@ describe('SurveyGroupRestService', function () {
         expect(service.initialize).not.toBeNull();
         expect(Injections.OtusRestResourceService.getSurveyGroupResource).toHaveBeenCalled();
       });
-
-    });
-
-    describe('create method', function () {
-      beforeEach(function () {
-        spyOn(service, 'create').and.callThrough();
-        service.create();
-      });
-
-      it('should create be defined', function () {
-        expect(service.create).toHaveBeenCalled();
-        expect(service.create).not.toBeNull();
-        service.create(Mock.datasourceList).then(function (data) {
-          expect(data.data).toEqual(Mock.datasourceList);
-        });
-      });
-    });
-
-    describe('update method', function () {
-      beforeEach(function () {
-        spyOn(service, 'update').and.callThrough();
-        service.update();
-      });
-
-      it('should update be defined', function () {
-        expect(service.update).toHaveBeenCalled();
-        expect(service.update).not.toBeNull();
-        service.update(Mock.datasourceList).then(function (data) {
-          expect(data.data).toEqual(Mock.datasourceList);
-        });
-      });
-    });
-
-    describe('list method', function () {
-      beforeEach(function () {
-        spyOn(service, 'list').and.callThrough();
-        service.list();
-      });
-
-      it('should update be defined', function () {
-        expect(service.list).toHaveBeenCalled();
-        expect(service.list).not.toBeNull();
-        service.list().then(function (data) {
-          expect(data.data).toEqual(Mock.datasourceList);
-        });
-      });
-    });
-
-    describe('getById method', function () {
-      beforeEach(function () {
-        spyOn(service, 'getById').and.callThrough();
-        service.getById();
-      });
-
-      it('should update be defined', function () {
-        expect(service.getById).toHaveBeenCalled();
-        expect(service.getById).not.toBeNull();
-        service.getById(ID).then(function (data) {
-          expect(data.id).toEqual(ID);
-        });
-      });
     });
   });
 
   function mockInjections() {
-    Mock.datasourceList = {
-      "id": "medicamentos",
-      "name": "MEDICAMENTOS",
-      "data": "fake1;extraction"
-    }
-
     Mock.OtusRestResourceService = {
       getDatasourceResourceFactory: () => {
         return {

@@ -54,8 +54,8 @@
 
     function updateSurveyGroupName(oldName, newName) {
       var update = {
-        old: oldName,
-        new: newName
+        surveyGroupName: oldName,
+        newSurveyGroupName: newName
       };
       return SurveyGroupRestService.updateSurveyGroupName(update)
         .then(function (response) {
@@ -65,8 +65,12 @@
         });
     }
 
-    function deleteSurveyGroup(group) {
-      return SurveyGroupRestService.deleteSurveyGroup(group.getName())
+    function deleteSurveyGroup(name) {
+      var deleteGroup = {
+        surveyGroupName: name,
+        newSurveyGroupName: ''
+      };
+      return SurveyGroupRestService.deleteSurveyGroup(deleteGroup)
         .then(function (response) {
           return response;
         }).catch(function (e) {
