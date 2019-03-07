@@ -98,7 +98,7 @@
                     "<div class='sk-circle11 sk-child'></div>" +
                     "<div class='sk-circle12 sk-child'></div>" +
                     "</div>"
-            });
+            }).se;
         }
     }
 

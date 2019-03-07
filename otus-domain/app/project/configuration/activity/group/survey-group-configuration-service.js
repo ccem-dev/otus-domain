@@ -20,6 +20,7 @@
     self.addNewSurveyGroup = addNewSurveyGroup;
     self.updateSurveyGroupName = updateSurveyGroupName;
     self.deleteSurveyGroup = deleteSurveyGroup;
+    self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
 
     onInit();
 
@@ -66,6 +67,15 @@
 
     function deleteSurveyGroup(group) {
       return SurveyGroupRestService.deleteSurveyGroup(group.getName())
+        .then(function (response) {
+          return response;
+        }).catch(function (e) {
+          return $q.reject(e);
+        });
+    }
+
+    function updateSurveyGroupAcronyms(group) {
+      return SurveyGroupRestService.updateSurveyGroupAcronyms(group)
         .then(function (response) {
           return response;
         }).catch(function (e) {
