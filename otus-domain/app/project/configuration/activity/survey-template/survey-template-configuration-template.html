@@ -33,7 +33,6 @@
   <md-chips flex layout="row" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode"  input-aria-label="grupos" input-aria-describedby="staticChipsNote" >
     <md-chip ng-repeat="group in $ctrl.surveyForm.groups">{{group.getName()}}</md-chip>
   </md-chips>
-  <span flex="40" class="md-subhead" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode">selecione <md-icon md-font-library="material-icons">mode_edit</md-icon> para vincular novos grupos</span>
   <div flex ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" > <span class="md-subhead">O  formulario não esta vinculado a nenhum grupo, selecione <md-icon md-font-library="material-icons">mode_edit</md-icon> para vincular</span></div>
   <div layout="row" flex="20" layout-align="end end">
     <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.surveyGroupsEdit()">

@@ -34,6 +34,8 @@
     self.publishTemplate = publishTemplate;
     self.updateSurveyFormType = updateSurveyFormType;
     self.deleteSurveyTemplate = deleteSurveyTemplate;
+    self.groupEditMode = groupEditMode;
+
     self.uploadConfig = {
       'callback': uploadFile,
       'type': 'json'
@@ -42,8 +44,10 @@
     self.uploadedObject = {};
     self.uploadedFile = {};
     self.disableSaving = true;
+    self.surveyGroupsEditModeMirror = false;
 
     function onInit() {
+      self.groupEditModeStatus=false;
       getCollectionOfPermissions();
       _getTemplatesList();
       deleteConfirmDialog = $mdDialog.confirm()
@@ -52,6 +56,10 @@
         .ariaLabel('exclusão de formulário')
         .ok('Sim')
         .cancel('Não');
+    }
+
+    function groupEditMode(status) {
+      self.groupEditModeStatus=status;
     }
 
     function _getTemplatesList() {
