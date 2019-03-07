@@ -66,7 +66,7 @@
       var removedGroups = _getRemovedGroups(oldGroups);
       var newGroups = _getNewGroups(oldGroups);
 
-      removedGroups.forEach((groupName) => {
+      removedGroups.forEach(function(groupName){
         SurveyGroupConfigurationService.getListOfSurveyGroups()
           .then(function(data) {
             var group = data.getGroup(groupName);
@@ -75,7 +75,7 @@
           });
       });
 
-      newGroups.forEach((newGroup) => {
+      newGroups.forEach(function(newGroup){
         SurveyGroupConfigurationService.getListOfSurveyGroups()
           .then(function(data) {
               var group = data.getGroup(newGroup.getName());
@@ -84,12 +84,12 @@
           });
       });
 
-      console.log(1);
+      self.surveyGroupsEditMode = false;
     }
 
     function _getRemovedGroups(oldGroups){
-      return oldGroups.filter((groupName) => {
-        var foundGroup = self.surveyForm.groups.filter((newGroup) => {
+      return oldGroups.filter(function(groupName){
+        var foundGroup = self.surveyForm.groups.filter(function(newGroup){
           if(newGroup.getName() === groupName){
             return true
           }
@@ -99,8 +99,8 @@
     }
 
     function _getNewGroups(oldGroups) {
-      return self.surveyForm.groups.filter((newGroup) => {
-        var foundGroup = oldGroups.filter((groupName) => {
+      return self.surveyForm.groups.filter(function(newGroup){
+        var foundGroup = oldGroups.filter(function(groupName){
           if(newGroup.getName() === groupName){
             return true
           }
@@ -110,7 +110,7 @@
     }
 
     function deleteSurveyTemplate() {
-      $mdDialog.show(_deleteConfirmDialog).then(function () {
+      $mdDialog.show(_deleteConfirmDialog).then(function(){
         var index = self.surveyTemplates.indexOf(self.surveyForm);
         ProjectConfigurationService.deleteSurveyTemplate(self.surveyForm.surveyTemplate.identity.acronym)
           .then(function () {
@@ -141,7 +141,7 @@
     }
 
     function _filterUsersWithPermissionExclusiveDisjunction() {
-      self.permissionList.forEach(function (permission) {
+      self.permissionList.forEach(function(permission){
         if (permission.acronym === self.surveyForm.surveyTemplate.identity.acronym && permission.version == self.surveyForm.version) {
           self.permission = ActivityPermissionFactory.fromJsonObject(permission);
         }
@@ -162,7 +162,7 @@
         .then(function(data) {
           var groupNames = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
           self.surveyForm.groups = [];
-          groupNames.forEach((groupName) => {
+          groupNames.forEach(function(groupName){
             self.surveyForm.groups.push(data.getGroup(groupName))
           });
           self.groupsManager = data;
