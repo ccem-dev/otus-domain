@@ -12,7 +12,7 @@
   ];
 
   function Controller($mdToast, $mdDialog, SurveyGroupConfigurationService) {
-    const GROUP_ALREADY_EXISTS = 'Group already exists';
+    var GROUP_ALREADY_EXISTS = 'Group already exists';
     var oldName;
     var self = this;
     self.groups = [];

@@ -54,8 +54,8 @@
 
     function updateSurveyGroupName(oldName, newName) {
       var update = {
-        oldName: oldName,
-        newName: newName
+        old: oldName,
+        new: newName
       };
       return SurveyGroupRestService.updateSurveyGroupName(update)
         .then(function (response) {

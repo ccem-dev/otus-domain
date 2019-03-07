@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusDomain')
+    .module('otusDomain.rest')
     .service('SurveyGroupRestService', Service);
 
   Service.$inject = [
@@ -41,44 +41,48 @@
       return defer.promise;
     }
 
-    function addNewSurveyGroup(group) {
+    function addNewSurveyGroup(data) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.addNewSurveyGroup(group, function () {
+      _rest.addNewSurveyGroup(data, function () {
         defer.resolve();
       });
       return defer.promise;
     }
 
-    function updateSurveyGroupName(update) {
+    function updateSurveyGroupName(data) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.updateSurveyGroupName(update, function () {
+      _rest.updateSurveyGroupName(data, function () {
         defer.resolve();
       });
       return defer.promise;
     }
 
-    function updateSurveyGroupAcronyms(group) {
+    function updateSurveyGroupAcronyms(data) {
       var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.updateSurveyGroupAcronyms(group, function () {
+      _rest.updateSurveyGroupAcronyms(data, function () {
         defer.resolve();
       });
       return defer.promise;
     }
 
-    function deleteSurveyGroup(name) {
+    function deleteSurveyGroup(data) {
+      var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.deleteSurveyGroup({ name: name }).$promise;
+      _rest.deleteSurveyGroup(data, function () {
+        defer.resolve();
+      });
+      return defer.promise;
     }
 
   }
