@@ -16,21 +16,6 @@
     </md-button>
   </div>
 </div>
-<style>
-  md-chips-wrap {
-    box-shadow: none;
-    cursor: default;
-
-  button.md-chip-remove {
-    display: none;
-  }
-
-  .md-chip-input-container md-autocomplete {
-    display: none;
-    cursor: default;
-  }
-  }
-</style>
 <div layout="row" layout-align="start center">
   <label>Grupos: </label>
   <md-contact-chips flex="80" ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}" ng-if="$ctrl.surveyGroupsEditMode"

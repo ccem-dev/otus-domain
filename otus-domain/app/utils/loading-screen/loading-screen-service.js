@@ -8,7 +8,7 @@
     Service.$inject = [];
 
     function Service() {
-        const LOGO_SOURCE = "app/assets/img/coruja_neutra.png";
+        const LOGO_SOURCE = "app/assets/img/coruja_neutra_110px.png";
         const BACKGROUND_COLOR = "#009688";
         const MESSAGE = "Por favor, aguarde o carregamento.";
         const LOCKED_MESSAGE = "Loading bloqueado pela chave: ";
@@ -98,7 +98,7 @@
                     "<div class='sk-circle11 sk-child'></div>" +
                     "<div class='sk-circle12 sk-child'></div>" +
                     "</div>"
-            }).se;
+            });
         }
     }
 
