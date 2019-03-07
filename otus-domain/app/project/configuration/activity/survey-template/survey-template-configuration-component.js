@@ -8,7 +8,9 @@
       templateUrl: 'app/project/configuration/activity/survey-template/survey-template-configuration-template.html',
       bindings: {
         surveyForm: '<',
-        surveyTemplates: '='
+        surveyTemplates: '=',
+        mirrorEditModeStatus: '&',
+        blocEdit: '<'
       }
     }).controller('surveyTemplateConfigurationCtrl', Controller);
 
@@ -58,33 +60,36 @@
     }
 
     function surveyGroupsEdit() {
-      self.surveyGroupsEditMode = true;
+      if(!self.blocEdit){
+        self.mirrorEditModeStatus({status: true});
+        self.surveyGroupsEditMode = true;
+      } else {
+        $mdToast.show($mdToast.simple().textContent('Você já esta em modo de edição em outra atividade').hideDelay(2000));
+      }
     }
 
     function updateSurveyGroups() {
-      var oldGroups = self.groupsManager.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
-      var removedGroups = _getRemovedGroups(oldGroups);
-      var newGroups = _getNewGroups(oldGroups);
+      SurveyGroupConfigurationService.getListOfSurveyGroups()
+        .then(function(data) {
+          var oldGroups = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
+          var removedGroups = _getRemovedGroups(oldGroups);
+          var newGroups = _getNewGroups(oldGroups);
 
-      removedGroups.forEach(function(groupName){
-        SurveyGroupConfigurationService.getListOfSurveyGroups()
-          .then(function(data) {
+          removedGroups.forEach(function (groupName) {
             var group = data.getGroup(groupName);
             group.removeSurvey(self.surveyForm.surveyTemplate.identity.acronym);
             SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
           });
-      });
 
-      newGroups.forEach(function(newGroup){
-        SurveyGroupConfigurationService.getListOfSurveyGroups()
-          .then(function(data) {
-              var group = data.getGroup(newGroup.getName());
-              group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
-              SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
+          newGroups.forEach(function (newGroup) {
+            var group = data.getGroup(newGroup.getName());
+            group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
+            SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
           });
-      });
 
-      self.surveyGroupsEditMode = false;
+          self.mirrorEditModeStatus({status: false});
+          self.surveyGroupsEditMode = false;
+        })
     }
 
     function _getRemovedGroups(oldGroups){
