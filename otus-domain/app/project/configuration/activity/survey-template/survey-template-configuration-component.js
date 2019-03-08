@@ -47,6 +47,7 @@
     self.updateSurveyGroups = updateSurveyGroups;
 
     function onInit() {
+      self.surveyGroupsEditMode = false;
       self.permissionList = [];
       _dialogs();
       _fetchGroups();
@@ -79,15 +80,13 @@
             var group = data.getGroup(groupName);
             if(group) {
               group.removeSurvey(self.surveyForm.surveyTemplate.identity.acronym);
-              SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON()).then().catch(function () {});
-            } else {
-              notFoudGroups.push(newGroup)
+              SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON())
             }
           });
 
-          _addNewGroups(data,_getNewGroups(oldGroups)).then(function (notFoudGroups) {
-            if(notFoudGroups.length>0){
-              $mdToast.show($mdToast.simple().textContent('Grupo(s) ('+notFoudGroups+') não encontado(s)').hideDelay(5000));
+          _addNewGroups(data,_getNewGroups(oldGroups)).then(function (notFoundGroups) {
+            if(notFoundGroups.length>0){
+              $mdToast.show($mdToast.simple().textContent('Grupo(s) ('+notFoundGroups+') não encontado(s)').hideDelay(5000));
             }
             _fetchGroups();
           });
@@ -116,15 +115,19 @@
         if(group){
           group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
           SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON()).then().catch(function() {
-            notFoundGroups.push(newGroup.getName())
+            notFoundGroups.push(newGroup.getName());
+            if(index === newGroups.length-1){
+              defer.resolve(notFoundGroups);
+            }
           });
         } else {
-          notFoundGroups.push(newGroup.getName())
+          notFoundGroups.push(newGroup.getName());
+          if(index === newGroups.length-1){
+            defer.resolve(notFoundGroups);
+          }
         }
 
-        if(index === newGroups.length-1){
-          defer.resolve(notFoundGroups);
-        }
+
       });
       return defer.promise;
     }
