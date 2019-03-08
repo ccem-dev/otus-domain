@@ -15,6 +15,7 @@
     }).controller('surveyTemplateConfigurationCtrl', Controller);
 
   Controller.$inject = [
+    '$q',
     'otusDomain.project.activity.SurveyGroupConfigurationService',
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
     '$mdDialog',
@@ -24,7 +25,7 @@
     'ActivityConfigurationManagerService'
   ];
 
-  function Controller(SurveyGroupConfigurationService,ProjectConfigurationService, $mdDialog, $mdToast, ActivityPermissionFactory, DashboardStateService, ActivityConfigurationManagerService) {
+  function Controller($q, SurveyGroupConfigurationService, ProjectConfigurationService, $mdDialog, $mdToast, ActivityPermissionFactory, DashboardStateService, ActivityConfigurationManagerService) {
     var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
     var timeShowMsg = 5000;
     var _deleteConfirmDialog;
@@ -72,21 +73,24 @@
       SurveyGroupConfigurationService.getListOfSurveyGroups()
         .then(function(data) {
           var oldGroups = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
-          var removedGroups = _getRemovedGroups(oldGroups);
-          var newGroups = _getNewGroups(oldGroups);
+          var removedGroups =_getRemovedGroups(oldGroups);
 
           removedGroups.forEach(function (groupName) {
             var group = data.getGroup(groupName);
-            group.removeSurvey(self.surveyForm.surveyTemplate.identity.acronym);
-            SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
+            if(group) {
+              group.removeSurvey(self.surveyForm.surveyTemplate.identity.acronym);
+              SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON()).then().catch(function () {});
+            } else {
+              notFoudGroups.push(newGroup)
+            }
           });
 
-          newGroups.forEach(function (newGroup) {
-            var group = data.getGroup(newGroup.getName());
-            group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
-            SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON());
+          _addNewGroups(data,_getNewGroups(oldGroups)).then(function (notFoudGroups) {
+            if(notFoudGroups.length>0){
+              $mdToast.show($mdToast.simple().textContent('Grupo(s) ('+notFoudGroups+') não encontado(s)').hideDelay(5000));
+            }
+            _fetchGroups();
           });
-
           self.mirrorEditModeStatus({status: false});
           self.surveyGroupsEditMode = false;
         })
@@ -101,6 +105,28 @@
         });
         return foundGroup.length <= 0;
       });
+    }
+
+    function _addNewGroups(groupsManager, newGroups) {
+      var defer = $q.defer();
+      var notFoundGroups = [];
+
+      newGroups.forEach(function (newGroup,index) {
+        var group = groupsManager.getGroup(newGroup.getName());
+        if(group){
+          group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
+          SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON()).then().catch(function() {
+            notFoundGroups.push(newGroup.getName())
+          });
+        } else {
+          notFoundGroups.push(newGroup.getName())
+        }
+
+        if(index === newGroups.length-1){
+          defer.resolve(notFoundGroups);
+        }
+      });
+      return defer.promise;
     }
 
     function _getNewGroups(oldGroups) {

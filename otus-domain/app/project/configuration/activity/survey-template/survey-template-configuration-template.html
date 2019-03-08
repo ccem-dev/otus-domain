@@ -17,7 +17,8 @@
   </div>
 </div>
 <div layout="row" layout-align="start center">
-  <label>Grupos: </label>
+  <label flex="80" ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode">Grupos: <span class="md-subhead">O  formulario não esta vinculado a nenhum grupo, selecione <md-icon md-font-library="material-icons">mode_edit</md-icon> para vincular</span></label>
+  <label ng-if="$ctrl.surveyGroupsEditMode || ($ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode)">Grupos: </label>
   <md-contact-chips flex="80" ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}" ng-if="$ctrl.surveyGroupsEditMode"
     ng-change="$ctrl.onModelChange($ctrl.contacts)"
     ng-disabled="$ctrl.surveyGroupsEditMode"
@@ -33,7 +34,6 @@
   <md-chips flex layout="row" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode"  input-aria-label="grupos" input-aria-describedby="staticChipsNote" >
     <md-chip ng-repeat="group in $ctrl.surveyForm.groups">{{group.getName()}}</md-chip>
   </md-chips>
-  <div flex ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" > <span class="md-subhead">O  formulario não esta vinculado a nenhum grupo, selecione <md-icon md-font-library="material-icons">mode_edit</md-icon> para vincular</span></div>
   <div layout="row" flex="20" layout-align="end end">
     <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.surveyGroupsEdit()">
       <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
