@@ -85,9 +85,12 @@
     }
 
     function deleteSurveyGroup(group) {
+      var message = 'Você tem certeza que deseja excluir esse grupo?';
+      if (group.surveyAcronyms.length > 0)
+        message = 'Existem atividades relacionadas ao grupo, você tem certeza que deseja excluir esse grupo?';
       $mdDialog.show($mdDialog.confirm()
         .title('Exclusão do grupo')
-        .textContent('Você tem certeza que deseja excluir esse grupo?')
+        .textContent(message)
         .ariaLabel('exclusão do grupo')
         .ok('Sim')
         .cancel('Não')).then(function () {

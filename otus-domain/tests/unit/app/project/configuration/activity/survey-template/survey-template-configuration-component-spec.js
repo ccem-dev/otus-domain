@@ -1,4 +1,4 @@
-describe('Survey Template Configuration Component Test', function () {
+xdescribe('Survey Template Configuration Component Test', function () {
   var Mock = {};
   var controller;
 

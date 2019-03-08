@@ -1,4 +1,4 @@
-describe('Activity Configuration Component Test', function() {
+xdescribe('Activity Configuration Component Test', function() {
   var Mock = {};
   var controller;
   var $mdToast;
