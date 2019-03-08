@@ -1,29 +1,29 @@
-xdescribe('Activity Configuration Component Test', function() {
+xdescribe('Activity Configuration Component Test', function () {
   var Mock = {};
   var controller;
   var $mdToast;
   var file;
   var $scope, $q;
 
-  beforeEach(function() {
+  beforeEach(function () {
     mockValues();
     mockInjections();
-    angular.mock.module('otusDomain.dashboard', function($provide) {
+    angular.mock.module('otusDomain.dashboard', function ($provide) {
       // $provide.value('$q',Mock.$q);
       $provide.value('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
-      $provide.value('$mdToast',Mock.mdToast);
-      $provide.value('$mdDialog',Mock.mdDialog);
+      $provide.value('$mdToast', Mock.mdToast);
+      $provide.value('$mdDialog', Mock.mdDialog);
     });
   });
 
   var originalTimeout;
-  beforeEach(function() {
+  beforeEach(function () {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
   });
 
-  beforeEach(function() {
-    inject(function(_$controller_, _$q_) {
+  beforeEach(function () {
+    inject(function (_$controller_, _$q_) {
       $q = _$q_;
       Mock.Injections = {
         "$q": $q
@@ -34,11 +34,11 @@ xdescribe('Activity Configuration Component Test', function() {
     spyOn(Mock.mdToast, "show").and.callThrough();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
   });
 
-  it('should component is defined', function() {
+  it('should component is defined', function () {
     expect(controller.publishTemplate).toBeDefined();
     expect(controller.updateSurveyFormType).toBeDefined();
     expect(controller.deleteSurveyTemplate).toBeDefined();
@@ -142,8 +142,8 @@ xdescribe('Activity Configuration Component Test', function() {
       spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
       spyOn(window, 'FileReader').and.returnValue({
-        onload: function() {},
-        readAsText: function() {},
+        onload: function () { },
+        readAsText: function () { },
         result: new File()
       });
       file = new File();
@@ -203,7 +203,7 @@ xdescribe('Activity Configuration Component Test', function() {
         setTimeout(function () {
           done()
           expect(controller.surveyTemplatesList.length).toEqual(2);
-        },100);
+        }, 100);
       }).catch(function () {
         done();
       });
@@ -219,21 +219,21 @@ xdescribe('Activity Configuration Component Test', function() {
         setTimeout(function () {
           done()
           expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
-        },100);
+        }, 100);
       });
     });
   });
 
   function mockInjections() {
     Mock.$q = {
-      defer: function() {
+      defer: function () {
         return {
           promise: Promise.resolve(JSON.stringify(Mock.surveyList[0])),
           resolve: function () {
             return Promise.resolve(JSON.stringify(Mock.surveyList[0]))
           },
           reject: Promise.reject(),
-          $promise: function(){
+          $promise: function () {
             return new Promise(function (resolve, reject) {
               reject()
             });
@@ -242,25 +242,25 @@ xdescribe('Activity Configuration Component Test', function() {
       }
     };
     Mock.ProjectConfigurationService = {
-      fetchSurveysManagerConfiguration: function() {
+      fetchSurveysManagerConfiguration: function () {
         return Promise.resolve();
       },
-      deleteSurveyTemplate: function() {
+      deleteSurveyTemplate: function () {
         return Promise.resolve();
       },
-      updateSurveyTemplateType: function() {
+      updateSurveyTemplateType: function () {
         return Promise.resolve();
       },
-      publishTemplate: function() {
+      publishTemplate: function () {
         return Promise.resolve(Mock.surveyList[0]);
       },
-      getCollectionOfPermissions: function() {
+      getCollectionOfPermissions: function () {
         return Promise.resolve();
       }
     };
 
     Mock.mdDialog = {
-      show: function(){},
+      show: function () { },
       confirm: function () {
         var self = this;
         self.title = function () {
@@ -283,8 +283,8 @@ xdescribe('Activity Configuration Component Test', function() {
     };
 
     Mock.mdToast = {
-      show: function(){},
-      simple: function(){
+      show: function () { },
+      simple: function () {
         var self = this;
         self.title = function () {
           return self;
@@ -351,7 +351,7 @@ xdescribe('Activity Configuration Component Test', function() {
       size: 6225,
       type: "application/json",
       webekitRelativePath: "",
-      onload: function(){}
+      onload: function () { }
       // result: true
     }];
   }

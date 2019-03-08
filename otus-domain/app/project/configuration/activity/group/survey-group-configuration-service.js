@@ -19,8 +19,8 @@
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewSurveyGroup = addNewSurveyGroup;
     self.updateSurveyGroupName = updateSurveyGroupName;
-    self.deleteSurveyGroup = deleteSurveyGroup;
     self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
+    self.deleteSurveyGroup = deleteSurveyGroup;
 
     onInit();
 

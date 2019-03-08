@@ -12,7 +12,7 @@
       </md-input-container>
       <md-button class="md-primary md-raised" ng-click="$ctrl.addNewSurveyGroup()">Adicionar</md-button>
     </div>
-    <md-list ng-if="!$ctrl.error">
+    <md-list ng-if="!$ctrl.error || $ctrl.groups">
       <md-list-item ng-repeat="group in $ctrl.groups track by $index" aria-label="grupos de atividades">
         <div layout="row" flex layout-align="center center">
           <md-input-container class="remove-errors-spacer" flex md-no-float>
@@ -49,6 +49,9 @@
     </md-list>
     <div ng-if="$ctrl.error" layout-align="center center" layout="row" layout layout-padding>
       <p>{{$ctrl.error}}</p>
+    </div>
+    <div layout-align="center center" layout="row" layout layout-padding ng-if="!$ctrl.groups">
+      <md-progress-circular></md-progress-circular>
     </div>
   </md-card-content>
 </md-card>

@@ -28,11 +28,6 @@ xdescribe('SurveyGroupConfigurationService', function () {
           GroupManagerFactory: _$injector_.get('otusjs.survey.GroupManagerFactory')
         };
         service = _$injector_.get('otusDomain.project.activity.SurveyGroupConfigurationService', Injections);
-        spyOn(Injections.SurveyGroupRestService, "getListOfSurveyGroups").and.callThrough();
-        spyOn(Injections.SurveyGroupRestService, "addNewSurveyGroup").and.callThrough();
-        spyOn(Injections.SurveyGroupRestService, "updateSurveyGroupName").and.callThrough();
-        spyOn(Injections.SurveyGroupRestService, "updateSurveyGroupAcronyms").and.callThrough();
-        spyOn(Injections.SurveyGroupRestService, "deleteSurveyGroup").and.callThrough();
       });
     });
 
