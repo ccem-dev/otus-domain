@@ -45,17 +45,21 @@
     }
 
     function addNewSurveyGroup() {
-      SurveyGroupConfigurationService.addNewSurveyGroup(self.newGroup)
-        .then(function (response) {
-          $mdToast.show($mdToast.simple().textContent('O novo grupo foi adicionado na lista.').hideDelay(2000));
-          _getListOfSurveyGroups();
-        }).catch(function (e) {
-          if (GROUP_ALREADY_EXISTS === e.message) {
-            $mdToast.show($mdToast.simple().textContent('Grupo já cadastrado.').hideDelay(2000));
-          } else {
-            $mdToast.show($mdToast.simple().textContent('Ocorreu um erro, tente novamente mais tarde.').hideDelay(2000));
-          }
-        });
+      if (self.newGroup) {
+        SurveyGroupConfigurationService.addNewSurveyGroup(self.newGroup)
+          .then(function (response) {
+            $mdToast.show($mdToast.simple().textContent('O novo grupo foi adicionado na lista.').hideDelay(2000));
+            _getListOfSurveyGroups();
+          }).catch(function (e) {
+            if (GROUP_ALREADY_EXISTS === e.message) {
+              $mdToast.show($mdToast.simple().textContent('O nome escolhido já está em uso!').hideDelay(2000));
+            } else {
+              $mdToast.show($mdToast.simple().textContent('Ocorreu um erro, tente novamente mais tarde.').hideDelay(2000));
+            }
+          });
+      } else {
+        $mdToast.show($mdToast.simple().textContent('Você precisar definir um nome para o grupo!').hideDelay(2000));
+      }
       self.newGroup = '';
     }
 
@@ -67,8 +71,14 @@
     function updateSurveyGroupName(group) {
       SurveyGroupConfigurationService.updateSurveyGroupName(oldName, group.getName())
         .then(function (response) {
-          $mdToast.show($mdToast.simple().textContent('O nome do grupo foi atualizado.').hideDelay(2000));
-          _getListOfSurveyGroups();
+          if (response.MESSAGE === 'Data Validation Fail: SurveyGroupName already in use') {
+            $mdToast.show($mdToast.simple().textContent('Ocorreu um erro na tentativa de atualização. Por favor, verifique os dados informados.').hideDelay(2000));
+            group.editMode = false;
+            _getListOfSurveyGroups();
+          } else {
+            $mdToast.show($mdToast.simple().textContent('O nome do grupo foi atualizado.').hideDelay(2000));
+            _getListOfSurveyGroups();
+          }
         }).catch(function (e) {
           $mdToast.show($mdToast.simple().textContent('Ocorreu um erro, tente novamente mais tarde.').hideDelay(2000));
         });
@@ -81,7 +91,7 @@
         .ariaLabel('exclusão do grupo')
         .ok('Sim')
         .cancel('Não')).then(function () {
-          SurveyGroupConfigurationService.deleteSurveyGroup(group)
+          SurveyGroupConfigurationService.deleteSurveyGroup(group.getName())
             .then(function (response) {
               _getListOfSurveyGroups();
               $mdToast.show($mdToast.simple().textContent('O grupo foi excluído.').hideDelay(2000));

@@ -42,25 +42,17 @@
     }
 
     function addNewSurveyGroup(data) {
-      var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.addNewSurveyGroup(data, function () {
-        defer.resolve();
-      });
-      return defer.promise;
+      return _rest.addNewSurveyGroup(data).$promise;
     }
 
     function updateSurveyGroupName(data) {
-      var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.updateSurveyGroupName(data, function () {
-        defer.resolve();
-      });
-      return defer.promise;
+      return _rest.updateSurveyGroupName(data).$promise;
     }
 
     function updateSurveyGroupAcronyms(data) {
@@ -79,14 +71,10 @@
     }
 
     function deleteSurveyGroup(data) {
-      var defer = $q.defer();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.deleteSurveyGroup(data, function () {
-        defer.resolve();
-      });
-      return defer.promise;
+      return _rest.deleteSurveyGroup(data).$promise;
     }
 
   }
