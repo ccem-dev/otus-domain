@@ -60,8 +60,12 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      _rest.updateSurveyGroupAcronyms(data, function () {
-        defer.resolve();
+      _rest.updateSurveyGroupAcronyms(data,function (response) {
+        if ('data' in response) {
+          defer.resolve(response.data);
+        } else {
+          defer.reject(response);
+        }
       });
       return defer.promise;
     }
