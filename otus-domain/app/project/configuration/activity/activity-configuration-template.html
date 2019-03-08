@@ -25,9 +25,8 @@
     </div>
   </md-card-title-text>
     <md-list>
-      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search"  aria-label="formulário">
+      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index" ng-style="{background: $ctrl.getColor($index)}"  aria-label="formulário" layout-padding>
         <survey-template-configuration flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)" bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
-        <md-divider></md-divider>
       </md-list-item>
     </md-list>
 </md-content>

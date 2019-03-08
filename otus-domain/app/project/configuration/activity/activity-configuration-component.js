@@ -35,6 +35,7 @@
     self.updateSurveyFormType = updateSurveyFormType;
     self.deleteSurveyTemplate = deleteSurveyTemplate;
     self.groupEditMode = groupEditMode;
+    self.getColor = getColor;
 
     self.uploadConfig = {
       'callback': uploadFile,
@@ -47,7 +48,7 @@
     self.surveyGroupsEditModeMirror = false;
 
     function onInit() {
-      self.groupEditModeStatus=false;
+      self.groupEditModeStatus = false;
       getCollectionOfPermissions();
       _getTemplatesList();
       deleteConfirmDialog = $mdDialog.confirm()
@@ -59,7 +60,7 @@
     }
 
     function groupEditMode(status) {
-      self.groupEditModeStatus=status;
+      self.groupEditModeStatus = status;
     }
 
     function _getTemplatesList() {
@@ -173,6 +174,13 @@
 
       }
       $mdToast.show($mdToast.simple().textContent(errorMessage).hideDelay(2000));
+    }
+
+    function getColor(i) {
+      if (i % 2 == 0) {
+        return "#efefef";
+      }
+      return "#ffffff"
     }
   }
 }());

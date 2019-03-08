@@ -1,6 +1,6 @@
 <div layout="row" layout-align="start center">
-  <label flex>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}}
-    - versão: {{$ctrl.surveyForm.version}}</label>
+  <label flex> <span>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</span> - {{$ctrl.surveyForm.surveyTemplate.identity.name}}
+    |<span class="md-caption"> Versão: {{$ctrl.surveyForm.version}}</span></label>
   <div layout="row" flex="20" layout-align="end end">
     <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">
       <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
@@ -17,10 +17,9 @@
   </div>
 </div>
 <div layout="row" layout-align="start center">
-  <label flex="80" ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode">Grupos: <span class="md-subhead">O  formulario não esta vinculado a nenhum grupo, selecione <md-icon md-font-library="material-icons">mode_edit</md-icon> para vincular</span></label>
-  <label ng-if="$ctrl.surveyGroupsEditMode || ($ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode)">Grupos: </label>
+  <label flex="80" ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" class="md-caption">Grupos:</label>
+  <label ng-if="$ctrl.surveyGroupsEditMode || ($ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode)" class="md-caption">Grupos: </label>
   <md-contact-chips flex="80" ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}" ng-if="$ctrl.surveyGroupsEditMode"
-    ng-change="$ctrl.onModelChange($ctrl.contacts)"
     ng-disabled="$ctrl.surveyGroupsEditMode"
     md-contacts="$ctrl.querySearch($query)"
     md-contact-name="name" 
