@@ -12,7 +12,7 @@
   ];
 
   function Service($q, SurveyGroupRestService, GroupManagerFactory) {
-    var groupManagerFactory
+    var groupManagerFactory;
     var self = this;
 
     /* Public methods */
