@@ -59,7 +59,7 @@ describe('Survey Template Configuration Component Test', function () {
   });
 
   it('should add survey group', function (done) {
-    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.callThrough();
+    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.returnValue(Promise.resolve());
     spyOn(Mock.SurveyGroupConfigurationService, 'getListOfSurveyGroups').and.returnValue(Promise.resolve(Mock.groupsManager2));
     controller.$onInit();
     setTimeout(function () {
@@ -103,42 +103,6 @@ describe('Survey Template Configuration Component Test', function () {
       controller.updateSurveyGroups();
       Mock.SurveyGroupConfigurationService.getListOfSurveyGroups().then(function(data) {
         expect(Mock.SurveyGroupConfigurationService.updateSurveyGroupAcronyms).toHaveBeenCalledTimes(0);
-      });
-      done()
-    },100);
-  });
-
-  it('should show error when group is not found', function (done) {
-    spyOn(Mock.SurveyGroupConfigurationService, 'getListOfSurveyGroups').and.returnValue(Promise.resolve(Mock.groupsManager2));
-    spyOn(Mock.SurveyGroupConfigurationService, 'updateSurveyGroupAcronyms').and.returnValue(Promise.reject());
-    controller.$onInit();
-    setTimeout(function () {
-      controller.surveyForm.groups = [{
-        addSurvey:function(){},
-        removeSurvey:function () {},
-        toJSON:function () {},
-        getName:function () {
-          return "teste"
-        }
-      },{
-        addSurvey:function(){},
-        removeSurvey:function () {},
-        toJSON:function () {},
-        getName:function () {
-          return "teste1"
-        }
-      },{
-        addSurvey:function(){},
-        removeSurvey:function () {},
-        toJSON:function () {},
-        getName:function () {
-          return "teste2"
-        }
-      }];
-      controller.blocEdit = true;
-      controller.updateSurveyGroups();
-      Mock.SurveyGroupConfigurationService.getListOfSurveyGroups().then(function(data) {
-        expect(Mock.SurveyGroupConfigurationService.updateSurveyGroupAcronyms).toHaveBeenCalledTimes(1);
       });
       done()
     },100);
