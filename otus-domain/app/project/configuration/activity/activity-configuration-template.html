@@ -23,11 +23,10 @@
     <div layout="column" ng-hide="$ctrl.disableSaving">
       <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}</span>
     </div>
-
+  </md-card-title-text>
     <md-list>
-      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search"  aria-label="formulário">
-        <survey-template-configuration flex survey-form="surveyForm" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
-        <md-divider></md-divider>
+      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index" ng-style="{background: $ctrl.getColor($index)}"  aria-label="formulário" layout-padding>
+        <survey-template-configuration flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)" bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
       </md-list-item>
     </md-list>
 </md-content>
