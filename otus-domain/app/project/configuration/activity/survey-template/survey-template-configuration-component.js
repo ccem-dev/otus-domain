@@ -32,10 +32,7 @@
     var self = this;
     self.showSettings;
     self.usersList = [];
-
-    self.groups = [
-      { name: 'RECRUTAMENTO' }
-    ];
+    self.groups = [];
 
     /* Public methods */
     self.$onInit = onInit;
@@ -62,8 +59,8 @@
     }
 
     function surveyGroupsEdit() {
-      if(!self.blocEdit){
-        self.mirrorEditModeStatus({status: true});
+      if (!self.blocEdit) {
+        self.mirrorEditModeStatus({ status: true });
         self.surveyGroupsEditMode = true;
       } else {
         $mdToast.show($mdToast.simple().textContent('Você já esta em modo de edição em outra atividade').hideDelay(2000));
@@ -72,33 +69,33 @@
 
     function updateSurveyGroups() {
       SurveyGroupConfigurationService.getListOfSurveyGroups()
-        .then(function(data) {
+        .then(function (data) {
           var oldGroups = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
-          var removedGroups =_getRemovedGroups(oldGroups);
+          var removedGroups = _getRemovedGroups(oldGroups);
 
           removedGroups.forEach(function (groupName) {
             var group = data.getGroup(groupName);
-            if(group) {
+            if (group) {
               group.removeSurvey(self.surveyForm.surveyTemplate.identity.acronym);
               SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON())
             }
           });
 
-          _addNewGroups(data,_getNewGroups(oldGroups)).then(function (notFoundGroups) {
-            if(notFoundGroups.length>0){
-              $mdToast.show($mdToast.simple().textContent('Grupo(s) ('+notFoundGroups+') não encontado(s)').hideDelay(5000));
+          _addNewGroups(data, _getNewGroups(oldGroups)).then(function (notFoundGroups) {
+            if (notFoundGroups.length > 0) {
+              $mdToast.show($mdToast.simple().textContent('Grupo(s) (' + notFoundGroups + ') não encontado(s)').hideDelay(5000));
             }
             _fetchGroups();
           });
-          self.mirrorEditModeStatus({status: false});
+          self.mirrorEditModeStatus({ status: false });
           self.surveyGroupsEditMode = false;
         })
     }
 
-    function _getRemovedGroups(oldGroups){
-      return oldGroups.filter(function(groupName){
-        var foundGroup = self.surveyForm.groups.filter(function(newGroup){
-          if(newGroup.getName() === groupName){
+    function _getRemovedGroups(oldGroups) {
+      return oldGroups.filter(function (groupName) {
+        var foundGroup = self.surveyForm.groups.filter(function (newGroup) {
+          if (newGroup.getName() === groupName) {
             return true
           }
         });
@@ -110,19 +107,19 @@
       var defer = $q.defer();
       var notFoundGroups = [];
 
-      newGroups.forEach(function (newGroup,index) {
+      newGroups.forEach(function (newGroup, index) {
         var group = groupsManager.getGroup(newGroup.getName());
-        if(group){
+        if (group) {
           group.addSurvey(self.surveyForm.surveyTemplate.identity.acronym);
-          SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON()).then().catch(function() {
+          SurveyGroupConfigurationService.updateSurveyGroupAcronyms(group.toJSON()).then().catch(function () {
             notFoundGroups.push(newGroup.getName());
-            if(index === newGroups.length-1){
+            if (index === newGroups.length - 1) {
               defer.resolve(notFoundGroups);
             }
           });
         } else {
           notFoundGroups.push(newGroup.getName());
-          if(index === newGroups.length-1){
+          if (index === newGroups.length - 1) {
             defer.resolve(notFoundGroups);
           }
         }
@@ -133,9 +130,9 @@
     }
 
     function _getNewGroups(oldGroups) {
-      return self.surveyForm.groups.filter(function(newGroup){
-        var foundGroup = oldGroups.filter(function(groupName){
-          if(newGroup.getName() === groupName){
+      return self.surveyForm.groups.filter(function (newGroup) {
+        var foundGroup = oldGroups.filter(function (groupName) {
+          if (newGroup.getName() === groupName) {
             return true
           }
         });
@@ -144,7 +141,7 @@
     }
 
     function deleteSurveyTemplate() {
-      $mdDialog.show(_deleteConfirmDialog).then(function(){
+      $mdDialog.show(_deleteConfirmDialog).then(function () {
         var index = self.surveyTemplates.indexOf(self.surveyForm);
         ProjectConfigurationService.deleteSurveyTemplate(self.surveyForm.surveyTemplate.identity.acronym)
           .then(function () {
@@ -175,7 +172,7 @@
     }
 
     function _filterUsersWithPermissionExclusiveDisjunction() {
-      self.permissionList.forEach(function(permission){
+      self.permissionList.forEach(function (permission) {
         if (permission.acronym === self.surveyForm.surveyTemplate.identity.acronym && permission.version == self.surveyForm.version) {
           self.permission = ActivityPermissionFactory.fromJsonObject(permission);
         }
@@ -193,14 +190,14 @@
 
     function _fetchGroups() {
       SurveyGroupConfigurationService.getListOfSurveyGroups()
-        .then(function(data) {
+        .then(function (data) {
           var groupNames = data.getSurveyGroups(self.surveyForm.surveyTemplate.identity.acronym);
           self.surveyForm.groups = [];
-          groupNames.forEach(function(groupName){
+          groupNames.forEach(function (groupName) {
             self.surveyForm.groups.push(data.getGroup(groupName))
           });
           self.groupsManager = data;
-        }).catch(function() {
+        }).catch(function () {
           self.groups = [];
         });
     }

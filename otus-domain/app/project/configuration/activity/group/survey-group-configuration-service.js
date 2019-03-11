@@ -12,15 +12,15 @@
   ];
 
   function Service($q, SurveyGroupRestService, GroupManagerFactory) {
-    var groupManagerFactory
+    var groupManagerFactory;
     var self = this;
 
     /* Public methods */
     self.getListOfSurveyGroups = getListOfSurveyGroups;
     self.addNewSurveyGroup = addNewSurveyGroup;
     self.updateSurveyGroupName = updateSurveyGroupName;
-    self.deleteSurveyGroup = deleteSurveyGroup;
     self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
+    self.deleteSurveyGroup = deleteSurveyGroup;
 
     onInit();
 

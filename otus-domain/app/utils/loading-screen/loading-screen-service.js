@@ -9,7 +9,7 @@
 
   function Service() {
     var LOGO_SOURCE = "app/assets/img/coruja_neutra_110px.png";
-    var BACKGROUND_COLOR = "#009688";
+    var BACKGROUND_COLOR = "#b4d0ff";
     var MESSAGE = "Por favor, aguarde o carregamento.";
     var LOCKED_MESSAGE = "Loading bloqueado pela chave: ";
     var NEW_KEY_NOT_ADDED = "Não foi possível atribuir a nova chave: ";
@@ -83,7 +83,7 @@
       self.loading_screen = pleaseWait({
         logo: LOGO_SOURCE,
         backgroundColor: BACKGROUND_COLOR,
-        loadingHtml: "<p class='loading-message' style='color:#FFF;'>" + self.message + "</p>" +
+        loadingHtml: "<p class='loading-message' style='color:#000;'>" + self.message + "</p>" +
           "<div class='sk-circle'>" +
           "<div class='sk-circle1 sk-child'></div>" +
           "<div class='sk-circle2 sk-child'></div>" +
