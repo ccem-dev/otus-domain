@@ -43,17 +43,17 @@
             _userResource = OtusRestResourceService.getUserResource();
         }
 
-        function fetchUsers() {
-            var defer = $q.defer();
-            _userResource.list(function (response) {
-                if ('data' in response) {
-                    defer.resolve(response.data);
-                } else {
-                    defer.reject(true);
-                }
-            });
-            return defer.promise;
-        }
+      function fetchUsers() {
+        var defer = $q.defer();
+        _userResource.list(function (response) {
+          if ('data' in response) {
+            defer.resolve(response.data);
+          } else {
+            defer.reject(true);
+          }
+        });
+        return defer.promise;
+      }
 
         /* Surveys Manager Section */
         function fetchSurveysManagerConfiguration() {
