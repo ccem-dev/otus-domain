@@ -38,6 +38,7 @@
     "angular-ui-router": "^0.3.1",
     "jquery": "2.2.0",
     "moment": "2.12.0",
+    "please-wait": "0.0.5",
     "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#v1.13",
     "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
     "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#v1.16"
