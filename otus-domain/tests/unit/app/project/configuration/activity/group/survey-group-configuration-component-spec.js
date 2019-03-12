@@ -37,6 +37,7 @@ describe('surveyGroupConfiguration', function () {
 
       it('should to be defined', function () {
         expect(controller.$onInit).toBeDefined();
+        expect(controller.validUpdateName).toBeDefined();
       });
 
       it('should call getListOfSurveyGroups method', function () {
@@ -48,7 +49,6 @@ describe('surveyGroupConfiguration', function () {
     });
 
     describe('_getListOfSurveyGroups method', function () {
-
       it('should define list of groups', function () {
         spyOn(Mock.SurveyGroupConfigurationService, 'getListOfSurveyGroups').and.returnValue(Promise.resolve(Mock.groups));
 
@@ -166,6 +166,19 @@ describe('surveyGroupConfiguration', function () {
 
     });
 
+    describe("validUpdateName method", function () {
+      beforeEach(function () {
+        controller.edit(Mock.group1);
+      });
+
+      it('should return true', function () {
+        expect(controller.validUpdateName("newName",true)).toBeTruthy();
+      });
+
+      it('should return false', function () {
+        expect(controller.validUpdateName(Mock.group1.getName(),true)).toBeFalsy();
+      });
+    });
   });
 
   function mockInjections() {
@@ -174,7 +187,7 @@ describe('surveyGroupConfiguration', function () {
       getGroupList: function () {
         return [];
       }
-    }
+    };
 
     Mock.group1 = {
       getName: function () {
@@ -184,7 +197,7 @@ describe('surveyGroupConfiguration', function () {
       getSurveys: function () {
         return []
       }
-    }
+    };
 
     Mock.group2 = {
       getName: function () {
@@ -194,7 +207,7 @@ describe('surveyGroupConfiguration', function () {
       getSurveys: function () {
         return ['ABC', 'DEF']
       }
-    }
+    };
 
     Mock.mdToast = {
       show: function () { },
