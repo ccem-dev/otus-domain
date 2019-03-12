@@ -303,6 +303,7 @@
           },
           initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
             ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
           }
         },
         views: {

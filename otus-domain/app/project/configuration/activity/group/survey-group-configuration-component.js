@@ -29,6 +29,7 @@
     self.edit = edit;
     self.updateSurveyGroupName = updateSurveyGroupName;
     self.deleteSurveyGroup = deleteSurveyGroup;
+    self.validUpdateName = validUpdateName;
 
     function onInit() {
       _getListOfSurveyGroups();
@@ -71,6 +72,13 @@
     function edit(group) {
       oldName = group.getName();
       group.editMode = !group.editMode;
+    }
+
+    function validUpdateName(newName, editMode) {
+      if (editMode){
+        return newName != oldName
+      }
+      return true;
     }
 
     function updateSurveyGroupName(group) {

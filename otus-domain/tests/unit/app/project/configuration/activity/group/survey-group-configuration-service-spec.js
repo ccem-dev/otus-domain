@@ -60,6 +60,14 @@ describe('SurveyGroupConfigurationService', function () {
       expect(Mock.SurveyGroupRestService.updateSurveyGroupName).toHaveBeenCalledWith(Mock.updateStrutureUpdate);
     });
 
+    it('should updateSurveyGroupName return promise resolved', function () {
+      service.updateSurveyGroupName(Mock.oldName,Mock.oldName);
+      expect(Mock.SurveyGroupRestService.updateSurveyGroupName).toHaveBeenCalledTimes(0);
+      service.updateSurveyGroupName(Mock.oldName,Mock.oldName).then(function (response) {
+        expect(response).toEqual({});
+      });
+    });
+
     it('should deleteSurveyGroup called', function () {
       service.deleteSurveyGroup(Mock.oldName);
       expect(Mock.SurveyGroupRestService.deleteSurveyGroup).toHaveBeenCalledTimes(1);
@@ -113,6 +121,11 @@ describe('SurveyGroupConfigurationService', function () {
     Mock.updateStrutureUpdate  = {
       surveyGroupName: Mock.oldName,
       newSurveyGroupName: Mock.newName
+    };
+
+    Mock.updateStrutureUpdateInvalid  = {
+      surveyGroupName: Mock.oldName,
+      newSurveyGroupName: Mock.oldName
     };
 
     Mock.updateStrutureDelete  = {

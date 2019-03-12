@@ -22,12 +22,6 @@
     self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
     self.deleteSurveyGroup = deleteSurveyGroup;
 
-    onInit();
-
-    function onInit() {
-      SurveyGroupRestService.initialize();
-    }
-
     function getListOfSurveyGroups() {
       return SurveyGroupRestService.getListOfSurveyGroups()
         .then(function (response) {
@@ -57,6 +51,7 @@
         surveyGroupName: oldName,
         newSurveyGroupName: newName
       };
+      if(oldName === newName) return Promise.resolve({});
       return SurveyGroupRestService.updateSurveyGroupName(update)
         .then(function (response) {
           return response;
