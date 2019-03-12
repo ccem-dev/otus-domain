@@ -53,8 +53,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './app/**/*.js': 'coverage',
-      './tests/unit/**/*-spec.js': 'browserify'
+      './app/**/*.js': ['babel','coverage'],
+      './tests/unit/**/*-spec.js': 'babel'
     },
     browserify: {
       debug: true,
@@ -62,8 +62,14 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
-      type: 'lcov',
-      dir: 'target/test-coverage/'
+      reporters: [{
+        type: 'html',
+        dir: 'target/test-coverage/'
+      }, {
+        type: 'lcov',
+        dir: 'target/test-coverage/',
+        subdir: 'report-lcov'
+      }]
     },
 
     // test results reporter to use
