@@ -1,0 +1,116 @@
+<md-content flex layout-align="center start">
+  <md-subheader class="md-primary" flex="50">Permissões Otus</md-subheader>
+  <div layout="column" style="background-color: #FAFAFA" class="md-padding">
+  <form ng-submit="$event.preventDefault()" name="searchForm">
+    <div layout="row" layout-fill="" flex>
+      <label class="md-body-1">Selecione um usuário:</label>
+      <span flex></span>
+      <md-checkbox class="md-primary" ng-model="$ctrl.activeUsers" ng-change="$ctrl.filterUsersActives()" aria-label="ativos" style="margin-bottom: 5px !important;">
+        Somente os ativos.
+      </md-checkbox>
+    </div>
+
+  <md-autocomplete flex required
+    class="md-whiteframe-2dp"
+                   md-input-name="autocompleteField"
+    md-no-cache="true"
+    md-selected-item="$ctrl.selectedItem"
+    md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+    md-search-text="searchText"
+    md-selected-item-change="$ctrl.selectedItemChange(item)"
+    md-items="item in $ctrl.searchUser(searchText)"
+    md-item-text="item.name +' ('+item.email+')'"
+    md-min-length="0"
+    placeholder="Digite o nome ou email do usuário">
+    <md-item-template>
+      <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.name + " ("+item.email+")"}}</span>
+    </md-item-template>
+    <md-not-found>
+      Nenhum usuário com o nome de "{{$ctrl.searchText}}" foi encontrado.
+    </md-not-found>
+  </md-autocomplete>
+  </form>
+
+  </div>
+
+
+
+
+</md-content>
+
+<md-content>
+  <md-card flex layout-align="center center" layout="row"  ng-if="$ctrl.selectedUser">
+    <div layout="column" flex>
+      <div layout="row" layout-xs="column" flex>
+        <md-card-title layout="row" layout-xs="column" layout-align="center center">
+          <md-card-title-media layout="row" flex="10">
+            <div class="md-media-sm card-media" layout="row" flex>
+              <md-icon md-font-set="material-icons">face</md-icon>
+            </div>
+          </md-card-title-media>
+          <md-card-title-text layout="row">
+            <div layout="column">
+              <div layout="row" layout-align="start center">
+                <span class="md-headline">{{$ctrl.selectedUser.name}}</span>
+                <span class="md-subhead description user-title-position">{{$ctrl.selectedUser.surname}}</span>
+              </div>
+              <span class="md-subhead description">{{$ctrl.selectedUser.email}}</span>
+              <span ng-if="$ctrl.selectedUser.admin" class="md-subhead description">Administrador</span>
+            </div>
+            <span flex></span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" flex="15" flex-md="20" flex-sm="25" flex-xs="30" layout-align="center center">
+          <md-action flex layout="column">
+            <div layout="row" flex>
+              <div layout="column" flex="50">
+                <md-subheader class="md-subhead description backgroud-color-default">Centro:</md-subheader>
+              </div>
+              <div layout="column">
+                <md-select aria-label="Selecione um estado" class="margin-zero field-user-position" ng-model="$ctrl.selectedUser.fieldCenter.acronym" ng-change="$ctrl.updateFieldCenter(user)">
+                  <md-option value=""><em>Nenhum</em></md-option>
+                  <md-option ng-repeat="fieldCenter in $ctrl.fieldCenters track by $index" ng-value="fieldCenter.acronym">
+                    {{fieldCenter.acronym}}
+                  </md-option>
+                </md-select>
+              </div>
+            </div>
+            <div layout="row" flex ng-if="!$ctrl.selectedUser.admin">
+              <div layout="column" flex="50">
+                <md-subheader class="md-subhead description backgroud-color-default">Ativo:</md-subheader>
+              </div>
+              <div layout="column" flex>
+                <md-switch ng-if="!$ctrl.selectedUser.admin" aria-label="status" ng-model="$ctrl.selectedUser.enable" class="md-primary margin-zero field-user-position" md-no-ink ng-change="$ctrl.enableDisable(user)"></md-switch>
+              </div>
+            </div>
+            <div layout="row" flex>
+              <div layout="column" flex="50">
+                <md-subheader ng-class="(!$ctrl.selectedUser.enable ? 'user-ips-opacity' : '') + ' md-subhead description backgroud-color-default'">Extração:</md-subheader>
+              </div>
+              <div layout="column" flex>
+                <md-switch aria-label="extração" ng-disabled="!$ctrl.selectedUser.enable" ng-model="$ctrl.selectedUser.extraction" class="md-primary margin-zero field-user-position" md-no-ink ng-change="$ctrl.enableDisableExtraction(user)"></md-switch>
+              </div>
+            </div>
+            <div layout="row" flex>
+              <div layout="column" flex="50">
+
+              </div>
+              <div layout="column" flex>
+
+              </div>
+            </div>
+          </md-action>
+        </md-card-actions>
+      </div>
+      <md-divider flex="20"></md-divider>
+      <div layout="row" flex ng-class="!$ctrl.selectedUser.extraction ? 'user-ips-opacity' : ''">
+        <extractios-ips-field user="user" user-index="$index" flex></extractios-ips-field>
+      </div>
+    </div>
+  </md-card>
+</md-content>
+<md-content flex layout="row" layout-align="center center" ng-if="$ctrl.selectedUser">
+  <div layout="column" flex="100">
+    <permission title="Teste" layout-padding="" controller="$ctrl.groupManagerFactory" ></permission>
+  </div>
+</md-content>

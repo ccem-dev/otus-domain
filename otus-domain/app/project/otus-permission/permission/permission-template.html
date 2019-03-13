@@ -1,0 +1,79 @@
+<!--<style>-->
+  <!--.permission-object{-->
+    <!--/*border: 2px solid rgba(68,138,255, 0.4);*/-->
+    <!--/*border: 2px solid rgba(30,30,30, 0.4);*/-->
+    <!--/*-webkit-border-radius: 10px;*/-->
+    <!--/*-moz-border-radius: 10px;*/-->
+    <!--/*border-radius: 10px;*/-->
+    <!--height:auto;-->
+    <!--width: 100%;-->
+    <!--display: inline-block;-->
+    <!--padding: 10px 25px 25px 25px;-->
+    <!--margin:10px 0 10px 0;-->
+  <!--}-->
+  <!--.permission-title{-->
+    <!--color: rgb(68,138,255);-->
+  <!--}-->
+<!--</style>-->
+<!--<md-card class="permission-object">-->
+  <!--<div layout="column" flex>-->
+    <!--<span class="md-body-2">{{$ctrl.title}}</span>-->
+    <!--<md-input-container flex-gt-md="50" flex="70">-->
+      <!--<label>Blocos</label>-->
+      <!--<md-select ng-model="$ctrl.selectedGroups"-->
+                 <!--md-on-close="$ctrl.clearSearchTerm()"-->
+                 <!--data-md-container-class="selectdemoSelectHeader"-->
+                 <!--multiple flex>-->
+        <!--<md-select-header class="demo-select-header">-->
+          <!--<input id="searchBlock" ng-model="$ctrl.searchTerm"-->
+                 <!--type="search"-->
+                 <!--placeholder="Digite o bloco desejado.."-->
+                 <!--class="demo-header-searchbox md-text">-->
+        <!--</md-select-header>-->
+        <!--<md-optgroup label="Regra">-->
+          <!--<md-option ng-value="item" ng-repeat="item in $ctrl.groupList |-->
+              <!--filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>-->
+        <!--</md-optgroup>-->
+      <!--</md-select>-->
+    <!--</md-input-container>-->
+  <!--</div>-->
+  <md-card flex layout-padding="" layout-margin="" layout-align="start center" layout-fill="">
+    <md-card-actions layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
+      <h4>
+        <md-icon>view_module</md-icon>
+        Permitir visualização de atividade por blocos.
+      </h4>
+      <span flex-gt-md="5" flex="100" ></span>
+      <md-input-container flex-gt-md="50" flex="70">
+        <label>Blocos</label>
+        <md-select ng-model="$ctrl.selectedGroups"
+                   md-on-close="$ctrl.clearSearchTerm()"
+                   data-md-container-class="selectdemoSelectHeader"
+                   multiple flex>
+          <md-select-header class="demo-select-header">
+            <input id="searchBlock" ng-model="$ctrl.searchTerm"
+                   type="search"
+                   placeholder="Digite o bloco desejado.."
+                   class="demo-header-searchbox md-text">
+          </md-select-header>
+          <md-optgroup label="Blocos">
+            <md-option ng-value="item" ng-repeat="item in $ctrl.groupList |
+              filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>
+          </md-optgroup>
+        </md-select>
+      </md-input-container>
+      <span flex-gt-md="5" flex="10"></span>
+      <md-input-container flex>
+        <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
+                     ng-checked="$ctrl.isCheckedGroup()"
+                     md-indeterminate="$ctrl.isIndeterminateGroups()"
+                     ng-click="$ctrl.toggleAllGroups()">
+          Todos
+        </md-checkbox>
+      </md-input-container>
+
+    </md-card-actions>
+  </md-card>
+
+
+<!--</md-card>-->

@@ -1,78 +1,105 @@
+<style>
+  md-autocomplete#custom-template {
+    width: 200px;
+  }
+  .autocomplete-custom-template li {
+    border-bottom: 1px solid #ccc;
+    height: auto;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    white-space: normal;
+  }
+  .autocomplete-custom-template li:last-child {
+    border-bottom-width: 0;
+  }
+  .autocomplete-custom-template .item-title,
+  .autocomplete-custom-template .item-metadata {
+    display: block;
+    line-height: 2;
+  }
+  .autocomplete-custom-template .item-title md-icon {
+    height: 18px;
+    width: 18px;
+  }
+  .custom-container {
+    min-width: 300px !important;
+  }
+</style>
+
+
 <md-content flex layout-align="center start">
-  <md-subheader class="md-primary">Usuários Otus</md-subheader>
-  <md-content layout="row" layout-align="center center" flex=100>
-    <md-input-container flex-gt-md=50 flex=90>
-      <md-icon>search</md-icon>
-      <input ng-model="query" placeholder="Buscar por Nome ou Email">
-    </md-input-container>
-  </md-content>
-  <md-card flex layout-align="center center" layout="row"  ng-repeat="user in $ctrl.users | orderBy:['name', 'email'] | filter : query  track by $index">
-    <div layout="column" flex>
-      <div layout="row" layout-xs="column" flex>
-        <md-card-title layout="row" layout-xs="column" layout-align="center center">
-          <md-card-title-media layout="row" flex="10">
-            <div class="md-media-sm card-media" layout="row" flex>
-              <md-icon md-font-set="material-icons">face</md-icon>
-            </div>
-          </md-card-title-media>
-          <md-card-title-text layout="row">
-            <div layout="column">
-              <div layout="row" layout-align="start center">
-                <span class="md-headline">{{user.name}}</span>
-                <span class="md-subhead description user-title-position">{{user.surname}}</span>
-              </div>
-              <span class="md-subhead description">{{user.email}}</span>
-              <span ng-if="user.admin" class="md-subhead description">Administrador</span>
-            </div>
-            <span flex></span>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-actions layout="row" flex="15" flex-md="20" flex-sm="25" flex-xs="30" layout-align="center center">
-          <md-action flex layout="column">
-            <div layout="row" flex>
-              <div layout="column" flex="50">
-                <md-subheader class="md-subhead description backgroud-color-default">Centro:</md-subheader>
-              </div>
-              <div layout="column">
-                <md-select aria-label="Selecione um estado" class="margin-zero field-user-position" ng-model="user.fieldCenter.acronym" ng-change="$ctrl.updateFieldCenter(user)">
-                  <md-option value=""><em>Nenhum</em></md-option>
-                  <md-option ng-repeat="fieldCenter in $ctrl.fieldCenters track by $index" ng-value="fieldCenter.acronym">
-                    {{fieldCenter.acronym}}
-                  </md-option>
-                </md-select>
-              </div>
-            </div>
-            <div layout="row" flex ng-if="!user.admin">
-              <div layout="column" flex="50">
-                <md-subheader class="md-subhead description backgroud-color-default">Ativo:</md-subheader>
-              </div>
-              <div layout="column" flex>
-                <md-switch ng-if="!user.admin" aria-label="status" ng-model="user.enable" class="md-primary margin-zero field-user-position" md-no-ink ng-change="$ctrl.enableDisable(user)"></md-switch>
-              </div>
-            </div>
-            <div layout="row" flex>
-              <div layout="column" flex="50">
-                <md-subheader ng-class="(!user.enable ? 'user-ips-opacity' : '') + ' md-subhead description backgroud-color-default'">Extração:</md-subheader>
-              </div>
-              <div layout="column" flex>
-                <md-switch aria-label="extração" ng-disabled="!user.enable" ng-model="user.extraction" class="md-primary margin-zero field-user-position" md-no-ink ng-change="$ctrl.enableDisableExtraction(user)"></md-switch>
-              </div>
-            </div>
-            <div layout="row" flex>
-              <div layout="column" flex="50">
-                
-              </div>
-              <div layout="column" flex>
-                
-              </div>
-            </div>
-          </md-action>
-        </md-card-actions>
+  <md-subheader class="md-primary" flex="50">Usuários Otus</md-subheader>
+  <div layout="column" style="background-color: #FAFAFA" class="md-padding">
+    <form ng-submit="$event.preventDefault()" name="searchForm">
+
+      <span class="md-subhead">Filtros:</span>
+      <div layout="row" flex layout-fill="" layout-align="start center">
+        <md-checkbox class="md-primary" ng-model="$ctrl.activeUsers" ng-change="$ctrl.filterUsers()" aria-label="ativos" style="margin-bottom: 5px !important;">
+          Somente os ativos.
+        </md-checkbox>
+        <span flex="5"></span>
+        <md-checkbox class="md-primary" ng-model="$ctrl.extractionUsers" ng-change="$ctrl.filterUsers()" aria-label="ativos" style="margin-bottom: 5px !important;">
+          Extração habilitada.
+        </md-checkbox>
+        <span flex="5"></span>
+
+        <md-input-container style="width: 150px !important;">
+          <label>Centro</label>
+          <md-select ng-model="$ctrl.userCenter" ng-change="$ctrl.filterUsers()">
+            <md-option><em>None</em></md-option>
+            <md-option ng-repeat="center in $ctrl.fieldCenters" ng-value="center.acronym">
+              {{center.acronym}}
+            </md-option>
+          </md-select>
+        </md-input-container>
       </div>
-      <md-divider flex="20"></md-divider>
-      <div layout="row" flex ng-class="!user.extraction ? 'user-ips-opacity' : ''">
-        <extractios-ips-field user="user" user-index="$index" flex></extractios-ips-field>
+      <label>teste</label>
+      <md-autocomplete flex required
+                       class="md-whiteframe-2dp"
+                       md-input-name="autocompleteField"
+                       md-no-cache="true"
+                       md-selected-item="$ctrl.selectedItem"
+                       md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+                       md-search-text="$ctrl.searchText"
+                       md-selected-item-change="$ctrl.selectedItemChange(item)"
+                       md-items="item in $ctrl.searchUser($ctrl.searchText)"
+                       md-item-text="item.name +' '+item.surname+' ('+item.email+')'"
+                       md-min-length="0"
+                       placeholder="Digite o nome, sobrenome ou email do usuário"
+                       md-menu-class="autocomplete-custom-template"
+                       md-menu-container-class="custom-container">
+        <md-item-template>
+          <span class="item-title">
+            <md-icon class="md-mini">account_box</md-icon>
+            <span>{{item.name + " " +item.surname}}</span>
+          </span>
+          <span class="item-metadata">
+            <span class="md-caption">{{item.email}}</span>
+            <span ng-if="item.fieldCenter.acronym">{{" | "+item.fieldCenter.acronym}}</span>
+          </span>
+        </md-item-template>
+        <md-not-found>
+          Nenhum usuário com o nome de "{{$ctrl.searchText}}" foi encontrado.
+        </md-not-found>
+      </md-autocomplete>
+      <div layout="row" flex="30" layout-align="space-between start">
+        <div layout="column">
+          <span class="md-caption">Total de usuários => {{$ctrl.statisticData.total}}</span>
+          <span class="md-caption">Inativos => {{$ctrl.statisticData.inatives}}</span>
+          <span class="md-caption">Usuários de extração => {{$ctrl.statisticData.usersOfExtraction}}</span>
+        </div>
+        <div layout="column">
+          <span class="md-caption">Total por centro:</span>
+          <div layout="row" layout-wrap="" flex layout-align="space-around center">
+
+          </div>
+          <span class="md-caption" ng-repeat="center in $ctrl.statisticData.centers">{{center.acronym}} => {{center.total}}</span>
+        </div>
       </div>
-    </div>
-  </md-card>
+
+
+    </form>
+  </div>
 </md-content>
+
+<otus-user-manager selected-user="$ctrl.selectedUser" update-users="$ctrl.updateUsers()"></otus-user-manager>

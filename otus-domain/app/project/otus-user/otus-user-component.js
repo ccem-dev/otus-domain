@@ -8,132 +8,156 @@
       controller: Controller
     });
 
-    Controller.$inject = [
-      'OtusRestResourceService',
-      'ExtractionRestService',
-      'UserManagerFactory',
-      '$mdDialog',
-      '$mdToast'
-    ];
+  Controller.$inject = [
+    'OtusRestResourceService',
+    'ExtractionRestService',
+    'UserManagerFactory',
+    '$mdDialog',
+    '$mdToast'
+  ];
 
   function Controller(OtusRestResourceService, ExtractionRestService, UserManagerFactory, $mdDialog, $mdToast) {
     var self = this;
-    var DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status do usuário?';
-    var DIALOG_TITLE = 'Mudança de Status';
-    var EXTRACTION_DIALOG_TEXT_CONTENT = 'Você tem certeza que deseja alterar o status de Extração do usuário?';
-    var EXTRACTION_DIALOG_TITLE = 'Mudança de Status para Extração de Dados';
     var _userResource;
     var _fieldCenterResource;
-    var _confirmDialog;
-    var _confirmExtractionDialog;
     var _UserManager;
 
     self.users = [];
     self.fieldCenters = [];
+    self.activeUsers = true;
+    self.extractionUsers = false;
+    self.userCenter = "";
+    var _updateNecessary = false;
 
     self.$onInit = onInit;
-    self.enableDisable = enableDisable;
-    self.updateFieldCenter = updateFieldCenter;
-    self.enableDisableExtraction = enableDisableExtraction;
+    self.selectedItemChange = selectedItemChange;
+    self.searchUser = searchUser;
+    self.filterUsersActives = filterUsersActives;
+    self.filterUsersExtraction = filterUsersExtraction;
+    self.filterUsersCenter = filterUsersCenter;
+    self.filterUsers = filterUsers;
+    self.alterUser = alterUser;
 
     function onInit() {
+      self.selectedUser = null;
       _userResource = OtusRestResourceService.getUserResource();
       _fieldCenterResource = OtusRestResourceService.getOtusFieldCenterResource();
       _UserManager = UserManagerFactory.create(_userResource);
-      _createDialog();
       _loadUsers();
-      _loadFieldCenters();
-    }
+      // _loadFieldCenters();
+      self.statisticData = {};
+      self.statisticData.centers = [];
 
-    function enableDisable(user) {
-      $mdDialog.show(_confirmDialog).then(function() {
-        if (!user.enable) {
-          _disable(user);
-        } else {
-          _enable(user);
-        }
-      }, function() {
-        user.enable = !user.enable;
-      });
-    }
-
-    function enableDisableExtraction(user) {
-      $mdDialog.show(_confirmExtractionDialog).then(function() {
-        if (!user.extraction) {
-          _disableExtraction(user);
-        } else {
-          _enableExtraction(user);
-        }
-      }, function() {
-        user.extraction = !user.extraction;
-      });
-    }
-
-    function updateFieldCenter(user) {
-      _UserManager.updateFieldCenter(angular.toJson(user)).then(function(httpResponse) {
-        _showToast('Centro atualizado.');
-      });
-    }
-
-    function _enable(user) {
-      _UserManager.enable(user).then(function(httpResponse) {
-        _showToast('Usuário habilitado.');
-      });
-    }
-
-    function _disable(user) {
-      _UserManager.disable(user).then(function(httpResponse) {
-        if(user.extraction) {
-          user.extraction = false;
-          _disableExtraction(user);
-        }
-        _showToast('Usuário desabilitado.');
-      });
+      self.updateUsers = _updateUsers;
     }
 
     function _loadUsers() {
       _UserManager.list().then(function(httpResponse) {
-        self.users = httpResponse.data;
+        self.allUsers = httpResponse.data;
+        self.statisticData.total = self.allUsers.length;
+        self.statisticData.inatives = self.allUsers.filter(function (user) {
+          return user.enable == false;
+        }).length;
+        self.statisticData.usersOfExtraction = self.allUsers.filter(function (user) {
+          return user.extraction == true;
+        }).length;
+        _loadFieldCenters();
+        filterUsers();
       });
     }
 
-    function _enableExtraction(user) {
-      ExtractionRestService.enableExtraction(user).then(function(httpResponse) {
-        _showToast('Extração habilitada.');
-      });
-    }
-
-    function _disableExtraction(user) {
-      ExtractionRestService.disableExtraction(user).then(function(httpResponse) {
-        _showToast('Extração desabilitada.');
+    function _updateUsers() {
+      _UserManager.list().then(function(httpResponse) {
+        self.allUsers = httpResponse.data;
+        self.filterUsersActives();
+        self.filterUsersCenter();
+        self.filterUsersExtraction();
       });
     }
 
     function _loadFieldCenters() {
       _fieldCenterResource.getAll(function(httpResponse) {
         self.fieldCenters = httpResponse.data;
+        self.fieldCenters.forEach(function (center) {
+          var _total = self.allUsers.filter(function (user) {
+            return user.fieldCenter.acronym == center.acronym;
+          }).length;
+          self.statisticData.centers.push({
+            acronym: center.acronym,
+            total: _total
+          });
+        });
+        console.log(self.statisticData)
+
       });
     }
 
-    function _createDialog() {
-      _confirmDialog = $mdDialog.confirm()
-        .title(DIALOG_TITLE)
-        .textContent(DIALOG_TEXT_CONTENT)
-        .ok('Sim')
-        .cancel('Cancelar');
-
-      _confirmExtractionDialog = $mdDialog.confirm()
-        .title(EXTRACTION_DIALOG_TITLE)
-        .textContent(EXTRACTION_DIALOG_TEXT_CONTENT)
-        .ok('Sim')
-        .cancel('Cancelar');
+    function selectedItemChange(user){
+      self.selectedUser = user;
     }
 
-    function _showToast(message) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent(message)
-      );
+    function searchUser (query) {
+      if(_updateNecessary){
+        _updateUsers();
+      }
+      return query ? self.users.filter(_createFilterFor(query)) : self.users;
+    }
+
+    function filterUsersActives() {
+      if (self.activeUsers){
+        self.users = angular.copy(self.allUsers.filter(function (user) {
+          return user.enable == true;
+        }));
+      }
+    }
+
+    function filterUsersExtraction() {
+      if (self.extractionUsers){
+        self.users = angular.copy(self.users.filter(function (user) {
+          return user.extraction == true;
+        }));
+      }
+    }
+
+    function filterUsersCenter() {
+      self.selectCenter = self.fieldCenters.find(function (center) {
+        return center.acronym === self.userCenter;
+      });
+      if (self.selectCenter){
+        self.users = angular.copy(self.users.filter(function (user) {
+          return user.fieldCenter.acronym == self.userCenter;
+        }));
+      }
+    }
+
+    function filterUsers() {
+      _clearSelectUser();
+      if(!self.activeUsers && !self.extractionUsers && !self.selectCenter){
+        self.users = angular.copy(self.allUsers);
+      }
+      self.filterUsersActives();
+      self.filterUsersCenter();
+      self.filterUsersExtraction();
+    }
+
+    function _clearSelectUser(){
+      self.searchText = '';
+      delete self.selectedUser;
+    }
+
+    function _createFilterFor(query) {
+      var lowercaseQuery = query.toLowerCase();
+
+      return function filterFn(user) {
+        return (user.name.toLowerCase().indexOf(lowercaseQuery) >= 0 ||
+          user.email.toLowerCase().indexOf(lowercaseQuery) >= 0 ||
+          user.surname.toLowerCase().indexOf(lowercaseQuery) >= 0);
+      };
+
+    }
+
+    function alterUser(email) {
+      return self.selectedUser === email;
     }
   }
 

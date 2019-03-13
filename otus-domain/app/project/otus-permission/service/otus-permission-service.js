@@ -3,16 +3,15 @@
 
   angular
     .module('otusDomain.project')
-    .service('otusDomain.project.activity.SurveyGroupConfigurationService', Service);
+    .service('otusDomain.project.permission.OtusPermissionService', Service);
 
   Service.$inject = [
     '$q',
     'SurveyGroupRestService',
-    'OtusRestResourceService',
     'otusjs.survey.GroupManagerFactory'
   ];
 
-  function Service($q, SurveyGroupRestService, OtusRestResourceService, GroupManagerFactory) {
+  function Service($q, SurveyGroupRestService, GroupManagerFactory) {
     var groupManagerFactory;
     var self = this;
 
@@ -23,11 +22,6 @@
     self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
     self.deleteSurveyGroup = deleteSurveyGroup;
 
-    onInit();
-
-    function onInit() {
-      SurveyGroupRestService.initialize();
-    }
 
     function getListOfSurveyGroups() {
       return SurveyGroupRestService.getListOfSurveyGroups()
@@ -86,6 +80,10 @@
         }).catch(function (e) {
           return $q.reject(e);
         });
+    }
+
+    function getAllUsers() {
+
     }
   }
 }());
