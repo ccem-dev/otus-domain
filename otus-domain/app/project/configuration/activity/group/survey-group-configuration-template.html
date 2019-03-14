@@ -29,12 +29,19 @@
                 Editar
               </md-tooltip>
             </md-button>
-            <md-button ng-if="group.editMode" ng-disabled="updateForm.$invalid" class="md-icon-button md-primary"
+            <md-button ng-if="group.editMode && $ctrl.validUpdateName(group.name, group.editMode)" ng-disabled="updateForm.$invalid" class="md-icon-button md-primary"
               ng-click="$ctrl.updateSurveyGroupName(group)">
               <md-tooltip md-direction="left">
                 Atualizar
               </md-tooltip>
               <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
+            </md-button>
+            <md-button ng-if="group.editMode && !$ctrl.validUpdateName(group.name, group.editMode)" ng-disabled="updateForm.$invalid" class="md-icon-button md-primary"
+                       ng-click="group.editMode = false">
+              <md-tooltip md-direction="left">
+                Cancelar
+              </md-tooltip>
+              <md-icon md-font-set="material-icons" style="color:rgb(255, 82, 82);">cancel</md-icon>
             </md-button>
             <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteSurveyGroup(group)">
               <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
