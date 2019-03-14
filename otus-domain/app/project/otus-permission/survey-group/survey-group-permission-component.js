@@ -3,8 +3,8 @@
 
   angular
     .module('otusDomain.project')
-    .component('permission', {
-      templateUrl: 'app/project/otus-permission/permission/permission-template.html',
+    .component('surveyGroupPermission', {
+      templateUrl: 'app/project/otus-permission/survey-group/survey-group-permission-template.html',
       controller: Controller,
       bindings:{
         title : "@",
@@ -33,7 +33,7 @@
 
     self.surveysGroups = [];
     self.selectedGroups = [];
-    self.groupList = ["teste"];
+    self.groupList = [];
 
     onInit();
 
@@ -44,7 +44,6 @@
     //     self.groupList = self.controller.getGroupNames();
     //   }
     // });
-    console.log(self.permission)
 
     function onInit() {
       if(self.controller){
@@ -79,8 +78,6 @@
     }
 
     function isIndeterminateGroups() {
-      console.log(self.permission);
-      console.log(self.controller);
       return (self.selectedGroups.length !== 0 &&
         self.selectedGroups.length !== self.groupList.length);
     }

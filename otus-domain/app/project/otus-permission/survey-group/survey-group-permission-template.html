@@ -1,0 +1,41 @@
+<div flex="100" layout="row" layout-align="center center" layout-fill="">
+  <md-card flex layout-padding="" layout-align="start center">
+    <md-card-actions layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
+      <h4>
+        <md-icon>view_module</md-icon>
+        Permitir visualização de atividade por blocos.
+      </h4>
+      <span flex-gt-md="5" flex="100" ></span>
+      <md-input-container flex-gt-md="50" flex="70">
+        <label>Blocos</label>
+        <md-select ng-model="$ctrl.selectedGroups"
+                   md-on-close="$ctrl.clearSearchTerm()"
+                   data-md-container-class="selectdemoSelectHeader"
+                   multiple flex>
+          <md-select-header class="demo-select-header">
+            <input id="searchBlock" ng-model="$ctrl.searchTerm"
+                   type="search"
+                   placeholder="Digite o bloco desejado.."
+                   class="demo-header-searchbox md-text">
+          </md-select-header>
+          <md-optgroup label="Blocos">
+            <md-option ng-value="item" ng-repeat="item in $ctrl.groupList |
+              filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>
+          </md-optgroup>
+        </md-select>
+      </md-input-container>
+      <span flex-gt-md="5" flex="10"></span>
+      <md-input-container flex>
+        <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
+                     ng-checked="$ctrl.isCheckedGroup()"
+                     md-indeterminate="$ctrl.isIndeterminateGroups()"
+                     ng-click="$ctrl.toggleAllGroups()">
+          Todos
+        </md-checkbox>
+      </md-input-container>
+
+    </md-card-actions>
+  </md-card>
+</div>
+
+

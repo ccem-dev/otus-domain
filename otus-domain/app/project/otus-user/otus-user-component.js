@@ -13,10 +13,14 @@
     'ExtractionRestService',
     'UserManagerFactory',
     '$mdDialog',
-    '$mdToast'
+    '$mdToast',
+    'otusjs.survey.GroupManagerFactory',
+    'SurveyGroupRestService',
+    '$compile',
+    '$scope'
   ];
 
-  function Controller(OtusRestResourceService, ExtractionRestService, UserManagerFactory, $mdDialog, $mdToast) {
+  function Controller(OtusRestResourceService, ExtractionRestService, UserManagerFactory, $mdDialog, $mdToast, GroupManagerFactory, SurveyGroupRestService, $compile, $scope) {
     var self = this;
     var _userResource;
     var _fieldCenterResource;
@@ -27,6 +31,7 @@
     self.activeUsers = true;
     self.extractionUsers = false;
     self.userCenter = "";
+    self.updateStatistic = ()=>{};
     var _updateNecessary = false;
 
     self.$onInit = onInit;
@@ -44,40 +49,39 @@
       _fieldCenterResource = OtusRestResourceService.getOtusFieldCenterResource();
       _UserManager = UserManagerFactory.create(_userResource);
       _loadUsers();
-      // _loadFieldCenters();
-      self.statisticData = {};
-      self.statisticData.centers = [];
+      _getListOfSurveyGroups();
 
       self.updateUsers = _updateUsers;
+    }
+
+    function _renderStatisticalComponent() {
+      var html = $compile('<users-statistical-data users="$ctrl.allUsers" ng-if="$ctrl.allUsers" flex>></users-statistical-data>')($scope);
+      angular.element(document.getElementById("statisticComponent")).html("");
+      angular.element(document.getElementById("statisticComponent")).append(html)
     }
 
     function _loadUsers() {
       _UserManager.list().then(function(httpResponse) {
         self.allUsers = httpResponse.data;
-        self.statisticData.total = self.allUsers.length;
-        self.statisticData.inatives = self.allUsers.filter(function (user) {
-          return user.enable == false;
-        }).length;
-        self.statisticData.usersOfExtraction = self.allUsers.filter(function (user) {
-          return user.extraction == true;
-        }).length;
+        _renderStatisticalComponent()
         _loadFieldCenters();
         filterUsers();
       });
     }
 
     function _updateUsers() {
+
       _UserManager.list().then(function(httpResponse) {
         self.allUsers = httpResponse.data;
         self.filterUsersActives();
-        self.filterUsersCenter();
-        self.filterUsersExtraction();
+        _renderStatisticalComponent()
       });
     }
 
     function _loadFieldCenters() {
       _fieldCenterResource.getAll(function(httpResponse) {
         self.fieldCenters = httpResponse.data;
+
         self.fieldCenters.forEach(function (center) {
           var _total = self.allUsers.filter(function (user) {
             return user.fieldCenter.acronym == center.acronym;
@@ -87,13 +91,22 @@
             total: _total
           });
         });
-        console.log(self.statisticData)
 
+      });
+    }
+
+    function _getListOfSurveyGroups() {
+      SurveyGroupRestService.getListOfSurveyGroups()
+        .then(function (response) {
+          self.groupManagerFactory = GroupManagerFactory.create(response);
+        }).catch(function (e) {
+        Promise.reject(e);
       });
     }
 
     function selectedItemChange(user){
       self.selectedUser = user;
+      _renderStatisticalComponent();
     }
 
     function searchUser (query) {
@@ -108,15 +121,10 @@
         self.users = angular.copy(self.allUsers.filter(function (user) {
           return user.enable == true;
         }));
+      }else {
+        self.users = angular.copy(self.allUsers);
       }
-    }
-
-    function filterUsersExtraction() {
-      if (self.extractionUsers){
-        self.users = angular.copy(self.users.filter(function (user) {
-          return user.extraction == true;
-        }));
-      }
+      self.filterUsersCenter();
     }
 
     function filterUsersCenter() {
@@ -128,6 +136,15 @@
           return user.fieldCenter.acronym == self.userCenter;
         }));
       }
+      self.filterUsersExtraction();
+    }
+
+    function filterUsersExtraction() {
+      if (self.extractionUsers){
+        self.users = angular.copy(self.users.filter(function (user) {
+          return user.extraction == true;
+        }));
+      }
     }
 
     function filterUsers() {
@@ -136,8 +153,6 @@
         self.users = angular.copy(self.allUsers);
       }
       self.filterUsersActives();
-      self.filterUsersCenter();
-      self.filterUsersExtraction();
     }
 
     function _clearSelectUser(){
