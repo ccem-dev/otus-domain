@@ -15,7 +15,6 @@ describe('SurveyGroupConfigurationService', function () {
     inject(function (_$injector_) {
       service = _$injector_.get('otusDomain.project.activity.SurveyGroupConfigurationService');
     });
-
   });
 
   it('should serviceInstance is defined', function () {

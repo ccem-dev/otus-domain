@@ -38,4 +38,5 @@ describe("Users Statistical Data Component Tests", function() {
     expect(controller.getStyle()).toEqual(STYLE_MOCK);
   });
 
-})
+});
+

@@ -8,11 +8,10 @@
   Service.$inject = [
     '$q',
     'SurveyGroupRestService',
-    'OtusRestResourceService',
     'otusjs.survey.GroupManagerFactory'
   ];
 
-  function Service($q, SurveyGroupRestService, OtusRestResourceService, GroupManagerFactory) {
+  function Service($q, SurveyGroupRestService, GroupManagerFactory) {
     var groupManagerFactory;
     var self = this;
 

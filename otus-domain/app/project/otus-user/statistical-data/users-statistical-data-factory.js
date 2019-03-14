@@ -20,6 +20,7 @@
   function UserStatisticalDataFactory(users) {
     var self = this;
     var _statisticData = {};
+    var _jsonStructure = {};
 
     self.toJSON = toJSON;
 
@@ -30,7 +31,7 @@
         _statisticData.centers = [];
         _statisticData.total = users.length;
 
-        _statisticData.inatives = users.filter(function (user) {
+        _statisticData.inactive = users.filter(function (user) {
           return user.enable == false;
         }).length;
 
@@ -58,9 +59,13 @@
 
         centers = Object.keys(result);
         let index = centers.indexOf("undefined");
-        centers.splice(index, 1);
         let values = Object.values(result);
-        values.splice(index, 1)
+
+        if(index > -1){
+
+          centers.splice(index, 1);
+          values.splice(index, 1);
+        }
 
         for (let i = 0; i < centers.length; i++) {
           _statisticData.centers.push({
@@ -68,11 +73,19 @@
             total: values[i],
           })
         }
+        _jsonStructure = {
+          total: _statisticData.total,
+          inactive: _statisticData.inactive,
+          usersOfExtraction: _statisticData.usersOfExtraction,
+          centers: _statisticData.centers
+
+        }
       }
     }
 
     function toJSON() {
-      return _statisticData;
+
+      return _jsonStructure;
     }
   }
 })();
