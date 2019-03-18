@@ -134,6 +134,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent(message)
+          .hideDelay(3000)
       );
       self.updateUsers();
     }

@@ -29,14 +29,20 @@
 
 <md-content flex layout-align="center start">
   <md-subheader class="md-primary" flex="50">Usuários Otus</md-subheader>
-  <div id="statisticComponent" layout="row" layout-align="center center" flex>
-    <md-progress-circular class="md-primary md-hue-3" md-diameter="70"></md-progress-circular>
-  </div>
+
   <div layout="column" style="background-color: #FAFAFA" class="md-padding">
     <form ng-submit="$event.preventDefault()" name="searchForm">
+      <div layout="row" layout-align="start center" flex>
 
-      <span class="md-subhead">Filtros:</span>
-      <div layout="row" flex layout-fill="" layout-align="start center">
+        <span class="md-subhead">Filtros:</span>
+        <span flex></span>
+
+        <div id="statisticComponent" layout="row" layout-align="end center">
+        </div>
+      </div>
+      <md-divider></md-divider>
+    </form>
+      <div layout="row" layout-wrap="" flex layout-fill="" layout-align="start center">
         <md-checkbox class="md-primary" ng-model="$ctrl.activeUsers" ng-change="$ctrl.filterUsers()" aria-label="ativos" style="margin-bottom: 5px !important;">
           Somente os ativos.
         </md-checkbox>
@@ -55,45 +61,63 @@
             </md-option>
           </md-select>
         </md-input-container>
+
+        <span flex></span>
+
       </div>
-      <md-autocomplete flex required
-                       class="md-whiteframe-1dp"
-                       md-input-name="autocompleteField"
-                       md-no-cache="true"
-                       md-selected-item="$ctrl.selectedItem"
-                       md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
-                       md-search-text="$ctrl.searchText"
-                       md-selected-item-change="$ctrl.selectedUserChange(item)"
-                       md-items="item in $ctrl.searchUser($ctrl.searchText)"
-                       md-item-text="item.name +' '+item.surname+' ('+item.email+')'"
-                       md-min-length="0"
-                       placeholder="Digite o nome, sobrenome ou email do usuário"
-                       md-menu-class="autocomplete-custom-template"
-                       md-menu-container-class="custom-container">
-        <md-item-template>
+      <div layout-gt-xs="row" layout="column" layout-align="start center" flex>
+        <div flex>
+          <md-autocomplete flex required
+                           class="md-whiteframe-1dp"
+                           md-input-name="autocompleteField"
+                           md-no-cache="true"
+                           md-selected-item="$ctrl.selectedItem"
+                           md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+                           md-search-text="$ctrl.searchText"
+                           md-selected-item-change="$ctrl.selectedUserChange(item)"
+                           md-items="item in $ctrl.searchUser($ctrl.searchText)"
+                           md-item-text="item.name +' '+item.surname+' ('+item.email+')'"
+                           md-min-length="0"
+                           placeholder="Digite o nome, sobrenome ou email do usuário"
+                           md-menu-class="autocomplete-custom-template"
+                           md-menu-container-class="custom-container">
+            <md-item-template>
           <span class="item-title">
             <md-icon class="md-mini">account_box</md-icon>
             <span>{{item.name + " " +item.surname}}</span>
           </span>
-          <span class="item-metadata">
+              <span class="item-metadata">
             <span class="md-caption">{{item.email}}</span>
             <span ng-if="item.fieldCenter.acronym">{{" | "+item.fieldCenter.acronym}}</span>
           </span>
-        </md-item-template>
-        <md-not-found>
-          Nenhum usuário com o nome de "{{$ctrl.searchText}}" foi encontrado.
-        </md-not-found>
-      </md-autocomplete>
+            </md-item-template>
+            <md-not-found>
+              Nenhum usuário com o nome de "{{$ctrl.searchText}}" foi encontrado.
+            </md-not-found>
+
+          </md-autocomplete>
+          <md-tooltip md-direction="down">Digite o nome, sobrenome ou email do usuário</md-tooltip>
+        </div>
 
 
+        <md-button class="md-primary md-raised" ng-disabled="!$ctrl.selectedUser" style="height: 40px !important;" ng-click="$ctrl.getAllPermissions()">
+          <md-icon ng-if="!$ctrl.managerUserPermission">lock</md-icon>
+          <md-icon ng-if="$ctrl.managerUserPermission">lock_open</md-icon>
+          permissões
+        </md-button>
+
+      </div>
 
     </form>
   </div>
 </md-content>
-<otus-user-manager selected-user="$ctrl.selectedUser" update-users="$ctrl.updateUsers()" layout-margin="" flex></otus-user-manager>
-<div layout="row" flex layout-align="end center" ng-init="permission=false" >
+<md-content flex>
 
-  <md-button class="md-primary md-raised" ng-if="$ctrl.selectedUser" ng-click="permission = true">Ver permissões</md-button>
-</div>
-<survey-group-permission title="Teste" layout-padding="" ng-if="$ctrl.selectedUser" layout-margin="" flex></survey-group-permission>
+
+  <otus-user-manager selected-user="$ctrl.selectedUser" update-users="$ctrl.updateUsers()" layout-margin="" flex></otus-user-manager>
+  <div id="listPermissions" flex layout-fill ng-if="$ctrl.managerUserPermission">
+    <md-subheader class="md-primary" flex="50" >Permissões Otus</md-subheader>
+    <survey-group-permission permission="$ctrl.surveyGroupPermission" flex></survey-group-permission>
+  </div>
+</md-content>
 

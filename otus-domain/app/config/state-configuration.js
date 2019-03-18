@@ -113,9 +113,10 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
-            ActivityConfigurationRestService.initialize();
+          initialize: function (SurveyGroupRestService, PermissionRestService) {
             SurveyGroupRestService.initialize();
+            //todo: falta implementar
+            PermissionRestService.initialize();
           }
         },
         views: {

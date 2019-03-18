@@ -206,11 +206,24 @@ describe("Otus User Manager Component Tests", function () {
 
     Mock.$mdToast = {
       show: () => {},
-      simple: () => {
-        return {
-          textContent: () => {}
+      simple: function() {
+        var self = this;
+
+        self.textContent = function (msg) {
+          var vm = this;
+          vm.msg = msg;
+          return vm;
+        };
+
+        self.hideDelay = function (p) {
+          var vm = this;
+          vm.p = p;
+          return vm;
+        };
+
+        return self;
         }
-      },
+
     };
 
     Mock.UserManager = {

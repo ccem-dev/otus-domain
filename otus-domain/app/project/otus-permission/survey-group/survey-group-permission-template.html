@@ -1,12 +1,21 @@
-<div flex="100" layout="row" layout-align="center center" layout-fill="">
-  <md-card flex layout-padding="" layout-align="start center">
-    <md-card-actions layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
+<div flex="100" layout="row" layout-align="center center" layout-margin="">
+  <div flex layout-align="start center">
+    <div layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
       <h4>
         <md-icon>view_module</md-icon>
         Permitir visualização de atividade por blocos.
       </h4>
-      <span flex-gt-md="5" flex="100" ></span>
-      <md-input-container flex-gt-md="50" flex="70">
+      <span flex="5"></span>
+      <md-input-container>
+        <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
+                     ng-checked="$ctrl.isCheckedGroup()"
+                     md-indeterminate="$ctrl.isIndeterminateGroups()"
+                     ng-click="$ctrl.toggleAllGroups()">
+          Todos
+        </md-checkbox>
+      </md-input-container>
+      <span flex="100" ></span>
+      <md-input-container flex>
         <label>Blocos</label>
         <md-select ng-model="$ctrl.selectedGroups"
                    md-on-close="$ctrl.clearSearchTerm()"
@@ -24,18 +33,11 @@
           </md-optgroup>
         </md-select>
       </md-input-container>
-      <span flex-gt-md="5" flex="10"></span>
-      <md-input-container flex>
-        <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
-                     ng-checked="$ctrl.isCheckedGroup()"
-                     md-indeterminate="$ctrl.isIndeterminateGroups()"
-                     ng-click="$ctrl.toggleAllGroups()">
-          Todos
-        </md-checkbox>
-      </md-input-container>
-
-    </md-card-actions>
-  </md-card>
+      <span flex="5"></span>
+      <md-button class="md-raised md-primary" ng-if="!$ctrl.isModified()" ng-click="$ctrl.isModified()" style="background-color: #43B19A">SALVAR</md-button>
+      <md-button class="md-raised md-primary" ng-if="$ctrl.isModified()" ng-disabled="true">SALVAR</md-button>
+    </div>
+  </div>
 </div>
 
 

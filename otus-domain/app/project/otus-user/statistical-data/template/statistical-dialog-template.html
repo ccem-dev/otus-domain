@@ -1,0 +1,20 @@
+<table widht="600px">
+  <tbody>
+  <tr style="border-bottom:2px inset rgba(215, 215, 215, 1)">
+      <th>Total</th>
+      <th ng-style="$ctrl.getStyle()">Inativos</th>
+      <th ng-style="$ctrl.getStyle()">Extração</th>
+      <th ng-style="$ctrl.getStyle()" colspan="{{$ctrl.statisticData.centers.length}}">Centro(s)</th>
+    </tr>
+  <tr>
+      <td class="md-caption rowBiggerFont" rowspan="2"><i>{{$ctrl.statisticData.total}}</i></td>
+      <td ng-style="$ctrl.getStyle()" class="md-caption rowBiggerFont" rowspan="2"><i>{{$ctrl.statisticData.inactive}}</i></td>
+      <td ng-style="$ctrl.getStyle()" class="md-caption rowBiggerFont" rowspan="2"><i>{{$ctrl.statisticData.usersOfExtraction}}</i></td>
+      <th ng-style="$ctrl.getStyle()" ng-repeat="center in $ctrl.statisticData.centers track by $index">{{center.acronym}}</th>
+    </tr>
+  <tr>
+      <td class="md-caption" ng-style="$ctrl.getStyle()" ng-repeat="center in $ctrl.statisticData.centers track by $index"><i>{{center.total}}</i></td>
+    </tr>
+  </tbody>
+ </table>
+<div layout="row" flex><span flex></span><md-button flex="20" ng-click="$ctrl.exit()">SAIR</md-button></div>

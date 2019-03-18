@@ -13,10 +13,12 @@
     'OtusRestResourceService',
     'UserManagerFactory',
     '$compile',
-    '$scope'
+    '$scope',
+    'ProjectPermissionService'
+
   ];
 
-  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope) {
+  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope, ProjectPermissionService) {
     var self = this;
     var _userResource;
     var _fieldCenterResource;
@@ -43,7 +45,6 @@
       _fieldCenterResource = OtusRestResourceService.getOtusFieldCenterResource();
       _UserManager = UserManagerFactory.create(_userResource);
       _loadUsers();
-
     }
 
     function _renderStatisticalComponent() {
@@ -123,6 +124,7 @@
 
     function selectedUserChange(user){
       self.selectedUser = user;
+      if (!user) delete self.managerUserPermission;
     }
 
     function searchUser (query) {
@@ -137,6 +139,33 @@
           user.surname.toLowerCase().indexOf(lowercaseQuery) >= 0);
       };
     }
+
+    self.getAllPermissions = getAllPermissions;
+
+    function getAllPermissions() {
+      if(self.selectedUser){
+        ProjectPermissionService.getAll(self.selectedUser.email).then(function (response) {
+          self.managerUserPermission = response;
+          self.managerUserPermission.permissionList.forEach(function (permissionJson) {
+            self.surveyGroupPermission = permissionJson.objectType == "SurveyGroupPermission"? permissionJson: null;
+          })
+        });
+      } else {
+        delete self.managerUserPermission;
+      }
+
+
+    }
+
+    // function _renderPermission(permission) {
+    //   let _template = ProjectPermissionService.getPermissionComponent(permission.objectType);
+    //   $scope.permission = permission;
+    //   let html = $compile(_template)($scope);
+    //   angular.element(document.getElementById("listPermissions")).append(html)
+    // }
+
+
+
   }
 
 })();

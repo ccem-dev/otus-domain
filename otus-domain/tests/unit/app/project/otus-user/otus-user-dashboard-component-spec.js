@@ -8,6 +8,8 @@ describe('Otus User Dashboard Component Tests', function () {
     angular.mock.module('otusDomain.project', function($provide) {
       $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
       $provide.value('$scope', {});
+      $provide.value('PermissionRestService', {});
+      $provide.value('otusjs.user.permission.PermissionManagerFactory', {});
     });
   });
 
@@ -16,7 +18,8 @@ describe('Otus User Dashboard Component Tests', function () {
       Injections = {
         'OtusRestResourceService': _$injector_.get('OtusRestResourceService'),
         'UserManagerFactory': _$injector_.get('UserManagerFactory'),
-        '$compile': _$injector_.get('$compile')
+        '$compile': _$injector_.get('$compile'),
+        'ProjectPermissionService': _$injector_.get('ProjectPermissionService')
       };
       scope = _$rootScope_.$new();
       Injections.$scope = scope;
