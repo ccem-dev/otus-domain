@@ -3,8 +3,8 @@
 
   angular
     .module('otusDomain.project')
-    .component('otusUser', {
-      templateUrl: 'app/project/otus-user/otus-user-template.html',
+    .component('otusUserDashboard', {
+      templateUrl: 'app/project/otus-user/otus-user-dashboard-template.html',
       controller: 'otusUserCtrl as $ctrl'
     })
     .controller('otusUserCtrl', Controller);
@@ -57,7 +57,7 @@
         self.allUsers = httpResponse.data;
         _renderStatisticalComponent();
         _loadFieldCenters();
-        filterUsers();
+        self.filterUsers();
       }).catch(function (err) {
         console.error(err);
       });
@@ -74,27 +74,7 @@
     function _loadFieldCenters() {
       _fieldCenterResource.getAll(function(httpResponse) {
         self.fieldCenters = httpResponse.data;
-
-        self.fieldCenters.forEach(function (center) {
-          var _total = self.allUsers.filter(function (user) {
-            return user.fieldCenter.acronym == center.acronym;
-          }).length;
-          self.statisticData.centers.push({
-            acronym: center.acronym,
-            total: _total
-          });
-        });
-
       });
-    }
-
-    function selectedUserChange(user){
-      self.selectedUser = user;
-      _renderStatisticalComponent();
-    }
-
-    function searchUser (query) {
-      return query ? self.users.filter(_createFilterFor(query)) : self.users;
     }
 
     function filterUsersActives() {
@@ -139,6 +119,14 @@
     function _clearSelectUser(){
       self.searchText = '';
       delete self.selectedUser;
+    }
+
+    function selectedUserChange(user){
+      self.selectedUser = user;
+    }
+
+    function searchUser (query) {
+      return query ? self.users.filter(_createFilterFor(query)) : self.users;
     }
 
     function _createFilterFor(query) {
