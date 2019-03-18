@@ -63,7 +63,7 @@
                        md-selected-item="$ctrl.selectedItem"
                        md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
                        md-search-text="$ctrl.searchText"
-                       md-selected-item-change="$ctrl.selectedItemChange(item)"
+                       md-selected-item-change="$ctrl.selectedUserChange(item)"
                        md-items="item in $ctrl.searchUser($ctrl.searchText)"
                        md-item-text="item.name +' '+item.surname+' ('+item.email+')'"
                        md-min-length="0"
@@ -95,5 +95,5 @@
 
   <md-button class="md-primary md-raised" ng-if="$ctrl.selectedUser" ng-click="permission = true">Ver permissões</md-button>
 </div>
-<survey-group-permission title="Teste" layout-padding="" controller="$ctrl.groupManagerFactory" ng-if="$ctrl.groupManagerFactory && $ctrl.selectedUser" layout-margin="" flex></survey-group-permission>
+<survey-group-permission title="Teste" layout-padding="" ng-if="$ctrl.selectedUser" layout-margin="" flex></survey-group-permission>
 

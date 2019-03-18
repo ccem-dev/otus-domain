@@ -5,22 +5,18 @@
     .module('otusDomain.project')
     .component('otusUser', {
       templateUrl: 'app/project/otus-user/otus-user-template.html',
-      controller: Controller
-    });
+      controller: 'otusUserCtrl as $ctrl'
+    })
+    .controller('otusUserCtrl', Controller);
 
   Controller.$inject = [
     'OtusRestResourceService',
-    'ExtractionRestService',
     'UserManagerFactory',
-    '$mdDialog',
-    '$mdToast',
-    'otusjs.survey.GroupManagerFactory',
-    'SurveyGroupRestService',
     '$compile',
     '$scope'
   ];
 
-  function Controller(OtusRestResourceService, ExtractionRestService, UserManagerFactory, $mdDialog, $mdToast, GroupManagerFactory, SurveyGroupRestService, $compile, $scope) {
+  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope) {
     var self = this;
     var _userResource;
     var _fieldCenterResource;
@@ -31,17 +27,15 @@
     self.activeUsers = true;
     self.extractionUsers = false;
     self.userCenter = "";
-    self.updateStatistic = ()=>{};
-    var _updateNecessary = false;
 
     self.$onInit = onInit;
-    self.selectedItemChange = selectedItemChange;
+    self.selectedUserChange = selectedUserChange;
     self.searchUser = searchUser;
     self.filterUsersActives = filterUsersActives;
     self.filterUsersExtraction = filterUsersExtraction;
     self.filterUsersCenter = filterUsersCenter;
     self.filterUsers = filterUsers;
-    self.alterUser = alterUser;
+    self.updateUsers = _updateUsers;
 
     function onInit() {
       self.selectedUser = null;
@@ -49,9 +43,7 @@
       _fieldCenterResource = OtusRestResourceService.getOtusFieldCenterResource();
       _UserManager = UserManagerFactory.create(_userResource);
       _loadUsers();
-      _getListOfSurveyGroups();
 
-      self.updateUsers = _updateUsers;
     }
 
     function _renderStatisticalComponent() {
@@ -63,14 +55,15 @@
     function _loadUsers() {
       _UserManager.list().then(function(httpResponse) {
         self.allUsers = httpResponse.data;
-        _renderStatisticalComponent()
+        _renderStatisticalComponent();
         _loadFieldCenters();
         filterUsers();
+      }).catch(function (err) {
+        console.error(err);
       });
     }
 
     function _updateUsers() {
-
       _UserManager.list().then(function(httpResponse) {
         self.allUsers = httpResponse.data;
         self.filterUsersActives();
@@ -95,24 +88,12 @@
       });
     }
 
-    function _getListOfSurveyGroups() {
-      SurveyGroupRestService.getListOfSurveyGroups()
-        .then(function (response) {
-          self.groupManagerFactory = GroupManagerFactory.create(response);
-        }).catch(function (e) {
-        Promise.reject(e);
-      });
-    }
-
-    function selectedItemChange(user){
+    function selectedUserChange(user){
       self.selectedUser = user;
       _renderStatisticalComponent();
     }
 
     function searchUser (query) {
-      if(_updateNecessary){
-        _updateUsers();
-      }
       return query ? self.users.filter(_createFilterFor(query)) : self.users;
     }
 
@@ -162,17 +143,11 @@
 
     function _createFilterFor(query) {
       var lowercaseQuery = query.toLowerCase();
-
       return function filterFn(user) {
         return (user.name.toLowerCase().indexOf(lowercaseQuery) >= 0 ||
           user.email.toLowerCase().indexOf(lowercaseQuery) >= 0 ||
           user.surname.toLowerCase().indexOf(lowercaseQuery) >= 0);
       };
-
-    }
-
-    function alterUser(email) {
-      return self.selectedUser === email;
     }
   }
 

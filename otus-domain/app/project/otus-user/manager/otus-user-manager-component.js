@@ -5,12 +5,13 @@
     .module('otusDomain.project')
     .component('otusUserManager', {
       templateUrl: 'app/project/otus-user/manager/otus-user-manager-template.html',
-      controller: Controller,
+      controller: 'otusUserManagerCtrl as $ctrl',
       bindings:{
         selectedUser: "<",
         updateUsers: "&"
       }
-    });
+    })
+    .controller('otusUserManagerCtrl', Controller);
 
     Controller.$inject = [
       'OtusRestResourceService',
@@ -32,7 +33,6 @@
     var _confirmExtractionDialog;
     var _UserManager;
 
-    self.users = [];
     self.fieldCenters = [];
     self.activeUsers = true;
     self.extractionUsers = false;
@@ -77,41 +77,36 @@
     }
 
     function updateFieldCenter(user) {
-      _UserManager.updateFieldCenter(angular.toJson(user)).then(function(httpResponse) {
+      _UserManager.updateFieldCenter(user).then(function() {
         _showToast('Centro atualizado.');
-       self.updateUsers();
       });
     }
 
     function _enable(user) {
-      _UserManager.enable(user).then(function(httpResponse) {
+      _UserManager.enable(user).then(function() {
         _showToast('Usuário habilitado.');
-       self.updateUsers();
       });
     }
 
     function _disable(user) {
-      _UserManager.disable(user).then(function(httpResponse) {
+      _UserManager.disable(user).then(function() {
         if(user.extraction) {
           user.extraction = false;
           _disableExtraction(user);
         }
         _showToast('Usuário desabilitado.');
-       self.updateUsers();
       });
     }
 
     function _enableExtraction(user) {
-      ExtractionRestService.enableExtraction(user).then(function(httpResponse) {
+      ExtractionRestService.enableExtraction(user).then(function() {
         _showToast('Extração habilitada.');
-       self.updateUsers();
       });
     }
 
     function _disableExtraction(user) {
-      ExtractionRestService.disableExtraction(user).then(function(httpResponse) {
+      ExtractionRestService.disableExtraction(user).then(function() {
         _showToast('Extração desabilitada.');
-       self.updateUsers();
       });
     }
 
@@ -140,6 +135,7 @@
         $mdToast.simple()
         .textContent(message)
       );
+      self.updateUsers();
     }
 
   }
