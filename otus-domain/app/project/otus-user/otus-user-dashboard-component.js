@@ -14,11 +14,12 @@
     'UserManagerFactory',
     '$compile',
     '$scope',
-    'ProjectPermissionService'
-
+    'ProjectPermissionService',
+    'PERMISSION_LIST',
+    '$mdDialog'
   ];
 
-  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope, ProjectPermissionService) {
+  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope, ProjectPermissionService, PERMISSION_LIST, $mdDialog) {
     var self = this;
     var _userResource;
     var _fieldCenterResource;
@@ -48,7 +49,7 @@
     }
 
     function _renderStatisticalComponent() {
-      var html = $compile('<users-statistical-data users="$ctrl.allUsers" ng-if="$ctrl.allUsers" flex>></users-statistical-data>')($scope);
+      var html = $compile('<users-statistical-data users="$ctrl.allUsers" layout-align="start space-between" ng-if="$ctrl.allUsers" flex></users-statistical-data>')($scope);
       angular.element(document.getElementById("statisticComponent")).html("");
       angular.element(document.getElementById("statisticComponent")).append(html)
     }
@@ -124,7 +125,12 @@
 
     function selectedUserChange(user){
       self.selectedUser = user;
-      if (!user) delete self.managerUserPermission;
+      if (!user) {
+        delete self.managerUserPermission;
+        delete self.selectedUser;
+      } else {
+        _getAllPermissions();
+      }
     }
 
     function searchUser (query) {
@@ -140,32 +146,28 @@
       };
     }
 
-    self.getAllPermissions = getAllPermissions;
-
-    function getAllPermissions() {
+    function _getAllPermissions() {
       if(self.selectedUser){
         ProjectPermissionService.getAll(self.selectedUser.email).then(function (response) {
-          self.managerUserPermission = response;
-          self.managerUserPermission.permissionList.forEach(function (permissionJson) {
-            self.surveyGroupPermission = permissionJson.objectType == "SurveyGroupPermission"? permissionJson: null;
-          })
+          if(response.permissionList) {
+            self.managerUserPermission = response;
+            self.surveyGroupPermission = self.managerUserPermission.findByType(PERMISSION_LIST.SURVEY_GROUP);
+          }
+        }).catch(function () {
+          _showDialog("<h2>Não foi possível carregar as permissões de usuário!</h2><span class='md-caption'>Tente novamente mais tarde.</span>")
         });
       } else {
         delete self.managerUserPermission;
       }
-
-
     }
 
-    // function _renderPermission(permission) {
-    //   let _template = ProjectPermissionService.getPermissionComponent(permission.objectType);
-    //   $scope.permission = permission;
-    //   let html = $compile(_template)($scope);
-    //   angular.element(document.getElementById("listPermissions")).append(html)
-    // }
-
-
-
+    function _showDialog(message) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .htmlContent(message)
+          .ok("OK")
+      );
+    }
   }
 
 })();

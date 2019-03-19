@@ -1,11 +1,8 @@
 (function () {
 
   angular
-    .module('otusDomain')
+    .module('otusDomain.project')
     .constant('PERMISSION_LIST', {
-      "SurveyGroupPermission" : '<survey-group-permission flex></survey-group-permission>'
-
+      "SURVEY_GROUP" : "SurveyGroupPermission"
     });
-
-
 }());

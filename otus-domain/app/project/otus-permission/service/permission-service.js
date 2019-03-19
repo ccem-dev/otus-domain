@@ -8,56 +8,36 @@
   Service.$inject = [
     'PermissionRestService',
     'otusjs.user.permission.PermissionManagerFactory',
+    'otusjs.user.permission.SurveyGroupPermissionFactory',
     '$q'
   ];
 
-  function Service(PermissionRestService, PermissionManagerFactory, $q) {
-    var permissionManagerFactory;
+  function Service(PermissionRestService, PermissionManagerFactory, SurveyGroupPermissionFactory, $q) {
+    var _permissionManagerFactory;
     var self = this;
 
     /* Public methods */
-    // self.getListOfSurveyGroups = getListOfSurveyGroups;
-    // self.addNewSurveyGroup = addNewSurveyGroup;
-    // self.updateSurveyGroupName = updateSurveyGroupName;
-    // self.updateSurveyGroupAcronyms = updateSurveyGroupAcronyms;
-    // self.deleteSurveyGroup = deleteSurveyGroup;
-
     self.getAll = getAll;
-    // self.getPermissionComponent = getPermissionComponent;
     self.savePermission = savePermission;
 
     function getAll(email) {
       return PermissionRestService.getAll(email).then(function (response) {
-        if (response.data){
-          permissionManagerFactory = PermissionManagerFactory.create(response.data);
-          console.log(permissionManagerFactory)
-          return permissionManagerFactory;
+        if ('data' in response){
+          _permissionManagerFactory = PermissionManagerFactory.create(response.data.permissions, email);
+          if (!_permissionManagerFactory.permissionList.length){
+            return _buildEmptyPermissions(email);
+          }
+          return _permissionManagerFactory;
         }
-        return [];
-
+        return $q.reject()
+      }).catch(function () {
+        return $q.reject();
       });
     }
-    //
-    // function getPermissionComponent(objectType) {
-    //   return PERMISSION_LIST[objectType];
-    // }
 
-
-
-
-    // function getListOfSurveyGroups() {
-    //   return SurveyGroupRestService.getListOfSurveyGroups()
-    //     .then(function (response) {
-    //       groupManagerFactory = GroupManagerFactory.create(response);
-    //       return groupManagerFactory;
-    //     }).catch(function (e) {
-    //       return $q.reject(e);
-    //     });
-    // }
-    //
     function savePermission(permission) {
       try {
-        return PermissionRestService.savePermission(permission)
+        return PermissionRestService.savePermission(permission.toJSON())
           .then(function (response) {
             return response;
           }).catch(function (e) {
@@ -67,44 +47,12 @@
         return $q.reject(e);
       }
     }
-    //
-    // function updateSurveyGroupName(oldName, newName) {
-    //   var update = {
-    //     surveyGroupName: oldName,
-    //     newSurveyGroupName: newName
-    //   };
-    //   return SurveyGroupRestService.updateSurveyGroupName(update)
-    //     .then(function (response) {
-    //       return response;
-    //     }).catch(function (e) {
-    //       return $q.reject(e);
-    //     });
-    // }
-    //
-    // function deleteSurveyGroup(name) {
-    //   var deleteGroup = {
-    //     surveyGroupName: name,
-    //     newSurveyGroupName: ''
-    //   };
-    //   return SurveyGroupRestService.deleteSurveyGroup(deleteGroup)
-    //     .then(function (response) {
-    //       return response;
-    //     }).catch(function (e) {
-    //       return $q.reject(e);
-    //     });
-    // }
-    //
-    // function updateSurveyGroupAcronyms(group) {
-    //   return SurveyGroupRestService.updateSurveyGroupAcronyms(group)
-    //     .then(function (response) {
-    //       return response;
-    //     }).catch(function (e) {
-    //       return $q.reject(e);
-    //     });
-    // }
-    //
-    // function getAllUsers() {
-    //
-    // }
+
+    function _buildEmptyPermissions(email) {
+      let _permissions = [];
+      _permissions.push(SurveyGroupPermissionFactory.create({}, email));
+      _permissionManagerFactory = PermissionManagerFactory.create(_permissions, email);
+      return _permissionManagerFactory;
+    }
   }
 }());

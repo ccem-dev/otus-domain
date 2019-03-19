@@ -19,34 +19,17 @@
     self.getAll = getAll;
     self.savePermission = savePermission;
 
-
     function initialize() {
-      _rest = OtusRestResourceService.getSurveyGroupResource();
+      _rest = OtusRestResourceService.getUserPermissionResource();
     }
 
-    function getAll() {
-      var defer = $q.defer();
+    function getAll(email) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      //Todo: implementar
-      defer.resolve({data:[
-        {
-          objectType: "SurveyGroupPermission",
-          email: "tiago.matana@gmail.com",
-          groups: ["otus"]
-        }
-      ]});
-      // _rest.getListOfSurveyGroups(function (response) {
-      //   if ('data' in response) {
-      //     defer.resolve(response.data);
-      //   } else {
-      //     defer.reject(true);
-      //   }
-      // });
-      return defer.promise;
+      return _rest.getAll({email: email}).$promise;
+      // return _rest.getAll().$promise;
     }
-
 
     function savePermission(data) {
       if (!_rest) {

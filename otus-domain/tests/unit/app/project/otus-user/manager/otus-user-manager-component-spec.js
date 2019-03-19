@@ -104,8 +104,19 @@ describe("Otus User Manager Component Tests", function () {
       expect(Mock.UserManager.enable).toHaveBeenCalledTimes(1);
       expect(Mock.UserManager.enable).toHaveBeenCalledWith(Mock.USER_ENABLE);
       expect(Mock.UserManager.disable).toHaveBeenCalledTimes(0);
+
       Mock.UserManager.enable().then(function(params) {
         expect(controller.updateUsers).toHaveBeenCalledTimes(1);
+      });
+    });
+    Mock.USER_DISABLE.extraction = true;
+    controller.enableDisable(Mock.USER_DISABLE);
+    Mock.$mdDialog.show().then(function() {
+      expect(Mock.UserManager.disable).toHaveBeenCalledTimes(1);
+      expect(Mock.UserManager.disable).toHaveBeenCalledWith(Mock.USER_DISABLE);
+
+      Mock.UserManager.disable().then(function(params) {
+        expect(controller.updateUsers).toHaveBeenCalledTimes(2);
       });
     });
   });

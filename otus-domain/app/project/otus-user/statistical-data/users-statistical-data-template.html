@@ -1,36 +1,46 @@
-<style>
-  table{
-    display: table;
-    text-align: center !important;
-    border-collapse:collapse;
-    border-spacing:0;
-    width: 98% !important;
-
-  }
-  td,th {
-    padding: 10px 20px 10px 20px;
-    border: 0px;
-  }
-  tr:first-child {
-    background-color: rgba(127, 127, 127, 0.38);
-  }
-  tr{
-    border-bottom:1px inset rgba(215, 215, 215, 1);
-  }
-  .rowBiggerFont {
-    font-size: 22px !important;
-  }
-  .md-dialog{
-    width: 600px !important;
-    height: auto !important;
-  }
-</style>
-
-  <md-button class="md-primary" ng-click="$ctrl.show($event)">
-    <md-icon>live_help</md-icon>
-    <span>Informações</span>
-    <md-tooltip>Informações sobre usuários</md-tooltip>
-  </md-button>
-  <md-progress-circular class="md-primary md-hue-3" md-diameter="70" ng-if="!$ctrl.ready"></md-progress-circular>
-
+<md-toolbar class="md-table-toolbar md-default" style="background-color: #fafafa">
+  <div class="md-toolbar-tools">
+    <span>Estatística de usuários no sistema</span>
+  </div>
+</md-toolbar>
+<md-table-container>
+  <table md-table ng-model="$ctrl.statisticData.centers" multiple md-progress="promise">
+    <thead md-head>
+    <tr md-row>
+      <th md-column><span>Descrição</span></th>
+      <th md-column md-numeric><span>Quantidade</span></th>
+    </tr>
+    </thead>
+    <tbody md-body>
+    <tr md-row>
+      <td md-cell>Total</td>
+      <td md-cell>{{$ctrl.statisticData.total}}</td>
+    </tr>
+    <tr md-row>
+      <td md-cell>Inativos</td>
+      <td md-cell>{{$ctrl.statisticData.inactive}}</td>
+    </tr>
+    <tr md-row>
+      <td md-cell>Extração</td>
+      <td md-cell>{{$ctrl.statisticData.usersOfExtraction}}</td>
+    </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<md-table-container>
+  <table md-table ng-model="$ctrl.statisticData.centers" md-progress="promise">
+    <thead md-head>
+    <tr md-row>
+      <th md-column><span>Centro(s)</span></th>
+      <th md-column md-numeric><span>Quantidade</span></th>
+    </tr>
+    </thead>
+    <tbody md-body>
+    <tr md-row ng-repeat="center in $ctrl.statisticData.centers track by $index">
+      <td md-cell>{{center.acronym}}</td>
+      <td md-cell>{{center.total}}</td>
+    </tr>
+    </tbody>
+  </table>
+</md-table-container>
 

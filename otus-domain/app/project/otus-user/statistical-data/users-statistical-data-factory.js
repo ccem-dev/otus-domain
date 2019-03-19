@@ -62,6 +62,7 @@
         let values = Object.values(result);
 
         if(index > -1){
+
           centers.splice(index, 1);
           values.splice(index, 1);
         }
@@ -77,7 +78,6 @@
           inactive: _statisticData.inactive,
           usersOfExtraction: _statisticData.usersOfExtraction,
           centers: _statisticData.centers
-
         }
       }
     }

@@ -59,10 +59,16 @@ describe("Users Statistical Data Factory Tests", function() {
         acronym: "RS"
       }
     };
-    Mock.users = [Mock.user1, Mock.user2, Mock.user3, Mock.user4];
+
+    Mock.user5 = {
+      enable:true,
+      extraction:false,
+      fieldCenter:{}
+    };
+    Mock.users = [Mock.user1, Mock.user2, Mock.user3, Mock.user4, Mock.user5];
 
     Mock.structure = {
-      total: 4,
+      total: 5,
       inactive: 2,
       usersOfExtraction: 2,
       centers:[
