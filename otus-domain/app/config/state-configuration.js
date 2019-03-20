@@ -115,7 +115,6 @@
           },
           initialize: function (SurveyGroupRestService, PermissionRestService) {
             SurveyGroupRestService.initialize();
-            //todo: falta implementar
             PermissionRestService.initialize();
           }
         },

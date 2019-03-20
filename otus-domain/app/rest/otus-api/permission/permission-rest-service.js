@@ -28,7 +28,6 @@
         throw new Error('REST resource is not initialized.');
       }
       return _rest.getAll({email: email}).$promise;
-      // return _rest.getAll().$promise;
     }
 
     function savePermission(data) {
