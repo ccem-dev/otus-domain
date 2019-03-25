@@ -42,13 +42,9 @@
     }
 
     function _isEqual(arrayOne, arrayTwo) {
-      var type = Object.prototype.toString.call(arrayOne);
-      if (type !== Object.prototype.toString.call(arrayTwo)) return false;
-      if (['[object Array]', '[object Object]'].indexOf(type) < 0) return false;
-      var arrayOneLen = type === '[object Array]' ? arrayOne.length : Object.keys(arrayOne).length;
-      var arrayTwoLen = type === '[object Array]' ? arrayTwo.length : Object.keys(arrayTwo).length;
-      if (arrayOneLen !== arrayTwoLen) return false;
-      return true;
+      arrayOne.sort();
+      arrayTwo.sort();
+      return JSON.stringify(arrayTwo) === JSON.stringify(arrayOne)
     }
 
     function savePermission() {
