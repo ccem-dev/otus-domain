@@ -21,7 +21,7 @@
     var self = this;
     var _statisticData = {};
     var _jsonStructure = {};
-
+    var centers;
     self.toJSON = toJSON;
 
     _build();
@@ -39,17 +39,13 @@
           return user.extraction == true;
         }).length;
 
-        let centers = users.map(function (user) {
-          return user.fieldCenter.acronym;
-        }).filter(function (value, index, users) {
-          return users.indexOf(value) === index;
-        });
-
         centers = users.map(function (user) {
           return user.fieldCenter.acronym;
         });
 
-        let result = {};
+        centers.sort();
+
+        var result = {};
 
         for (let i = 0; i < centers.length; ++i) {
           if (!result[centers[i]])
@@ -58,8 +54,8 @@
         }
 
         centers = Object.keys(result);
-        let index = centers.indexOf("undefined");
-        let values = Object.values(result);
+        var index = centers.indexOf("undefined");
+        var values = Object.values(result);
 
         if(index > -1){
 
