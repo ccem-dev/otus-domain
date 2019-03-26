@@ -21,7 +21,8 @@
           'otusDomain.user',
           'utils',
           'ngMaterial',
-          'ngSanitize'
+          'ngSanitize',
+          'md.data.table'
         ]);
 
 }());

@@ -1,0 +1,49 @@
+<div flex="100" layout="row" layout-align="center center" layout-margin="">
+  <div flex layout-align="start center">
+    <div layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
+      <h4>
+        <md-icon>view_module</md-icon>
+        Permitir visualização de atividade por blocos.
+      </h4>
+      <span flex="5"></span>
+      <md-input-container>
+        <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
+                     ng-checked="$ctrl.isCheckedGroup()"
+                     md-indeterminate="$ctrl.isIndeterminateGroups()"
+                     ng-click="$ctrl.toggleAllGroups()">
+          Todos os blocos
+        </md-checkbox>
+      </md-input-container>
+      <span flex="100"></span>
+    </div>
+      <div layout="row" layout-gt-md="row" layout-align="space-between center" layout-wrap layout-fill>
+      <md-input-container flex>
+        <label>Blocos</label>
+        <md-select ng-model="$ctrl.selectedGroups"
+                   md-on-close="$ctrl.clearSearchTerm()"
+                   data-md-container-class="selectdemoSelectHeader"
+                   multiple flex>
+          <md-select-header class="demo-select-header">
+            <input id="searchBlock" ng-model="$ctrl.searchTerm"
+                   type="search"
+                   placeholder="Digite o bloco desejado.."
+                   class="demo-header-searchbox md-text">
+          </md-select-header>
+          <md-optgroup label="Blocos">
+            <md-option ng-value="item" ng-repeat="item in $ctrl.groupList |
+              filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>
+          </md-optgroup>
+        </md-select>
+      </md-input-container>
+        <div flex="20" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+
+          <md-button class="md-primary md-default md-icon-button" aria-label="Save" ng-click="$ctrl.savePermission()" >
+            <md-icon>save</md-icon>
+            <md-tooltip md-direction="top">Salvar permissão.</md-tooltip>
+          </md-button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
