@@ -7,6 +7,7 @@ describe('Survey Template Configuration Component Test', function () {
   beforeEach(function () {
     angular.mock.module("otusDomain.dashboard", function ($provide) {
       $provide.value('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
+      $provide.value('otusDomain.project.activity.SurveyGroupConfigurationService', Mock.SurveyGroupConfigurationService);
         $provide.value('$mdDialog', Mock.mdDialog);
         $provide.value('$mdToast', Mock.mdToast);
         $provide.value('otusjs.model.activity.ActivityPermissionFactory', Mock.ActivityPermissionFactory);
@@ -15,14 +16,96 @@ describe('Survey Template Configuration Component Test', function () {
     });
 
     inject(function (_$controller_) {
-
-      controller = _$controller_("surveyTemplateConfigurationCtrl", {}, {surveyForm: Mock.surveyList[0], surveyTemplates: Mock.surveyList});
+      controller = _$controller_("surveyTemplateConfigurationCtrl", {}, {surveyForm: Mock.surveyList[0], surveyTemplates: Mock.surveyList, mirrorEditModeStatus:function () {}});
     });
 
 
     spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
     spyOn(Mock.ActivityConfigurationManagerService, "setSurveyToSettings").and.callThrough();
     spyOn(Mock.DashboardStateService, "goToActivitySettings").and.callThrough();
+
+  });
+
+  it('should activate group edit mode', function (done) {
+    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.callThrough();
+    controller.$onInit();
+    controller.blocEdit = false;
+    expect(controller.surveyGroupsEditMode).toBe(false);
+    controller.surveyGroupsEdit();
+    expect(controller.surveyGroupsEditMode).toBe(true);
+    done()
+  });
+
+  it('should not activate group edit mode', function (done) {
+    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.callThrough();
+    controller.$onInit();
+    controller.blocEdit = true;
+    expect(controller.surveyGroupsEditMode).toBe(false);
+    controller.surveyGroupsEdit();
+    expect(controller.surveyGroupsEditMode).toBe(false);
+    done()
+  });
+
+  it('should remove survey group', function (done) {
+    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.callThrough();
+      spyOn(Mock.SurveyGroupConfigurationService, 'getListOfSurveyGroups').and.returnValue(Promise.resolve(Mock.groupsManager));
+      controller.$onInit();
+      controller.blocEdit = true;
+      controller.updateSurveyGroups();
+      Mock.SurveyGroupConfigurationService.getListOfSurveyGroups().then(function(data) {
+        expect(Mock.SurveyGroupConfigurationService.updateSurveyGroupAcronyms).toHaveBeenCalledTimes(1);
+      });
+      done()
+  });
+
+  it('should add survey group', function (done) {
+    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.returnValue(Promise.resolve());
+    spyOn(Mock.SurveyGroupConfigurationService, 'getListOfSurveyGroups').and.returnValue(Promise.resolve(Mock.groupsManager2));
+    controller.$onInit();
+    setTimeout(function () {
+      controller.surveyForm.groups = [{
+        addSurvey:function(){},
+        removeSurvey:function () {},
+        toJSON:function () {},
+        getName:function () {
+          return "teste"
+        }
+      },{
+        addSurvey:function(){},
+        removeSurvey:function () {},
+        toJSON:function () {},
+        getName:function () {
+          return "teste1"
+        }
+      },{
+        addSurvey:function(){},
+        removeSurvey:function () {},
+        toJSON:function () {},
+        getName:function () {
+          return "teste2"
+        }
+      }];
+      controller.blocEdit = true;
+      controller.updateSurveyGroups();
+      Mock.SurveyGroupConfigurationService.getListOfSurveyGroups().then(function(data) {
+        expect(Mock.SurveyGroupConfigurationService.updateSurveyGroupAcronyms).toHaveBeenCalledTimes(1);
+      });
+      done()
+    },100);
+  });
+
+  it('should do nothing on groups update', function (done) {
+    spyOn(Mock.SurveyGroupConfigurationService, "updateSurveyGroupAcronyms").and.callThrough();
+    spyOn(Mock.SurveyGroupConfigurationService, 'getListOfSurveyGroups').and.returnValue(Promise.resolve(Mock.groupsManager2));
+    controller.$onInit();
+    setTimeout(function () {
+      controller.blocEdit = true;
+      controller.updateSurveyGroups();
+      Mock.SurveyGroupConfigurationService.getListOfSurveyGroups().then(function(data) {
+        expect(Mock.SurveyGroupConfigurationService.updateSurveyGroupAcronyms).toHaveBeenCalledTimes(0);
+      });
+      done()
+    },100);
   });
 
   it('should find a permission relative to survey', function (done) {
@@ -74,6 +157,64 @@ describe('Survey Template Configuration Component Test', function () {
 
 
   function mockInjections() {
+    Mock.SurveyGroupConfigurationService = {
+      getListOfSurveyGroups:function () {
+        return Promise.resolve()
+      },
+      updateSurveyGroupAcronyms:function () {}
+    };
+
+    Mock.groupsManager ={
+      getSurveyGroups: function() {
+        return ["teste","teste1"]
+      },
+      getGroup:function () {
+        return {
+          addSurvey:function(){},
+          removeSurvey:function () {},
+          toJSON:function () {},
+          getName:function () {
+            return "teste"
+          }
+        }
+      }
+    };
+
+    Mock.groupsManager2 ={
+      getSurveyGroups: function() {
+        return ["teste","teste1"]
+      },
+      getGroup:function (groupName) {
+        if(groupName == "teste"){
+          return {
+            addSurvey:function(){},
+            removeSurvey:function () {},
+            toJSON:function () {},
+            getName:function () {
+              return "teste"
+            }
+          }
+        } else if(groupName == "teste1"){
+          return {
+            addSurvey:function(){},
+            removeSurvey:function () {},
+            toJSON:function () {},
+            getName:function () {
+              return "teste1"
+            }
+          }
+        } else if(groupName == "teste2"){
+          return {
+            addSurvey:function(){},
+            removeSurvey:function () {},
+            toJSON:function () {},
+            getName:function () {
+              return "teste2"
+            }
+          }
+        }
+      }
+    };
 
     Mock.ActivityPermissionFactory= {
       create: function() {},

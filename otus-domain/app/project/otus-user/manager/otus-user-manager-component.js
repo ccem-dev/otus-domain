@@ -3,10 +3,15 @@
 
   angular
     .module('otusDomain.project')
-    .component('otusUser', {
-      templateUrl: 'app/project/otus-user/otus-user-template.html',
-      controller: Controller
-    });
+    .component('otusUserManager', {
+      templateUrl: 'app/project/otus-user/manager/otus-user-manager-template.html',
+      controller: 'otusUserManagerCtrl as $ctrl',
+      bindings:{
+        selectedUser: "<",
+        updateUsers: "&"
+      }
+    })
+    .controller('otusUserManagerCtrl', Controller);
 
     Controller.$inject = [
       'OtusRestResourceService',
@@ -28,8 +33,10 @@
     var _confirmExtractionDialog;
     var _UserManager;
 
-    self.users = [];
     self.fieldCenters = [];
+    self.activeUsers = true;
+    self.extractionUsers = false;
+    self.userCenter = "";
 
     self.$onInit = onInit;
     self.enableDisable = enableDisable;
@@ -37,11 +44,11 @@
     self.enableDisableExtraction = enableDisableExtraction;
 
     function onInit() {
+      self.user = self.selectedUser;
       _userResource = OtusRestResourceService.getUserResource();
       _fieldCenterResource = OtusRestResourceService.getOtusFieldCenterResource();
       _UserManager = UserManagerFactory.create(_userResource);
       _createDialog();
-      _loadUsers();
       _loadFieldCenters();
     }
 
@@ -70,19 +77,19 @@
     }
 
     function updateFieldCenter(user) {
-      _UserManager.updateFieldCenter(angular.toJson(user)).then(function(httpResponse) {
+      _UserManager.updateFieldCenter(user).then(function() {
         _showToast('Centro atualizado.');
       });
     }
 
     function _enable(user) {
-      _UserManager.enable(user).then(function(httpResponse) {
+      _UserManager.enable(user).then(function() {
         _showToast('Usuário habilitado.');
       });
     }
 
     function _disable(user) {
-      _UserManager.disable(user).then(function(httpResponse) {
+      _UserManager.disable(user).then(function() {
         if(user.extraction) {
           user.extraction = false;
           _disableExtraction(user);
@@ -91,20 +98,14 @@
       });
     }
 
-    function _loadUsers() {
-      _UserManager.list().then(function(httpResponse) {
-        self.users = httpResponse.data;
-      });
-    }
-
     function _enableExtraction(user) {
-      ExtractionRestService.enableExtraction(user).then(function(httpResponse) {
+      ExtractionRestService.enableExtraction(user).then(function() {
         _showToast('Extração habilitada.');
       });
     }
 
     function _disableExtraction(user) {
-      ExtractionRestService.disableExtraction(user).then(function(httpResponse) {
+      ExtractionRestService.disableExtraction(user).then(function() {
         _showToast('Extração desabilitada.');
       });
     }
@@ -133,8 +134,11 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent(message)
+          .hideDelay(3000)
       );
+      self.updateUsers();
     }
+
   }
 
 })();

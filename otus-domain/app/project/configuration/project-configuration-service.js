@@ -58,7 +58,7 @@
         /* Surveys Manager Section */
         function fetchSurveysManagerConfiguration() {
             var defer = $q.defer();
-            _configurationResource.getSurveys(function (response) {
+            _configurationResource.getAllSurveys(function (response) {
                 if ('data' in response) {
                     defer.resolve(response.data);
                 } else {

@@ -2,7 +2,7 @@
   <h2 class="md-headline">Configurações dos formulários disponíveis</h2>
   <div layout="row" layout-align="end center">
     <md-input-container flex="">
-      <input type="text" ng-model="search.surveyTemplate.identity.name" placeholder="Buscar por nome de formulário" />
+      <input type="text" ng-model="search" placeholder="Buscar por nome de formulário" />
     </md-input-container>
     <span flex></span>
     <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
@@ -23,11 +23,10 @@
     <div layout="column" ng-hide="$ctrl.disableSaving">
       <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}</span>
     </div>
-
+  </md-card-title-text>
     <md-list>
-      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search"  aria-label="formulário">
-        <survey-template-configuration flex survey-form="surveyForm" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
-        <md-divider></md-divider>
+      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index" ng-style="{background: $ctrl.getColor($index)}"  aria-label="formulário" layout-padding>
+        <survey-template-configuration flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)" bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
       </md-list-item>
     </md-list>
 </md-content>

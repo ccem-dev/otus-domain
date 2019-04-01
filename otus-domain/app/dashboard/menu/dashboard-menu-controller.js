@@ -21,7 +21,6 @@
     self.open = open;
     self.close = close;
     self.openHome = openHome;
-    self.openSurveyForms = openSurveyForms;
     self.openUserActivation = openUserActivation;
     self.logout = logout;
     self.openProjectCenters = openProjectCenters;
@@ -45,11 +44,6 @@
 
     function openHome() {
       DashboardStateService.goToHome();
-      close();
-    }
-
-    function openSurveyForms() {
-      DashboardStateService.goToSurveyForms();
       close();
     }
 

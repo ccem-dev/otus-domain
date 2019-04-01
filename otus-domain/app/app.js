@@ -20,7 +20,9 @@
           'otus.client',
           'otusDomain.user',
           'utils',
-          'ngMaterial'
+          'ngMaterial',
+          'ngSanitize',
+          'md.data.table'
         ]);
 
 }());

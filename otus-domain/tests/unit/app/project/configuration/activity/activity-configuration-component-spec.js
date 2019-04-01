@@ -11,6 +11,7 @@ describe('Activity Configuration Component Test', function() {
     angular.mock.module('otusDomain.dashboard', function($provide) {
       // $provide.value('$q',Mock.$q);
       $provide.value('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
+      $provide.value('otusDomain.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('$mdToast',Mock.mdToast);
       $provide.value('$mdDialog',Mock.mdDialog);
     });
@@ -201,7 +202,7 @@ describe('Activity Configuration Component Test', function() {
       Mock.ProjectConfigurationService.deleteSurveyTemplate().then(function () {
         expect(controller.surveyTemplatesList.length).toEqual(3);
         setTimeout(function () {
-          done()
+          done();
           expect(controller.surveyTemplatesList.length).toEqual(2);
         },100);
       }).catch(function () {
@@ -225,6 +226,14 @@ describe('Activity Configuration Component Test', function() {
   });
 
   function mockInjections() {
+    Mock.LoadingScreenService = {
+      start:function() {
+        return Promise.resolve();
+      },
+      finish:function() {
+        return Promise.resolve();
+      }
+    };
     Mock.$q = {
       defer: function() {
         return {

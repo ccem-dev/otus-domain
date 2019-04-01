@@ -112,6 +112,10 @@
           },
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (SurveyGroupRestService, PermissionRestService) {
+            SurveyGroupRestService.initialize();
+            PermissionRestService.initialize();
           }
         },
         views: {
@@ -123,7 +127,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@user-otus-management': {
-            template: '<otus-user flex="80"></otus-user>'
+            template: '<otus-user-dashboard flex="80"></otus-user-dashboard>'
           }
         }
       })
@@ -165,8 +169,9 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityConfigurationRestService) {
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
             ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
           }
         },
         views: {
@@ -192,8 +197,9 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityConfigurationRestService) {
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
             ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
           }
         },
         views: {
@@ -301,8 +307,9 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityConfigurationRestService) {
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
             ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
           }
         },
         views: {
