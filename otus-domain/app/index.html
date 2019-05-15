@@ -2,23 +2,23 @@
 <html lang="en" ng-app="otusDomain">
 
 <head>
-  <base href="/otus-domain/" />
-  <meta charset="UTF-8" />
+  <base href="/otus-domain/"/>
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="initial-scale=1">
   <title>Otus Domain</title>
-  <link href="app/assets/img/coruja_neutra.png" rel="icon" />
+  <link href="app/assets/img/coruja_neutra.png" rel="icon"/>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- ASSETS -->
   <!-- application -->
-  <link href="app/assets/css/styles.css" rel="stylesheet" />
-  <link href="app/assets/css/login.css" rel="stylesheet" />
-  <link href="app/assets/css/user-register.css" rel="stylesheet" />
-  <link href="app/assets/css/initial-config.css" rel="stylesheet" />
+  <link href="app/assets/css/styles.css" rel="stylesheet"/>
+  <link href="app/assets/css/login.css" rel="stylesheet"/>
+  <link href="app/assets/css/user-register.css" rel="stylesheet"/>
+  <link href="app/assets/css/initial-config.css" rel="stylesheet"/>
   <!-- library -->
-  <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
-  <link href="node_modules/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet" />
+  <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
+  <link href="node_modules/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet"/>
   <link href="node_modules/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/>
   <!-- uncache(rename:true, append:hash) -->
   <!-- build:css css/otus.min.css -->
@@ -151,9 +151,11 @@
 <script src="app/project/otus-user/statistical-data/users-statistical-data-component.js"></script>
 
 <!-- PROJECT-OTUS-PERMISSION -->
-<script src="app/project/otus-permission/service/permission-service.js"></script>
-<script src="app/project/otus-permission/survey-group/survey-group-permission-component.js"></script>
 <script src="app/project/otus-permission/config/permission-constant.js"></script>
+<script src="app/project/otus-permission/service/permission-service.js"></script>
+<script src="app/project/otus-permission/permission-grid/permission-grid-component.js"></script>
+<script src="app/project/otus-permission/survey-group/survey-group-permission-component.js"></script>
+<script src="app/project/otus-permission/laboratory/laboratory-permission-component.js"></script>
 
 <!--ANGULAR MATERIAL TABLE-->
 <script type="text/javascript" src="node_modules/angular-material-data-table/dist/md-data-table.min.js"></script>
@@ -208,7 +210,8 @@
 <!-- PROJECT-CONFIGURATION -->
 <script src="app/project/configuration/project-configuration-controller.js"></script>
 <script src="app/project/configuration/project-configuration-service.js"></script>
-<script src="app/project/configuration/config-components/project-visual-identity-component/project-visual-identity-component.js"></script>
+<script
+  src="app/project/configuration/config-components/project-visual-identity-component/project-visual-identity-component.js"></script>
 <script src="app/project/configuration/participant-registration/participant-registration-component.js"></script>
 
 <!-- UPLOAD TOOL -->
