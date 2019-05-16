@@ -3,6 +3,7 @@
   angular
     .module('otusDomain.project')
     .constant('PERMISSION_LIST', {
-      "SURVEY_GROUP" : "SurveyGroupPermission"
+      "SURVEY_GROUP" : "SurveyGroupPermission",
+      "LABORATORY" : "LaboratoryPermission"
     });
 }());

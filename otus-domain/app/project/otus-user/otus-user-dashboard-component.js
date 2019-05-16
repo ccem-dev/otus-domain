@@ -14,7 +14,7 @@
     'UserManagerFactory',
     '$compile',
     '$scope',
-    'ProjectPermissionService',
+    'ProjectPermissionService', //todo check if still in use
     'PERMISSION_LIST',
     '$mdDialog'
   ];
@@ -126,10 +126,7 @@
     function selectedUserChange(user){
       self.selectedUser = user;
       if (!user) {
-        delete self.managerUserPermission;
         delete self.selectedUser;
-      } else {
-        _getAllPermissions();
       }
     }
 
@@ -144,21 +141,6 @@
           user.email.toLowerCase().indexOf(lowercaseQuery) >= 0 ||
           user.surname.toLowerCase().indexOf(lowercaseQuery) >= 0);
       };
-    }
-
-    function _getAllPermissions() {
-      if(self.selectedUser){
-        ProjectPermissionService.getAll(self.selectedUser.email).then(function (response) {
-          if(response.permissionList) {
-            self.managerUserPermission = response;
-            self.surveyGroupPermission = self.managerUserPermission.findByType(PERMISSION_LIST.SURVEY_GROUP);
-          }
-        }).catch(function () {
-          _showDialog("<h2>Não foi possível carregar as permissões de usuário!</h2><span class='md-caption'>Tente novamente mais tarde.</span>")
-        });
-      } else {
-        delete self.managerUserPermission;
-      }
     }
 
     function _showDialog(message) {
