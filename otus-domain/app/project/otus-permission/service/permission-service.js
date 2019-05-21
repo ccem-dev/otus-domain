@@ -21,18 +21,23 @@
     self.savePermission = savePermission;
 
     function getAll(email) {
-      return PermissionRestService.getAll(email).then(function (response) {
-        if ('data' in response){
-          _permissionManagerFactory = PermissionManagerFactory.create(response.data.permissions, email);
-          if (!_permissionManagerFactory.permissionList.length){
-            return _buildEmptyPermissions(email);
+      return PermissionRestService.getAll(email)
+        .then(function (response) {
+          console.log(response);
+          if ('data' in response) {
+            try{
+              _permissionManagerFactory = PermissionManagerFactory.create(response.data.permissions, email);
+            } catch (e) {
+              return Promise.reject(e);
+            }
+
+            if (!_permissionManagerFactory.permissionList.length) {
+              return _buildEmptyPermissions(email);
+            }
+            return _permissionManagerFactory;
           }
-          return _permissionManagerFactory;
-        }
-        return $q.reject()
-      }).catch(function () {
-        return $q.reject();
-      });
+          return $q.reject()
+        })
     }
 
     function savePermission(permission) {
@@ -48,6 +53,7 @@
       }
     }
 
+    //todo: remove
     function _buildEmptyPermissions(email) {
       let _permissions = [];
       _permissions.push(SurveyGroupPermissionFactory.create({}, email));

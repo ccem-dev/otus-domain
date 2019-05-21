@@ -18,7 +18,9 @@
   function Controller() {
     var self = this;
 
-    console.log('')
+    self.$onInit =  function () {
+      console.log(self.permission)
+    };
 
     return self;
   }

@@ -50,8 +50,9 @@
 
     function _renderStatisticalComponent() {
       var html = $compile('<users-statistical-data users="$ctrl.allUsers" layout-align="start space-between" ng-if="$ctrl.allUsers" flex></users-statistical-data>')($scope);
-      angular.element(document.getElementById("statisticComponent")).html("");
-      angular.element(document.getElementById("statisticComponent")).append(html)
+      let elem = angular.element(document.getElementById("statisticComponent"));
+      elem.html("");
+      elem.append(html)
     }
 
     function _loadUsers() {
@@ -124,10 +125,8 @@
     }
 
     function selectedUserChange(user){
+      delete self.selectedUser;
       self.selectedUser = user;
-      if (!user) {
-        delete self.selectedUser;
-      }
     }
 
     function searchUser (query) {
@@ -143,13 +142,6 @@
       };
     }
 
-    function _showDialog(message) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .htmlContent(message)
-          .ok("OK")
-      );
-    }
   }
 
 })();

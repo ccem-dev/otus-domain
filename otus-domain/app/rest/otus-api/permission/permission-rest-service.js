@@ -24,10 +24,28 @@
     }
 
     function getAll(email) {
+      return callFake(); //todo remove
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
       return _rest.getAll({email: email}).$promise;
+    }
+
+    function callFake() {
+      return Promise.resolve({
+        data: {
+          permissions: [
+            {
+              objectType: "SurveyGroupPermission",
+              groups: ["Laboratório", "Desfechos"]
+            },
+            {
+              objectType: "LaboratoryPermission",
+              access: true
+            }
+          ]
+        }
+      });
     }
 
     function savePermission(data) {
