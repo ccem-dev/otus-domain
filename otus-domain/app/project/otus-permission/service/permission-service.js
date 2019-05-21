@@ -13,52 +13,49 @@
   ];
 
   function Service(PermissionRestService, PermissionManagerFactory, SurveyGroupPermissionFactory, $q) {
-    var _permissionManagerFactory;
+    var _permissionManager;
     var self = this;
 
     /* Public methods */
-    self.getAll = getAll;
+    self.fetchPermissions = fetchPermissions;
     self.savePermission = savePermission;
+    self.getPermissionByType = getPermissionByType;
 
-    function getAll(email) {
+    function fetchPermissions(email) {
       return PermissionRestService.getAll(email)
         .then(function (response) {
           console.log(response);
-          if ('data' in response) {
-            try{
-              _permissionManagerFactory = PermissionManagerFactory.create(response.data.permissions, email);
-            } catch (e) {
-              return Promise.reject(e);
-            }
-
-            if (!_permissionManagerFactory.permissionList.length) {
-              return _buildEmptyPermissions(email);
-            }
-            return _permissionManagerFactory;
+          console.log($q.resolve());
+          console.log(Promise.resolve());
+          try {
+            _setPermissionManager(response.data.permissions, email);
+          } catch (e) {
+            return $q.reject(e);
           }
-          return $q.reject()
+          return _permissionManager;
+
         })
     }
 
     function savePermission(permission) {
-      try {
-        return PermissionRestService.savePermission(permission.toJSON())
-          .then(function (response) {
-            return response;
-          }).catch(function (e) {
-            return $q.reject(e);
-          });
-      } catch (e) {
-        return $q.reject(e);
-      }
+      return PermissionRestService.savePermission(permission.toJSON())
+        .then(function (response) {
+          if ("data" in response) {
+            return response.data;
+          } else {
+            $q.reject();
+          }
+        })
+
     }
 
-    //todo: remove
-    function _buildEmptyPermissions(email) {
-      let _permissions = [];
-      _permissions.push(SurveyGroupPermissionFactory.create({}, email));
-      _permissionManagerFactory = PermissionManagerFactory.create(_permissions, email);
-      return _permissionManagerFactory;
+    function getPermissionByType(objectType) {
+      return _permissionManager.findByType(objectType);
     }
+
+    function _setPermissionManager(managerData, email) {
+      _permissionManager = PermissionManagerFactory.create(managerData, email);
+    }
+
   }
 }());

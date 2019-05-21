@@ -6,20 +6,18 @@
     .component('surveyGroupPermission', {
       templateUrl: 'app/project/otus-permission/survey-group/survey-group-permission-template.html',
       controller: 'surveyGroupPermissionCtrl as $ctrl',
-      bindings: {
-        permission: "=",
-      }
     })
     .controller('surveyGroupPermissionCtrl', Controller);
 
   Controller.$inject = [
+    'PERMISSION_LIST',
     'otusDomain.project.activity.SurveyGroupConfigurationService',
     '$element',
     'ProjectPermissionService',
     '$mdToast'
   ];
 
-  function Controller(SurveyGroupConfigurationService, $element, ProjectPermissionService, $mdToast) {
+  function Controller(PERMISSION_LIST, SurveyGroupConfigurationService, $element, ProjectPermissionService, $mdToast) {
     var self = this;
 
     self.$onInit = onInit;
@@ -28,17 +26,23 @@
     self.isCheckedGroup = isCheckedGroup;
     self.toggleAllGroups = toggleAllGroups;
     self.clearSearchTerm = clearSearchTerm;
-    self.savePermission = savePermission;
+    self.save = save;
 
     self.surveysGroups = [];
     self.selectedGroups = [];
     self.groupList = [];
 
     function onInit() {
+      _fetchPermission();
       _getListOfSurveyGroups();
       $element.find('#searchBlock').on('keydown', function (ev) {
         ev.stopPropagation();
       });
+    }
+
+
+    function _fetchPermission() {
+      self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.SURVEY_GROUP);
     }
 
     function _isEqual(arrayOne, arrayTwo) {
@@ -47,18 +51,20 @@
       return JSON.stringify(arrayTwo) === JSON.stringify(arrayOne)
     }
 
-    function savePermission() {
+    function save() {
       var _originalGroups = angular.copy(self.permission.groups);
-      if(!_isEqual(self.permission.groups, self.selectedGroups)){
+
+      if (!_isEqual(self.permission.groups, self.selectedGroups)) {
         self.permission.groups = self.selectedGroups;
-        ProjectPermissionService.savePermission(self.permission).then(function (response) {
-          if(response.data){
+        ProjectPermissionService.savePermission(self.permission)
+          .then(function (response) {
             _showToast("Permissão de Grupo salva com sucesso.")
-          }
-        }).catch(function () {
-          self.permission.groups = _originalGroups;
-          _showToast("Não foi possível salvar permissão.")
-        });
+
+          })
+          .catch(function () {
+            self.permission.groups = _originalGroups;
+            _showToast("Não foi possível salvar permissão.")
+          });
       } else {
         _showToast("Não houve modificações na permissão.")
       }
@@ -72,8 +78,8 @@
           self.groupList = self.surveysGroups.getGroupNames();
 
         }).catch(function (e) {
-          Promise.reject(e);
-        });
+        Promise.reject(e);
+      });
     }
 
     function existsGroup(item) {
