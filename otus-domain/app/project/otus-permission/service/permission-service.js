@@ -24,9 +24,6 @@
     function fetchPermissions(email) {
       return PermissionRestService.getAll(email)
         .then(function (response) {
-          console.log(response);
-          console.log($q.resolve());
-          console.log(Promise.resolve());
           try {
             _setPermissionManager(response.data.permissions, email);
           } catch (e) {
