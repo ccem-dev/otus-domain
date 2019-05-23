@@ -31,6 +31,8 @@
     self.surveysGroups = [];
     self.selectedGroups = [];
     self.groupList = [];
+    self.error = false;
+
 
     function onInit() {
       _fetchPermission();
@@ -42,7 +44,12 @@
 
 
     function _fetchPermission() {
-      self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.SURVEY_GROUP);
+      try {
+        self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.SURVEY_GROUP);
+      } catch (e) {
+        self.error = true;
+        throw "Erro ao recuperar informações de " + PERMISSION_LIST.SURVEY_GROUP ;
+      }
     }
 
     function _isEqual(arrayOne, arrayTwo) {

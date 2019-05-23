@@ -17,24 +17,21 @@
 
   function Controller($mdToast, PERMISSION_LIST, ProjectPermissionService) {
     var self = this;
-    var _permissionName = PERMISSION_LIST.LABORATORY;
 
     self.initialValue = undefined;
-    self.save = save;
+    self.error = false;
 
-    self.$onInit =  function () {
-      _fetchPermission();
-    };
+    self.$onInit =  _fetchPermission;
+    self.save = save;
 
     function _fetchPermission() {
       try {
-        self.permission = ProjectPermissionService.getPermissionByType(_permissionName );
+        self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.LABORATORY );
         self.initialValue = self.permission.access;
       } catch (e) {
         self.error = true;
-        throw "Erro ao recuperar informações de " + _permissionName ;
+        throw "Erro ao recuperar informações de " + PERMISSION_LIST.LABORATORY ;
       }
-
     }
     
     function save() {

@@ -13,13 +13,10 @@
     'OtusRestResourceService',
     'UserManagerFactory',
     '$compile',
-    '$scope',
-    'ProjectPermissionService', //todo check if still in use
-    'PERMISSION_LIST',
-    '$mdDialog'
+    '$scope'
   ];
 
-  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope, ProjectPermissionService, PERMISSION_LIST, $mdDialog) {
+  function Controller(OtusRestResourceService, UserManagerFactory, $compile, $scope) {
     var self = this;
     var _userResource;
     var _fieldCenterResource;
