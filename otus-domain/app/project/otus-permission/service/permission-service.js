@@ -35,7 +35,7 @@
     }
 
     function savePermission(permission) {
-      return PermissionRestService.savePermission(permission.toJSON())
+      return PermissionRestService.savePermission(permission)
         .then(function (response) {
           if ("data" in response) {
             return response.data;
