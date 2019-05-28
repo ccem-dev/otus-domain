@@ -8,10 +8,6 @@ describe('Otus User Dashboard Component Tests', function () {
     angular.mock.module('otusDomain.project', function($provide) {
       $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
       $provide.value('$scope', {});
-      $provide.value('$mdDialog', {});
-      $provide.value('otusjs.user.permission.SurveyGroupPermissionFactory', {});
-      $provide.value('PermissionRestService', {getAll: ()=>{return Promise.resolve([])}});
-      $provide.value('otusjs.user.permission.PermissionManagerFactory', {});
     });
   });
 
@@ -20,10 +16,7 @@ describe('Otus User Dashboard Component Tests', function () {
       Injections = {
         'OtusRestResourceService': _$injector_.get('OtusRestResourceService'),
         'UserManagerFactory': _$injector_.get('UserManagerFactory'),
-        '$compile': _$injector_.get('$compile'),
-        'ProjectPermissionService': _$injector_.get('ProjectPermissionService'),
-        'PERMISSION_LIST': _$injector_.get('PERMISSION_LIST'),
-        '$mdDialog': _$injector_.get('$mdDialog')
+        '$compile': _$injector_.get('$compile')
       };
       scope = _$rootScope_.$new();
       Injections.$scope = scope;
@@ -43,8 +36,6 @@ describe('Otus User Dashboard Component Tests', function () {
     spyOn(controller, "filterUsersActives").and.callThrough();
     spyOn(controller, "filterUsersExtraction").and.callThrough();
     spyOn(controller, "filterUsersCenter").and.callThrough();
-    spyOn(Injections.ProjectPermissionService, "getAll").and.returnValue(Promise.resolve(Mock.managerUserPermission));
-    spyOn(Mock.managerUserPermission, "findByType").and.callThrough();
   });
 
   it('should controller defined', function() {
@@ -75,7 +66,7 @@ describe('Otus User Dashboard Component Tests', function () {
 
     Mock.UserManager.list().then(function () {
       expect(controller.allUsers).toBeDefined();
-      expect(angular.element).toHaveBeenCalledTimes(2);
+      expect(angular.element).toHaveBeenCalledTimes(1);
       expect(controller.filterUsers).toHaveBeenCalledBefore(controller.filterUsersActives);
       expect(controller.filterUsersActives).toHaveBeenCalledBefore(controller.filterUsersCenter);
       expect(controller.filterUsersCenter).toHaveBeenCalledBefore(controller.filterUsersExtraction);
@@ -132,9 +123,6 @@ describe('Otus User Dashboard Component Tests', function () {
     controller.$onInit();
     controller.selectedUserChange("otus");
     expect(controller.selectedUser).toEqual("otus");
-    Injections.ProjectPermissionService.getAll().then(function () {
-      expect(Mock.managerUserPermission.findByType).toHaveBeenCalledTimes(1);
-    })
     controller.selectedUserChange();
     expect(controller.selectedUser).toBeUndefined();
     expect(controller.managerUserPermission).toBeUndefined();
@@ -187,11 +175,6 @@ describe('Otus User Dashboard Component Tests', function () {
       list: function() {
         return Promise.resolve({data:[]});
       }
-    };
-
-    Mock.managerUserPermission = {
-      findByType : function(){},
-      permissionList: []
     };
 
     Mock.users = [

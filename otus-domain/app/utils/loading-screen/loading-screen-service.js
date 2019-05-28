@@ -13,7 +13,7 @@
     var MESSAGE = "Por favor, aguarde o carregamento.";
     var LOCKED_MESSAGE = "Loading bloqueado pela chave: ";
     var NEW_KEY_NOT_ADDED = "Não foi possível atribuir a nova chave: ";
-    var NOT_FINISHED_WITH_KEY = "Não foi possível encerrar o loding com a chave: ";
+    var NOT_FINISHED_WITH_KEY = "Não foi possível encerrar o loading com a chave: ";
 
     var self = this;
     self.key = '';
