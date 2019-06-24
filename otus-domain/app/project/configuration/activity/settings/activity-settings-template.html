@@ -19,26 +19,26 @@
         </md-button>
       </md-card-title>
       <md-card-content>
-        <md-list>
+        <md-list layout-align="center center">
           <md-list-item aria-label="template" class="md-2-line">
             <md-card class="current-version">
               <md-card-title class="remove-errors-spacer">
                 <span>{{$ctrl.permission.version}}</span>
               </md-card-title>
             </md-card>
-            <div class="md-list-item-text">
+            <div class="md-list-item-text" flex class="remove-errors-spacer">
               <h3>{{$ctrl.permission.acronym}}</h3>
               <p>nome do forumlário</p>
             </div>
-            <div layout="row" flex="20" layout-align="end end">
+            <div class="md-list-item-text" layout="row" flex="20" layout-align="end end">
               <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.surveyGroupsEdit()">
-                <md-icon md-font-library="material-icons" aria-label="baixar template">file_download</md-icon>
-                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#448aff">file_download</md-icon>
+                <md-tooltip md-direction="left">
                   Baixar template
                 </md-tooltip>
               </md-button>
               <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.updateSurveyGroups()">
-                <md-icon md-font-library="material-icons" aria-label="baixar dicionário de variáveis">assignment_returned</md-icon>
+                <md-icon md-font-library="material-icons" aria-label="baixar dicionário de variáveis" style="color:#448aff">assignment_returned</md-icon>
                 <md-tooltip md-direction="left">
                   Baixar dicionário de variáveis
                 </md-tooltip>
@@ -50,7 +50,6 @@
       </md-card-content>
     </md-content>
   </md-card>
-
   <!-- dictionary and template -->
   <md-card layout="column" flex>
     <md-content layout="column" class="autocomplete">
@@ -67,18 +66,18 @@
           <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
             aria-label="template" class="md-2-line">
             <md-card>
-              <md-card-title class="remove-errors-spacer">
+              <md-card-title>
                 <span>{{surveyForm.version}}</span>
               </md-card-title>
             </md-card>
-            <div class="md-list-item-text">
+            <div class="md-list-item-text" flex class="remove-errors-spacer">
               <h3>{{surveyForm.surveyTemplate.identity.acronym}}</h3>
               <p>{{surveyForm.surveyTemplate.identity.name}}</p>
             </div>
-            <div layout="row" flex="20" layout-align="end end">
+            <div class="md-list-item-text" layout="row" flex="20" layout-align="end end">
               <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.surveyGroupsEdit()">
                 <md-icon md-font-library="material-icons" aria-label="baixar template">file_download</md-icon>
-                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                <md-tooltip md-direction="left">
                   Baixar template
                 </md-tooltip>
               </md-button>
