@@ -9,13 +9,14 @@
     }).controller("activitySettingsCtrl", Controller);
 
   Controller.$inject = [
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
     '$mdToast',
+    'otusDomain.LoadingScreenService',
     'ActivityConfigurationManagerService',
-    'otusjs.model.activity.ActivityPermissionFactory'
+    'otusjs.model.activity.ActivityPermissionFactory',
+    'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
   ];
 
-  function Controller(ProjectConfigurationService, $mdToast, ActivityConfigurationManagerService, ActivityPermissionFactory) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, ProjectConfigurationService) {
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
     var DELAY = 2000;
@@ -32,27 +33,15 @@
     self.onRemove = onRemove;
 
     function onInit() {
-      self.users= [];
-      self.AllUsers= [];
-      self.permission = ActivityConfigurationManagerService.getSurveyToSettings()
-      ProjectConfigurationService.fetchUsers().then(function (users) {
-        _constructorUsers(users);
-        self.permission.exclusiveDisjunction.forEach(function (email) {
-          self.AllUsers.forEach(function (user) {
-            if (user.email === email){
-              self.users.push(user);
-            }
-          })
-        })
-      });
-    }
-
-    function _showMessage(msg, time) {
-      $mdToast.show($mdToast.simple().textContent(msg).position('right bottom').hideDelay(time));
+      self.users = [];
+      self.AllUsers = [];
+      self.permission = ActivityConfigurationManagerService.getSurveyToSettings();
+      _getUsers();
+      _getTemplatesList();
     }
 
     function saveSettings(MSG) {
-      if(!self.permission._id){
+      if (!self.permission._id) {
         ProjectConfigurationService.setUsersExclusiveDisjunction(self.permission).then(function (data) {
           ProjectConfigurationService.getCollectionOfPermissions().then(function (response) {
             self.permissionList = angular.copy(response);
@@ -60,25 +49,16 @@
           });
           _showMessage(MSG, DELAY);
         }).catch(function (err) {
-          _showMessage('Não foi possível atualizar configurações',DELAY);
+          _showMessage('Não foi possível atualizar configurações', DELAY);
         });
       } else {
         ProjectConfigurationService.updateUsersExclusiveDisjunction(self.permission).then(function (response) {
           _showMessage(MSG, DELAY);
         }).catch(function (err) {
-          _showMessage('Não foi possível atualizar configurações',DELAY);
+          _showMessage('Não foi possível atualizar configurações', DELAY);
         });
       }
     }
-
-    function _filterUsersWithPermissionExclusiveDisjunction() {
-      self.permissionList.forEach(function (permission) {
-        if (permission.acronym === self.permission.acronym && permission.version == self.permission.version) {
-          self.permission = ActivityPermissionFactory.fromJsonObject(permission);
-        }
-      });
-    }
-
 
     function transformChip(chip) {
       if (angular.isObject(chip)) {
@@ -97,13 +77,7 @@
       saveSettings(USER_DEL);
     }
 
-    function _constructorUsers(users) {
-      users.forEach(function (user) {
-        self.AllUsers.push({name:user.name,email: user.email})
-      });
-    }
-
-    function querySearch (criteria) {
+    function querySearch(criteria) {
       return criteria ? self.AllUsers.filter(createFilterFor(criteria)) : [];
     }
 
@@ -114,6 +88,54 @@
       };
     }
 
+    function _getUsers() {
+      ProjectConfigurationService.fetchUsers().then(function (users) {
+        _constructorUsers(users);
+        self.permission.exclusiveDisjunction.forEach(function (email) {
+          self.AllUsers.forEach(function (user) {
+            if (user.email === email) {
+              self.users.push(user);
+            }
+          })
+        })
+      });
+    }
+
+    function _getTemplatesList() {
+      LoadingScreenService.start();
+      ProjectConfigurationService.fetchSurveysManagerConfiguration()
+        .then(function (data) {
+          self.surveyTemplatesList = data;
+          if (self.surveyTemplatesList.length === 0) {
+            self.noListInfo = 'Nenhum formulário adicionado';
+          } else {
+            self.noListInfo = '';
+          }
+          LoadingScreenService.finish();
+        }).catch(function () {
+          self.surveyTemplatesList = [];
+          self.noListInfo = 'Erro de comunicação com servidor';
+          LoadingScreenService.finish();
+        });
+    }
+
+    function _constructorUsers(users) {
+      users.forEach(function (user) {
+        self.AllUsers.push({ name: user.name, email: user.email })
+      });
+    }
+
+    function _filterUsersWithPermissionExclusiveDisjunction() {
+      self.permissionList.forEach(function (permission) {
+        if (permission.acronym === self.permission.acronym && permission.version == self.permission.version) {
+          self.permission = ActivityPermissionFactory.fromJsonObject(permission);
+        }
+      });
+    }
+
+    function _showMessage(msg, time) {
+      $mdToast.show($mdToast.simple().textContent(msg).position('right bottom').hideDelay(time));
+    }
 
   }
 }());

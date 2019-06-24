@@ -1,45 +1,126 @@
+<style>
+  .current-version {
+    background-color: #448aff !important;
+  }
+</style>
+
 <md-content class="md-padding autocomplete" layout="column" flex>
-  <h2 class="md-title">Configuração de Atividade</h2>
-  <div layout="column" layout-margin>
-    <span class="md-headline">Sigla: {{$ctrl.permission.acronym}}</span>
-    <span class="md-subhead">Versão: {{$ctrl.permission.version}}</span>
-  </div>
+  <h2 class="md-headline">Configuração de Atividade</h2>
+  <!-- current version -->
+  <!-- TODO: isso deve ser melhorado, atualmente está pegando informações das permissões! -->
   <md-card layout="column" flex>
-
     <md-content layout="column" class="autocomplete">
-          <md-card-title layout="row" layout-align="start center" flex>
-
-
-          <span class="md-title">Cegamento entre usuários</span>
-
-
+      <md-card-title layout="row" layout-align="start center" flex>
+        <span class="md-title">Versão da atividade utilizada atualmente</span>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
-        <md-icon>help</md-icon>
-        <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
+          <md-icon>help</md-icon>
+          <md-tooltip>Versão da atividade utilizada atualmente</md-tooltip>
         </md-button>
       </md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item aria-label="template" class="md-2-line">
+            <md-card class="current-version">
+              <md-card-title class="remove-errors-spacer">
+                <span>{{$ctrl.permission.version}}</span>
+              </md-card-title>
+            </md-card>
+            <div class="md-list-item-text">
+              <h3>{{$ctrl.permission.acronym}}</h3>
+              <p>nome do forumlário</p>
+            </div>
+            <div layout="row" flex="20" layout-align="end end">
+              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.surveyGroupsEdit()">
+                <md-icon md-font-library="material-icons" aria-label="baixar template">file_download</md-icon>
+                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                  Baixar template
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.updateSurveyGroups()">
+                <md-icon md-font-library="material-icons" aria-label="baixar dicionário de variáveis">assignment_returned</md-icon>
+                <md-tooltip md-direction="left">
+                  Baixar dicionário de variáveis
+                </md-tooltip>
+              </md-button>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-content>
+  </md-card>
 
+  <!-- dictionary and template -->
+  <md-card layout="column" flex>
+    <md-content layout="column" class="autocomplete">
+      <md-card-title layout="row" layout-align="start center" flex>
+        <span class="md-title">Outras versões da atividade</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
+          <md-icon>help</md-icon>
+          <md-tooltip>Outras versões da atividade, seu dicionários de variaveis e template</md-tooltip>
+        </md-button>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
+            aria-label="template" class="md-2-line">
+            <md-card>
+              <md-card-title class="remove-errors-spacer">
+                <span>{{surveyForm.version}}</span>
+              </md-card-title>
+            </md-card>
+            <div class="md-list-item-text">
+              <h3>{{surveyForm.surveyTemplate.identity.acronym}}</h3>
+              <p>{{surveyForm.surveyTemplate.identity.name}}</p>
+            </div>
+            <div layout="row" flex="20" layout-align="end end">
+              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.surveyGroupsEdit()">
+                <md-icon md-font-library="material-icons" aria-label="baixar template">file_download</md-icon>
+                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                  Baixar template
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.updateSurveyGroups()">
+                <md-icon md-font-library="material-icons" aria-label="baixar dicionário de variáveis">assignment_returned</md-icon>
+                <md-tooltip md-direction="left">
+                  Baixar dicionário de variáveis
+                </md-tooltip>
+              </md-button>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-content>
+  </md-card>
+  <!-- Blinding between users -->
+  <md-card layout="column" flex>
+    <md-content layout="column" class="autocomplete">
+      <md-card-title layout="row" layout-align="start center" flex>
+        <span class="md-title">Cegamento entre usuários</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
+          <md-icon>help</md-icon>
+          <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
+        </md-button>
+      </md-card-title>
       <div layout="column" layout-margin>
-        <span class="md-subhead">Caso algum dos usuários listados abaixo realize a edição da atividade os demais, pertencentes ao grupo, perderam o acesso a ela.</span>
+        <span class="md-subhead">Caso algum dos usuários listados abaixo realize a edição da atividade os demais,
+          pertencentes ao grupo, perderam o acesso a ela.</span>
         <span class="md-caption remove-errors-spacer">Cegar esta atividade entre os seguintes usuários:</span>
         <div layout="row" flex>
-          <md-chips ng-model="$ctrl.users" md-autocomplete-snap flex
-                    md-transform-chip="ctrl.transformChip($chip)"
-                    md-require-match="true" md-on-add="$ctrl.onAdd($chip)" md-on-remove="$ctrl.onRemove($chip)">
-            <md-autocomplete
-              md-selected-item="$ctrl.selectedItem"
-              md-search-text="$ctrl.searchText"
-              md-items="item in $ctrl.querySearch($ctrl.searchText)"
-              md-item-text="item.name"
-
-              placeholder="Digite o nome do usuário">
+          <md-chips ng-model="$ctrl.users" md-autocomplete-snap flex md-transform-chip="ctrl.transformChip($chip)"
+            md-require-match="true" md-on-add="$ctrl.onAdd($chip)" md-on-remove="$ctrl.onRemove($chip)">
+            <md-autocomplete md-selected-item="$ctrl.selectedItem" md-search-text="$ctrl.searchText" md-items="item in $ctrl.querySearch($ctrl.searchText)"
+              md-item-text="item.name" placeholder="Digite o nome do usuário">
               <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
             </md-autocomplete>
             <md-chip-template>
-        <span>
-          <strong>{{$chip.name}}</strong>
-        </span>
+              <span>
+                <strong>{{$chip.name}}</strong>
+              </span>
             </md-chip-template>
           </md-chips>
         </div>
