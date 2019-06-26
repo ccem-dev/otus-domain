@@ -58,7 +58,7 @@
         </md-button>
       </md-card-title>
       <md-card-content>
-        <md-list>
+        <md-list ng-if="!$ctrl.error">
           <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
             aria-label="template" class="md-2-line">
             <md-card>
@@ -84,6 +84,12 @@
             <md-divider></md-divider>
           </md-list-item>
         </md-list>
+        <md-content ng-if="$ctrl.error" flex layout="row">
+          <div layout="row" flex layout-align="center center">
+            <div class="label-light-gray">
+              <p class="md-2-line">{{$ctrl.message}}</p>
+            </div>
+          </div>
       </md-card-content>
     </md-content>
   </md-card>

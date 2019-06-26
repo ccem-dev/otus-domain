@@ -18,11 +18,14 @@
   ];
 
   function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService) {
+    const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
     var DELAY = 2000;
     var self = this;
+    self.error;
     self.users;
+    self.message;
     self.AllUsers;
     self.versions;
     self.usersList;
@@ -39,6 +42,7 @@
     self.onRemove = onRemove;
 
     function onInit() {
+      self.error = false;
       self.users = [];
       self.AllUsers = [];
       self.versions = [];
@@ -92,6 +96,7 @@
     }
 
     function downloadVariables(version) {
+      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [label] AS [LABEL], [dataType] AS [ID_DA_QUESTAO], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validatorTypes] AS [VALIDACOES]';
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
@@ -99,13 +104,11 @@
             return survey;
         });
         var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
-        var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
       } else {
         var dictionary = SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate);
-        var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
         var name = acronym + "-".concat(self.currentSurvey.version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
       }
@@ -158,7 +161,8 @@
         .then(function (data) {
           self.versions = data;
         }).catch(function () {
-          // TODO: exibir mensagem de erro ao tentar carregar informações!
+          self.error = true;
+          self.message = GENERIC_ERROR;
         });
     }
 
@@ -170,7 +174,8 @@
           self.surveyTemplatesList = data;
           LoadingScreenService.finish();
         }).catch(function () {
-          // TODO: exibir mensagem de erro ao tentar carregar informações!
+          self.error = true;
+          self.message = GENERIC_ERROR;
           LoadingScreenService.finish();
         });
     }
