@@ -72,18 +72,27 @@
     }
 
     function downloadTemplate(version) {
+      var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+      var name = '' + acronym;
+      var downloadElement = document.createElement('a');
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
           if (survey.version === version)
             return survey;
         });
-        // TODO: download do template
+        name = name.concat('-' + version);
+        downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(survey)));
       } else {
-        // TODO: download do template
+        downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(self.currentSurvey)));
+        name = name.concat('-' + self.currentSurvey.version);
       }
+      downloadElement.setAttribute('download', name + '.json');
+      downloadElement.setAttribute('target', '_blank');
+      downloadElement.click();
     }
 
     function downloadVariables(version) {
+      var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
           if (survey.version === version)
@@ -91,17 +100,14 @@
         });
         var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
         var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
-        var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
       } else {
         var dictionary = SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate);
         var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
-        var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
-        var name = acronym + "-".concat(version);
+        var name = acronym + "-".concat(self.currentSurvey.version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
-        console.log(dictionary);
       }
     }
 
@@ -151,12 +157,6 @@
       ProjectConfigurationService.getSurveyVersions(acronym)
         .then(function (data) {
           self.versions = data;
-          // TODO: remover!
-          var _data = [
-            2,
-            1
-          ];
-          self.versions = _data;
         }).catch(function () {
           // TODO: exibir mensagem de erro ao tentar carregar informações!
         });
@@ -167,11 +167,7 @@
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       ProjectConfigurationService.getSurveyTemplatesByAcronym(acronym)
         .then(function (data) {
-          // self.surveyTemplatesList.push(data);
-
-          // TODO: remover!
           self.surveyTemplatesList = data;
-
           LoadingScreenService.finish();
         }).catch(function () {
           // TODO: exibir mensagem de erro ao tentar carregar informações!
@@ -195,6 +191,10 @@
 
     function _showMessage(msg, time) {
       $mdToast.show($mdToast.simple().textContent(msg).position('right bottom').hideDelay(time));
+    }
+
+    function _exportSurvey(JsonTemplate) {
+      return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
 
   }
