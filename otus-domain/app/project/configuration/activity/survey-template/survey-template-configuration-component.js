@@ -54,7 +54,8 @@
 
     function showActivitySettings() {
       _filterUsersWithPermissionExclusiveDisjunction();
-      ActivityConfigurationManagerService.setSurveyToSettings(self.permission);
+      ActivityConfigurationManagerService.setSurveyInContext(self.surveyForm);
+      ActivityConfigurationManagerService.setPermissionInContext(self.permission);
       DashboardStateService.goToActivitySettings();
     }
 

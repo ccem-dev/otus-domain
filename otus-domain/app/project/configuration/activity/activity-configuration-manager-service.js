@@ -9,24 +9,35 @@
 
   function Service() {
     var self = this;
-
+    self.survey;
+    self.permission;
 
     self.$onInit = onInit;
-    self.getSurveyToSettings = getSurveyToSettings;
-    self.setSurveyToSettings = setSurveyToSettings;
+    self.getSurveyOfContext = getSurveyOfContext;
+    self.setSurveyInContext = setSurveyInContext;
+    self.getPermissionOfContext = getPermissionOfContext;
+    self.setPermissionInContext = setPermissionInContext;
 
     function onInit() {
-      self.selectSurveyToSettings = null;
+      self.permission = null;
+      self.survey = null;
     }
 
-    function getSurveyToSettings() {
-      return self.selectSurveyToSettings || null;
+    function getSurveyOfContext() {
+      return self.survey;
     }
 
-    function setSurveyToSettings(survey) {
-      self.selectSurveyToSettings = survey;
+    function setSurveyInContext(survey) {
+      self.survey = survey;
     }
 
+    function getPermissionOfContext() {
+      return self.permission;
+    }
+
+    function setPermissionInContext(permission) {
+      self.permission = permission;
+    }
 
   }
 }());

@@ -19,7 +19,9 @@
 
         /* Public methods */
         self.$onInit = onInit;
-        self.fetchSurveysManagerConfiguration = fetchSurveysManagerConfiguration;
+        self.getSurveysManagerConfiguration = getSurveysManagerConfiguration;
+        self.getSurveyTemplatesByAcronym = getSurveyTemplatesByAcronym;
+        self.getSurveyVersions = getSurveyVersions;
         self.publishTemplate = publishTemplate;
         self.updateSurveyTemplateType = updateSurveyTemplateType;
         self.deleteSurveyTemplate = deleteSurveyTemplate;
@@ -43,20 +45,20 @@
             _userResource = OtusRestResourceService.getUserResource();
         }
 
-      function fetchUsers() {
-        var defer = $q.defer();
-        _userResource.list(function (response) {
-          if ('data' in response) {
-            defer.resolve(response.data);
-          } else {
-            defer.reject(true);
-          }
-        });
-        return defer.promise;
-      }
+        function fetchUsers() {
+            var defer = $q.defer();
+            _userResource.list(function (response) {
+                if ('data' in response) {
+                    defer.resolve(response.data);
+                } else {
+                    defer.reject(true);
+                }
+            });
+            return defer.promise;
+        }
 
         /* Surveys Manager Section */
-        function fetchSurveysManagerConfiguration() {
+        function getSurveysManagerConfiguration() {
             var defer = $q.defer();
             _configurationResource.getAllSurveys(function (response) {
                 if ('data' in response) {
@@ -65,6 +67,36 @@
                     defer.reject(true);
                 }
             });
+            return defer.promise;
+        }
+
+        function getSurveyTemplatesByAcronym(acronym, version) {
+            var defer = $q.defer();
+            _configurationResource.getByAcronym({
+                'acronym': acronym
+            },
+                function (response) {
+                    if (response.data) {
+                        defer.resolve(response.data);
+                    } else {
+                        defer.reject(response.data);
+                    }
+                });
+            return defer.promise;
+        }
+
+        function getSurveyVersions(acronym) {
+            var defer = $q.defer();
+            _configurationResource.getSurveyVersions({
+                'acronym': acronym,
+            },
+                function (response) {
+                    if (response.data) {
+                        defer.resolve(response.data);
+                    } else {
+                        defer.reject(response.data);
+                    }
+                });
             return defer.promise;
         }
 

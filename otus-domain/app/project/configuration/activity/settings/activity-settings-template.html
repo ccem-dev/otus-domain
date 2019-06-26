@@ -7,15 +7,14 @@
 <md-content class="md-padding autocomplete" layout="column" flex>
   <h2 class="md-headline">Configuração de Atividade</h2>
   <!-- current version -->
-  <!-- TODO: isso deve ser melhorado, atualmente está pegando informações das permissões! -->
   <md-card layout="column" flex>
     <md-content layout="column" class="autocomplete">
       <md-card-title layout="row" layout-align="start center" flex>
-        <span class="md-title">Versão da atividade utilizada atualmente</span>
+        <span class="md-title">Versão atual</span>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
           <md-icon>help</md-icon>
-          <md-tooltip>Versão da atividade utilizada atualmente</md-tooltip>
+          <md-tooltip>Versões atual da atividade, seu dicionário de variaveis e template</md-tooltip>
         </md-button>
       </md-card-title>
       <md-card-content>
@@ -23,25 +22,22 @@
           <md-list-item aria-label="template" class="md-2-line">
             <md-card class="current-version">
               <md-card-title class="remove-errors-spacer">
-                <span>{{$ctrl.permission.version}}</span>
+                <span>{{$ctrl.currentSurvey.version}}</span>
+                <md-tooltip md-direction="left">Versão</md-tooltip>
               </md-card-title>
             </md-card>
-            <div class="md-list-item-text" flex class="remove-errors-spacer">
-              <h3>{{$ctrl.permission.acronym}}</h3>
-              <p>nome do forumlário</p>
+            <div class="md-list-item-text">
+              <h3>{{$ctrl.currentSurvey.surveyTemplate.identity.acronym}}</h3>
+              <p>{{$ctrl.currentSurvey.surveyTemplate.identity.name}}</p>
             </div>
             <div class="md-list-item-text" layout="row" flex="20" layout-align="end end">
-              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.surveyGroupsEdit()">
+              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.downloadTemplate()">
                 <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#448aff">file_download</md-icon>
-                <md-tooltip md-direction="left">
-                  Baixar template
-                </md-tooltip>
+                <md-tooltip md-direction="left">Baixar template</md-tooltip>
               </md-button>
-              <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.updateSurveyGroups()">
+              <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.downloadVariables()">
                 <md-icon md-font-library="material-icons" aria-label="baixar dicionário de variáveis" style="color:#448aff">assignment_returned</md-icon>
-                <md-tooltip md-direction="left">
-                  Baixar dicionário de variáveis
-                </md-tooltip>
+                <md-tooltip md-direction="left">Baixar dicionário de variáveis</md-tooltip>
               </md-button>
             </div>
             <md-divider></md-divider>
@@ -54,11 +50,11 @@
   <md-card layout="column" flex>
     <md-content layout="column" class="autocomplete">
       <md-card-title layout="row" layout-align="start center" flex>
-        <span class="md-title">Outras versões da atividade</span>
+        <span class="md-title">Versões anteriores</span>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
           <md-icon>help</md-icon>
-          <md-tooltip>Outras versões da atividade, seu dicionários de variaveis e template</md-tooltip>
+          <md-tooltip>Versões anteriores da atividade, seu dicionário de variaveis e template</md-tooltip>
         </md-button>
       </md-card-title>
       <md-card-content>
@@ -68,6 +64,7 @@
             <md-card>
               <md-card-title>
                 <span>{{surveyForm.version}}</span>
+                <md-tooltip md-direction="left">Versão</md-tooltip>
               </md-card-title>
             </md-card>
             <div class="md-list-item-text" flex class="remove-errors-spacer">
@@ -75,17 +72,13 @@
               <p>{{surveyForm.surveyTemplate.identity.name}}</p>
             </div>
             <div class="md-list-item-text" layout="row" flex="20" layout-align="end end">
-              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.surveyGroupsEdit()">
+              <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.downloadTemplate(surveyForm.version)">
                 <md-icon md-font-library="material-icons" aria-label="baixar template">file_download</md-icon>
-                <md-tooltip md-direction="left">
-                  Baixar template
-                </md-tooltip>
+                <md-tooltip md-direction="left">Baixar template</md-tooltip>
               </md-button>
-              <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.updateSurveyGroups()">
+              <md-button class="md-icon-button" aria-label="baixar dicionário de variáveis" ng-click="$ctrl.downloadVariables(surveyForm.version)">
                 <md-icon md-font-library="material-icons" aria-label="baixar dicionário de variáveis">assignment_returned</md-icon>
-                <md-tooltip md-direction="left">
-                  Baixar dicionário de variáveis
-                </md-tooltip>
+                <md-tooltip md-direction="left">Baixar dicionário de variáveis</md-tooltip>
               </md-button>
             </div>
             <md-divider></md-divider>

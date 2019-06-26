@@ -15,14 +15,14 @@
             restrict: 'A',
             link: linkFunction,
             scope: {
-                uploadTool: '='
+                upload: '='
             }
         };
         return ddo;
 
         function linkFunction($scope, $element, attributes) {
             var fileUploadElement;
-            var uploadConfig = $scope.uploadTool;
+            var uploadConfig = $scope.upload;
             var callback = uploadConfig.callback || {};
             var uploadType = uploadConfig.type || 'any';
 

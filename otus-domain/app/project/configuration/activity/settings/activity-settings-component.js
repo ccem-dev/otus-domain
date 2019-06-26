@@ -13,21 +13,27 @@
     'otusDomain.LoadingScreenService',
     'ActivityConfigurationManagerService',
     'otusjs.model.activity.ActivityPermissionFactory',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
+    'SurveyFactory',
+    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
   ];
 
-  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, ProjectConfigurationService) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService) {
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
     var DELAY = 2000;
     var self = this;
-    self.surveyTemplatesList = [];
-    self.usersList = [];
+    self.users;
+    self.AllUsers;
+    self.versions;
+    self.usersList;
+    self.surveyTemplatesList;
 
     /* Public methods */
     self.$onInit = onInit;
     self.querySearch = querySearch;
     self.saveSettings = saveSettings;
+    self.downloadTemplate = downloadTemplate;
+    self.downloadVariables = downloadVariables;
     self.transformChip = transformChip;
     self.onAdd = onAdd;
     self.onRemove = onRemove;
@@ -35,9 +41,14 @@
     function onInit() {
       self.users = [];
       self.AllUsers = [];
-      self.permission = ActivityConfigurationManagerService.getSurveyToSettings();
+      self.versions = [];
+      self.usersList = [];
+      self.surveyTemplatesList = [];
+      self.currentSurvey = ActivityConfigurationManagerService.getSurveyOfContext();
+      self.permission = ActivityConfigurationManagerService.getPermissionOfContext();
       _getUsers();
-      _getTemplatesList();
+      _getSurveyVersions();
+      _getSurveyTemplates();
     }
 
     function saveSettings(MSG) {
@@ -57,6 +68,40 @@
         }).catch(function (err) {
           _showMessage('Não foi possível atualizar configurações', DELAY);
         });
+      }
+    }
+
+    function downloadTemplate(version) {
+      if (version) {
+        var survey = self.surveyTemplatesList.find(function (survey) {
+          if (survey.version === version)
+            return survey;
+        });
+        // TODO: download do template
+      } else {
+        // TODO: download do template
+      }
+    }
+
+    function downloadVariables(version) {
+      if (version) {
+        var survey = self.surveyTemplatesList.find(function (survey) {
+          if (survey.version === version)
+            return survey;
+        });
+        var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
+        var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
+        var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+        var name = acronym + "-".concat(version);
+        alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
+
+      } else {
+        var dictionary = SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate);
+        var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
+        var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+        var name = acronym + "-".concat(version);
+        alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
+        console.log(dictionary);
       }
     }
 
@@ -101,20 +146,35 @@
       });
     }
 
-    function _getTemplatesList() {
-      LoadingScreenService.start();
-      ProjectConfigurationService.fetchSurveysManagerConfiguration()
+    function _getSurveyVersions() {
+      var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+      ProjectConfigurationService.getSurveyVersions(acronym)
         .then(function (data) {
+          self.versions = data;
+          // TODO: remover!
+          var _data = [
+            2,
+            1
+          ];
+          self.versions = _data;
+        }).catch(function () {
+          // TODO: exibir mensagem de erro ao tentar carregar informações!
+        });
+    }
+
+    function _getSurveyTemplates() {
+      LoadingScreenService.start();
+      var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+      ProjectConfigurationService.getSurveyTemplatesByAcronym(acronym)
+        .then(function (data) {
+          // self.surveyTemplatesList.push(data);
+
+          // TODO: remover!
           self.surveyTemplatesList = data;
-          if (self.surveyTemplatesList.length === 0) {
-            self.noListInfo = 'Nenhum formulário adicionado';
-          } else {
-            self.noListInfo = '';
-          }
+
           LoadingScreenService.finish();
         }).catch(function () {
-          self.surveyTemplatesList = [];
-          self.noListInfo = 'Erro de comunicação com servidor';
+          // TODO: exibir mensagem de erro ao tentar carregar informações!
           LoadingScreenService.finish();
         });
     }

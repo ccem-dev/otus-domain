@@ -14,7 +14,7 @@
         <md-content flex="15" layout-gt-md="column" layout="row" layout-align="top center" layout-padding layout-wrap>
             <div layout="row" layout-align="start center">
                 <span class="md-title">Logo</span>
-                <md-button class="md-icon-button md-primary" ng-hide="$ctrl.progressLogo" upload-tool="$ctrl.uploadLogo">
+                <md-button class="md-icon-button md-primary" ng-hide="$ctrl.progressLogo" upload="$ctrl.uploadLogo">
                     <md-icon flex md-font-library="material-icons" aria-label="Logo">autorenew</md-icon>
                 </md-button>
                 <md-progress-circular ng-if="$ctrl.progressLogo" md-mode="indeterminate"></md-progress-circular>
@@ -25,7 +25,7 @@
         <md-content flex="85" layout-gt-md="column" layout="row" layout-padding layout-wrap>
             <div layout="row" layout-align="start center">
                 <span class="md-title">Banner</span>
-                <md-button class="md-icon-button md-primary" ng-if="!$ctrl.progressBanner" upload-tool="$ctrl.uploadBanner">
+                <md-button class="md-icon-button md-primary" ng-if="!$ctrl.progressBanner" upload="$ctrl.uploadBanner">
                     <md-icon md-font-library="material-icons" aria-label="Banner">autorenew</md-icon>
                 </md-button>
                 <md-progress-circular ng-show="$ctrl.progressBanner" md-mode="indeterminate"></md-progress-circular>
