@@ -45,8 +45,9 @@
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#v1.0",
     "please-wait": "0.0.5",
     "i18next": "17.0.4",
+    "ng-i18next": "1.0.5",
     "i18next-xhr-backend": "3.0.0",
-    "ng-i18next": "1.0.5"
+    "i18next-browser-languagedetector": "3.0.1"
   },
   "devDependencies": {
     "angular-mocks": "1.4.9",

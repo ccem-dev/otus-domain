@@ -30,11 +30,13 @@
 
   function Runner() {
     window.i18next
+      .use(window.i18nextBrowserLanguageDetector)
       .use(window.i18nextXHRBackend)
 
     window.i18next.init({
+      fallbackLng: 'dev',
       backend: {
-        loadPath: '../../resources/i18/{{lng}}/labels.json'
+        loadPath: 'app/i18n/locales/{{lng}}/{{ns}}.json'
       },
     }, function (err, t) {
       if (err)
