@@ -1,0 +1,17 @@
+{
+  "questionDataType": {
+    "CalendarQuestion": "Data",
+    "CheckboxQuestion": "Seleção múltipla",
+    "DecimalQuestion": "Decimal",
+    "EmailQuestion": "Email",
+    "FileUploadQuestion": "Arquivo",
+    "IntegerQuestion": "Inteiro",
+    "PhoneQuestion": "Telefone",
+    "SingleSelectionQuestion": "Seleção única",
+    "TextQuestion": "Texto",
+    "TimeQuestion": "Tempo",
+    "GridIntegerQuestion": "Grade de número inteiro",
+    "GridTextQuestion": "Grade de texto"
+  },
+  "hello": "Herzlich Willkommen!"
+}

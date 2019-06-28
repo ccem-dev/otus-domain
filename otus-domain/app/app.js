@@ -22,7 +22,24 @@
       'otusDomain.utils',
       'ngMaterial',
       'ngSanitize',
-      'md.data.table'
-    ]);
+      'md.data.table',
+      'jm.i18next'
+    ]).run(Runner);
+
+  Runner.$inject = [];
+
+  function Runner() {
+    window.i18next
+      .use(window.i18nextXHRBackend)
+
+    window.i18next.init({
+      backend: {
+        loadPath: '../../resources/i18/{{lng}}/labels.json'
+      },
+    }, function (err, t) {
+      if (err)
+        console.log(err);
+    });
+  }
 
 }());

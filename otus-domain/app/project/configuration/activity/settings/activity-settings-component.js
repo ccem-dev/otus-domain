@@ -15,9 +15,10 @@
     'otusjs.model.activity.ActivityPermissionFactory',
     'SurveyFactory',
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    '$i18next'
   ];
 
-  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, $i18next) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -53,6 +54,8 @@
       _getUsers();
       _getSurveyVersions();
       _getSurveyTemplates();
+
+      console.log($i18next.t('hello'));
     }
 
     function saveSettings(MSG) {
@@ -96,7 +99,7 @@
     }
 
     function downloadVariables(version) {
-      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [label] AS [LABEL], [dataType] AS [ID_DA_QUESTAO], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validatorTypes] AS [VALIDACOES]';
+      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [dataType] AS [TIPO_DA_QUESTAO], [label] AS [LABEL], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validatorTypes] AS [VALIDACOES]';
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
@@ -104,6 +107,7 @@
             return survey;
         });
         var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
+        console.log(dictionary);
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
