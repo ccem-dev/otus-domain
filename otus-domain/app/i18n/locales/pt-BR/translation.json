@@ -20,6 +20,18 @@
     "mandatory": "Obrigatório({{validation.value}})",
     "lowerLimit": "Valor mínimo({{validation.value}})",
     "upperLimit": "Valor máximo({{validation.value}})",
-    "scale": "Casas decimais({{validation.value}})"
+    "scale": "Casas decimais({{validation.value}})",
+    "distinct": "Diferente de({{validation.value}})",
+    "in": "Intervalo de valores({{validation.begin}}, {{validation.end}})",
+    "alphanumeric": "Alfanuméricos({{validation.value}})",
+    "minLength": "Tamanho mínimo({{validation.value}})",
+    "maxLength": "Tamanho máximo({{validation.value}})",
+    "precision": "Total de dígitos({{validation.value}})",
+    "minTime": "Data Mínima({{validation.value}})",
+    "maxTime": "Data Máxima({{validation.value}})"
+  },
+  "booleanValue": {
+    "true": "verdadeiro",
+    "false": "falso"
   }
 }

@@ -146,15 +146,14 @@
     }
 
     function _buildInternationalizationOfSurveyTemplate(dictionary) {
-      console.log(dictionary);
       dictionary.forEach(function (d) {
         d.objectType = $i18next.t('questionDataType.' + d.objectType);
         if (d.validationTypes) {
           d.validationTypes = d.validationTypes.map(function (validation) {
+            if (validation.name === "mandatory" || validation.name === "accept" || validation.name === "alphanumeric")
+              validation.value = $i18next.t('booleanValue.' + validation.value);
             return validation = $i18next.t('validationTypes.' + validation.name, { validation });
           });
-
-          console.log(d.validationTypes);
         }
       });
       return dictionary;
