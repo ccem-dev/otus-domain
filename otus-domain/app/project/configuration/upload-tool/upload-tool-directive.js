@@ -3,7 +3,7 @@
 
     angular
         .module('otusDomain.project.configuration')
-        .directive('uploadTool', directive);
+        .directive('upload', directive);
 
     directive.$inject = [
         'otusjs.otus-domain.project.configuration.UploadToolService'

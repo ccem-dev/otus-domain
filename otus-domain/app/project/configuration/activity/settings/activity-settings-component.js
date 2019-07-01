@@ -106,12 +106,12 @@
         });
         var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
         _buildInternationalizationOfSurveyTemplate(dictionary);
-
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
       } else {
         var dictionary = SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate);
+        _buildInternationalizationOfSurveyTemplate(dictionary);
         var name = acronym + "-".concat(self.currentSurvey.version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
       }
@@ -149,7 +149,6 @@
       dictionary.forEach(function (d) {
         d.objectType = $i18next.t('questionDataType.' + d.objectType);
       });
-      console.log(dictionary);
       return dictionary;
     }
 
