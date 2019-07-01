@@ -1,5 +1,6 @@
 {
   "questionDataType": {
+    "AutocompleteQuestion": "Autocompletar",
     "CalendarQuestion": "Data",
     "CheckboxQuestion": "Seleção múltipla",
     "DecimalQuestion": "Decimal",
@@ -13,5 +14,11 @@
     "GridIntegerQuestion": "Grade de número inteiro",
     "GridTextQuestion": "Grade de texto",
     "TextItem": "Informação"
+  },
+  "validationTypes": {
+    "mandatory": "Obrigatório({{mandatory.value}})",
+    "lowerLimit": "Valor mínimo({{mandatory.value}})",
+    "upperLimit": "Valor máximo({{mandatory.value}})",
+    "scale": "Casas decimais({{mandatory.value}})"
   }
 }
