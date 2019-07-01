@@ -16,9 +16,10 @@
     "TextItem": "Informação"
   },
   "validationTypes": {
-    "mandatory": "Obrigatório({{mandatory.value}})",
-    "lowerLimit": "Valor mínimo({{mandatory.value}})",
-    "upperLimit": "Valor máximo({{mandatory.value}})",
-    "scale": "Casas decimais({{mandatory.value}})"
+    "accept": "Aceitar resposta({{validation.value}})",
+    "mandatory": "Obrigatório({{validation.value}})",
+    "lowerLimit": "Valor mínimo({{validation.value}})",
+    "upperLimit": "Valor máximo({{validation.value}})",
+    "scale": "Casas decimais({{validation.value}})"
   }
 }

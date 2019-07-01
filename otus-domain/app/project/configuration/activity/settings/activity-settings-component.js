@@ -97,7 +97,7 @@
     }
 
     function downloadVariables(version) {
-      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [questionDataType] AS [TIPO_DA_QUESTAO], [label] AS [LABEL], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validatorTypes] AS [VALIDACOES]';
+      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [objectType] AS [TIPO_DA_QUESTAO], [label] AS [LABEL], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validationTypes] AS [VALIDACOES]';
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
@@ -148,10 +148,14 @@
     function _buildInternationalizationOfSurveyTemplate(dictionary) {
       console.log(dictionary);
       dictionary.forEach(function (d) {
-        d.objectType = $i18next.t('questionDataType.' + d.questionDataType);
-        // d.validationTypes.forEach(function (validation) {
-        //   console.log(validation);
-        // });
+        d.objectType = $i18next.t('questionDataType.' + d.objectType);
+        if (d.validationTypes) {
+          d.validationTypes = d.validationTypes.map(function (validation) {
+            return validation = $i18next.t('validationTypes.' + validation.name, { validation });
+          });
+
+          console.log(d.validationTypes);
+        }
       });
       return dictionary;
     }
