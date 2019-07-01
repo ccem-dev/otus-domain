@@ -11,7 +11,7 @@
     "TextQuestion": "Texto",
     "TimeQuestion": "Tempo",
     "GridIntegerQuestion": "Grade de número inteiro",
-    "GridTextQuestion": "Grade de texto"
-  },
-  "hello": "Herzlich Willkommen!"
+    "GridTextQuestion": "Grade de texto",
+    "TextItem": "Informação"
+  }
 }

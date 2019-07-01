@@ -36,7 +36,7 @@
     window.i18next.init({
       fallbackLng: 'dev',
       backend: {
-        loadPath: 'app/i18n/locales/{{lng}}/{{ns}}.json'
+        loadPath: 'app/i18n/locales/pt-BR/translation.json'
       },
     }, function (err, t) {
       if (err)

@@ -54,8 +54,6 @@
       _getUsers();
       _getSurveyVersions();
       _getSurveyTemplates();
-
-      console.log($i18next.t('hello'));
     }
 
     function saveSettings(MSG) {
@@ -99,7 +97,7 @@
     }
 
     function downloadVariables(version) {
-      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [dataType] AS [TIPO_DA_QUESTAO], [label] AS [LABEL], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validatorTypes] AS [VALIDACOES]';
+      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [objectType] AS [TIPO_DA_QUESTAO], [label] AS [LABEL], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validatorTypes] AS [VALIDACOES]';
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
@@ -107,7 +105,8 @@
             return survey;
         });
         var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
-        console.log(dictionary);
+        _buildInternationalizationOfSurveyTemplate(dictionary);
+
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
@@ -144,6 +143,14 @@
       return function filterFn(user) {
         return (user.name.toLowerCase().indexOf(lowercaseQuery) !== -1);
       };
+    }
+
+    function _buildInternationalizationOfSurveyTemplate(dictionary) {
+      dictionary.forEach(function (d) {
+        d.objectType = $i18next.t('questionDataType.' + d.objectType);
+      });
+      console.log(dictionary);
+      return dictionary;
     }
 
     function _getUsers() {
