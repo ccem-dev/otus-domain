@@ -15,10 +15,10 @@
     'otusjs.model.activity.ActivityPermissionFactory',
     'SurveyFactory',
     'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
-    '$i18next'
+    'otusDomain.dashboard.business.SurveyTemplateTranslateService'
   ];
 
-  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, $i18next) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -97,21 +97,20 @@
     }
 
     function downloadVariables(version) {
-      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [objectType] AS [TIPO_DA_QUESTAO], [label] AS [LABEL], [extractionValues] AS [VALORES_DE_EXTRACAO], [metadata] AS [METADADOS], [validationTypes] AS [VALIDACOES]';
+      var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [objectType] AS [TIPO_DA_QUESTAO], [extractionValues] AS [VALORES_DE_EXTRACAO], [label] AS [LABEL], [metadata] AS [METADADOS], [validationTypes] AS [VALIDACOES]';
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
           if (survey.version === version)
             return survey;
         });
-        var dictionary = SurveyFactory.createDictionary(survey.surveyTemplate);
-        _buildInternationalizationOfSurveyTemplate(dictionary);
+        console.log(SurveyFactory.createDictionary(survey.surveyTemplate));
+        var dictionary = SurveyTemplateTranslateService.translate(SurveyFactory.createDictionary(survey.surveyTemplate));
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
       } else {
-        var dictionary = SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate);
-        _buildInternationalizationOfSurveyTemplate(dictionary);
+        var dictionary = SurveyTemplateTranslateService.translate(SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate));
         var name = acronym + "-".concat(self.currentSurvey.version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
       }
@@ -143,20 +142,6 @@
       return function filterFn(user) {
         return (user.name.toLowerCase().indexOf(lowercaseQuery) !== -1);
       };
-    }
-
-    function _buildInternationalizationOfSurveyTemplate(dictionary) {
-      dictionary.forEach(function (d) {
-        d.objectType = $i18next.t('questionDataType.' + d.objectType);
-        if (d.validationTypes) {
-          d.validationTypes = d.validationTypes.map(function (validation) {
-            if (validation.name === "mandatory" || validation.name === "accept" || validation.name === "alphanumeric")
-              validation.value = $i18next.t('booleanValue.' + validation.value);
-            return validation = $i18next.t('validationTypes.' + validation.name, { validation });
-          });
-        }
-      });
-      return dictionary;
     }
 
     function _getUsers() {
