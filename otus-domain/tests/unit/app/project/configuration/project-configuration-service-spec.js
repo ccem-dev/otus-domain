@@ -63,7 +63,6 @@ describe('ProjectConfigurationService Test', function () {
         return Mock.rest;
       }
     };
-
     Mock.$q = {
       defer: () => {
         return { promise: {}, resolve: () => { }, reject: () => { } }
