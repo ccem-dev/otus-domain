@@ -52,14 +52,14 @@ describe('Activity Configuration Component Test', function() {
   describe('without return data', function () {
 
     beforeEach(function () {
-      spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.callThrough();
+      spyOn(Mock.ProjectConfigurationService, "getSurveysManagerConfiguration").and.callThrough();
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
     });
 
     it('should initialize component without data', function () {
       controller.$onInit();
       expect(Mock.ProjectConfigurationService.getCollectionOfPermissions).toHaveBeenCalledTimes(1);
-      expect(Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration).toHaveBeenCalledTimes(1);
+      expect(Mock.ProjectConfigurationService.getSurveysManagerConfiguration).toHaveBeenCalledTimes(1);
       expect(Mock.mdDialog.confirm).toHaveBeenCalledTimes(1);
       expect(controller.surveyTemplatesList.length).toEqual(0);
       expect(controller.permissionList.length).toEqual(0);
@@ -69,14 +69,14 @@ describe('Activity Configuration Component Test', function() {
   describe('with return data empty', function () {
 
     beforeEach(function () {
-      spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.returnValue(Promise.resolve([]));
+      spyOn(Mock.ProjectConfigurationService, "getSurveysManagerConfiguration").and.returnValue(Promise.resolve([]));
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
     });
 
     it('should initialize component without data', function () {
       controller.$onInit();
       expect(Mock.ProjectConfigurationService.getCollectionOfPermissions).toHaveBeenCalledTimes(1);
-      expect(Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration).toHaveBeenCalledTimes(1);
+      expect(Mock.ProjectConfigurationService.getSurveysManagerConfiguration).toHaveBeenCalledTimes(1);
       expect(Mock.mdDialog.confirm).toHaveBeenCalledTimes(1);
       expect(controller.surveyTemplatesList.length).toEqual(0);
       expect(controller.permissionList.length).toEqual(0);
@@ -85,16 +85,16 @@ describe('Activity Configuration Component Test', function() {
 
   describe('with return data', function () {
     beforeEach(function () {
-      spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
+      spyOn(Mock.ProjectConfigurationService, "getSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
     });
 
     it('should initialize component with data', function (done) {
       controller.$onInit();
       expect(Mock.ProjectConfigurationService.getCollectionOfPermissions).toHaveBeenCalledTimes(1);
-      expect(Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration).toHaveBeenCalledTimes(1);
+      expect(Mock.ProjectConfigurationService.getSurveysManagerConfiguration).toHaveBeenCalledTimes(1);
       expect(Mock.mdDialog.confirm).toHaveBeenCalledTimes(1);
-      Mock.ProjectConfigurationService.fetchSurveysManagerConfiguration().then(function () {
+      Mock.ProjectConfigurationService.getSurveysManagerConfiguration().then(function () {
         expect(controller.surveyTemplatesList.length).toEqual(Mock.surveyList.length);
         done()
       });
@@ -104,7 +104,7 @@ describe('Activity Configuration Component Test', function() {
 
   describe('the updateSurveyFormType method', function () {
     beforeEach(function () {
-      spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
+      spyOn(Mock.ProjectConfigurationService, "getSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
 
     });
@@ -140,7 +140,7 @@ describe('Activity Configuration Component Test', function() {
   describe('method publishTemplate', function () {
 
     beforeEach(function () {
-      spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
+      spyOn(Mock.ProjectConfigurationService, "getSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
       spyOn(window, 'FileReader').and.returnValue({
         onload: function() {},
@@ -191,7 +191,7 @@ describe('Activity Configuration Component Test', function() {
 
   describe('method deleteSurveyTemplate', function () {
     beforeEach(function () {
-      spyOn(Mock.ProjectConfigurationService, "fetchSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
+      spyOn(Mock.ProjectConfigurationService, "getSurveysManagerConfiguration").and.returnValue(Promise.resolve(Mock.surveyList));
       spyOn(Mock.ProjectConfigurationService, "getCollectionOfPermissions").and.callThrough();
       spyOn(Mock.mdDialog, "show").and.returnValue(Promise.resolve())
     });
@@ -251,7 +251,7 @@ describe('Activity Configuration Component Test', function() {
       }
     };
     Mock.ProjectConfigurationService = {
-      fetchSurveysManagerConfiguration: function() {
+      getSurveysManagerConfiguration: function() {
         return Promise.resolve();
       },
       deleteSurveyTemplate: function() {

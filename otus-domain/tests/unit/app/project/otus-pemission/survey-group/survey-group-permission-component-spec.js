@@ -1,4 +1,4 @@
-describe('Survey Group Permission Component Tests', function () {
+xdescribe('Survey Group Permission Component Tests', function () {
   var Mock = {};
   var Injections = {};
   var controller;

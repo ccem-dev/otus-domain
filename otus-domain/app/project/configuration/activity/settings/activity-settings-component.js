@@ -85,11 +85,11 @@
           if (survey.version === version)
             return survey;
         });
-        name = name.concat('-' + version);
+        name = name.concat(version);
         downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(survey)));
       } else {
         downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(self.currentSurvey)));
-        name = name.concat('-' + self.currentSurvey.version);
+        name = name.concat(self.currentSurvey.version);
       }
       downloadElement.setAttribute('download', name + '.json');
       downloadElement.setAttribute('target', '_blank');
@@ -99,18 +99,21 @@
     function downloadVariables(version) {
       var headers = '[acronym] AS [SIGLA], [extractionID] AS [ID_DA_QUESTAO], [objectType] AS [TIPO_DA_QUESTAO], [extractionValues] AS [VALORES_DE_EXTRACAO], [label] AS [LABEL], [metadata] AS [METADADOS], [validationTypes] AS [VALIDACOES]';
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+      var name = 'dicionario-de-variaveis_' + acronym;
       if (version) {
         var survey = self.surveyTemplatesList.find(function (survey) {
           if (survey.version === version)
             return survey;
         });
         var dictionary = SurveyTemplateTranslateService.translate(SurveyFactory.createDictionary(survey.surveyTemplate));
-        var name = acronym + "-".concat(version);
+        name = name.concat(version + '_');
+        name = name.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
 
       } else {
         var dictionary = SurveyTemplateTranslateService.translate(SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate));
-        var name = acronym + "-".concat(self.currentSurvey.version);
+        name = name.concat(self.currentSurvey.version + '_');
+        name = name.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
       }
     }
