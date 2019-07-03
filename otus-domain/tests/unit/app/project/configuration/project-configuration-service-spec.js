@@ -1,39 +1,74 @@
-xdescribe('project configuration service', function() {
-    var Mock = {};
-    var service,
-        $injector,
-        $q,
-        $http;
+describe('ProjectConfigurationService Test', function () {
+  var Mock = {};
+  var service;
+  var Injections = {};
+  var originalTimeout;
 
-    beforeEach(function() {
-        angular.mock.module('otusDomain');
-
-        inject(function(_$injector_, _$q_) {
-            $q = _$q_;
-            $injector = _$injector_;
-            deferred = $q.defer(); //_$q_.defer();
-            service = $injector.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService', {
-              'OtusRestResourceService':mockOtusRestResourceService($injector),
-              '$q': $q
-            });
-        });
-
+  beforeEach(function () {
+    mockInjections();
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    angular.mock.module('otusDomain.project.configuration', function ($provide) {
+      $provide.value("OtusRestResourceService", Mock.OtusRestResourceService);
     });
 
-    /* Participant Register Fetcher */
-    //fetchParticipantRegisterConfiguration
-    it('should', function() {
-      console.log('stay');
-    });
-    //updateParticipantRegisterConfiguration
-    it('just should', function() {
+    inject(function (_$injector_) {
+      Injections = {
+        $q: _$injector_.get('$q')
+      };
+      service = _$injector_.get('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Injections);
+      service.initialize();
     });
 
+    spyOn(Mock.rest, "list").and.callThrough();
+    spyOn(Mock.rest, "listAll").and.callThrough();
+    spyOn(Mock.OtusRestResourceService, "getConfigurationResource").and.returnValue(Mock.rest);
+    spyOn(Mock.OtusRestResourceService, "getProjectConfigurationResource").and.returnValue(Mock.rest);
+    spyOn(Mock.OtusRestResourceService, "getPermissionConfigurationResource").and.returnValue(Mock.rest);
+    spyOn(Mock.OtusRestResourceService, "getUserResource").and.returnValue(Mock.rest);
+  });
 
-    /* Visual Identity */
-    //fetchProjectsVisualIdentity
-    //updateVisualIdentityConfiguration
-    function mockOtusRestResourceService($injector){
-      Mock.OtusRestResourceService = $injector.get('OtusRestResourceService');
+  afterEach(function () {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+  });
+
+  it('should defined method', function () {
+    expect(service.list).toBeDefined();
+    expect(service.listAll).toBeDefined();
+  });
+
+  it('should call list method', function (done) {
+    service.list();
+    expect(Mock.rest.list).toHaveBeenCalledTimes(1);
+    done()
+  });
+
+  it('should call listAll method', function (done) {
+    service.listAll();
+    expect(Mock.rest.listAll).toHaveBeenCalledTimes(1);
+    done()
+  });
+
+  function mockInjections() {
+    Mock.rest = {
+      list: function () {
+        return { $promise: Promise.resolve({ data: [] }) };
+      },
+      listAll: function () {
+        return { $promise: Promise.resolve({ data: [] }) };
+      }
+    };
+    Mock.OtusRestResourceService = {
+      getSurveyResource: function () {
+        return Mock.rest;
+      }
+    };
+
+    Mock.$q = {
+      defer: () => {
+        return { promise: {}, resolve: () => { }, reject: () => { } }
+      },
     }
+  }
+
 });
