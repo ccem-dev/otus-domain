@@ -104,7 +104,6 @@
           if (survey.version === version)
             return survey;
         });
-        console.log(SurveyFactory.createDictionary(survey.surveyTemplate));
         var dictionary = SurveyTemplateTranslateService.translate(SurveyFactory.createDictionary(survey.surveyTemplate));
         var name = acronym + "-".concat(version);
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);

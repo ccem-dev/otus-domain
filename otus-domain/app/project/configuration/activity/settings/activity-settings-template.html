@@ -30,15 +30,18 @@
       <md-card-content>
         <md-list>
           <md-list-item aria-label="template" class="md-2-line">
-            <div layout="row" layout-align="center center" flex>
+            <div flex="80" layout-margin layout="row" layout-align="start center">
               <div class="current-version" md-whiteframe="1dp" layout-padding>
-                <span class="md-title" style="vertical-align: middle;">{{$ctrl.currentSurvey.version}}</span>
+                <span class="md-title">{{$ctrl.currentSurvey.version}}</span>
+                <md-tooltip md-direction="left">Versão</md-tooltip>
               </div>
-              <div class="md-list-item-text">
+              <div class="md-list-item-text" layout-align="center start" layout-margin>
                 <h3>{{$ctrl.currentSurvey.surveyTemplate.identity.acronym}}</h3>
                 <p>{{$ctrl.currentSurvey.surveyTemplate.identity.name}}</p>
               </div>
-              <div class="md-list-item-text" flex="20" layout-align="end end">
+            </div>
+            <div flex="20" layout-margin layout="row" layout-align="end center">
+              <div>
                 <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.downloadTemplate()">
                   <md-icon md-font-library="material-icons" aria-label="baixar template" style="color:#448aff">file_download</md-icon>
                   <md-tooltip md-direction="left">Baixar template</md-tooltip>
@@ -70,16 +73,18 @@
         <md-list ng-if="!$ctrl.error">
           <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
             aria-label="template" class="md-2-line">
-            <div layout="row" layout-align="center center" flex>
-              <div class="questionPositionChip" md-whiteframe="1dp">
-                <span class="md-title" style="vertical-align: middle;">{{surveyForm.version}}</span>
+            <div flex="80" layout-margin layout="row" layout-align="start center">
+              <div md-whiteframe="1dp" layout-padding>
+                <span class="md-title">{{surveyForm.version}}</span>
                 <md-tooltip md-direction="left">Versão</md-tooltip>
               </div>
-              <div class="md-list-item-text">
+              <div class="md-list-item-text" layout-align="center start" layout-margin>
                 <h3>{{surveyForm.surveyTemplate.identity.acronym}}</h3>
                 <p>{{surveyForm.surveyTemplate.identity.name}}</p>
               </div>
-              <div class="md-list-item-text" flex="20" layout-align="end end">
+            </div>
+            <div flex="20" layout-margin layout="row" layout-align="end center">
+              <div>
                 <md-button class="md-icon-button" aria-label="baixar template" ng-click="$ctrl.downloadTemplate(surveyForm.version)">
                   <md-icon md-font-library="material-icons" aria-label="baixar template">file_download</md-icon>
                   <md-tooltip md-direction="left">Baixar template</md-tooltip>
@@ -99,6 +104,7 @@
               <p class="md-2-line">{{$ctrl.message}}</p>
             </div>
           </div>
+        </md-content>
       </md-card-content>
     </md-content>
   </md-card>

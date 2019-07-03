@@ -15,7 +15,6 @@
     self.translate = translate;
 
     function translate(dictionary) {
-      console.log(dictionary);
       dictionary.forEach(function (surveyItem) {
         _translateExtractionValues(surveyItem);
         _translateValidationTypes(surveyItem);
@@ -29,10 +28,6 @@
         if (_isSpecificExtraction(surveyItem.objectType)) {
           surveyItem.extractionValues = surveyItem.extractionValues.map(function (extractionValue) {
             switch (surveyItem.objectType) {
-              case 'AutocompleteQuestion':
-                return extractionValue = $i18next.t('extractionValues.AutocompleteQuestion');
-              case 'FileUploadQuestion':
-                return extractionValue = $i18next.t('extractionValues.FileUploadQuestion');
               case 'SingleSelectionQuestion':
                 return extractionValue = $i18next.t('extractionValues.SingleSelectionQuestion', { extractionValue });
               case 'CheckboxQuestion':
@@ -41,7 +36,14 @@
             }
           });
         } else {
-          surveyItem.extractionValues = $i18next.t('extractionValues.Default');
+          switch (surveyItem.objectType) {
+            case 'AutocompleteQuestion':
+              return surveyItem.extractionValues = $i18next.t('extractionValues.AutocompleteQuestion');
+            case 'FileUploadQuestion':
+              return surveyItem.extractionValues = $i18next.t('extractionValues.FileUploadQuestion');
+            default:
+              return surveyItem.extractionValues = $i18next.t('extractionValues.Default');
+          }
         }
       }
     }
@@ -63,7 +65,7 @@
     }
 
     function _isSpecificExtraction(questionDataType) {
-      return questionDataType === 'AutocompleteQuestion' || questionDataType === 'FileUploadQuestion' || questionDataType === 'SingleSelectionQuestion' || questionDataType === 'CheckboxQuestion';
+      return questionDataType === 'SingleSelectionQuestion' || questionDataType === 'CheckboxQuestion';
     }
 
   }
