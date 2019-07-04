@@ -10,7 +10,7 @@ describe('Activity Configuration Component Test', function() {
     mockInjections();
     angular.mock.module('otusDomain.dashboard', function($provide) {
       // $provide.value('$q',Mock.$q);
-      $provide.value('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
+      $provide.value('otusDomain.rest.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
       $provide.value('otusDomain.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('$mdToast',Mock.mdToast);
       $provide.value('$mdDialog',Mock.mdDialog);

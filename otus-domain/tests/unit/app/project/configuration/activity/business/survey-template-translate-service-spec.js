@@ -1,4 +1,4 @@
-fdescribe('SurveyTemplateTranslateService', function () {
+describe('SurveyTemplateTranslateService', function () {
   var Mock = {};
   var service;
 

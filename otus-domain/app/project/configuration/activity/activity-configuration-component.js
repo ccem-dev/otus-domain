@@ -14,7 +14,7 @@
     '$mdToast',
     '$mdDialog',
     'otusDomain.LoadingScreenService',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
+    'otusDomain.rest.configuration.ProjectConfigurationService'
   ];
 
   function Controller($q, $mdToast, $mdDialog, LoadingScreenService, ProjectConfigurationService) {

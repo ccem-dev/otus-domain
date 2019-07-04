@@ -14,7 +14,7 @@
     'ActivityConfigurationManagerService',
     'otusjs.model.activity.ActivityPermissionFactory',
     'SurveyFactory',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    'otusDomain.rest.configuration.ProjectConfigurationService',
     'otusDomain.dashboard.business.SurveyTemplateTranslateService'
   ];
 

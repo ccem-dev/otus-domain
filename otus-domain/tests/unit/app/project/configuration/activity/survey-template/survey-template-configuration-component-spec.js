@@ -6,7 +6,7 @@ describe('Survey Template Configuration Component Test', function () {
   mockInjections();
   beforeEach(function () {
     angular.mock.module("otusDomain.dashboard", function ($provide) {
-      $provide.value('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
+      $provide.value('otusDomain.rest.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
       $provide.value('otusDomain.project.activity.SurveyGroupConfigurationService', Mock.SurveyGroupConfigurationService);
       $provide.value('$mdDialog', Mock.mdDialog);
       $provide.value('$mdToast', Mock.mdToast);

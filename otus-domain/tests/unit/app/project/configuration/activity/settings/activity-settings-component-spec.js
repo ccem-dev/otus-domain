@@ -19,7 +19,7 @@ describe("Activity Settings Component Test", function () {
       $provide.value("ActivityConfigurationManagerService", Mock.ActivityConfigurationManagerService);
       $provide.value('otusjs.model.activity.ActivityPermissionFactory', Mock.ActivityPermissionFactory);
       $provide.value('SurveyFactory', Mock.SurveyFactory);
-      $provide.value("otusjs.otus-domain.project.configuration.ProjectConfigurationService", Mock.ProjectConfigurationService);
+      $provide.value("otusDomain.rest.configuration.ProjectConfigurationService", Mock.ProjectConfigurationService);
       $provide.value('otusDomain.dashboard.business.SurveyTemplateTranslateService', Mock.SurveyTemplateTranslateService);
     });
 

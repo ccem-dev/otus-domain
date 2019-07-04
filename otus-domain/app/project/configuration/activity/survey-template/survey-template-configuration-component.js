@@ -17,7 +17,7 @@
   Controller.$inject = [
     '$q',
     'otusDomain.project.activity.SurveyGroupConfigurationService',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    'otusDomain.rest.configuration.ProjectConfigurationService',
     '$mdDialog',
     '$mdToast',
     'otusjs.model.activity.ActivityPermissionFactory',

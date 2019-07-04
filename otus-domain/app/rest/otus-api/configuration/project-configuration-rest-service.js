@@ -2,8 +2,8 @@
     'use strict';
 
     angular
-        .module('otusDomain.project.configuration')
-        .service('otusjs.otus-domain.project.configuration.ProjectConfigurationService', ProjectConfigurationService);
+        .module('otusDomain.rest')
+        .service('otusDomain.rest.configuration.ProjectConfigurationService', ProjectConfigurationService);
 
     ProjectConfigurationService.$inject = [
         'OtusRestResourceService',
