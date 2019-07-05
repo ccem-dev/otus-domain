@@ -1,4 +1,4 @@
-fdescribe('Survey Group Permission Component Tests', function () {
+describe('Survey Group Permission Component Tests', function () {
   var Mock = {};
   var Injections = {};
   var controller;

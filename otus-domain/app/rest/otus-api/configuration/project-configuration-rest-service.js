@@ -70,7 +70,7 @@
             return defer.promise;
         }
 
-        function getSurveyTemplatesByAcronym(acronym, version) {
+        function getSurveyTemplatesByAcronym(acronym) {
             var defer = $q.defer();
             _configurationResource.getByAcronym({
                 'acronym': acronym

@@ -16,19 +16,24 @@ describe('SurveyTemplateTranslateService', function () {
     });
   });
 
-  it('should to be defined', function () {
-    expect(service.translate).toBeDefined();
+  describe('service basic unit test', function () {
+    it('should to be defined', function () {
+      expect(service).toBeDefined();
+      expect(service.translate).toBeDefined();
+    });
   });
 
-  it('when method translate is call then should translated question type', function () {
-    var result = service.translate(Mock.dicionary);
-
-    // TODO:
+  describe('translate method', function () {
+    it('when method translate is call then should return object', function () {
+      expect(service.translate(Mock.dicionary)).toEqual(jasmine.any(Object));
+    });
   });
 
   function mockInjections() {
     Mock.$i18next = {
-      t: function () { }
+      t: function () {
+
+      }
     }
   }
 
