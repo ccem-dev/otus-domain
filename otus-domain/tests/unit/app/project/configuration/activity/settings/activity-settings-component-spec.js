@@ -171,6 +171,17 @@ describe("Activity Settings Component Test", function () {
     expect(controller.transformChip("Fulano")).toEqual(NEW_CHIP);
   });
 
+  describe('downloadTemplate method', function () {
+    it('should to be defined', function () {
+      expect(controller.downloadTemplate).toBeDefined();
+    });
+  });
+
+  describe('downloadVariables method', function () {
+    it('should to be defined', function () {
+      expect(controller.downloadVariables).toBeDefined();
+    });
+  });
 
   function mockInjections() {
 
@@ -242,8 +253,22 @@ describe("Activity Settings Component Test", function () {
   }
 
   function mockValues() {
+    Mock.surveyTemplatesList = [{
+      'sender': "test@test.com",
+      'sendingDate': "Oct 6, 2016 10:56:46 PM",
+      'surveyFormType': "FORM_INTERVIEW",
+      'version': 1,
+      'isDiscarded': false,
+      'surveyTemplate': {
+        'identity': {
+          'name': 'DIARIO DE SONO',
+          'acronym': 'DSO',
+        }
+      }
+    }];
+
     Mock.surveyTemplate = {
-      'sender': "brenoscheffer@gmail.com",
+      'sender': "test@test.com",
       'sendingDate': "Oct 6, 2016 10:56:46 PM",
       'surveyFormType': "FORM_INTERVIEW",
       'version': 1,

@@ -86,7 +86,6 @@
             return survey;
         });
         name = name.concat(version);
-        console.log(survey)
         downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(survey.surveyTemplate)));
       } else {
         downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(self.currentSurvey.surveyTemplate)));
@@ -110,7 +109,6 @@
         name = name.concat(version + '_');
         name = name.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [dictionary]);
-
       } else {
         var dictionary = SurveyTemplateTranslateService.translate(SurveyFactory.createDictionary(self.currentSurvey.surveyTemplate));
         name = name.concat(self.currentSurvey.version + '_');
