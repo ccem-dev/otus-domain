@@ -86,9 +86,10 @@
             return survey;
         });
         name = name.concat(version);
-        downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(survey)));
+        console.log(survey)
+        downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(survey.surveyTemplate)));
       } else {
-        downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(self.currentSurvey)));
+        downloadElement.setAttribute('href', _exportSurvey(JSON.stringify(self.currentSurvey.surveyTemplate)));
         name = name.concat(self.currentSurvey.version);
       }
       downloadElement.setAttribute('download', name + '.json');
