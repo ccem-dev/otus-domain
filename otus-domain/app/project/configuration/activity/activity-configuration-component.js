@@ -14,7 +14,7 @@
     '$mdToast',
     '$mdDialog',
     'otusDomain.LoadingScreenService',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
+    'otusDomain.rest.configuration.ProjectConfigurationService'
   ];
 
   function Controller($q, $mdToast, $mdDialog, LoadingScreenService, ProjectConfigurationService) {
@@ -65,7 +65,7 @@
 
     function _getTemplatesList() {
       LoadingScreenService.start();
-      ProjectConfigurationService.fetchSurveysManagerConfiguration()
+      ProjectConfigurationService.getSurveysManagerConfiguration()
         .then(function (data) {
           self.surveyTemplatesList = data;
           if (self.surveyTemplatesList.length === 0) {

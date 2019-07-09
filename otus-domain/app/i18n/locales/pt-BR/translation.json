@@ -1,0 +1,49 @@
+{
+  "questionDataType": {
+    "AutocompleteQuestion": "Autocompletar",
+    "CalendarQuestion": "Data",
+    "CheckboxQuestion": "Seleção múltipla",
+    "DecimalQuestion": "Decimal",
+    "EmailQuestion": "E-mail",
+    "FileUploadQuestion": "Upload de arquivo",
+    "IntegerQuestion": "Inteiro",
+    "PhoneQuestion": "Telefone",
+    "SingleSelectionQuestion": "Seleção única",
+    "TextQuestion": "Texto",
+    "TimeQuestion": "Tempo",
+    "GridIntegerQuestion": "Grade de número inteiro",
+    "GridTextQuestion": "Grade de texto",
+    "TextItem": "Informação"
+  },
+  "validationTypes": {
+    "accept": "Aceitar resposta({{validation.value}})",
+    "mandatory": "Obrigatório({{validation.value}})",
+    "lowerLimit": "Valor mínimo({{validation.value}})",
+    "upperLimit": "Valor máximo({{validation.value}})",
+    "scale": "Casas decimais({{validation.value}})",
+    "distinct": "Diferente de({{validation.value}})",
+    "in": "Intervalo de valores({{validation.begin}}, {{validation.end}})",
+    "alphanumeric": "Alfanuméricos({{validation.value}})",
+    "minLength": "Tamanho mínimo({{validation.value}})",
+    "maxLength": "Tamanho máximo({{validation.value}})",
+    "precision": "Total de dígitos({{validation.value}})",
+    "minDate": "Data Mínima({{validation.value}})",
+    "maxDate": "Data Máxima({{validation.value}})",
+    "futureDate": "Somente data futura({{validation.value}})",
+    "pastDate": "Somente data passada({{validation.value}})",
+    "rangeDate": "Intervalo de datas({{validation.begin}}, {{validation.end}})",
+    "minTime": "Hora mínima({{validation.value}})",
+    "maxTime": "Hora máxima({{validation.value}})"
+  },
+  "booleanValue": {
+    "true": "verdadeiro",
+    "false": "falso"
+  },
+  "extractionValues": {
+    "Default": "Campo aberto",
+    "AutocompleteQuestion": "Campo com a resposta correspondente as opções disponíveis",
+    "FileUploadQuestion": "Campo com a resposta do identificador do arquivo",
+    "SingleSelectionQuestion": "{{extractionValue.value}}-{{extractionValue.label}}",
+    "CheckboxQuestion": "{{extractionValue.value}}-{{extractionValue.label}}"
+  }
+}

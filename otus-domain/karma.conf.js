@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
-module.exports = function(config) {
+module.exports = function (config) {
   var APP_ROOT_PATH = 'app/';
   var COMPONENTS_ROOT_PATH = 'app/components/';
   var NODE_MODULES_ROOT_PATH = 'node_modules/';
@@ -32,6 +32,7 @@ module.exports = function(config) {
       /* Otus platform */
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-validation-js/dist/otus-validation.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils.min.js',
       NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
       COMPONENTS_ROOT_PATH + 'st-utils/**/*-module.js',
@@ -54,7 +55,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './app/**/*.js': ['babel','coverage'],
+      './app/**/*.js': ['babel', 'coverage'],
       './tests/unit/**/*-spec.js': 'babel'
     },
     browserify: {
