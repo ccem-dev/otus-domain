@@ -51,20 +51,20 @@ describe('Permission Service Tests', function () {
   it('should call the permission manager factory', function () {
     service.fetchPermissions(EMAIL).then(function () {
       expect(Mock.PermissionManagerFactory.create).toHaveBeenCalledTimes(1);
-    });
+    }).catch(function (e) { });
   });
 
   it('should call the permission manager find by type', function () {
     service.fetchPermissions(EMAIL).then(function () {
       service.getPermissionByType("LaboratoryPermission");
       expect(Mock.permissionManager).toHaveBeenCalledWith("LaboratoryPermission")
-    });
+    }).catch(function (e) { });
   });
 
   function mockDependencies() {
     Mock.PermissionRestService = {
       getAll: function () {
-        return Promise.resolve({data: {permissions: []}});
+        return Promise.resolve({ data: { permissions: [] } });
       },
       savePermission: function () {
         return Promise.resolve({});

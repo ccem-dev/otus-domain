@@ -17,7 +17,7 @@
   Controller.$inject = [
     '$q',
     'otusDomain.project.activity.SurveyGroupConfigurationService',
-    'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+    'otusDomain.rest.configuration.ProjectConfigurationService',
     '$mdDialog',
     '$mdToast',
     'otusjs.model.activity.ActivityPermissionFactory',
@@ -54,7 +54,8 @@
 
     function showActivitySettings() {
       _filterUsersWithPermissionExclusiveDisjunction();
-      ActivityConfigurationManagerService.setSurveyToSettings(self.permission);
+      ActivityConfigurationManagerService.setSurveyInContext(self.surveyForm);
+      ActivityConfigurationManagerService.setPermissionInContext(self.permission);
       DashboardStateService.goToActivitySettings();
     }
 

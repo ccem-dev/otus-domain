@@ -12,7 +12,7 @@
 
     Controller.$inject = [
         '$q',
-        'otusjs.otus-domain.project.configuration.ProjectConfigurationService',
+        'otusDomain.rest.configuration.ProjectConfigurationService',
         '$mdToast'
     ];
 

@@ -28,7 +28,7 @@ describe('uploadTool', function() {
 
         });
         it('should call the type resolver', function() {
-            var $element = '<button upload-tool="uploadConfig"></button>';
+            var $element = '<button upload="uploadConfig"></button>';
             element = $compile($element)(scope);
             scope.$apply();
             element[0].click();
@@ -37,21 +37,21 @@ describe('uploadTool', function() {
 
         it('should call the service with the parameters passed through template', function() {
             scope.uploadConfig.type = 'image';
-            element = $compile('<button upload-tool="uploadConfig" ></button>')(scope);
+            element = $compile('<button upload="uploadConfig" ></button>')(scope);
             element[0].click();
             expect(Mock.UploadToolService.uploadTypeResolver).toHaveBeenCalledWith('image');
         });
 
         it('should accept multiple formats as parameters', function() {
             scope.uploadConfig.type = 'image, json';
-            element = $compile('<button upload-tool="uploadConfig"></button>')(scope);
+            element = $compile('<button upload="uploadConfig"></button>')(scope);
             element[0].click();
             expect(Mock.UploadToolService.uploadTypeResolver).toHaveBeenCalledWith('image, json');
         });
 
         it('should accept any format when no format type is given', function() {
             scope.uploadConfig.type = '';
-            element = $compile('<button upload-tool="uploadConfig"></button>')(scope);
+            element = $compile('<button upload="uploadConfig"></button>')(scope);
             element[0].click();
             expect(Mock.UploadToolService.uploadTypeResolver).toHaveBeenCalledWith('any');
         });

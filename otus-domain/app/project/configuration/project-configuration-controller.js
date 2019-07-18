@@ -6,7 +6,7 @@
     .controller('otusjs.otus-domain.project.configuration.ProjectConfigurationController', ProjectConfigurationController);
 
     ProjectConfigurationController.$inject=[
-      'otusjs.otus-domain.project.configuration.ProjectConfigurationService'
+      'otusDomain.rest.configuration.ProjectConfigurationService'
     ];
 
     function ProjectConfigurationController(ProjectConfigurationService) {

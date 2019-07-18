@@ -21,7 +21,7 @@ describe('participant registration', function () {
     });
     $provide.value("$mdDialog", Mock.mdDialog);
     $provide.value("$mdToast", Mock.mdToast);
-    $provide.value('otusjs.otus-domain.project.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
+    $provide.value('otusDomain.rest.configuration.ProjectConfigurationService', Mock.ProjectConfigurationService);
   }));
   beforeEach(inject(function (_$controller_, _$q_, _$rootScope_, _$mdToast_, _$injector_, _$compile_) {
     $controller = _$controller_;

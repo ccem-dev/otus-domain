@@ -5,7 +5,7 @@
       <input type="text" ng-model="search" placeholder="Buscar por nome de formulário" />
     </md-input-container>
     <span flex></span>
-    <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload-tool="$ctrl.uploadConfig">
+    <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload="$ctrl.uploadConfig">
       <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
       <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
         Enviar Template
@@ -21,12 +21,15 @@
   <md-card-title-text>
     <span class="md-body-2">Formulários</span>
     <div layout="column" ng-hide="$ctrl.disableSaving">
-      <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} - {{$ctrl.uploadedObject.identity.name}}</span>
+      <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} -
+        {{$ctrl.uploadedObject.identity.name}}</span>
     </div>
   </md-card-title-text>
-    <md-list>
-      <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index" ng-style="{background: $ctrl.getColor($index)}"  aria-label="formulário" layout-padding>
-        <survey-template-configuration flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)" bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
-      </md-list-item>
-    </md-list>
+  <md-list>
+    <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index" ng-style="{background: $ctrl.getColor($index)}"
+      aria-label="formulário" layout-padding>
+      <survey-template-configuration flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)"
+        bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
+    </md-list-item>
+  </md-list>
 </md-content>
