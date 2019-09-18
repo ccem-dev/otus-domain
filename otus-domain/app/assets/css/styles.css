@@ -41,12 +41,6 @@ md-input-container.md-input-invalid>md-icon {
   color: red !important;
 }
 
-#logo-image {
-  border-radius: 120px;
-  width: 120px;
-  height: 120px;
-}
-
 .margin-zero {
   margin: 0px;
 }
@@ -54,12 +48,6 @@ md-input-container.md-input-invalid>md-icon {
 .margin-small-top {
   top:-2px !important;
   margin: 10px;
-}
-
-.iconBigger {
-  font-size: 4.5vw !important;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.54) !important;
 }
 
 .field-user-position {

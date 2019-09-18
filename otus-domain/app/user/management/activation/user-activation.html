@@ -1,31 +1,40 @@
-<md-content flex=80 layout-align="center start">
+<md-content flex layout="column">
   <md-subheader class="md-primary">Usuários Domain</md-subheader>
 
-  <md-content layout="row" layout-align="center center" flex=100>
+  <div layout="row" layout-align="center center" flex>
     <md-input-container flex-gt-md=50 flex=90>
       <md-icon md-font-library="material-icons">search</md-icon>
       <input ng-model="query" placeholder="Buscar por Nome ou Email"></input>
     </md-input-container>
-  </md-content>
+  </div>
 
-  <md-card layout="row" layout-align="center center" ng-repeat="user in $ctrl.users | orderBy:['name', 'email'] | filter : query track by $index">
-    <md-card-title>
-      <md-card-title-media>
-        <div class="md-media-sm card-media" layout-align="center center">
-          <md-icon md-font-set="material-icons">face</md-icon>
+  <div layout="column" flex="80" ng-repeat="user in $ctrl.users | orderBy:['name', 'email'] | filter : query track by $index">
+    <div layout-margin layout-align="center center" layout="row">
+      <div layout-margin layout="column" layout-align="center center">
+        <md-icon md-font-set="material-icons">face</md-icon>
+      </div>
+      <div layout="column" flex>
+        <div layout="row">
+          <span class="md-subhead">{{user.name}}</span>
+          <span>&nbsp;</span>
+          <span class="md-subhead">{{user.surname}}</span>
         </div>
-      </md-card-title-media>
-      <md-card-title-text layout="row">
-        <div layout="column">
-          <span class="md-headline">{{user.name}}</span>
-          <span class="md-subhead description">{{user.email}}</span>
-          <span ng-show="user.admin" class="md-subhead description">Administrador</span>
+        <span class="md-body1">{{user.email}}</span>
+        <div ng-show="user.admin" layout="row" layout-align="start">
+          <div layout-marging>
+            <md-icon md-font-set="material-icons">security</md-icon>
+            <span class="md-body1">Administrador</span>
+          </div>
         </div>
-        <span flex></span>
-      </md-card-title-text>
-    </md-card-title>
-    <md-action>
-      <md-switch ng-show="!user.admin" aria-label="status" ng-model="user.enable" class="md-primary" md-no-ink ng-change="$ctrl.confirmDialog(user)"></md-switch>
-    </md-action>
-  </md-card>
+      </div>
+      <div layout="column" layout-align="center center">
+        <md-switch ng-disabled="user.admin" aria-label="status" ng-model="user.enable"
+          class="md-primary" md-no-ink ng-change="$ctrl.confirmDialog(user)"></md-switch>
+      </div>
+    </div>
+    <div>
+      <md-divider></md-divider>
+    </div>
+  </div>
+
 </md-content>
