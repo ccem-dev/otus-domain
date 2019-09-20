@@ -1,35 +1,41 @@
-<md-content class="md-padding" layout="column">
-  <h2 class="md-headline">Configurações dos formulários disponíveis</h2>
-  <div layout="row" layout-align="end center">
-    <md-input-container flex="">
-      <input type="text" ng-model="search" placeholder="Buscar por nome de formulário" />
+<div layout-padding flex layout="column">
+  <span>Atividades</span>
+
+  <div layout-align="center center" layout="row">
+    <md-input-container flex="60" flex-xs="100">
+      <input type="text" ng-model="search" placeholder="Busca por nome" />
     </md-input-container>
-    <span flex></span>
+  </div>
+
+  <div layout="row" layout-align="end center">
+    <span ng-hide="!$ctrl.disableSaving" class="md-body-1">Nova Atividade :</span>
+
+    <span ng-hide="$ctrl.disableSaving" class="md-body-1">{{$ctrl.uploadedObject.identity.acronym}} -
+        {{$ctrl.uploadedObject.identity.name}}</span>
+
     <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload="$ctrl.uploadConfig">
       <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
       <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
         Enviar Template
       </md-tooltip>
     </md-button>
-    <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.disableSaving" ng-click="$ctrl.publishTemplate()">
+    <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.disableSaving"
+      ng-click="$ctrl.publishTemplate()">
       <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
       <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
         Salvar
       </md-tooltip>
     </md-button>
   </div>
-  <md-card-title-text>
-    <span class="md-body-2">Formulários</span>
-    <div layout="column" ng-hide="$ctrl.disableSaving">
-      <span class="md-subhead">Template Escolhido: {{$ctrl.uploadedObject.identity.acronym}} -
-        {{$ctrl.uploadedObject.identity.name}}</span>
-    </div>
-  </md-card-title-text>
-  <md-list>
-    <md-list-item ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index" ng-style="{background: $ctrl.getColor($index)}"
-      aria-label="formulário" layout-padding>
-      <survey-template-configuration flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)"
-        bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
-    </md-list-item>
-  </md-list>
-</md-content>
+
+  <md-content flex layout="row" layout-align="center center">
+    <md-list flex>
+      <md-list-item class="md-3-line" ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
+        aria-label="formulário">
+        <survey-template-configuration class="md-list-item-text" flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)"
+          bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</div>

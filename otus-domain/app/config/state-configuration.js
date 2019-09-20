@@ -183,7 +183,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@activity_configuration': {
-            template: '<activity-configuration flex="80"></activity-configuration>'
+            template: '<activity-configuration flex></activity-configuration>'
           }
         }
       })
