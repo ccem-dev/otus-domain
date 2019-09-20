@@ -127,7 +127,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@user-otus-management': {
-            template: '<otus-user-dashboard flex="80"></otus-user-dashboard>'
+            template: '<otus-user-dashboard></otus-user-dashboard>'
           }
         }
       })

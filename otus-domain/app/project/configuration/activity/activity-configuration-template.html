@@ -1,11 +1,9 @@
 <div layout-padding flex layout="column">
-  <span>Atividades</span>
+  <span class="md-primary">Atividades</span>
 
-  <div layout-align="center center" layout="row">
-    <md-input-container flex="60" flex-xs="100">
-      <input type="text" ng-model="search" placeholder="Busca por nome" />
-    </md-input-container>
-  </div>
+  <md-input-container layout-align="center center" layout="row" flex="60" flex-xs="100">
+    <input type="text" ng-model="search" placeholder="Busca por nome" />
+  </md-input-container>
 
   <div layout="row" layout-align="end center">
     <span ng-hide="!$ctrl.disableSaving" class="md-body-1">Nova Atividade :</span>
@@ -28,14 +26,10 @@
     </md-button>
   </div>
 
-  <md-content flex layout="row" layout-align="center center">
-    <md-list flex>
-      <md-list-item class="md-3-line" ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
-        aria-label="formulário">
-        <survey-template-configuration class="md-list-item-text" flex survey-form="surveyForm" mirror-edit-mode-status="$ctrl.groupEditMode(status)"
-          bloc-edit="$ctrl.groupEditModeStatus" survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
-        <md-divider ng-if="!$last"></md-divider>
-      </md-list-item>
-    </md-list>
-  </md-content>
+  <md-card ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
+    aria-label="formulário">
+    <survey-template-configuration class="md-list-item-text" flex survey-form="surveyForm"
+      mirror-edit-mode-status="$ctrl.groupEditMode(status)" bloc-edit="$ctrl.groupEditModeStatus"
+      survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
+  </md-card>
 </div>
