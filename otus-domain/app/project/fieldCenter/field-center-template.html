@@ -1,15 +1,10 @@
-<md-content layout="row" flex>
+<md-content layout="row" layout-xs="column" flex>
   <otus-painel ng-if=fieldCenterController.showAddCenterTab align=fieldCenterController.centerAddAling
     header-label=fieldCenterController.centerAddheaderLabel>
-    <center-card show-tab="fieldCenterController.showAddCenterTab"></center-card>
+    <center-card show-tab="fieldCenterController.showAddCenterTab" flex></center-card>
   </otus-painel>
-  <div flex ng-if=!fieldCenterController.showAddCenterTab>
-    <!--<div otus-waiting-project layout-padding layout-margin layout-align="center top" layout="row" flex>-->
-    <!--<h1>Centros Cadastrados</h1>-->
-    <!--</div>-->
-
+  <div flex >
     <md-subheader class="md-primary">Centros</md-subheader>
-
     <div flex layout="column">
       <md-list-item flex ng-repeat="fieldCenter in fieldCenterController.getAllCenters()">
         <md-card layout-padding flex layout="column">
@@ -134,7 +129,6 @@
         <span class="md-body-1">O projeto selecionado não possui nenhum centro cadastrado. Utilize o botão <md-icon
       md-font-set="material-icons">add</md-icon> para cadastrar novos centros.</span>
       </div>
-
     </div>
     <md-button class="md-fab md-fab-bottom-right" aria-label="Gerenciar Centro" ng-click="fieldCenterController.showCreationTab(!fieldCenterController.showAddCenterTab)">
       <md-icon md-svg-icon="plus" ng-if="!fieldCenterController.showAddCenterTab"></md-icon>
