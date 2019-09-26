@@ -137,7 +137,7 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
 }
 
 .select-multiple-centers {
-  width: 280px;
+  min-width: 200px;
   margin: 15px;
   /* padding: 20px; */
 }

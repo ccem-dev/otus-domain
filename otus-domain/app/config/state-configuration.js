@@ -238,7 +238,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@report_manager': {
-            template: '<report-manager flex="80"></report-manager>'
+            template: '<report-manager flex></report-manager>'
           }
         }
       })
