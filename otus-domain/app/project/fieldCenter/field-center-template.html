@@ -1,125 +1,126 @@
-<md-content layout="row" layout-xs="column" flex>
-  <otus-painel ng-if=fieldCenterController.showAddCenterTab align=fieldCenterController.centerAddAling
-    header-label=fieldCenterController.centerAddheaderLabel>
-    <center-card show-tab="fieldCenterController.showAddCenterTab" flex></center-card>
-  </otus-painel>
-  <div flex >
-    <md-subheader class="md-primary">Centros</md-subheader>
-    <div flex layout="column">
-      <md-list-item flex ng-repeat="fieldCenter in fieldCenterController.getAllCenters()">
-        <md-card layout-padding flex layout="column">
-          <form name="updateForm" novalidate>
+<div layout="row" layout-align="center center" flex="">
+  <md-content layout="column" layout-gt-lg="row" flex="80" flex-xs="100">
+    <otus-painel ng-if=fieldCenterController.showAddCenterTab align=fieldCenterController.centerAddAling
+                 header-label=fieldCenterController.centerAddheaderLabel flex>
+      <center-card show-tab="fieldCenterController.showAddCenterTab" flex></center-card>
+    </otus-painel>
+    <div flex>
+      <md-subheader class="md-primary">Centros</md-subheader>
+      <div flex layout="column">
+        <md-list-item flex ng-repeat="fieldCenter in fieldCenterController.getAllCenters()">
+          <md-card layout-padding flex layout="column">
+            <form name="updateForm" novalidate>
 
-            <div layout="row" layout-xs="column">
-              <div layout="row">
-                <md-input-container flex="" flex-xs="50">
-                  <label>Sigla</label>
-                  <input disabled ng-model="fieldCenter.acronym">
-                </md-input-container>
-                <md-input-container flex="" flex-xs="50">
-                  <label>Código</label>
-                  <input disabled ng-model="fieldCenter.code" type="text">
-                </md-input-container>
+              <div layout="row" layout-xs="column">
+                <div layout="row">
+                  <md-input-container flex="" flex-xs="50">
+                    <label>Sigla</label>
+                    <input disabled ng-model="fieldCenter.acronym">
+                  </md-input-container>
+                  <md-input-container flex="" flex-xs="50">
+                    <label>Código</label>
+                    <input disabled ng-model="fieldCenter.code" type="text">
+                  </md-input-container>
+                </div>
+
+                <div flex layout="row">
+                  <md-input-container flex>
+                    <label>Nome</label>
+                    <input ng-disabled="!fieldCenter.editMode" required name="name" ng-model="fieldCenter.name"
+                           type="text">
+                    <div ng-messages="updateForm.name.$error">
+                      <div ng-message="required">Obrigatório</div>
+                    </div>
+                  </md-input-container>
+                </div>
               </div>
 
-              <div flex layout="row">
+              <div layout="row" layout-xs="column" flex >
+                <div layout="row" layout-align-xs="start" flex>
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20"><circle cx="10" cy="10" r="10" fill="{{fieldCenter.backgroundColor}}" /></svg>
+                  <md-input-container flex ng-if="!fieldCenter.editMode">
+                    <label>Cor de fundo</label>
+                    <input disabled ng-model="fieldCenter.backgroundColor">
+                  </md-input-container>
+                  <md-input-container flex ng-if="fieldCenter.editMode">
+                    <label>Cor de fundo</label>
+                    <input name="backgroundColor" required colorpicker="rgba" ng-model="fieldCenter.backgroundColor">
+                    <div ng-messages="updateForm.backgroundColor.$error">
+                      <div ng-message="required">Obrigatório</div>
+                    </div>
+                  </md-input-container>
+                </div>
+
+                <div layout="row" layout-align-xs="start" flex>
+                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20"><circle cx="10" cy="10" r="10" fill="{{fieldCenter.borderColor}}" /></svg>
+                  <md-input-container flex ng-if="!fieldCenter.editMode">
+                    <label>Cor da borda</label>
+                    <input disabled name="borderColor" ng-model="fieldCenter.borderColor">
+                  </md-input-container>
+                  <md-input-container flex ng-if="fieldCenter.editMode">
+                    <label>Cor da borda</label>
+                    <input name="borderColor" class="form-control" required colorpicker="rgba" ng-model="fieldCenter.borderColor">
+                    <div ng-messages="updateForm.borderColor.$error">
+                      <div ng-message="required">Obrigatório</div>
+                    </div>
+                  </md-input-container>
+                </div>
+              </div>
+
+              <div layout="row" layout-xs="column">
                 <md-input-container flex>
-                  <label>Nome</label>
-                  <input ng-disabled="!fieldCenter.editMode" required name="name" ng-model="fieldCenter.name"
-                    type="text">
-                  <div ng-messages="updateForm.name.$error">
-                    <div ng-message="required">Obrigatório</div>
-                  </div>
+                  <label>Endereço</label>
+                  <md-icon md-font-set="material-icons">place</md-icon>
+                  <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.address" type="text">
                 </md-input-container>
-              </div>
-            </div>
-
-            <div layout="row" layout-xs="column" flex >
-              <div layout="row" layout-align-xs="start" flex>
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20"><circle cx="10" cy="10" r="10" fill="{{fieldCenter.backgroundColor}}" /></svg>
-                <md-input-container flex ng-if="!fieldCenter.editMode">
-                  <label>Cor de fundo</label>
-                  <input disabled ng-model="fieldCenter.backgroundColor">
-                </md-input-container>
-                <md-input-container flex ng-if="fieldCenter.editMode">
-                  <label>Cor de fundo</label>
-                  <input name="backgroundColor" required colorpicker="rgba" ng-model="fieldCenter.backgroundColor">
-                  <div ng-messages="updateForm.backgroundColor.$error">
-                    <div ng-message="required">Obrigatório</div>
-                  </div>
+                <md-input-container flex>
+                  <label>Complemento</label>
+                  <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.complement">
                 </md-input-container>
               </div>
 
-              <div layout="row" layout-align-xs="start" flex>
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="20" height="20"><circle cx="10" cy="10" r="10" fill="{{fieldCenter.borderColor}}" /></svg>
-                <md-input-container flex ng-if="!fieldCenter.editMode">
-                  <label>Cor da borda</label>
-                  <input disabled name="borderColor" ng-model="fieldCenter.borderColor">
+              <div layout="row" layout-xs="column">
+                <md-input-container>
+                  <label>Cep</label>
+                  <md-icon md-font-set="material-icons">markunread_mailbox</md-icon>
+                  <input aria-label="Cep" ui-mask="99999-999" ng-disabled="!fieldCenter.editMode"
+                         ng-model="fieldCenter.zip">
                 </md-input-container>
-                <md-input-container flex ng-if="fieldCenter.editMode">
-                  <label>Cor da borda</label>
-                  <input name="borderColor" class="form-control" required colorpicker="rgba" ng-model="fieldCenter.borderColor">
-                  <div ng-messages="updateForm.borderColor.$error">
-                    <div ng-message="required">Obrigatório</div>
-                  </div>
+                <md-input-container flex>
+                  <label>Fone</label>
+                  <md-icon md-font-set="material-icons">phone</md-icon>
+                  <input aria-label="Telefone" ui-mask="99 99999 999?9" ng-disabled="!fieldCenter.editMode"
+                         ng-model="fieldCenter.phone" type="phone">
                 </md-input-container>
               </div>
-            </div>
 
-            <div layout="row" layout-xs="column">
-              <md-input-container flex>
-                <label>Endereço</label>
-                <md-icon md-font-set="material-icons">place</md-icon>
-                <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.address" type="text">
-              </md-input-container>
-              <md-input-container flex>
-                <label>Complemento</label>
-                <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.complement">
-              </md-input-container>
-            </div>
+              <div layout="row" layout-xs="column">
+                <md-input-container flex>
+                  <label>Pais</label>
+                  <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.country">
+                </md-input-container>
+                <md-input-container flex>
+                  <label>Estado</label>
+                  <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.state">
+                </md-input-container>
+              </div>
+            </form>
 
-            <div layout="row" layout-xs="column">
-              <md-input-container>
-                <label>Cep</label>
-                <md-icon md-font-set="material-icons">markunread_mailbox</md-icon>
-                <input aria-label="Cep" ui-mask="99999-999" ng-disabled="!fieldCenter.editMode"
-                  ng-model="fieldCenter.zip">
-              </md-input-container>
-              <md-input-container flex>
-                <label>Fone</label>
-                <md-icon md-font-set="material-icons">phone</md-icon>
-                <input aria-label="Telefone" ui-mask="99 99999 999?9" ng-disabled="!fieldCenter.editMode"
-                  ng-model="fieldCenter.phone" type="phone">
-              </md-input-container>
-            </div>
-
-            <div layout="row" layout-xs="column">
-              <md-input-container flex>
-                <label>Pais</label>
-                <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.country">
-              </md-input-container>
-              <md-input-container flex>
-                <label>Estado</label>
-                <input ng-disabled="!fieldCenter.editMode" ng-model="fieldCenter.state">
-              </md-input-container>
-            </div>
-          </form>
-
-          <div>
-            <div flex layout="row" layout-align="end center">
-              <md-button class="md-raised md-primary" ng-disabled="updateForm.$invalid || !fieldCenter.editMode"
-                class="md-icon-button md-primary" ng-click="fieldCenterController.update(fieldCenter)">
-                <md-icon md-font-set="material-icons" style=button "color:green">check</md-icon>
-                Salvar
-              </md-button>
-              <md-button class="md-raised " ng-click="fieldCenterController.edit(fieldCenter)">
-                <md-icon md-font-set="material-icons">
-                  {{ !fieldCenter.editMode ? 'mode_edit' : 'cancel' }}</md-icon>
-                {{ !fieldCenter.editMode ? 'Editar' : 'Cancelar' }}
-              </md-button>
-            </div>
-        </md-card>
-      </md-list-item>
+            <div>
+              <div flex layout="row" layout-align="end center">
+                <md-button class="md-raised md-primary" ng-disabled="updateForm.$invalid || !fieldCenter.editMode"
+                           class="md-icon-button md-primary" ng-click="fieldCenterController.update(fieldCenter)">
+                  <md-icon md-font-set="material-icons" style=button "color:green">check</md-icon>
+                  Salvar
+                </md-button>
+                <md-button class="md-raised " ng-click="fieldCenterController.edit(fieldCenter)">
+                  <md-icon md-font-set="material-icons">
+                    {{ !fieldCenter.editMode ? 'mode_edit' : 'cancel' }}</md-icon>
+                  {{ !fieldCenter.editMode ? 'Editar' : 'Cancelar' }}
+                </md-button>
+              </div>
+          </md-card>
+        </md-list-item>
       </div>
       <div layout-padding layout-margin ng-show="!fieldCenterController.getAllCenters().length">
         <h2>
@@ -127,11 +128,13 @@
           <span class="md-display-2">Centros de Pesquisa</span>
         </h2>
         <span class="md-body-1">O projeto selecionado não possui nenhum centro cadastrado. Utilize o botão <md-icon
-      md-font-set="material-icons">add</md-icon> para cadastrar novos centros.</span>
+          md-font-set="material-icons">add</md-icon> para cadastrar novos centros.</span>
       </div>
     </div>
     <md-button class="md-fab md-fab-bottom-right" aria-label="Gerenciar Centro" ng-click="fieldCenterController.showCreationTab(!fieldCenterController.showAddCenterTab)">
       <md-icon md-svg-icon="plus" ng-if="!fieldCenterController.showAddCenterTab"></md-icon>
       <md-icon ng-if="fieldCenterController.showAddCenterTab">keyboard_return</md-icon>
     </md-button>
-</md-content>
+  </md-content>
+</div>
+
