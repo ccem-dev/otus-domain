@@ -265,7 +265,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@datasource_manager': {
-            template: '<datasource-manager flex="80"></datasource-manager>'
+            template: '<datasource-manager flex></datasource-manager>'
           }
         }
       })

@@ -8,9 +8,8 @@ md-backdrop {
   position: fixed !important;
 }
 
-md-backdrop ~ md-content {
+md-backdrop ~ md-tab {
   position: fixed;
-  overflow: hidden;
 }
 
 @media (max-width: 456px) {
