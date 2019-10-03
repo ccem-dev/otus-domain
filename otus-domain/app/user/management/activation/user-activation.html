@@ -1,6 +1,6 @@
 <div layout="row" layout-align="center center" flex>
   <div layout="column" flex="80" flex-xs="100">
-    <md-subheader class="md-primary">Usuários Domain
+    <md-subheader hide-xs class="md-primary">Usuários Domain
       <div layout="row" layout-align="center center" flex>
         <md-input-container flex-gt-md=50 flex=90>
           <md-icon md-font-library="material-icons">search</md-icon>
@@ -9,6 +9,14 @@
       </div>
     </md-subheader>
     <md-content flex layout="column">
+      <md-subheader hide-gt-xs class="md-primary">Usuários Domain
+        <div layout="row" layout-align="center center" flex>
+          <md-input-container flex-gt-md=50 flex=90>
+            <md-icon md-font-library="material-icons">search</md-icon>
+            <input ng-model="query" placeholder="Buscar por Nome ou Email"></input>
+          </md-input-container>
+        </div>
+      </md-subheader>
       <div layout="column" flex="80"
            ng-repeat="user in $ctrl.users | orderBy:['name', 'email'] | filter : query track by $index">
         <div layout-margin layout-align="center center" layout="row">

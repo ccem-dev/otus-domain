@@ -27,18 +27,18 @@
     <span class="md-body-1">{{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}}</span>
   </div>
 
-  <div style="margin-bottom:15px" layout-align="center center" layout="row">
+  <div style="margin-bottom:15px" layout-align="start center" layout="row">
     <md-contact-chips ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}"
       ng-if="$ctrl.surveyGroupsEditMode" ng-disabled="$ctrl.surveyGroupsEditMode"
       md-contacts="$ctrl.querySearch($query)" md-contact-name="name" md-require-match="true"
       md-separator-keys="$ctrl.keys" md-highlight-flags="i" placeholder="Digite um nome de grupo"
-      secondary-placeholder="Editar grupo" input-aria-label="Grupos pretendidos">
+      secondary-placeholder="Editar grupo" input-aria-label="Grupos pretendidos" flex>
     </md-contact-chips>
     <md-chips flex layout="row" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode"
       input-aria-label="grupos" input-aria-describedby="staticChipsNote">
       <md-chip ng-repeat="group in $ctrl.surveyForm.groups">{{group.getName()}}</md-chip>
     </md-chips>
-    <span flex />
+    <span ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" flex></span>
     <div layout="row" layout-align="end end">
       <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar"
         ng-click="$ctrl.surveyGroupsEdit()">

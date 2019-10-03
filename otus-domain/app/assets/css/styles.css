@@ -174,3 +174,9 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
 .selectdemoSelectHeader>md-select-menu {
   margin-top: 45px !important;
 }
+md-chips-wrap {
+  width: 100%;
+}
+md-chips-wrap > div{
+  width: 100%;
+}
