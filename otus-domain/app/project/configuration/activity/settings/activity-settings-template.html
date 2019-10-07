@@ -140,4 +140,42 @@
       </div>
     </md-content>
   </md-card>
+  <md-card layout="column">
+    <md-content layout="column">
+      <md-card-title layout="row" layout-align="start center" flex>
+        <span class="md-title">Relatório</span>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.saveSettings()" layout-fill="">
+          <md-icon>help</md-icon>
+          <md-tooltip>Relatório da atividade e template</md-tooltip>
+        </md-button>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item aria-label="template" class="md-2-line">
+            <div flex="80" layout-margin layout="row" layout-align="start center">
+
+              <div class="md-list-item-text" layout-align="center start" layout-margin>
+                <h3>{{$ctrl.currentSurvey.surveyTemplate.identity.acronym}}</h3>
+                <p>{{$ctrl.currentSurvey.surveyTemplate.identity.name}}</p>
+              </div>
+            </div>
+            <div flex="20" layout-margin layout="row" layout-align="end center">
+              <div>
+                <md-button class="md-icon-button" aria-label="baixar relatório" ng-click="$ctrl.downloadReport()">
+                  <md-icon md-font-library="material-icons" aria-label="baixar relatório" style="color:#448aff">file_download</md-icon>
+                  <md-tooltip md-direction="left">download relatório</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="upload relatório" ng-click="$ctrl.uploadReport()">
+                  <md-icon md-font-library="material-icons" aria-label="upload relatório" style="color:#448aff">file_upload</md-icon>
+                  <md-tooltip md-direction="left">upload relatório</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-content>
+  </md-card>
 </md-content>
