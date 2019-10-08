@@ -165,27 +165,46 @@
         <span class="md-subhead">Área ao armazenamento do relatório da atividade</span>
         <md-list>
           <md-list-item aria-label="template" class="md-2-line">
-            <div flex="80" layout="row" layout-align="start center" layout-margin>
-              <div class="md-list-item-text" layout-align="center start" layout-margin>
-                <h3>{{$ctrl.currentSurvey.surveyTemplate.identity.acronym}}</h3>
-                <p>{{$ctrl.currentSurvey.surveyTemplate.identity.name}}</p>
-              </div>
-            </div>
+<!--            <div flex="80" layout="row" layout-align="start center" layout-margin>-->
+<!--              <div class="md-list-item-text" layout-align="center start" layout-margin>-->
+<!--                <h3>{{$ctrl.currentSurvey.surveyTemplate.identity.acronym}}</h3>-->
+<!--                <p>{{$ctrl.currentSurvey.surveyTemplate.identity.name}}</p>-->
+<!--              </div>-->
+<!--            </div>-->
           </md-list-item>
         </md-list>
-        <md-whiteframe class="md-whiteframe-1dp" layout>
+        <md-whiteframe class="md-whiteframe-1dp" layout ng-if="!$ctrl.persistentActivityReport">
           <div flex="90" layout="row" layout-align="center center" layout-margin>
             <p>FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO</p>
           </div>
           <div flex="10" layout="row" layout-align="end center" layout-margin>
-            <md-button aria-label="upload relatório" class="md-icon-button" ng-click="$ctrl.uploadReport()">
-              <md-icon aria-label="upload relatório" md-font-library="material-icons" style="color:#448aff">
+            <md-button aria-label="persistir relatório" class="md-icon-button" ng-click="$ctrl.uploadReport()">
+              <md-icon aria-label="persistir relatório" md-font-library="material-icons">
                 file_upload
               </md-icon>
-              <md-tooltip md-direction="left">upload relatório</md-tooltip>
+              <md-tooltip md-direction="bottom">persistir relatório</md-tooltip>
             </md-button>
           </div>
         </md-whiteframe>
+
+        <md-whiteframe class="md-whiteframe-1dp" layout ng-if="$ctrl.persistentActivityReport">
+          <div flex="80" layout="column" layout-align="left left" layout-margin>
+            <h3>Label:</h3>
+            <h4>Enviado em:</h4>
+            <h4>Versões</h4>
+          </div>
+          <div flex="20" layout="row" layout-align="end center" layout-margin>
+            <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport()">
+              <md-icon aria-label="deletar relatório" md-font-library="material-icons">delete</md-icon>
+              <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
+            </md-button>
+            <md-button aria-label="atualizar relatório" class="md-icon-button" ng-click="$ctrl.updateReport()">
+              <md-icon aria-label="atualizar relatório" md-font-library="material-icons">save</md-icon>
+              <md-tooltip md-direction="bottom">atualizar relatório</md-tooltip>
+            </md-button>
+          </div>
+        </md-whiteframe>
+
       </md-card-content>
   </md-card>
 </md-content>

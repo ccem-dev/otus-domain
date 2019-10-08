@@ -31,6 +31,7 @@
     self.versions;
     self.usersList;
     self.surveyTemplatesList;
+    self.persistentActivityReport;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -41,6 +42,8 @@
     self.transformChip = transformChip;
     self.onAdd = onAdd;
     self.onRemove = onRemove;
+    self.uploadReport = uploadReport;
+    self.deleteReport = deleteReport;
 
     function onInit() {
       self.error = false;
@@ -54,6 +57,10 @@
       _getUsers();
       _getSurveyVersions();
       _getSurveyTemplates();
+
+      self.activityReportList = [];
+      self.persistentActivityReport = false;
+      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym);
     }
 
     function saveSettings(MSG) {
@@ -205,5 +212,38 @@
       return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
 
+    function _loadActivityReportList(acronym){
+      self.activityReportList = _mockServiceGetReportList(acronym);
+      if (self.activityReportList.length > 0)  self.persistentActivityReport = true;
+    }
+
+    function uploadReport(){
+      console.log("upload");
+      self.persistentActivityReport = true;
+    }
+
+    function deleteReport(){
+      console.log("updata");
+      self.persistentActivityReport = false;
+    }
+
+    function _mockServiceGetReportList(acronym){
+      let status = 2
+
+      switch(status){
+        case 1 : return []
+        break;
+
+        case 2 : return [
+          {label : "template versão 1", sendDate: new Date(), versions: ["version 1"]},
+          {label : "template versão 3", sendDate: new Date(), versions: ["version 3"]},
+          {label : "template versão 2", sendDate: new Date(), versions: ["version 2"]}
+        ];
+      }
+
+    }
   }
+
+
+
 }());
