@@ -60,7 +60,7 @@
 
       self.activityReportList = [];
       self.persistentActivityReport = false;
-      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym);
+      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 1);
     }
 
     function saveSettings(MSG) {
@@ -212,13 +212,14 @@
       return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
 
-    function _loadActivityReportList(acronym){
-      self.activityReportList = _mockServiceGetReportList(acronym);
+    function _loadActivityReportList(acronym, st){
+      self.activityReportList = _mockServiceGetReportList(acronym, st);
       if (self.activityReportList.length > 0)  self.persistentActivityReport = true;
     }
 
     function uploadReport(){
       console.log("upload");
+      self.activityReportList = _mockServiceGetReportList(self.currentSurvey.surveyTemplate.identity.acronym, 2);
       self.persistentActivityReport = true;
     }
 
@@ -227,18 +228,21 @@
       self.persistentActivityReport = false;
     }
 
-    function _mockServiceGetReportList(acronym){
-      let status = 2
+    function _mockServiceGetReportList(acronym, st){
+      let status = st
 
       switch(status){
         case 1 : return []
         break;
 
-        case 2 : return [
+        case 2 :
+          console.log("2")
+          return [
           {label : "template versão 1", sendDate: new Date(), versions: ["version 1"]},
           {label : "template versão 3", sendDate: new Date(), versions: ["version 3"]},
           {label : "template versão 2", sendDate: new Date(), versions: ["version 2"]}
         ];
+        break;
       }
 
     }
