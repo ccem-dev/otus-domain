@@ -12,6 +12,12 @@
     text-align: center !important;
     border-radius: 0px !important;
   }
+
+  .select-multiple-versions {
+    width: 280px;
+    margin: 15px;
+  }
+
 </style>
 
 <md-content class="md-padding autocomplete" flex layout="column">
@@ -136,9 +142,9 @@
         <div flex layout="row">
           <md-chips flex md-autocomplete-snap md-on-add="$ctrl.onAdd($chip)" md-on-remove="$ctrl.onRemove($chip)"
                     md-require-match="true" md-transform-chip="ctrl.transformChip($chip)" ng-model="$ctrl.users">
-            <md-autocomplete md-item-text="item.name" md-items="item in $ctrl.querySearch($ctrl.searchText)"
-                             md-search-text="$ctrl.searchText"
-                             md-selected-item="$ctrl.selectedItem" placeholder="Digite o nome do usuário">
+            <md-autocomplete do md-item-text="item.name"
+                             md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                             md-search-text="$ctrl.searchText" md-selected-item="$ctrl.selectedItem" nome o placeholder=Digite usuário>
               <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
             </md-autocomplete>
             <md-chip-template>
@@ -151,6 +157,7 @@
       </div>
     </md-content>
   </md-card>
+
 
   <md-card layout="column">
     <md-content layout="column">
@@ -166,6 +173,7 @@
         <span class="md-subhead">Lista de relatórios armazenados</span>
       </div>
       <md-card-content>
+        <md-divider></md-divider>
 
         <md-whiteframe class="md-whiteframe-1dp" layout ng-if="!$ctrl.persistentActivityReport">
           <div flex="90" layout="row" layout-align="center center" layout-margin>
@@ -183,23 +191,30 @@
 
         <md-list ng-if=$ctrl.persistentActivityReport>
           <md-list-item aria-label="template" ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
-            <md-whiteframe class="md-whiteframe-1dp" layout flex>
-              <div flex="80" layout="column" layout-align="left left" layout-margin>
-                <h3>Label: {{report.label}}</h3>
-                <h4>Enviado em:{{report.sendDate}}</h4>
-                <h4>Versões : {{report.versions}}</h4>
+
+            <div flex="80" layout="column" layout-align="left left" layout-margin>
+              <p class="md-body-2">Label: {{report.label}}</p>
+              <p class="md-body-1">Enviado em:{{report.sendDate}}</p>
+              <div layout="column">
+                <md-input-container>
+                  <label class="md-title">Versões</label>
+                  <md-select class="margin-zero select-multiple-versions" multiple ng-model="selectedVersions">
+                    <md-optgroup label="versões">
+                      <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version">{{version}}</md-option>
+                    </md-optgroup>
+                  </md-select>
+                </md-input-container>
               </div>
-              <div flex="20" layout="row" layout-align="end center" layout-margin>
-                <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport()">
-                  <md-icon aria-label="deletar relatório" md-font-library="material-icons">delete</md-icon>
-                  <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
-                </md-button>
-                <md-button aria-label="atualizar relatório" class="md-icon-button" ng-click="$ctrl.updateReport()">
-                  <md-icon aria-label="atualizar relatório" md-font-library="material-icons">save</md-icon>
-                  <md-tooltip md-direction="bottom">atualizar relatório</md-tooltip>
-                </md-button>
-              </div>
-            </md-whiteframe>
+            </div>
+
+            <div flex="20" layout="row" layout-align="end right" layout-margin>
+              <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport()">
+                <md-icon aria-label="deletar relatório" md-font-library="material-icons">delete</md-icon>
+                <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
+              </md-button>
+            </div>
+            <md-divider></md-divider>
+
           </md-list-item>
         </md-list>
         <md-content flex layout="row" ng-if="$ctrl.error">

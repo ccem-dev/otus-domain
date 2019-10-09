@@ -15,10 +15,11 @@
     'otusjs.model.activity.ActivityPermissionFactory',
     'SurveyFactory',
     'otusDomain.rest.configuration.ProjectConfigurationService',
-    'otusDomain.dashboard.business.SurveyTemplateTranslateService'
+    'otusDomain.dashboard.business.SurveyTemplateTranslateService',
+    '$element'
   ];
 
-  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService, $element) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -61,6 +62,7 @@
       self.activityReportList = [];
       self.persistentActivityReport = false;
       _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 1);
+      self.selectedVersions = [];
     }
 
     function saveSettings(MSG) {
@@ -218,7 +220,6 @@
     }
 
     function uploadReport(){
-      console.log("upload");
       self.activityReportList = _mockServiceGetReportList(self.currentSurvey.surveyTemplate.identity.acronym, 2);
       self.persistentActivityReport = true;
     }
@@ -228,6 +229,12 @@
       self.persistentActivityReport = false;
     }
 
+    $element.find('input').on('keydown', function(ev) {
+      console.log(ev);
+      ev.stopPropagation();
+    });
+
+
     function _mockServiceGetReportList(acronym, st){
       let status = st
 
@@ -236,7 +243,7 @@
         break;
 
         case 2 :
-          console.log("2")
+          //console.log("case 2")
           return [
           {label : "template versão 1", sendDate: new Date(), versions: ["version 1"]},
           {label : "template versão 3", sendDate: new Date(), versions: ["version 3"]},
