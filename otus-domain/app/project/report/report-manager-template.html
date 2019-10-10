@@ -23,8 +23,8 @@
                 </i>
               </div>
             </md-card-title-media>
-            <md-card-title-text layout="row" flex>
-              <div layout="column"  layout-align-xs="center center" layout-align-gt-xs="start start" flex>
+            <md-card-title-text class="report-card-title-text" layout="row" flex>
+              <div layout="column"  layout-align-xs="start start" layout-align-gt-xs="start start" flex>
 
                 <div layout="row">
                   <span class="md-headline" flex> {{report.label}}</span>
@@ -32,7 +32,7 @@
                 </div>
 
                 <div layout="row" layout-xs="column" layout-align="space-around center" flex>
-                  <div layout="column" layout-align="center center" flex>
+                  <div layout="column" layout-align="center start" flex>
                     <span class="md-subhead description ">{{report.sendingDate | date: 'dd/MM/y'}}</span>
                     <span class="md-subhead description ">{{report.sender}}</span>
                   </div>
@@ -54,7 +54,7 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-actions layout="row" flex="15" flex-md="20" flex-sm="25" flex-xs="30" layout-align="center center">
-            <md-action flex layout="column">
+            <md-action flex layout="column" layout-xs="row">
               <div layout="row" flex>
                 <div layout="column" flex="50" layout-align="start end">
                   <md-subheader class="md-subhead description backgroud-color-default">Remover:</md-subheader>

@@ -180,3 +180,7 @@ md-chips-wrap {
 md-chips-wrap > div{
   width: 100%;
 }
+
+.report-card-title-text{
+  min-width: 312px !important;
+}
