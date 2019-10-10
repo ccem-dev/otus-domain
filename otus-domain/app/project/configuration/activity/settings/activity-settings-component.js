@@ -16,11 +16,13 @@
     'SurveyFactory',
     'otusDomain.rest.configuration.ProjectConfigurationService',
     'otusDomain.dashboard.business.SurveyTemplateTranslateService',
-    '$mdDialog'
+    '$mdDialog',
+    '$mdSelect'
 
   ];
 
-  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory,
+                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -133,7 +135,7 @@
       if (angular.isObject(chip)) {
         return chip;
       }
-      return { name: chip, type: 'new' };
+      return {name: chip, type: 'new'};
     }
 
     function onAdd(user) {
@@ -176,9 +178,9 @@
         .then(function (data) {
           self.versions = data;
         }).catch(function () {
-          self.error = true;
-          self.message = GENERIC_ERROR;
-        });
+        self.error = true;
+        self.message = GENERIC_ERROR;
+      });
     }
 
     function _getSurveyTemplates() {
@@ -189,15 +191,15 @@
           self.surveyTemplatesList = data;
           LoadingScreenService.finish();
         }).catch(function () {
-          self.error = true;
-          self.message = GENERIC_ERROR;
-          LoadingScreenService.finish();
-        });
+        self.error = true;
+        self.message = GENERIC_ERROR;
+        LoadingScreenService.finish();
+      });
     }
 
     function _constructorUsers(users) {
       users.forEach(function (user) {
-        self.AllUsers.push({ name: user.name, email: user.email })
+        self.AllUsers.push({name: user.name, email: user.email})
       });
     }
 
@@ -217,73 +219,123 @@
       return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
 
-    function _loadActivityReportList(acronym, st){
+    function _loadActivityReportList(acronym, st) {
       self.activityReportList = _mockServiceGetReportList(acronym, st);
-      if (self.activityReportList.length > 0)  self.persistentActivityReport = true;
+      if (self.activityReportList.length > 0) self.persistentActivityReport = true;
     }
 
-    function uploadReport(){
+    function uploadReport() {
       self.activityReportList = _mockServiceGetReportList(self.currentSurvey.surveyTemplate.identity.acronym, 2);
       self.persistentActivityReport = true;
     }
 
-    function updateSelectVersion(report){
-      console.log(report)
+    function updateSelectVersion(report) {
       _showAlert(report);
-      //console.log(`update: ${report.versions}`);
+       $mdSelect.destroy();
+      //$mdSelect.hide();
     }
 
-    function cancelSelectVersion(report){
-      console.log(`cancel: ${report.versions}`);
+    function cancelSelectVersion(report) {
+      //console.log($mdSelect);
+      //$mdSelect.build();
+      //$mdSelect.destroy();
+      //$mdSelect.show();
+      //console.log($mdSelect);
+      //$mdSelect.destroy();
+      report.cancelUpdateVersion();
+      $mdSelect.cancel()
+      //console.log(`cancel: ${report.versions}`);
+
     }
 
-    function deleteReport(){
+    function deleteReport() {
       console.log("delete");
       self.persistentActivityReport = false;
     }
 
-
     function _showAlert(report) {
-      console.log(report)
-      // Appending dialog to document.body to cover sidenav in docs app
+      console.log(report.versions)
       var confirm = $mdDialog.confirm()
-        .title(' Deseja confirmar alterações nas versões do relatório ?')
-        .textContent(`update: ${report.versions}`)
-        .ariaLabel('Lucky day')
+        .title('Deseja confirmar as seguintes alterações no relatório ?')
+        .htmlContent(`<h3>Lista de versões (Original): ${report.getCurrentVersions()}</h3>
+                      <h3>Lista de versões (Atualizada): ${report.versions}</h3>`)
+        .ariaLabel('version change confirmation')
         .targetEvent(report)
         .ok('SIM')
         .cancel('NÃO');
 
-      $mdDialog.show(confirm).then(function() {
-        console.log('sim')
-        //self.status = 'You decided to get rid of your debt.';
-      }, function() {
-        console.log('não')
-        //self.status = 'You decided to keep your debt.';
+      $mdDialog.show(confirm).then(function () {
+        console.log('sim');
+
+      }, function () {
+        console.log('não');
       });
-    };
+    }
 
 
-    function _mockServiceGetReportList(acronym, st){
+    function _mockServiceGetReportList(acronym, st) {
       let status = st
 
-      switch(status){
-        case 1 : return []
-        break;
+      switch (status) {
+        case 1 :
+          return []
+          break;
 
         case 2 :
           //console.log("case 2")
           return [
-          {_id:1, acronym:"CSJ", label : "template versão 1", sendDate: new Date(), versions: ["1"]},
-          {_id:2, acronym:"CSJ", label : "template versão 3", sendDate: new Date(), versions: ["2"]},
-          {_id:3, acronym: "CSJ", label : "template versão 2", sendDate: new Date(), versions: []}
-        ];
-        break;
+            new ActivityReport({
+              _id: 1,
+              acronym: "CSJ",
+              label: "template versão 1",
+              sendDate: new Date(),
+              versions: ["1"]
+            }),
+            new ActivityReport({
+              _id: 2,
+              acronym: "CSJ",
+              label: "template versão 3",
+              sendDate: new Date(),
+              versions: ["2"]
+            }),
+            new ActivityReport({_id: 3, acronym: "CSJ", label: "template versão 2", sendDate: new Date(), versions: []})
+          ];
+          break;
       }
 
     }
   }
 
+  function ActivityReport(obj) {
+    var self = this;
+    var _currentVersions = obj.versions;
 
+
+    self.id = obj.id;
+    self.acronym = obj.acronym;
+    self.label = obj.label;
+    self.sendDate = obj.sendDate;
+    self.versions = obj.versions;
+
+    self.cancelUpdateVersion = cancelUpdateVersion;
+    self.updateCurrentVersions = updateCurrentVersions;
+    self.getCurrentVersions = getCurrentVersions;
+
+    function cancelUpdateVersion() {
+      self.versions = _currentVersions;
+    }
+
+    function updateCurrentVersions() {
+      _currentVersions = self.versions;
+    }
+
+    function getCurrentVersions() {
+      return _currentVersions;
+
+
+    }
+
+    return self;
+  }
 
 }());

@@ -22,6 +22,14 @@
     text-align: center !important;
   }
 
+  .md-select-menu-container{
+
+  }
+
+  md-select.mat-select-underline{
+    display:none;
+}
+
 </style>
 
 <md-content class="md-padding autocomplete" flex layout="column">
@@ -163,7 +171,6 @@
     </md-content>
   </md-card>
 
-
   <md-card layout="column">
     <md-content layout="column">
       <md-card-title flex layout="row" layout-align="start center">
@@ -203,12 +210,12 @@
               <div>
                 <md-input-container>
                   <label class="md-title ">Versões</label>
-                  <md-select class="margin-zero select-multiple-versions" multiple ng-model="report.versions">
+                  <md-select class="margin-zero select-multiple-versions" multiple ng-model="report.versions" md-on-close="$ctrl.cancelSelectVersion(report)">
                     <md-optgroup class="select-version" label="versões">
                       <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version">
                         {{version}}
                       </md-option>
-                      <md-button class="md-mini" ng-click="$ctrl.cancelSelectVersion(report)">Cancelar</md-button>
+                      <md-button class="md-mini"  ng-click="$ctrl.cancelSelectVersion(report)">Cancelar</md-button>
                       <md-button class="md-mini md-primary" ng-click="$ctrl.updateSelectVersion(report)">Atualizar</md-button>
                     </md-optgroup>
                   </md-select>
