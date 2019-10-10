@@ -17,6 +17,7 @@
     'otusDomain.rest.configuration.ProjectConfigurationService',
     'otusDomain.dashboard.business.SurveyTemplateTranslateService',
     '$element'
+
   ];
 
   function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService, $element) {
@@ -45,6 +46,7 @@
     self.onRemove = onRemove;
     self.uploadReport = uploadReport;
     self.deleteReport = deleteReport;
+    self.updateReportVersion = updateReportVersion;
 
     function onInit() {
       self.error = false;
@@ -224,15 +226,15 @@
       self.persistentActivityReport = true;
     }
 
-    function deleteReport(){
-      console.log("updata");
-      self.persistentActivityReport = false;
+    function updateReportVersion(report){
+      console.log(report);
+
     }
 
-    $element.find('input').on('keydown', function(ev) {
-      console.log(ev);
-      ev.stopPropagation();
-    });
+    function deleteReport(){
+      console.log("delete");
+      self.persistentActivityReport = false;
+    }
 
 
     function _mockServiceGetReportList(acronym, st){
@@ -247,7 +249,7 @@
           return [
           {label : "template versão 1", sendDate: new Date(), versions: ["version 1"]},
           {label : "template versão 3", sendDate: new Date(), versions: ["version 3"]},
-          {label : "template versão 2", sendDate: new Date(), versions: ["version 2"]}
+          // {label : "template versão 2", sendDate: new Date(), versions: ["version 2"]}
         ];
         break;
       }

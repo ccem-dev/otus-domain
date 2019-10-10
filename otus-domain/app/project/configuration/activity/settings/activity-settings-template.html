@@ -1,4 +1,4 @@
-<style>
+<style xmlns:text-align="http://www.w3.org/1999/xhtml">
   .current-version {
     background-color: #448aff !important;
     color: #FAFAFA !important;
@@ -14,8 +14,12 @@
   }
 
   .select-multiple-versions {
-    width: 280px;
+    width: 100px;
     margin: 15px;
+  }
+
+  .select-version {
+    text-align: center !important;
   }
 
 </style>
@@ -144,7 +148,8 @@
                     md-require-match="true" md-transform-chip="ctrl.transformChip($chip)" ng-model="$ctrl.users">
             <md-autocomplete do md-item-text="item.name"
                              md-items="item in $ctrl.querySearch($ctrl.searchText)"
-                             md-search-text="$ctrl.searchText" md-selected-item="$ctrl.selectedItem" nome o placeholder=Digite usuário>
+                             md-search-text="$ctrl.searchText" md-selected-item="$ctrl.selectedItem" nome o
+                             placeholder=Digite usuário>
               <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
             </md-autocomplete>
             <md-chip-template>
@@ -180,27 +185,32 @@
             <p>FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO</p>
           </div>
           <div flex="10" layout="row" layout-align="end center" layout-margin>
-            <md-button aria-label="persistir relatório" class="md-icon-button" ng-click="$ctrl.uploadReport()">
-              <md-icon aria-label="persistir relatório" md-font-library="material-icons">
+            <md-button aria-label="upload relatório" class="md-icon-button" ng-click="$ctrl.uploadReport()">
+              <md-icon aria-label="upload relatório" md-font-library="material-icons">
                 file_upload
               </md-icon>
-              <md-tooltip md-direction="bottom">persistir relatório</md-tooltip>
+              <md-tooltip md-direction="bottom">Upload relatório</md-tooltip>
             </md-button>
           </div>
         </md-whiteframe>
 
         <md-list ng-if=$ctrl.persistentActivityReport>
-          <md-list-item aria-label="template" ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
-
+          <md-list-item aria-label="template"
+                        ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
             <div flex="80" layout="column" layout-align="left left" layout-margin>
               <p class="md-body-2">Label: {{report.label}}</p>
               <p class="md-body-1">Enviado em:{{report.sendDate}}</p>
-              <div layout="column">
+              <div>
                 <md-input-container>
-                  <label class="md-title">Versões</label>
-                  <md-select class="margin-zero select-multiple-versions" multiple ng-model="selectedVersions">
-                    <md-optgroup label="versões">
-                      <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version">{{version}}</md-option>
+                  <label class="md-title ">Versões</label>
+                  <md-select class="margin-zero select-multiple-versions" multiple ng-model="report.versions">
+                    <md-optgroup class="select-version" label="versões">
+                      <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version">
+                        {{version}}
+                      </md-option>
+                      <md-button class="md-mini" ng-click="$ctrl.cancelReportVersion()">Cancelar</md-button>
+                      <md-button class="md-mini md-primary" ng-click="$ctrl.updateReportVersion(report)">Atualizar
+                      </md-button>
                     </md-optgroup>
                   </md-select>
                 </md-input-container>
@@ -214,16 +224,10 @@
               </md-button>
             </div>
             <md-divider></md-divider>
-
           </md-list-item>
         </md-list>
-        <md-content flex layout="row" ng-if="$ctrl.error">
-          <div flex layout="row" layout-align="center center">
-            <div class="label-light-gray">
-              <p class="md-2-line">{{$ctrl.message}}</p>
-            </div>
-          </div>
-        </md-content>
+
+
       </md-card-content>
   </md-card>
 </md-content>
