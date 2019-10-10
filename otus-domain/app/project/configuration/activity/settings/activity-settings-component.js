@@ -16,11 +16,11 @@
     'SurveyFactory',
     'otusDomain.rest.configuration.ProjectConfigurationService',
     'otusDomain.dashboard.business.SurveyTemplateTranslateService',
-    '$element'
+    '$mdDialog'
 
   ];
 
-  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService, $element) {
+  function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory, ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -46,7 +46,8 @@
     self.onRemove = onRemove;
     self.uploadReport = uploadReport;
     self.deleteReport = deleteReport;
-    self.updateReportVersion = updateReportVersion;
+    self.updateSelectVersion = updateSelectVersion;
+    self.cancelSelectVersion = cancelSelectVersion;
 
     function onInit() {
       self.error = false;
@@ -226,15 +227,41 @@
       self.persistentActivityReport = true;
     }
 
-    function updateReportVersion(report){
-      console.log(report);
+    function updateSelectVersion(report){
+      console.log(report)
+      _showAlert(report);
+      //console.log(`update: ${report.versions}`);
+    }
 
+    function cancelSelectVersion(report){
+      console.log(`cancel: ${report.versions}`);
     }
 
     function deleteReport(){
       console.log("delete");
       self.persistentActivityReport = false;
     }
+
+
+    function _showAlert(report) {
+      console.log(report)
+      // Appending dialog to document.body to cover sidenav in docs app
+      var confirm = $mdDialog.confirm()
+        .title(' Deseja confirmar alterações nas versões do relatório ?')
+        .textContent(`update: ${report.versions}`)
+        .ariaLabel('Lucky day')
+        .targetEvent(report)
+        .ok('SIM')
+        .cancel('NÃO');
+
+      $mdDialog.show(confirm).then(function() {
+        console.log('sim')
+        //self.status = 'You decided to get rid of your debt.';
+      }, function() {
+        console.log('não')
+        //self.status = 'You decided to keep your debt.';
+      });
+    };
 
 
     function _mockServiceGetReportList(acronym, st){
@@ -247,9 +274,9 @@
         case 2 :
           //console.log("case 2")
           return [
-          {label : "template versão 1", sendDate: new Date(), versions: ["version 1"]},
-          {label : "template versão 3", sendDate: new Date(), versions: ["version 3"]},
-          // {label : "template versão 2", sendDate: new Date(), versions: ["version 2"]}
+          {_id:1, acronym:"CSJ", label : "template versão 1", sendDate: new Date(), versions: ["1"]},
+          {_id:2, acronym:"CSJ", label : "template versão 3", sendDate: new Date(), versions: ["2"]},
+          {_id:3, acronym: "CSJ", label : "template versão 2", sendDate: new Date(), versions: []}
         ];
         break;
       }

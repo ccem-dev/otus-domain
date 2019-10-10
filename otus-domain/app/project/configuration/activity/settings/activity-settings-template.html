@@ -208,9 +208,8 @@
                       <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version">
                         {{version}}
                       </md-option>
-                      <md-button class="md-mini" ng-click="$ctrl.cancelReportVersion()">Cancelar</md-button>
-                      <md-button class="md-mini md-primary" ng-click="$ctrl.updateReportVersion(report)">Atualizar
-                      </md-button>
+                      <md-button class="md-mini" ng-click="$ctrl.cancelSelectVersion(report)">Cancelar</md-button>
+                      <md-button class="md-mini md-primary" ng-click="$ctrl.updateSelectVersion(report)">Atualizar</md-button>
                     </md-optgroup>
                   </md-select>
                 </md-input-container>
@@ -226,7 +225,6 @@
             <md-divider></md-divider>
           </md-list-item>
         </md-list>
-
 
       </md-card-content>
   </md-card>
