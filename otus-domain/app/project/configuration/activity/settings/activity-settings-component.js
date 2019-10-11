@@ -67,7 +67,7 @@
       self.activityReportList = [];
       self.outOfReportVersionList = [];
       self.persistentActivityReport = false;
-      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 2);
+      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 1);
     }
 
     function saveSettings(MSG) {
@@ -223,16 +223,16 @@
 
     function _loadActivityReportList(acronym, st) {
       self.activityReportList = ProjectConfigurationService.getActivityReports(acronym, st);
-      //self.activityReportList = _mockServiceGetReportList(acronym, st);
       if (self.activityReportList.length > 0) self.persistentActivityReport = true;
     }
 
+    //TODO: método simulando uma persistência com o service
     function uploadReport() {
-      self.activityReportList = _mockServiceGetReportList(self.currentSurvey.surveyTemplate.identity.acronym, 2);
+      self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym, 2);
       self.persistentActivityReport = true;
     }
 
-    //TODO: make method in service for get list report through by promisse resolved
+
     function _loadListOfOutOfReportVersions(activityVersions) {
       if (self.activityReportList.length) {
         let candidateReportVersions = angular.copy(activityVersions);
