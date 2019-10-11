@@ -203,7 +203,8 @@
                   <label class="md-title ">Versões</label>
                   <md-select class="margin-zero select-multiple-versions" multiple ng-model="report.versions" md-on-close="$ctrl.cancelSelectVersion(report)">
                     <md-optgroup class="select-version" label="versões">
-                      <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version">
+                      <md-option ng-repeat="version in $ctrl.versions | orderBy: $index" ng-value="version"
+                                 ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}">
                         {{version}}
                       </md-option>
                       <md-button class="md-mini"  ng-click="$ctrl.cancelSelectVersion(report)">Cancelar</md-button>
@@ -213,7 +214,6 @@
                 </md-input-container>
               </div>
             </div>
-
             <div flex="20" layout="row" layout-align="end right" layout-margin>
               <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport()">
                 <md-icon aria-label="deletar relatório" md-font-library="material-icons">delete</md-icon>

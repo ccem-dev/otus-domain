@@ -177,7 +177,7 @@
       ProjectConfigurationService.getSurveyVersions(acronym)
         .then(function (data) {
           self.versions = data;
-          _loadListOfOutOfReportVersions(self.versions)
+          self.activityVersionsAvailable = _loadListOfOutOfReportVersions(self.versions);
 
         }).catch(function () {
         self.error = true;
@@ -222,7 +222,8 @@
     }
 
     function _loadActivityReportList(acronym, st) {
-      self.activityReportList = _mockServiceGetReportList(acronym, st);
+      self.activityReportList = ProjectConfigurationService.getActivityReports(acronym, st);
+      //self.activityReportList = _mockServiceGetReportList(acronym, st);
       if (self.activityReportList.length > 0) self.persistentActivityReport = true;
     }
 
@@ -232,27 +233,26 @@
     }
 
     //TODO: make method in service for get list report through by promisse resolved
-    function _loadListOfOutOfReportVersions(activityVersions){
+    function _loadListOfOutOfReportVersions(activityVersions) {
+      if (self.activityReportList.length) {
+        let candidateReportVersions = angular.copy(activityVersions);
 
-      if(self.activityReportList.length){
-        let candidateVersions = angular.copy(activityVersions);
-
-        self.activityReportList.forEach(template => {
-           template.versions.forEach(versionTemplate => {
-            let index = candidateVersions.indexOf(versionTemplate);
+        self.activityReportList.forEach(report => {
+          report.versions.forEach(reportVersion => {
+            let index = candidateReportVersions.indexOf(reportVersion);
             if (index !== -1) {
-              candidateVersions.splice(index, 1);
+              candidateReportVersions.splice(index, 1);
             }
           })
         });
 
-        console.log(candidateVersions);
+        return candidateReportVersions;
       }
     }
 
     function updateSelectVersion(report) {
       _showAlert(report);
-       $mdSelect.destroy();
+      $mdSelect.destroy();
     }
 
     function cancelSelectVersion(report) {
@@ -286,68 +286,6 @@
         console.log('btn não');
       });
     }
-
-    function _mockServiceGetReportList(acronym, st) {
-      let status = st
-
-      switch (status) {
-        case 1 :
-          return []
-          break;
-
-        case 2 :
-          //console.log("case 2")
-          return [
-            new ActivityReport({
-              id: 1,
-              acronym: "RCPC",
-              label: "template versão 1",
-              sendingDate: new Date(),
-              versions: [1]
-            }),
-            new ActivityReport({
-              id: 2,
-              acronym: "RCPC",
-              label: "template versão 3",
-              sendingDate: new Date(),
-              versions: [3]
-            }),
-            new ActivityReport({id: 3, acronym: "RCPC", label: "template versão 2", sendingDate: new Date(), versions: [2]})
-          ];
-          break;
-      }
-    }
-  }
-
-  function ActivityReport(obj) {
-    var self = this;
-    var _currentVersions = obj.versions;
-
-    self.id = obj.id;
-    self.template = obj.template;
-    self.label = obj.label;
-    self.sendingDate = obj.sendingDate;
-    self.acronym = obj.acronym;
-    self.versions = obj.versions;
-    self.datasources = obj.datasources;
-
-    self.cancelUpdateVersion = cancelUpdateVersion;
-    self.updateCurrentVersions = updateCurrentVersions;
-    self.getCurrentVersions = getCurrentVersions;
-
-    function cancelUpdateVersion() {
-      self.versions = _currentVersions;
-    }
-
-    function updateCurrentVersions() {
-      _currentVersions = self.versions;
-    }
-
-    function getCurrentVersions() {
-      return _currentVersions;
-    }
-
-    return self;
-  }
+   }
 
 }());
