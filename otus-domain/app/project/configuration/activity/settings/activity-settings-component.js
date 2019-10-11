@@ -65,9 +65,9 @@
       _getSurveyTemplates();
 
       self.activityReportList = [];
+      self.outOfReportVersionList = [];
       self.persistentActivityReport = false;
-      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 1);
-      self.selectedVersions = [];
+      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 2);
     }
 
     function saveSettings(MSG) {
@@ -177,6 +177,8 @@
       ProjectConfigurationService.getSurveyVersions(acronym)
         .then(function (data) {
           self.versions = data;
+          _loadListOfOutOfReportVersions(self.versions)
+
         }).catch(function () {
         self.error = true;
         self.message = GENERIC_ERROR;
@@ -229,23 +231,33 @@
       self.persistentActivityReport = true;
     }
 
+    //TODO: make method in service for get list report through by promisse resolved
+    function _loadListOfOutOfReportVersions(activityVersions){
+
+      if(self.activityReportList.length){
+        let candidateVersions = angular.copy(activityVersions);
+
+        self.activityReportList.forEach(template => {
+           template.versions.forEach(versionTemplate => {
+            let index = candidateVersions.indexOf(versionTemplate);
+            if (index !== -1) {
+              candidateVersions.splice(index, 1);
+            }
+          })
+        });
+
+        console.log(candidateVersions);
+      }
+    }
+
     function updateSelectVersion(report) {
       _showAlert(report);
        $mdSelect.destroy();
-      //$mdSelect.hide();
     }
 
     function cancelSelectVersion(report) {
-      //console.log($mdSelect);
-      //$mdSelect.build();
-      //$mdSelect.destroy();
-      //$mdSelect.show();
-      //console.log($mdSelect);
-      //$mdSelect.destroy();
       report.cancelUpdateVersion();
-      $mdSelect.cancel()
-      //console.log(`cancel: ${report.versions}`);
-
+      $mdSelect.cancel();
     }
 
     function deleteReport() {
@@ -254,24 +266,26 @@
     }
 
     function _showAlert(report) {
-      console.log(report.versions)
+      let versionCandidates = report.versions;
       var confirm = $mdDialog.confirm()
         .title('Deseja confirmar as seguintes alterações no relatório ?')
-        .htmlContent(`<h3>Lista de versões (Original): ${report.getCurrentVersions()}</h3>
-                      <h3>Lista de versões (Atualizada): ${report.versions}</h3>`)
+        .htmlContent(` <h3>Versões compatíveis</h3>
+                       <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
+                       <p class="md-body-1">Solicitadas: ${report.versions}</p>`)
         .ariaLabel('version change confirmation')
         .targetEvent(report)
         .ok('SIM')
         .cancel('NÃO');
 
       $mdDialog.show(confirm).then(function () {
-        console.log('sim');
+        console.log('btn sim');
+        report.versions = versionCandidates;
+        report.updateCurrentVersions();
 
       }, function () {
-        console.log('não');
+        console.log('btn não');
       });
     }
-
 
     function _mockServiceGetReportList(acronym, st) {
       let status = st
@@ -285,24 +299,23 @@
           //console.log("case 2")
           return [
             new ActivityReport({
-              _id: 1,
-              acronym: "CSJ",
+              id: 1,
+              acronym: "RCPC",
               label: "template versão 1",
-              sendDate: new Date(),
-              versions: ["1"]
+              sendingDate: new Date(),
+              versions: [1]
             }),
             new ActivityReport({
-              _id: 2,
-              acronym: "CSJ",
+              id: 2,
+              acronym: "RCPC",
               label: "template versão 3",
-              sendDate: new Date(),
-              versions: ["2"]
+              sendingDate: new Date(),
+              versions: [3]
             }),
-            new ActivityReport({_id: 3, acronym: "CSJ", label: "template versão 2", sendDate: new Date(), versions: []})
+            new ActivityReport({id: 3, acronym: "RCPC", label: "template versão 2", sendingDate: new Date(), versions: [2]})
           ];
           break;
       }
-
     }
   }
 
@@ -310,12 +323,13 @@
     var self = this;
     var _currentVersions = obj.versions;
 
-
     self.id = obj.id;
-    self.acronym = obj.acronym;
+    self.template = obj.template;
     self.label = obj.label;
-    self.sendDate = obj.sendDate;
+    self.sendingDate = obj.sendingDate;
+    self.acronym = obj.acronym;
     self.versions = obj.versions;
+    self.datasources = obj.datasources;
 
     self.cancelUpdateVersion = cancelUpdateVersion;
     self.updateCurrentVersions = updateCurrentVersions;
@@ -331,8 +345,6 @@
 
     function getCurrentVersions() {
       return _currentVersions;
-
-
     }
 
     return self;
