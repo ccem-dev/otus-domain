@@ -1,13 +1,11 @@
-<div layout="row" layout-sm="column">
-  <span flex></span>
-  <md-card flex flex-gt-xs="60" class="otus-panel md-whiteframe-1dp" layout="column">
-    <div layout-padding layout="column">
+<div>
+  <div class="otus-panel md-whiteframe-1dp" flex="90" flex-offset="5" layout="column">
+    <div layout-padding layout-margin layout="column">
       <div class="otus-panel-subheader" ng-style="{'background':'linear-gradient(to right, {{$ctrl.colorLeft}}, {{$ctrl.colorRight}})'}">
-        <h4 ng-bind="$ctrl.headerLabel"></h4>
+        {{$ctrl.headerLabel}}
       </div>
     </div>
-    <div layout-align="{{$ctrl.align}}" layout-wrap layout="row" flex layout-margin ng-transclude>
+    <div layout-align="{{$ctrl.align}}" layout-wrap layout="row" flex style="margin:10px" ng-transclude>
     </div>
-  </md-card>
-  <span flex></span>
+  </div>
 </div>

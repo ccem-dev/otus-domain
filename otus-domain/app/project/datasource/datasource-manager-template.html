@@ -1,77 +1,85 @@
-<md-content class="md-padding" layout="column">
-    
-  <h2 class="md-headline">Configuração de fonte de dados</h2>
-  <div layout="row" layout-align="end center" ng-show="!$ctrl.insertingNewDatasource">
+<div layout="row" layout-align="center center" flex>
+  <div layout="column" layout-margin flex="80" flex-xs="100">
+    <div flex>
+      <h2 class="md-headline">Configuração de fonte de dados</h2>
+    </div>
     <md-input-container flex-gt-md="50" flex="60">
-      <input type="text" ng-model="search.name" placeholder="Buscar por nome da fonte de dado" />
+      <input type="text" ng-model="search.name" placeholder="Buscar por nome da fonte de dado"/>
     </md-input-container>
-    <span flex></span>
-    <md-card-title-text>
-      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" ng-click="$ctrl.newDatasourceAction()" ng-disabled="$ctrl.isLoading()" datasource-upload="$ctrl.action">
+    <div layout="row" layout-align="end center" ng-show="!$ctrl.insertingNewDatasource">
+      <md-button class="md-icon-button md-primary" md-tooltip="Enviar" ng-click="$ctrl.newDatasourceAction()"
+                 ng-disabled="$ctrl.isLoading()" datasource-upload="$ctrl.action">
         <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Enviar
         </md-tooltip>
       </md-button>
-    </md-card-title-text>
-  </div>
-  <span class="md-body-2" ng-show="$ctrl.insertingNewDatasource" >Insira o nome da fonte de dados utilizando apenas letras minúsculas, letras maiúsculas, números ou underline</span>
-  <div layout="row" layout-align="end center" ng-show="$ctrl.insertingNewDatasource">
-    <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
-      <input type="text" ng-model="$ctrl.newDatasourceFile.name" placeholder="Nome do arquivo" disabled/>
-    </md-input-container>
-    <md-card-title-text ng-show="$ctrl.newDatasourceFile.name">
-      <md-button class="md-icon-button md-primary" ng-click="$ctrl.cancelUpload()">
-        <md-icon md-font-library="material-icons" aria-label="Cancel">close</md-icon>
-        <md-tooltip md-visible="false" md-delay="200" md-direction="down" md-autohide="true">
-          Cancelar
-        </md-tooltip>
-      </md-button>
-    </md-card-title-text>
-    <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
-      <input type="text" ng-model="$ctrl.newDatasourceName" id="newDatasourceName" placeholder="Nome da fonte de dados" ng-keypress="$ctrl.datasourceNameFilter($event)"/>
-    </md-input-container>
-    <span flex></span>
-    <md-card-title-text>
-      <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.isLoading()" ng-click="$ctrl.saveNewDatasource()">
-        <md-icon md-font-library="material-icons" aria-label="Load">save</md-icon>
-        <md-tooltip md-visible="false" md-delay="200" md-direction="down" md-autohide="true">
-          Salvar
-        </md-tooltip>
-      </md-button>
+    </div>
+    <span class="md-body-2" ng-show="$ctrl.insertingNewDatasource">Insira o nome da fonte de dados utilizando apenas letras minúsculas, letras maiúsculas, números ou underline</span>
+    <div layout="row" layout-align="end center" ng-show="$ctrl.insertingNewDatasource">
+      <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
+        <input type="text" ng-model="$ctrl.newDatasourceFile.name" placeholder="Nome do arquivo" disabled/>
+      </md-input-container>
+      <md-card-title-text ng-show="$ctrl.newDatasourceFile.name">
+        <md-button class="md-icon-button md-primary" ng-click="$ctrl.cancelUpload()">
+          <md-icon md-font-library="material-icons" aria-label="Cancel">close</md-icon>
+          <md-tooltip md-visible="false" md-delay="200" md-direction="down" md-autohide="true">
+            Cancelar
+          </md-tooltip>
+        </md-button>
+      </md-card-title-text>
+      <md-input-container flex-gt-md="50" flex="60" class="removeMarginBottom">
+        <input type="text" ng-model="$ctrl.newDatasourceName" id="newDatasourceName"
+               placeholder="Nome da fonte de dados" ng-keypress="$ctrl.datasourceNameFilter($event)"/>
+      </md-input-container>
+      <span flex></span>
+      <md-card-title-text>
+        <md-button class="md-icon-button md-primary" ng-disabled="$ctrl.isLoading()"
+                   ng-click="$ctrl.saveNewDatasource()">
+          <md-icon md-font-library="material-icons" aria-label="Load">save</md-icon>
+          <md-tooltip md-visible="false" md-delay="200" md-direction="down" md-autohide="true">
+            Salvar
+          </md-tooltip>
+        </md-button>
       </md-card-title-text>
 
-  </div>
-  <div layout="row" ng-show="$ctrl.isLoading()" flex layout-sm="column" layout-align="center center">
-      <md-progress-linear md-mode="indeterminate"  md-diameter="96"></md-progress-linear>
     </div>
-  <md-card-title-text>
+    <div layout="row" ng-show="$ctrl.isLoading()" flex layout-sm="column" layout-align="center center">
+      <md-progress-linear md-mode="indeterminate" md-diameter="96"></md-progress-linear>
+    </div>
     <span class="md-body-2">Fonte de dados</span>
-    <md-list>
-      <md-list-item ng-if="$ctrl.ready" ng-repeat="datasource in $ctrl.datasources | orderBy: datasource.name | filter : search"
-                    aria-label="fonte de dado">
-        <div layout="row" layout-align="space-between center" flex>
-          <div layout="column">
-            <span flex> {{ datasource.name }}</span>
-            <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">{{ datasource.name }}</md-tooltip>
-          </div>
-          <div layout="row">
-            <md-button class="md-icon-button md-default-theme" md-tooltip="Editar" ng-click="$ctrl.updateAction(datasource)" datasource-upload="$ctrl.action">
-              <md-icon md-font-library="material-icons" aria-label="Load">create</md-icon>
-              <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-                Editar
+    <md-content>
+      <md-list>
+        <md-list-item ng-if="$ctrl.ready"
+                      ng-repeat="datasource in $ctrl.datasources | orderBy: datasource.name | filter : search"
+                      aria-label="fonte de dado">
+          <div layout="row" layout-align="space-between center" flex>
+            <md-content layout="column">
+              <span flex> {{ datasource.name }}</span>
+              <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">{{ datasource.name
+                }}
               </md-tooltip>
-            </md-button>
-            <md-button class="md-icon-button md-default-theme" md-tooltip="Baixar" ng-click="$ctrl.exportDatasource(datasource)">
-              <md-icon md-font-library="material-icons" aria-label="Load">file_download</md-icon>
-              <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">
-                Baixar
-              </md-tooltip>
-            </md-button>
+            </md-content>
+            <div layout="row">
+              <md-button class="md-icon-button md-default-theme" md-tooltip="Editar"
+                         ng-click="$ctrl.updateAction(datasource)" datasource-upload="$ctrl.action">
+                <md-icon md-font-library="material-icons" aria-label="Load">create</md-icon>
+                <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+                  Editar
+                </md-tooltip>
+              </md-button>
+              <md-button class="md-icon-button md-default-theme" md-tooltip="Baixar"
+                         ng-click="$ctrl.exportDatasource(datasource)">
+                <md-icon md-font-library="material-icons" aria-label="Load">file_download</md-icon>
+                <md-tooltip md-visible="false" md-delay="200" md-direction="right" md-autohide="true">
+                  Baixar
+                </md-tooltip>
+              </md-button>
+            </div>
           </div>
-        </div>
-        <md-divider></md-divider>
-      </md-list-item>
-    </md-list>
-  </md-card-title-text>
-</md-content>
+          <md-divider></md-divider>
+        </md-list-item>
+      </md-list>
+    </md-content>
+  </div>
+</div>

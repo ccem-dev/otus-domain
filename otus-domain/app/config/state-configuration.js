@@ -127,7 +127,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@user-otus-management': {
-            template: '<otus-user-dashboard flex="80"></otus-user-dashboard>'
+            template: '<otus-user-dashboard></otus-user-dashboard>'
           }
         }
       })
@@ -183,7 +183,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@activity_configuration': {
-            template: '<activity-configuration flex="80"></activity-configuration>'
+            template: '<activity-configuration flex></activity-configuration>'
           }
         }
       })
@@ -238,7 +238,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@report_manager': {
-            template: '<report-manager flex="80"></report-manager>'
+            template: '<report-manager flex></report-manager>'
           }
         }
       })
@@ -265,7 +265,7 @@
             templateUrl: dashboardMenu
           },
           'system-content@datasource_manager': {
-            template: '<datasource-manager flex="80"></datasource-manager>'
+            template: '<datasource-manager flex></datasource-manager>'
           }
         }
       })

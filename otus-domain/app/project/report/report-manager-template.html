@@ -1,92 +1,96 @@
-<md-content flex layout-align="center start">
-  <div layout="row" layout-padding>
-    <span class="md-headline" layout-padding>Relatórios do projeto</span>
-  </div>
-  <md-content layout="row" layout-align="center center" flex=100>
-    <md-input-container flex-gt-md="50" flex="90">
-      <md-icon>search</md-icon>
-      <input ng-model="query.label" placeholder="Buscar por Nome de Relatório">
-    </md-input-container>
-  </md-content>
-  <md-card flex layout-align="center center" layout="row" ng-if="$ctrl.ready"
-           ng-repeat="report in $ctrl.reports | orderBy: report.label | filter : query track by $index">
-    <div layout="column" flex>
-      <div layout="row" layout-xs="column" flex>
-        <md-card-title layout="row" layout-xs="column" layout-align="center center" flex>
-          <md-card-title-media layout="row" flex="10">
-            <div class="md-media-sm card-media" layout="row" flex>
-              <i class="material-icons iconBigger" ng-click="$ctrl.exportReport(report)">file_download
-                <md-tooltip md-direction="bottom">
-                  Baixar
-                </md-tooltip>
-              </i>
-            </div>
-          </md-card-title-media>
-          <md-card-title-text layout="row" flex>
-            <div layout="column" layout-align="start start" flex>
-
-              <div layout="row" >
-                <span class="md-headline" flex> {{report.label}}</span>
-                <md-tooltip>{{report.label}}</md-tooltip>
-              </div>
-
-              <div layout="row" layout-align="space-around center" flex>
-                <div layout="column" layout-align="start start" flex>
-                  <span class="md-subhead description ">{{report.sendingDate | date: 'dd/MM/y'}}</span>
-                  <span class="md-subhead description ">{{report.sender}}</span>
-                </div>
-
-                <div layout="column" layout-align="start start" flex>
-                  <md-input-container class="margin-zero select-multiple-centers" flex>
-                    <md-select aria-label="Selecione o(s) estado(s)" ng-model="report.fieldCenter" placeholder="Disponível nos centros:"
-                               multiple>
-                      <md-option ng-repeat="center in $ctrl.fieldCenters | orderBy: center.name"
-                                 ng-value="center.acronym">{{center.acronym}}
-                      </md-option>
-                      <md-tooltip md-direction="bottom">Centros</md-tooltip>
-                    </md-select>
-                  </md-input-container>
-                </div>
-              </div>
-            </div>
-          </md-card-title-text>
-        </md-card-title>
-
-        <md-card-actions layout="row" flex="15" flex-md="20" flex-sm="25" flex-xs="30" layout-align="center center">
-          <md-action flex layout="column">
-            <div layout="row" flex>
-              <div layout="column" flex="50" layout-align="start end">
-                <md-subheader class="md-subhead description backgroud-color-default">Remover:</md-subheader>
-              </div>
-              <div layout="column" flex>
-                <md-button class="md-icon-button" ng-click="$ctrl.deleteReport(report, $index)">
-                  <md-icon aria-label="Delete">delete_forever</md-icon>
-                  <md-tooltip md-direction="bottom">Excluir</md-tooltip>
-                </md-button>
-              </div>
-            </div>
-            <div layout="row" flex>
-              <div layout="column" flex="50" layout-align="start end">
-                <md-subheader class="md-subhead description backgroud-color-default">Salvar:</md-subheader>
-              </div>
-              <div layout="column" flex>
-                <md-button class="md-icon-button" ng-click="$ctrl.updateReport(report)">
-                  <md-icon aria-label="Update" class="md-primary">save</md-icon>
-                  <md-tooltip md-direction="bottom">Atualizar Centro</md-tooltip>
-                </md-button>
-              </div>
-            </div>
-
-          </md-action>
-        </md-card-actions>
-      </div>
+<md-content flex layout="row" layout-align="center start">
+  <div flex flex-gt-xs="80">
+    <div layout="row" layout-padding>
+      <span class="md-headline" layout-padding>Relatórios do projeto</span>
     </div>
-  </md-card>
+    <md-content layout="row" layout-align="center center" flex=100>
+      <md-input-container flex-gt-md="50" flex="90">
+        <md-icon>search</md-icon>
+        <input ng-model="query.label" placeholder="Buscar por Nome de Relatório">
+      </md-input-container>
+    </md-content>
+    <md-card flex layout-align="center center" layout="row" ng-if="$ctrl.ready"
+             ng-repeat="report in $ctrl.reports | orderBy: report.label | filter : query track by $index">
+      <div layout="column" flex>
+        <div layout="row" layout-xs="column" flex>
+          <md-card-title layout="row" layout-xs="column" layout-align="center center" flex>
+            <md-card-title-media layout="row" flex="10">
+              <div class="md-media-sm card-media" layout="row" flex>
+                <i class="material-icons iconBigger" ng-click="$ctrl.exportReport(report)">file_download
+                  <md-tooltip md-direction="bottom">
+                    Baixar
+                  </md-tooltip>
+                </i>
+              </div>
+            </md-card-title-media>
+            <md-card-title-text class="report-card-title-text" layout="row" flex>
+              <div layout="column"  layout-align-xs="start start" layout-align-gt-xs="start start" flex>
+
+                <div layout="row">
+                  <span class="md-headline" flex> {{report.label}}</span>
+                  <md-tooltip>{{report.label}}</md-tooltip>
+                </div>
+
+                <div layout="row" layout-xs="column" layout-align="space-around center" flex>
+                  <div layout="column" layout-align="center start" flex>
+                    <span class="md-subhead description ">{{report.sendingDate | date: 'dd/MM/y'}}</span>
+                    <span class="md-subhead description ">{{report.sender}}</span>
+                  </div>
+
+                  <div layout="column" layout-align="start start" flex>
+                    <md-input-container class="margin-zero select-multiple-centers" flex>
+                      <md-select aria-label="Selecione o(s) estado(s)" ng-model="report.fieldCenter"
+                                 placeholder="Disponível nos centros:"
+                                 multiple>
+                        <md-option ng-repeat="center in $ctrl.fieldCenters | orderBy: center.name"
+                                   ng-value="center.acronym">{{center.acronym}}
+                        </md-option>
+                        <md-tooltip md-direction="bottom">Centros</md-tooltip>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                </div>
+              </div>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-actions layout="row" flex="15" flex-md="20" flex-sm="25" flex-xs="30" layout-align="center center">
+            <md-action flex layout="column" layout-xs="row">
+              <div layout="row" flex>
+                <div layout="column" flex="50" layout-align="start end">
+                  <md-subheader class="md-subhead description backgroud-color-default">Remover:</md-subheader>
+                </div>
+                <div layout="column" flex>
+                  <md-button class="md-icon-button" ng-click="$ctrl.deleteReport(report, $index)">
+                    <md-icon aria-label="Delete">delete_forever</md-icon>
+                    <md-tooltip md-direction="bottom">Excluir</md-tooltip>
+                  </md-button>
+                </div>
+              </div>
+              <div layout="row" flex>
+                <div layout="column" flex="50" layout-align="start end">
+                  <md-subheader class="md-subhead description backgroud-color-default">Salvar:</md-subheader>
+                </div>
+                <div layout="column" flex>
+                  <md-button class="md-icon-button" ng-click="$ctrl.updateReport(report)">
+                    <md-icon aria-label="Update" class="md-primary">save</md-icon>
+                    <md-tooltip md-direction="bottom">Atualizar Centro</md-tooltip>
+                  </md-button>
+                </div>
+              </div>
+
+            </md-action>
+          </md-card-actions>
+        </div>
+      </div>
+    </md-card>
+
+    <md-fab-speed-dial count="0" md-direction="up" class="md-fab md-fab-bottom-right md-fling">
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-primary" report-template-upload="$ctrl.uploadReport">
+          <md-icon md-svg-icon="upload"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+    </md-fab-speed-dial>
+  </div>
 </md-content>
-<md-fab-speed-dial count="0" md-direction="up" class="md-fab md-fab-bottom-right md-fling">
-  <md-fab-trigger>
-    <md-button aria-label="menu" class="md-fab md-primary" report-template-upload="$ctrl.uploadReport">
-      <md-icon md-svg-icon="upload"></md-icon>
-    </md-button>
-  </md-fab-trigger>
-</md-fab-speed-dial>
+

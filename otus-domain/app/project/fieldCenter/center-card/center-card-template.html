@@ -1,27 +1,29 @@
-<div layout="column" flex layout-align="start center">
+<div layout="column" layout-xs="row" flex layout-align="start center">
   <div layout="column" flex>
     <md-content flex="80" layout-padding style="background: transparent !important;">
       <div class="md-dialog-content">
-        <form name="createForm" novalidate>
-          <div layout="row">
-            <div layout-padding layout-margin  md-colors="{background: 'default-accent'}" class="color-center" style="background: {{$ctrl.fieldCenter.backgroundColor}};"></div>
+        <form name="createForm" layout-wrap novalidate>
+          <div layout="row" layout-xs="column" layout-padding>
+            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center"
+                 style="background: {{$ctrl.fieldCenter.backgroundColor}};"></div>
             <md-input-container md-no-float>
               <label>Cor de fundo</label>
-<input name="backgroundColor" colorpicker="rgba" required ng-model="$ctrl.fieldCenter.backgroundColor">
+              <input name="backgroundColor" colorpicker="rgba" required ng-model="$ctrl.fieldCenter.backgroundColor">
               <div ng-messages="createForm.backgroundColor.$error">
                 <div ng-message="required">Obrigatório</div>
               </div>
             </md-input-container>
-            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center" style="background: {{$ctrl.fieldCenter.borderColor}};"></div>
+            <div layout-padding layout-margin md-colors="{background: 'default-accent'}" class="color-center"
+                 style="background: {{$ctrl.fieldCenter.borderColor}};"></div>
             <md-input-container md-no-float>
               <label>Cor da borda</label>
-<input name="borderColor" colorpicker="rgba" required ng-model="$ctrl.fieldCenter.borderColor">
+              <input name="borderColor" colorpicker="rgba" required ng-model="$ctrl.fieldCenter.borderColor">
               <div ng-messages="createForm.borderColor.$error">
                 <div ng-message="required">Obrigatório</div>
               </div>
             </md-input-container>
           </div>
-          <div layout="row" layout-padding>
+          <div layout="row" layout-xs="column" layout-padding>
             <md-input-container>
               <label>Sigla</label>
               <input name="acronym" ng-change="$ctrl.resetValidation()" ng-model="$ctrl.fieldCenter.acronym" required/>
@@ -31,17 +33,16 @@
                 <div ng-message="ACRONYM_EXIST">Centro já existente</div>
               </div>
             </md-input-container>
-
             <md-input-container>
               <label>Código</label>
-              <input numbers-only name="code" ng-change="$ctrl.resetValidationCode()" ng-model="$ctrl.fieldCenter.code" required/>
+              <input numbers-only name="code" ng-change="$ctrl.resetValidationCode()" ng-model="$ctrl.fieldCenter.code"
+                     required/>
 
               <div ng-messages="createForm.code.$error">
                 <div ng-message="required">Obrigatório</div>
                 <div ng-message="CODE_EXIST">Código já existente</div>
               </div>
             </md-input-container>
-
             <md-input-container flex md-no-float>
               <label>Nome</label>
               <input name="name" required ng-model="$ctrl.fieldCenter.name"></input>
@@ -51,35 +52,31 @@
               </div>
             </md-input-container>
           </div>
-          <div layout="row" layout-padding>
+          <div layout="row" layout-xs="column" layout-padding>
             <md-input-container>
               <label>Estado</label>
               <input ng-model="$ctrl.fieldCenter.state"></input>
             </md-input-container>
-
-            <md-input-container flex="50" md-no-float>
+            <md-input-container md-no-float>
               <label>Endereço</label>
               <md-icon md-font-set="material-icons">place</md-icon>
               <input ng-model="$ctrl.fieldCenter.address"></input>
             </md-input-container>
-
             <md-input-container>
               <label>Complemento</label>
               <input ng-model="$ctrl.fieldCenter.complement"></input>
             </md-input-container>
           </div>
-          <div layout="row" layout-padding>
+          <div layout="row" layout-xs="column" layout-padding>
             <md-input-container>
               <label>Pais</label>
               <input ng-model="$ctrl.fieldCenter.country"></input>
             </md-input-container>
-
             <md-input-container>
               <label>Cep</label>
               <md-icon md-font-set="material-icons">markunread_mailbox</md-icon>
               <input aria-label="Cep" ui-mask="99999-999" ng-model="$ctrl.fieldCenter.zip"></input>
             </md-input-container>
-
             <md-input-container md-no-float>
               <label>Fone</label>
               <md-icon md-font-set="material-icons">phone</md-icon>
@@ -88,10 +85,12 @@
           </div>
         </form>
       </div>
+    </md-content>
   </div>
-  </md-content>
 </div>
 <div class="layout-row" layout-align="end center" layout-margin>
   <md-button class="md-raised md-no-focus" ng-click="$ctrl.cleanFields()">Limpar</md-button>
-  <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create()">Criar</md-button>
+  <md-button ng-disabled="createForm.$invalid" type="submit" class="md-raised md-primary" ng-click="$ctrl.create()">
+    Criar
+  </md-button>
 </div>
