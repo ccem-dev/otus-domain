@@ -5,10 +5,10 @@
     </md-card-title-text>
   </md-card-title>
   <md-card-content>
-    <div layout-gt-sm="row">
-      <md-input-container class="removeMarginBottom remove-errors-spacer" flex-gt-sm>
+    <div layout="row" layout-xs="column">
+      <md-input-container class="removeMarginBottom remove-errors-spacer" flex>
         <label>Adicionar um novo grupo</label>
-        <input ng-model="$ctrl.newGroup">
+        <input ng-model="$ctrl.newGroup" flex>
       </md-input-container>
       <md-button class="md-primary md-raised" ng-click="$ctrl.addNewSurveyGroup()">Adicionar</md-button>
     </div>
@@ -22,7 +22,7 @@
               <div ng-message="required">Obrigatório</div>
             </div>
           </md-input-container>
-          <div layout="row" flex="20" layout-align="end end">
+          <div layout="row" flex layout-align="end end">
             <md-button ng-if="!group.editMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.edit(group, $index)">
               <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
               <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">

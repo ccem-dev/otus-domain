@@ -1,51 +1,59 @@
-<div layout="row" layout-align="start center">
-  <label flex> <span>{{$ctrl.surveyForm.surveyTemplate.identity.acronym}}</span> - {{$ctrl.surveyForm.surveyTemplate.identity.name}}
-    |<span class="md-caption"> Versão: {{$ctrl.surveyForm.version}}</span></label>
-  <div layout="row" flex="20" layout-align="end end">
-    <md-button class="md-icon-button" aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">
-      <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
-      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-        Configurações
-      </md-tooltip>
-    </md-button>
-    <md-button class="md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteSurveyTemplate()">
-      <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
-      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-        Excluir
-      </md-tooltip>
-    </md-button>
+<div flex layout="column">
+  <div layout-align="center center" flex layout="row">
+    <span class="md-body-1"> Versão: {{$ctrl.surveyForm.version}}</span>
+
+    <span flex/>
+
+    <md-menu>
+      <md-button class="md-icon-button" ng-click="$mdMenu.open($event)">
+        <md-icon md-font-library="material-icons" aria-label="Configurações">menu</md-icon>
+      </md-button>
+      <md-menu-content>
+        <div layout="column" layout-align="start start">
+          <md-button aria-label="Configurações" ng-click="$ctrl.showActivitySettings()">
+            <md-icon md-font-library="material-icons" aria-label="Configurações">settings</md-icon>
+            <span>Configurações</span>
+          </md-button>
+          <md-button aria-label="Excluir" ng-click="$ctrl.deleteSurveyTemplate()">
+            <md-icon md-font-library="material-icons" aria-label="Excluir">delete</md-icon>
+            <span>Excluir</span>
+          </md-button>
+        </div>
+      </md-menu-content>
+    </md-menu>
   </div>
-</div>
-<div layout="row" layout-align="start center">
-  <label flex="80" ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" class="md-caption">Grupos:</label>
-  <label ng-if="$ctrl.surveyGroupsEditMode || ($ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode)" class="md-caption">Grupos: </label>
-  <md-contact-chips flex="80" ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}" ng-if="$ctrl.surveyGroupsEditMode"
-    ng-disabled="$ctrl.surveyGroupsEditMode"
-    md-contacts="$ctrl.querySearch($query)"
-    md-contact-name="name" 
-    md-require-match="true" 
-    md-separator-keys="$ctrl.keys" 
-    md-highlight-flags="i" 
-    placeholder="Digite um nome de grupo"
-    secondary-placeholder="Adicionar outros grupos" 
-    input-aria-label="Grupos pretendidos">
-  </md-contact-chips>
-  <md-chips flex layout="row" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode"  input-aria-label="grupos" input-aria-describedby="staticChipsNote" >
-    <md-chip ng-repeat="group in $ctrl.surveyForm.groups">{{group.getName()}}</md-chip>
-  </md-chips>
-  <div layout="row" flex="20" layout-align="end end">
-    <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar" ng-click="$ctrl.surveyGroupsEdit()">
-      <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
-      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
-        Editar grupos
-      </md-tooltip>
-    </md-button>
-    <md-button ng-if="$ctrl.surveyGroupsEditMode" class="md-icon-button md-primary"
-               ng-click="$ctrl.updateSurveyGroups()">
-      <md-tooltip md-direction="left">
-        Atualizar grupos
-      </md-tooltip>
-      <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
-    </md-button>
+
+  <div style="margin-bottom:15px">
+    <span class="md-body-1">{{$ctrl.surveyForm.surveyTemplate.identity.acronym}} - {{$ctrl.surveyForm.surveyTemplate.identity.name}}</span>
+  </div>
+
+  <div style="margin-bottom:15px" layout-align="start center" layout="row">
+    <md-contact-chips ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}"
+      ng-if="$ctrl.surveyGroupsEditMode" ng-disabled="$ctrl.surveyGroupsEditMode"
+      md-contacts="$ctrl.querySearch($query)" md-contact-name="name" md-require-match="true"
+      md-separator-keys="$ctrl.keys" md-highlight-flags="i" placeholder="Digite um nome de grupo"
+      secondary-placeholder="Editar grupo" input-aria-label="Grupos pretendidos" flex>
+    </md-contact-chips>
+    <md-chips flex layout="row" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode"
+      input-aria-label="grupos" input-aria-describedby="staticChipsNote">
+      <md-chip ng-repeat="group in $ctrl.surveyForm.groups">{{group.getName()}}</md-chip>
+    </md-chips>
+    <span ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" flex></span>
+    <div layout="row" layout-align="end end">
+      <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar"
+        ng-click="$ctrl.surveyGroupsEdit()">
+        <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
+        <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+          Editar grupos
+        </md-tooltip>
+      </md-button>
+      <md-button ng-if="$ctrl.surveyGroupsEditMode" class="md-icon-button md-primary"
+        ng-click="$ctrl.updateSurveyGroups()">
+        <md-tooltip md-direction="left">
+          Atualizar grupos
+        </md-tooltip>
+        <md-icon md-font-set="material-icons" style="color:green">check</md-icon>
+      </md-button>
+    </div>
   </div>
 </div>

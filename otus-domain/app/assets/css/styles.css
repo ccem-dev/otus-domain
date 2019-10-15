@@ -1,3 +1,26 @@
+md-sidenav {
+  position: fixed !important;
+  width: 320px;
+  min-width: 320px !important;
+}
+
+md-backdrop {
+  position: fixed !important;
+}
+
+md-backdrop ~ md-tab {
+  position: fixed;
+}
+
+@media (max-width: 456px) {
+  md-sidenav,
+  md-sidenav.md-locked-open,
+  md-sidenav.md-closed.md-locked-open-add-active {
+    position: fixed !important;
+    min-width: 320px !important;
+  }
+}
+
 * {
   padding: 0;
   box-sizing: border-box;
@@ -41,12 +64,6 @@ md-input-container.md-input-invalid>md-icon {
   color: red !important;
 }
 
-#logo-image {
-  border-radius: 120px;
-  width: 120px;
-  height: 120px;
-}
-
 .margin-zero {
   margin: 0px;
 }
@@ -54,12 +71,6 @@ md-input-container.md-input-invalid>md-icon {
 .margin-small-top {
   top:-2px !important;
   margin: 10px;
-}
-
-.iconBigger {
-  font-size: 4.5vw !important;
-  cursor: pointer;
-  color: rgba(0, 0, 0, 0.54) !important;
 }
 
 .field-user-position {
@@ -125,7 +136,7 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
 }
 
 .select-multiple-centers {
-  width: 280px;
+  min-width: 200px;
   margin: 15px;
   /* padding: 20px; */
 }
@@ -162,4 +173,14 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
 
 .selectdemoSelectHeader>md-select-menu {
   margin-top: 45px !important;
+}
+md-chips-wrap {
+  width: 100%;
+}
+md-chips-wrap > div{
+  width: 100%;
+}
+
+.report-card-title-text{
+  min-width: 312px !important;
 }
