@@ -173,16 +173,15 @@
     }
 
     function _getSurveyVersions() {
-      var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
+      let acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       ProjectConfigurationService.getSurveyVersions(acronym)
         .then(function (data) {
           self.versions = data;
-          self.activityVersionsAvailable = _loadListOfOutOfReportVersions(self.versions);
-
-        }).catch(function () {
-        self.error = true;
-        self.message = GENERIC_ERROR;
-      });
+        })
+        .catch(function () {
+          self.error = true;
+          self.message = GENERIC_ERROR;
+        });
     }
 
     function _getSurveyTemplates() {
@@ -222,9 +221,14 @@
     }
 
     function _loadActivityReportList(acronym) {
+
       ProjectConfigurationService.getActivityReports(acronym)
+        .then(_getSurveyVersions())
         .then(activityReports => {
           self.activityReportList = ActivitySettingsService.getActivityReports(activityReports);
+        })
+        .then(() => {
+          self.activityVersionsAvailable = _loadListOfOutOfReportVersions(self.versions);
           self.persistentActivityReport = true;
         })
         .catch(() => {
@@ -249,6 +253,7 @@
 
 
     function _loadListOfOutOfReportVersions(activityVersions) {
+
       if (self.activityReportList.length) {
         let candidateReportVersions = angular.copy(activityVersions);
 
