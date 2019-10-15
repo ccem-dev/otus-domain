@@ -17,12 +17,12 @@
     'otusDomain.rest.configuration.ProjectConfigurationService',
     'otusDomain.dashboard.business.SurveyTemplateTranslateService',
     '$mdDialog',
-    '$mdSelect'
-
+    '$mdSelect',
+    'activitySettingsService'
   ];
 
   function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory,
-                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect) {
+                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -67,7 +67,7 @@
       self.activityReportList = [];
       self.outOfReportVersionList = [];
       self.persistentActivityReport = false;
-      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym, 1);
+      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym);
     }
 
     function saveSettings(MSG) {
@@ -221,15 +221,30 @@
       return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
 
-    function _loadActivityReportList(acronym, st) {
-      self.activityReportList = ProjectConfigurationService.getActivityReports(acronym, st);
-      if (self.activityReportList.length > 0) self.persistentActivityReport = true;
+    function _loadActivityReportList(acronym) {
+      ProjectConfigurationService.getActivityReports(acronym)
+        .then(activityReports => {
+          self.activityReportList = ActivitySettingsService.getActivityReports(activityReports);
+          self.persistentActivityReport = true;
+        })
+        .catch(() => {
+          _toastFoundError("Lista de Relatórios Ausentes")
+        });
+    }
+
+    function _toastFoundError(message) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(message)
+          .hideDelay(5000)
+      );
     }
 
     //TODO: método simulando uma persistência com o service
     function uploadReport() {
-      self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym, 2);
-      self.persistentActivityReport = true;
+      //self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym, 2);
+      self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym);
+      if (self.activityReportList.length) self.persistentActivityReport = true;
     }
 
 
@@ -286,6 +301,6 @@
         console.log('btn não');
       });
     }
-   }
+  }
 
 }());

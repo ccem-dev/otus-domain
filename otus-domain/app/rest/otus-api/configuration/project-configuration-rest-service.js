@@ -15,6 +15,7 @@
     var _projectConfigurationResource;
     var _permissionConfiguration;
     var _userResource;
+    var _reportResource;
     var self = this;
 
     /* Public methods */
@@ -35,7 +36,7 @@
     self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
     self.getCollectionOfPermissions = getCollectionOfPermissions;
     self.fetchUsers = fetchUsers;
-    self.getActivityReports = getActivityReports
+    self.getActivityReports = getActivityReports;
 
     onInit();
 
@@ -44,6 +45,7 @@
       _projectConfigurationResource = OtusRestResourceService.getProjectConfigurationResource();
       _permissionConfiguration = OtusRestResourceService.getPermissionConfigurationResource();
       _userResource = OtusRestResourceService.getUserResource();
+      _reportResource = OtusRestResourceService.getReportResourceFactory();
     }
 
     function fetchUsers() {
@@ -239,41 +241,57 @@
       return defer.promise;
     }
 
-    function getActivityReports(acronym, st) {
-      let status = st
-
-      switch (status) {
-        case 1 :
-          return []
-          break;
-
-        case 2 :
-          return [
-            new ActivityReport({
-              id: 1,
-              acronym: "RCPC",
-              label: "template versão 1",
-              sendingDate: new Date(),
-              versions: [1]
-            }),
-            new ActivityReport({
-              id: 2,
-              acronym: "RCPC",
-              label: "template versão 3",
-              sendingDate: new Date(),
-              versions: [3, 4]
-            }),
-            new ActivityReport({
-              id: 3,
-              acronym: "RCPC",
-              label: "template versão 2",
-              sendingDate: new Date(),
-              versions: [2]
-            })
-          ];
-          break;
-      }
+    function getActivityReports(acronym) {
+      var defer = $q.defer();
+      _reportResource.getActivityReportList({
+          'acronym': acronym
+        },
+        function (response) {
+          if (response.data) {
+            defer.resolve(response.data);
+          } else {
+            defer.reject(response.data);
+          }
+        });
+      return defer.promise;
     }
+
+    // function getActivityReports(acronym, st) {
+    //   let status = st
+    //
+    //   switch (status) {
+    //     case 1 :
+    //       return []
+    //       break;
+    //
+    //     case 2 :
+    //       return [
+    //         new ActivityReport({
+    //           id: 1,
+    //           acronym: "RCPC",
+    //           label: "template versão 1",
+    //           sendingDate: new Date(),
+    //           versions: [1]
+    //         }),
+    //         new ActivityReport({
+    //           id: 2,
+    //           acronym: "RCPC",
+    //           label: "template versão 3",
+    //           sendingDate: new Date(),
+    //           versions: [3, 4]
+    //         }),
+    //         new ActivityReport({
+    //           id: 3,
+    //           acronym: "RCPC",
+    //           label: "template versão 2",
+    //           sendingDate: new Date(),
+    //           versions: [2]
+    //         })
+    //       ];
+    //       break;
+    //   }
+    // }
+
 
     function ActivityReport(obj) {
       var self = this;
