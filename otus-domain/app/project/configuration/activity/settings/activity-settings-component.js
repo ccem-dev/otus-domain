@@ -221,42 +221,29 @@
     }
 
     function _loadActivityReportList(acronym) {
-
+      _cleanCollections();
       ProjectConfigurationService.getActivityReports(acronym)
-        .then(_getSurveyVersions())
         .then(activityReports => {
-          self.activityReportList = ActivitySettingsService.getActivityReports(activityReports);
+          console.log("1 -resolveu a promisse da lista de report")
+          self.activityReportList = ActivitySettingsService.getActivityReports(activityReports); })
+        .then(() => {
+          _getSurveyVersions(),
+            console.log("2 - pegou as versions")
         })
         .then(() => {
-          self.activityVersionsAvailable = _loadListOfOutOfReportVersions(self.versions);
-          self.persistentActivityReport = true;
+          _loadListOfOutOfReportVersions(self.versions),
+            console.log("3 chamou o comparador de version disponivel")
         })
-        .catch(() => {
-          _toastFoundError("Lista de Relatórios Ausentes")
-        });
+        .then(() => {
+          self.persistentActivityReport = true,
+          console.log("4 - ativou o state da lista")
+        })
+        .catch(() => {_toastCalled("Lista de Relatórios Ausentes"), self.persistentActivityReport = false});
     }
-
-    function _toastFoundError(message) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent(message)
-          .hideDelay(5000)
-      );
-    }
-
-    //TODO: método simulando uma persistência com o service
-    function uploadReport() {
-      //self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym, 2);
-      self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym);
-      if (self.activityReportList.length) self.persistentActivityReport = true;
-    }
-
 
     function _loadListOfOutOfReportVersions(activityVersions) {
-
       if (self.activityReportList.length) {
         let candidateReportVersions = angular.copy(activityVersions);
-
         self.activityReportList.forEach(report => {
           report.versions.forEach(reportVersion => {
             let index = candidateReportVersions.indexOf(reportVersion);
@@ -265,9 +252,55 @@
             }
           })
         });
-
-        return candidateReportVersions;
+        self.activityVersionsAvailable = candidateReportVersions;
       }
+    }
+
+    function _showAlert(report) {
+      let versionCandidates = report.versions;
+      var confirm = $mdDialog.confirm()
+        .title('Deseja confirmar as seguintes alterações no relatório ?')
+        .htmlContent(` <h3>Versões compatíveis</h3>
+                       <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
+                       <p class="md-body-1">Solicitadas: ${report.versions}</p>`)
+        .ariaLabel('version change confirmation')
+        .targetEvent(report)
+        .ok('SIM')
+        .cancel('NÃO');
+
+      $mdDialog.show(confirm).then(() => {
+        ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
+          .then(_toastCalled("Solicitação OK: Versões Atualizadas"))
+          .then(console.log(self.activityReportList))
+          .then(_loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+          .then(console.log(self.activityReportList))
+          .catch(error => console.log(error));
+
+        //report.versions = versionCandidates;
+        //report.updateCurrentVersions();
+      }, function () {
+        console.log('btn não');
+      });
+    }
+
+    function _toastCalled(message) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(message)
+          .hideDelay(5000)
+      );
+    }
+
+    function _cleanCollections() {
+      self.activityReportList = [];
+      self.activityVersionsAvailable = [];
+    }
+
+    //TODO: método simulando uma persistência com o service
+    function uploadReport() {
+      //self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym, 2);
+      //self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym);
+      //if (self.activityReportList.length) self.persistentActivityReport = true;
     }
 
     function updateSelectVersion(report) {
@@ -285,27 +318,6 @@
       self.persistentActivityReport = false;
     }
 
-    function _showAlert(report) {
-      let versionCandidates = report.versions;
-      var confirm = $mdDialog.confirm()
-        .title('Deseja confirmar as seguintes alterações no relatório ?')
-        .htmlContent(` <h3>Versões compatíveis</h3>
-                       <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
-                       <p class="md-body-1">Solicitadas: ${report.versions}</p>`)
-        .ariaLabel('version change confirmation')
-        .targetEvent(report)
-        .ok('SIM')
-        .cancel('NÃO');
-
-      $mdDialog.show(confirm).then(function () {
-        console.log('btn sim');
-        report.versions = versionCandidates;
-        report.updateCurrentVersions();
-
-      }, function () {
-        console.log('btn não');
-      });
-    }
   }
 
 }());

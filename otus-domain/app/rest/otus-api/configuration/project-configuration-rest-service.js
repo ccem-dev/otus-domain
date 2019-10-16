@@ -37,6 +37,7 @@
     self.getCollectionOfPermissions = getCollectionOfPermissions;
     self.fetchUsers = fetchUsers;
     self.getActivityReports = getActivityReports;
+    self.updateActivityReport = updateActivityReport;
 
     onInit();
 
@@ -255,5 +256,22 @@
         });
       return defer.promise;
     }
+
+    function updateActivityReport(id, versionCandidates) {
+      var defer = $q.defer();
+      _reportResource.updateActivityReport({
+          'id': id,
+          'versions': versionCandidates
+        },
+        function (response) {
+          if (response.data) {
+            defer.resolve(response.data);
+          } else {
+            defer.reject(response.data);
+          }
+        });
+      return defer.promise;
+    }
+
   }
 }());

@@ -20,7 +20,7 @@
     var self = this;
     var _currentVersions = activityReportData.versions;
 
-    self.id = activityReportData.id;
+    self.id = activityReportData._id;
     self.template = activityReportData.template;
     self.label = activityReportData.label;
     self.sendingDate = activityReportData.sendingDate;

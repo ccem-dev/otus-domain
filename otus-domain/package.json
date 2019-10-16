@@ -39,7 +39,7 @@
     "angular-ui-router": "^0.3.1",
     "jquery": "2.2.0",
     "moment": "2.12.0",
-    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#dev",
+    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-47",
     "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
     "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#dev",
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#v1.0",
