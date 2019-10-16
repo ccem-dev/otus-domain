@@ -258,25 +258,31 @@
 
     function _showAlert(report) {
       let versionCandidates = report.versions;
-      let confirm = $mdDialog.confirm()
-        .title('Deseja confirmar as seguintes alterações no relatório ?')
-        .htmlContent(` <h3>Versões compatíveis</h3>
+
+      if (versionCandidates.length) {
+        let confirm = $mdDialog.confirm()
+          .title('Deseja confirmar as seguintes alterações no relatório ?')
+          .htmlContent(` <h3>Versões compatíveis</h3>
                        <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
                        <p class="md-body-1">Solicitadas: ${report.versions}</p>`)
-        .ariaLabel('version change confirmation')
-        .targetEvent(report)
-        .ok('SIM')
-        .cancel('NÃO');
+          .ariaLabel('version change confirmation')
+          .targetEvent(report)
+          .ok('SIM')
+          .cancel('NÃO');
 
-      $mdDialog.show(confirm).then(() => {
-        ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
-          .then((data) => {_toastCalled("Solicitação OK: Versões Atualizadas"), console.log(data)})
-          .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-          .catch(error => console.log(error));
+        $mdDialog.show(confirm).then(() => {
+          ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
+            .then((data) => {
+              _toastCalled("Solicitação OK: Versões Atualizadas"), console.log(data)
+            })
+            .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+            .catch(error => console.log(error));
+        });
+      }
+      else{
+        _toastCalled("Não é permitido relatório sem versão");
 
-      }, function () {
-        console.log('btn não');
-      });
+      }
     }
 
     function _toastCalled(message) {
