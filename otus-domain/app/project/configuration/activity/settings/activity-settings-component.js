@@ -258,7 +258,7 @@
 
     function _showAlert(report) {
       let versionCandidates = report.versions;
-      var confirm = $mdDialog.confirm()
+      let confirm = $mdDialog.confirm()
         .title('Deseja confirmar as seguintes alterações no relatório ?')
         .htmlContent(` <h3>Versões compatíveis</h3>
                        <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
@@ -270,14 +270,10 @@
 
       $mdDialog.show(confirm).then(() => {
         ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
-          .then(_toastCalled("Solicitação OK: Versões Atualizadas"))
-          .then(console.log(self.activityReportList))
-          .then(_loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-          .then(console.log(self.activityReportList))
+          .then((data) => {_toastCalled("Solicitação OK: Versões Atualizadas"), console.log(data)})
+          .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
           .catch(error => console.log(error));
 
-        //report.versions = versionCandidates;
-        //report.updateCurrentVersions();
       }, function () {
         console.log('btn não');
       });
@@ -313,11 +309,26 @@
       $mdSelect.cancel();
     }
 
-    function deleteReport() {
-      console.log("delete");
-      self.persistentActivityReport = false;
-    }
+    function deleteReport(report) {
+      console.log(report)
+      let confirm = $mdDialog.confirm()
+        .title('Exclusão de RELATÓRIO')
+        .htmlContent(`<h3>Você tem certeza que deseja excluir este RELATÓRIO?</h3>
+                      <p class="md-body-1">Atividade ${report.acronym}</p>
+                      <p class="md-body-1">Titulo: ${report.label}</p>
+                      <p class="md-body-1">Versões: ${report.versions}</p>`)
+        .ariaLabel('delete confirmation')
+        .ok('SIM')
+        .cancel('NÃO');
 
+      $mdDialog.show(confirm).then(() => {
+        ProjectConfigurationService.deleteActivityReport(report.id)
+          .then(data => console.log(data))
+          .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+          .catch(error => console.log(error));
+      });
+
+    }
   }
 
 }());

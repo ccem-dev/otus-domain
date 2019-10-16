@@ -38,6 +38,7 @@
     self.fetchUsers = fetchUsers;
     self.getActivityReports = getActivityReports;
     self.updateActivityReport = updateActivityReport;
+    self.deleteActivityReport = deleteActivityReport;
 
     onInit();
 
@@ -265,11 +266,27 @@
         },
         function (response) {
           if (response.data) {
-            defer.resolve(response.data);
+            defer.resolve(response);
           } else {
-            defer.reject(response.data);
+            defer.reject(response);
           }
         });
+      return defer.promise;
+    }
+
+    function deleteActivityReport(id) {
+      var defer = $q.defer();
+      _reportResource.remove({
+          'id': id,
+        },
+        function (response) {
+          if (response.data) {
+            defer.resolve(response);
+          } else {
+            defer.reject(reponse);
+          }
+        });
+
       return defer.promise;
     }
 

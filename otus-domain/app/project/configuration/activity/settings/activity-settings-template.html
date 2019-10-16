@@ -196,7 +196,7 @@
           <md-list-item aria-label="template"
                         ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
             <div flex="80" layout="column" layout-align="left left" layout-margin>
-              <p class="md-body-2">Label: {{report.label}}</p>
+              <p class="md-body-2">Titulo: {{report.label}}</p>
               <p class="md-body-1">Enviado em:{{report.sendDate}}</p>
               <div>
                 <md-input-container>
@@ -215,7 +215,7 @@
               </div>
             </div>
             <div flex="20" layout="row" layout-align="end right" layout-margin>
-              <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport()">
+              <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport(report)">
                 <md-icon aria-label="deletar relatório" md-font-library="material-icons">delete</md-icon>
                 <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
               </md-button>
