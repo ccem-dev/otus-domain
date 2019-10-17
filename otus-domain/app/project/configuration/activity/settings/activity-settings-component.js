@@ -18,11 +18,12 @@
     'otusDomain.dashboard.business.SurveyTemplateTranslateService',
     '$mdDialog',
     '$mdSelect',
-    'activitySettingsService'
+    'activitySettingsService',
+    '$q'
   ];
 
   function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory,
-                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService) {
+                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService, $q) {
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -46,11 +47,17 @@
     self.transformChip = transformChip;
     self.onAdd = onAdd;
     self.onRemove = onRemove;
-    self.uploadReport = uploadReport;
     self.deleteReport = deleteReport;
     self.updateSelectVersion = updateSelectVersion;
     self.cancelSelectVersion = cancelSelectVersion;
 
+    self.uploadConfig = {
+      'callback': uploadFile,
+      'type': 'json'
+    };
+
+    self.uploadedObject = {};
+    self.uploadedFile = {};
 
 
     function onInit() {
@@ -227,7 +234,8 @@
       ProjectConfigurationService.getActivityReports(acronym)
         .then(activityReports => {
           console.log("1 -resolveu a promisse da lista de report")
-          self.activityReportList = ActivitySettingsService.getActivityReports(activityReports); })
+          self.activityReportList = ActivitySettingsService.getActivityReports(activityReports);
+        })
         .then(() => {
           _getSurveyVersions(),
             console.log("2 - pegou as versions")
@@ -238,7 +246,7 @@
         })
         .then(() => {
           self.persistentActivityReport = true,
-          console.log("4 - ativou o state da lista")
+            console.log("4 - ativou o state da lista")
         })
         .catch(() => self.persistentActivityReport = false);
     }
@@ -274,16 +282,12 @@
 
         $mdDialog.show(confirm).then(() => {
           ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
-            .then((data) => {
-              _toastCalled("Solicitação OK: Versões Atualizadas"), console.log(data)
-            })
+            .then(() => _toastCalled("Solicitação OK: Versões Atualizadas"))
             .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
             .catch(error => console.log(error));
         });
-      }
-      else{
+      } else {
         _toastCalled("Não é permitido relatório sem versão");
-
       }
     }
 
@@ -300,27 +304,17 @@
       self.activityVersionsAvailable = [];
     }
 
-    //TODO: método simulando uma persistência com o service
-    function uploadReport() {
-      //self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym, 2);
-      //self.activityReportList = ProjectConfigurationService.getActivityReports(self.currentSurvey.surveyTemplate.identity.acronym);
-      //if (self.activityReportList.length) self.persistentActivityReport = true;
-    }
-
     function updateSelectVersion(report) {
       _showAlert(report);
-      $mdSelect.destroy();
+      //$mdSelect.destroy();
     }
 
     function cancelSelectVersion(report) {
-      if(report){
-        report.cancelUpdateVersion();
-      }
+      if (report) report.cancelUpdateVersion();
       $mdSelect.cancel();
     }
 
     function deleteReport(report) {
-      console.log(report)
       let confirm = $mdDialog.confirm()
         .title('Exclusão de RELATÓRIO')
         .htmlContent(`<h3>Você tem certeza que deseja excluir este RELATÓRIO?</h3>
@@ -333,42 +327,22 @@
 
       $mdDialog.show(confirm).then(() => {
         ProjectConfigurationService.deleteActivityReport(report.id)
-          .then(data => console.log(data))
           .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
           .catch(error => console.log(error));
       });
     }
 
-    self.uploadConfig = {
-      'callback': uploadFile,
-      'type': 'json'
-    };
-
     function uploadFile(fileList) {
-      console.log(filelist)
       fileList.forEach(function (file) {
         if (fileList[0].name.split('.')[1] === 'json') {
           _fileParser(file).then(function (templateObject) {
             self.uploadedObject = JSON.parse(templateObject);
             self.uploadedFile = templateObject;
-           //self.disableSaving = false;
           })
-            //.then(() => _publishReport())
+            .then(() => _publishReport())
         }
       });
     }
-
-    // function _publishReport() {
-    //   ProjectConfigurationService.publishReport(self.uploadedFile)
-    //     .then(function (activityReport) {
-    //       console.log(activityReport)
-    //       //successfullPublishCallback(surveyTemplate);
-    //     }).catch(function (message) {
-    //     //publishFailureMessenger(message);
-    //   });
-    // }
-
-
 
     function _fileParser(file) {
       var deferred = $q.defer();
@@ -380,6 +354,12 @@
       return deferred.promise;
     }
 
+    function _publishReport() {
+      ProjectConfigurationService.publishActivityReport(self.uploadedFile)
+        .then(() => _toastCalled("Solicitação Atendida (Relatório Adicionado)"))
+        .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+        .catch(() => _toastCalled("Ocorreu um Erro (Relatório Não Adicionado)"));
+    }
   }
 
 }());

@@ -39,6 +39,7 @@
     self.getActivityReports = getActivityReports;
     self.updateActivityReport = updateActivityReport;
     self.deleteActivityReport = deleteActivityReport;
+    self.publishActivityReport = publishActivityReport;
 
     onInit();
 
@@ -287,6 +288,19 @@
           }
         });
 
+      return defer.promise;
+    }
+
+    function publishActivityReport(report) {
+      var defer = $q.defer();
+      _reportResource.createActivityReport(report,
+        function (response) {
+          if ('data' in response) {
+            defer.resolve(response.data);
+          } else {
+            defer.reject(response.MESSAGE);
+          }
+        });
       return defer.promise;
     }
 

@@ -161,22 +161,21 @@
       </div>
     </md-content>
   </md-card>
-
+  <!-- ActivityReports -->
   <md-card layout="column">
     <md-content layout-padding>
-
     </md-content>
     <md-content layout="column">
       <md-card-title flex layout="row">
         <span class="md-title">Relatório</span>
         <span flex></span>
-        <md-button class="md-icon-button" layout-fill="" ng-click="$ctrl.saveSettings()">
+        <md-button class="md-icon-button" layout-fill="" ng-click="'$ctrl.saveSettings()'">
           <md-icon>help</md-icon>
-          <md-tooltip>Relatório da atividade e template</md-tooltip>
+          <md-tooltip>Relatório da Atividade</md-tooltip>
         </md-button>
       </md-card-title>
       <div layout="row" layout-margin>
-        <span class="md-subhead" flex="30">Lista de relatórios armazenados</span>
+        <span class="md-subhead" flex="30">Lista de Relatórios Armazenados</span>
         <span flex="40"></span>
         <span flex="30" layout="row">
           <span class="md-subhead">Enviar Relatório:</span>
@@ -196,7 +195,7 @@
           </md-optgroup>
         </md-select>
         <md-button class="md-icon-button md-primary"
-                   layout-align="end center"
+                   layout-align="start center"
                    md-tooltip="Upload"
                    upload="$ctrl.uploadConfig">
           <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
@@ -210,6 +209,7 @@
       <md-card-content>
         <md-divider></md-divider>
 
+        <!-- Template for Empty ActivityReport list -->
         <md-whiteframe class="md-whiteframe-1dp" layout ng-if="!$ctrl.persistentActivityReport">
           <div flex="90" layout="row" layout-align="center center" layout-margin>
             <p>FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO</p>
@@ -224,6 +224,7 @@
           </div>
         </md-whiteframe>
 
+        <!-- Template for List of ActivitityrReports with items -->
         <md-list ng-if=$ctrl.persistentActivityReport>
           <md-list-item aria-label="template"
                         ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
