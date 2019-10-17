@@ -163,8 +163,11 @@
   </md-card>
 
   <md-card layout="column">
+    <md-content layout-padding>
+
+    </md-content>
     <md-content layout="column">
-      <md-card-title flex layout="row" layout-align="start center">
+      <md-card-title flex layout="row">
         <span class="md-title">Relatório</span>
         <span flex></span>
         <md-button class="md-icon-button" layout-fill="" ng-click="$ctrl.saveSettings()">
@@ -172,8 +175,37 @@
           <md-tooltip>Relatório da atividade e template</md-tooltip>
         </md-button>
       </md-card-title>
-      <div layout="column" layout-margin>
-        <span class="md-subhead">Lista de relatórios armazenados</span>
+      <div layout="row" layout-margin>
+        <span class="md-subhead" flex="30">Lista de relatórios armazenados</span>
+        <span flex="40"></span>
+        <span flex="30" layout="row">
+          <span class="md-subhead">Enviar Relatório:</span>
+        <md-select class="margin-zero select-multiple-versions"
+                   md-on-close="$ctrl.cancelSelectVersion(report)"
+                   multiple
+                   aria-label="selecionar versões"
+                   ng-model="report.versions">
+          <md-optgroup>
+            <md-button class="md-mini md-primary" ng-click="$ctrl.infoSelectVersion(report)">Informar Versão
+            </md-button>
+            <md-option
+              ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"
+              ng-value="version">
+              {{version}}
+            </md-option>
+          </md-optgroup>
+        </md-select>
+        <md-button class="md-icon-button md-primary"
+                   layout-align="end center"
+                   md-tooltip="Upload"
+                   upload="$ctrl.uploadConfig">
+          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+          <md-tooltip md-autohide="true"
+                      md-delay="200"
+                      md-direction="top"
+                      md-visible="false">Enviar</md-tooltip>
+        </md-button>
+        </span>
       </div>
       <md-card-content>
         <md-divider></md-divider>
@@ -201,14 +233,17 @@
               <div>
                 <md-input-container>
                   <label class="md-title ">Versões</label>
-                  <md-select class="margin-zero select-multiple-versions" md-on-close="$ctrl.cancelSelectVersion(report)" multiple
+                  <md-select class="margin-zero select-multiple-versions"
+                             md-on-close="$ctrl.cancelSelectVersion(report)" multiple
                              ng-model="report.versions">
                     <md-optgroup class="select-version" label="versões">
                       <md-button class="md-mini" ng-click="$ctrl.cancelSelectVersion(report)">Cancelar</md-button>
                       <md-button class="md-mini md-primary" ng-click="$ctrl.updateSelectVersion(report)">Atualizar
                       </md-button>
-                      <md-option ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}" ng-repeat="version in $ctrl.versions | orderBy: $index"
-                                 ng-value="version">
+                      <md-option
+                        ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}"
+                        ng-repeat="version in $ctrl.versions | orderBy: $index"
+                        ng-value="version">
                         {{version}}
                       </md-option>
                     </md-optgroup>

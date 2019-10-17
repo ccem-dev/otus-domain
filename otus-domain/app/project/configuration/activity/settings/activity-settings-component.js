@@ -51,6 +51,8 @@
     self.updateSelectVersion = updateSelectVersion;
     self.cancelSelectVersion = cancelSelectVersion;
 
+
+
     function onInit() {
       self.error = false;
       self.users = [];
@@ -238,7 +240,7 @@
           self.persistentActivityReport = true,
           console.log("4 - ativou o state da lista")
         })
-        .catch(() => {_toastCalled("Lista de Relatórios Ausentes"), self.persistentActivityReport = false});
+        .catch(() => self.persistentActivityReport = false);
     }
 
     function _loadListOfOutOfReportVersions(activityVersions) {
@@ -311,7 +313,9 @@
     }
 
     function cancelSelectVersion(report) {
-      report.cancelUpdateVersion();
+      if(report){
+        report.cancelUpdateVersion();
+      }
       $mdSelect.cancel();
     }
 
@@ -333,8 +337,49 @@
           .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
           .catch(error => console.log(error));
       });
-
     }
+
+    self.uploadConfig = {
+      'callback': uploadFile,
+      'type': 'json'
+    };
+
+    function uploadFile(fileList) {
+      console.log(filelist)
+      fileList.forEach(function (file) {
+        if (fileList[0].name.split('.')[1] === 'json') {
+          _fileParser(file).then(function (templateObject) {
+            self.uploadedObject = JSON.parse(templateObject);
+            self.uploadedFile = templateObject;
+           //self.disableSaving = false;
+          })
+            //.then(() => _publishReport())
+        }
+      });
+    }
+
+    // function _publishReport() {
+    //   ProjectConfigurationService.publishReport(self.uploadedFile)
+    //     .then(function (activityReport) {
+    //       console.log(activityReport)
+    //       //successfullPublishCallback(surveyTemplate);
+    //     }).catch(function (message) {
+    //     //publishFailureMessenger(message);
+    //   });
+    // }
+
+
+
+    function _fileParser(file) {
+      var deferred = $q.defer();
+      var reader = new FileReader();
+      reader.onload = function () {
+        deferred.resolve(reader.result);
+      };
+      reader.readAsText(file);
+      return deferred.promise;
+    }
+
   }
 
 }());
