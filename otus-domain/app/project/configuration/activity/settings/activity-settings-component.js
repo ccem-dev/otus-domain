@@ -50,6 +50,7 @@
     self.deleteReport = deleteReport;
     self.updateSelectVersion = updateSelectVersion;
     self.cancelSelectVersion = cancelSelectVersion;
+    self.loadActivity = loadActivity;
 
     self.uploadConfig = {
       'callback': uploadFile,
@@ -274,9 +275,7 @@
           .title('Deseja confirmar as seguintes alterações no relatório ?')
           .htmlContent(` <h3>Versões compatíveis</h3>
                        <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
-                       <p class="md-body-1">Solicitadas: ${report.versions}</p>`)
-          .ariaLabel('version change confirmation')
-          .targetEvent(report)
+                       <p class="md-body-1">Solicitadas: ${versionCandidates}</p>`)
           .ok('SIM')
           .cancel('NÃO');
 
@@ -306,7 +305,7 @@
 
     function updateSelectVersion(report) {
       _showAlert(report);
-      //$mdSelect.destroy();
+      $mdSelect.destroy();
     }
 
     function cancelSelectVersion(report) {
@@ -328,9 +327,14 @@
       $mdDialog.show(confirm).then(() => {
         ProjectConfigurationService.deleteActivityReport(report.id)
           .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-          .catch(error => console.log(error));
       });
     }
+
+
+    function loadActivity(ev) {}
+
+
+
 
     function uploadFile(fileList) {
       fileList.forEach(function (file) {
@@ -358,7 +362,7 @@
       ProjectConfigurationService.publishActivityReport(self.uploadedFile)
         .then(() => _toastCalled("Solicitação Atendida (Relatório Adicionado)"))
         .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-        .catch(() => _toastCalled("Ocorreu um Erro (Relatório Não Adicionado)"));
+        .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"));
     }
   }
 
