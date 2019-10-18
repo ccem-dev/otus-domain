@@ -1,13 +1,45 @@
-<md-button class="md-icon-button md-primary"
-           layout-align="start center"
-           md-tooltip="Upload"
-<!--           upload="$ctrl.uploadConfig"-->
+<md-dialog md-theme="layoutTheme" aria-label="upload ActivityReport">
+  <md-dialog-content>
+    <md-toolbar class="md-toolbar-tools">
+      <span>Carregamento de Relatório de atividade</span>
+    </md-toolbar>
+    <md-content class="autoScroll" layout-padding>
+      Siga as instruções abaixo para inserir um novo relatório
+    </md-content>
+    <md-content class="autoScroll" layout-padding>
+      1. Selecione uma versão compatível
+    </md-content>
+    </md-content>
+    <md-content class="autoScroll" layout-padding>
+      2. Procure o Template a ser carregado no sistema.
+      <md-button class="md-icon-button md-primary"
+                 layout-align="start center"
+                 md-tooltip="Upload"
+                 ng-disabled="report.versions.length"
+                 upload="$ctrl.uploadConfig">
+        <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+        <md-tooltip md-autohide="true"
+                    md-delay="200"
+                    md-direction="top"
+                    md-visible="false">Localizar Arquivo
+        </md-tooltip>
+      </md-button>
+    </md-content>
+    <md-content class="autoScroll" layout-padding>
+      3. Envie o Template com a versão definida.
+    </md-content>
+  </md-dialog-content>
+  <md-dialog-actions>
 
-  <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
-  <md-tooltip md-autohide="true"
-              md-delay="200"
-              md-direction="top"
-              md-visible="false">Localizar Arquivo
-  </md-tooltip>
-</md-button>
-<p>controller: {{$ctrl.uploadConfig}}</p>
+    <md-button ng-click="controller.cancel({ action: 'cancel' })" class="md-raised">Cancelar</md-button>
+    <md-button ng-click="controller.confirm({ action: 'confirm' })" class="md-raised md-primary">ENVIAR</md-button>
+  </md-dialog-actions>
+
+
+
+</md-dialog>
+
+
+
+
+

@@ -19,11 +19,14 @@
     '$mdDialog',
     '$mdSelect',
     'activitySettingsService',
-    '$q'
+    '$q',
+    'ActivityReportDialogService'
   ];
 
   function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory,
-                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService, $q) {
+                      ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService,
+                      $q, ActivityReportDialogService) {
+
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -50,15 +53,15 @@
     self.deleteReport = deleteReport;
     self.updateSelectVersion = updateSelectVersion;
     self.cancelSelectVersion = cancelSelectVersion;
-    self.loadActivity = loadActivity;
+    self.loadActivityReport = loadActivityReport;
 
-    self.uploadConfig = {
-      'callback': uploadFile,
-      'type': 'json'
-    };
-
-    self.uploadedObject = {};
-    self.uploadedFile = {};
+    // self.uploadConfig = {
+    //   'callback': uploadFile,
+    //   'type': 'json'
+    // };
+    //
+    // self.uploadedObject = {};
+    // self.uploadedFile = {};
 
 
     function onInit() {
@@ -331,39 +334,41 @@
     }
 
 
-    function loadActivity(ev) {}
-
-
-
-
-    function uploadFile(fileList) {
-      fileList.forEach(function (file) {
-        if (fileList[0].name.split('.')[1] === 'json') {
-          _fileParser(file).then(function (templateObject) {
-            self.uploadedObject = JSON.parse(templateObject);
-            self.uploadedFile = templateObject;
-          })
-            .then(() => _publishReport())
-        }
-      });
+    function loadActivityReport(ev) {
+      ActivityReportDialogService.loadActivityReport(ev);
     }
 
-    function _fileParser(file) {
-      var deferred = $q.defer();
-      var reader = new FileReader();
-      reader.onload = function () {
-        deferred.resolve(reader.result);
-      };
-      reader.readAsText(file);
-      return deferred.promise;
-    }
 
-    function _publishReport() {
-      ProjectConfigurationService.publishActivityReport(self.uploadedFile)
-        .then(() => _toastCalled("Solicitação Atendida (Relatório Adicionado)"))
-        .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-        .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"));
-    }
+
+
+    // function uploadFile(fileList) {
+    //   fileList.forEach(function (file) {
+    //     if (fileList[0].name.split('.')[1] === 'json') {
+    //       _fileParser(file).then(function (templateObject) {
+    //         self.uploadedObject = JSON.parse(templateObject);
+    //         self.uploadedFile = templateObject;
+    //       })
+    //         .then(() => _publishReport())
+    //     }
+    //   });
+    // }
+    //
+    // function _fileParser(file) {
+    //   var deferred = $q.defer();
+    //   var reader = new FileReader();
+    //   reader.onload = function () {
+    //     deferred.resolve(reader.result);
+    //   };
+    //   reader.readAsText(file);
+    //   return deferred.promise;
+    // }
+
+    // function _publishReport() {
+    //   ProjectConfigurationService.publishActivityReport(self.uploadedFile)
+    //     .then(() => _toastCalled("Solicitação Atendida (Relatório Adicionado)"))
+    //     .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+    //     .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"));
+    // }
   }
 
 }());

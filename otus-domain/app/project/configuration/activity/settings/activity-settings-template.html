@@ -189,28 +189,28 @@
           <md-button class="md-primary"
                      layout-align="end none"
                      ng-disabled="true"
-                     ng-if="!$ctrl.activityVersionsAvailable.length">Não há versões
+                     ng-if="!$ctrl.activityVersionsAvailable.length">versões em uso
           </md-button>
 
           <md-button class="md-primary"
                      layout-align="end none"
-                     ng-click="$ctrl.loadActivity($event)"
+                     ng-click="$ctrl.loadActivityReport($event)"
                      ng-if="$ctrl.activityVersionsAvailable.length">Enviar Template
           </md-button>
         </div>
 
-        <md-button class="md-icon-button md-primary"
-                   layout-align="start center"
-                   md-tooltip="Upload"
-                   ng-disabled="report.versions.length"
-                   upload="$ctrl.uploadConfig">
-          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
-          <md-tooltip md-autohide="true"
-                      md-delay="200"
-                      md-direction="top"
-                      md-visible="false">Localizar Arquivo
-          </md-tooltip>
-        </md-button>
+<!--        <md-button class="md-icon-button md-primary"-->
+<!--                   layout-align="start center"-->
+<!--                   md-tooltip="Upload"-->
+<!--                   ng-disabled="report.versions.length"-->
+<!--                   upload="$ctrl.uploadConfig">-->
+<!--          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
+<!--          <md-tooltip md-autohide="true"-->
+<!--                      md-delay="200"-->
+<!--                      md-direction="top"-->
+<!--                      md-visible="false">Localizar Arquivo-->
+<!--          </md-tooltip>-->
+<!--        </md-button>-->
 
 
 <!--                    <md-select aria-label="selecionar versões"-->

@@ -21,6 +21,7 @@
     var _currentVersions = activityReportData.versions;
 
     self.id = activityReportData._id;
+    self.objectType = "ActivityReport"
     self.template = activityReportData.template;
     self.label = activityReportData.label;
     self.sendingDate = activityReportData.sendingDate;
