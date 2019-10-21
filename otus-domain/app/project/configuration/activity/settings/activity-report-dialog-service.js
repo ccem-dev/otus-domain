@@ -5,9 +5,14 @@
     .module('otusDomain.dashboard')
     .service('ActivityReportDialogService', Service);
 
-  Service.$inject = ['$mdDialog'];
+  Service.$inject = [
+    '$mdDialog',
+    '$q',
+    '$mdToast',
+    'otusDomain.rest.configuration.ProjectConfigurationService'
+  ];
 
-  function Service($mdDialog) {
+  function Service($mdDialog, $q, $mdToast, ProjectConfigurationService) {
     const self = this;
 
     self.$onInit = onInit;
@@ -17,8 +22,7 @@
 
     }
 
-    function loadActivityReport(ev){
-      console.log("service da dialog")
+    function loadActivityReport(ev, ComponentCtrl){
       $mdDialog.show({
         controller: DialogController,
         controllerAs: '$ctrl',
@@ -32,17 +36,24 @@
         }, function() {
           self.status = 'You cancelled the dialog.';
         });
+      self.ComponentCtrl = ComponentCtrl;
+      //self.ProjectConfigurationService = ProjectConfigurationService;
+
 
     }
 
     function DialogController($mdDialog) {
       const vm = this;
+
+      vm.publishReport = publishReport;
+
+      vm.activityVersionsAvailable = self.ComponentCtrl.activityVersionsAvailable;
+
       vm.hide = function() {
         $mdDialog.hide();
       };
 
       vm.cancel = function() {
-        console.log("tst cancel")
         $mdDialog.cancel();
       };
 
@@ -59,15 +70,16 @@
       vm.uploadedFile = {};
 
 
-
       function uploadFile(fileList) {
         fileList.forEach(function (file) {
           if (fileList[0].name.split('.')[1] === 'json') {
             _fileParser(file).then(function (templateObject) {
               self.uploadedObject = JSON.parse(templateObject);
-              self.uploadedFile = templateObject;
+              console.log(self.uploadedObject);
+              self.uploadedObject.versions = vm.availableVersions;
+              // self.uploadedFile = templateObject;
+              self.uploadedFile = JSON.stringify(self.uploadedObject);
             })
-              //.then(() => _publishReport())
           }
         });
       }
@@ -82,6 +94,28 @@
         return deferred.promise;
       }
 
+      function publishReport() {
+        let acronym = self.ComponentCtrl.currentSurvey.surveyTemplate.identity.acronym;
+        if(self.uploadedObject.acronym !== acronym){
+          _toastCalled("Erro: Relatório referente a outra atividade");
+          vm.cancel();
+          throw new Error('report with different acronym');
+        }
+
+        ProjectConfigurationService.publishActivityReport(self.uploadedFile)
+          .then(() => _toastCalled("Relatório Adicionado"))
+          .then(() => self.ComponentCtrl.loadActivityReportList(acronym))
+          .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"))
+          .then(()=> vm.cancel());
+      }
+
+      function _toastCalled(message) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(message)
+            .hideDelay(4000)
+        );
+      }
     }
 
   }

@@ -54,15 +54,7 @@
     self.updateSelectVersion = updateSelectVersion;
     self.cancelSelectVersion = cancelSelectVersion;
     self.loadActivityReport = loadActivityReport;
-
-    // self.uploadConfig = {
-    //   'callback': uploadFile,
-    //   'type': 'json'
-    // };
-    //
-    // self.uploadedObject = {};
-    // self.uploadedFile = {};
-
+    self.loadActivityReportList = loadActivityReportList;
 
     function onInit() {
       self.error = false;
@@ -80,7 +72,7 @@
       self.activityReportList = [];
       self.outOfReportVersionList = [];
       self.persistentActivityReport = false;
-      _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym);
+      self.loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym);
     }
 
     function saveSettings(MSG) {
@@ -233,7 +225,7 @@
       return 'data:text/json;charset=utf-8,' + encodeURIComponent(JsonTemplate);
     }
 
-    function _loadActivityReportList(acronym) {
+    function loadActivityReportList(acronym) {
       _cleanCollections();
       ProjectConfigurationService.getActivityReports(acronym)
         .then(activityReports => {
@@ -333,13 +325,9 @@
       });
     }
 
-
     function loadActivityReport(ev) {
-      ActivityReportDialogService.loadActivityReport(ev);
+        ActivityReportDialogService.loadActivityReport(ev, self);
     }
-
-
-
 
     // function uploadFile(fileList) {
     //   fileList.forEach(function (file) {

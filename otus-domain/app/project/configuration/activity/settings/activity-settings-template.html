@@ -195,7 +195,7 @@
           <md-button class="md-primary"
                      layout-align="end none"
                      ng-disabled="true"
-                     ng-if="!$ctrl.activityVersionsAvailable.length">versões em uso
+                     ng-if="!$ctrl.activityVersionsAvailable.length && $ctrl.persistentActivityReport"">versões em uso
           </md-button>
 
           <md-button id="uploadDialog" class="md-icon-button md-primary"
@@ -212,136 +212,23 @@
           </md-button>
         </div>
 
-<!--          <md-button class="md-primary"-->
-<!--                     layout-align="end none"-->
-<!--                     ng-click="$ctrl.loadActivityReport($event)"-->
-<!--                     ng-if="$ctrl.activityVersionsAvailable.length">Enviar Template-->
-<!--          </md-button>-->
-
-
-        <!--        <md-button class="md-icon-button md-primary"-->
-        <!--                   layout-align="start center"-->
-        <!--                   md-tooltip="Upload"-->
-        <!--                   ng-disabled="report.versions.length"-->
-        <!--                   upload="$ctrl.uploadConfig">-->
-        <!--          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
-        <!--          <md-tooltip md-autohide="true"-->
-        <!--                      md-delay="200"-->
-        <!--                      md-direction="top"-->
-        <!--                      md-visible="false">Localizar Arquivo-->
-        <!--          </md-tooltip>-->
-        <!--        </md-button>-->
-
-
-        <!--                    <md-select aria-label="selecionar versões"-->
-        <!--                               class="margin-zero select-multiple-versions"-->
-        <!--                               md-on-close="$mdSelect.destroy()"-->
-        <!--                               multiple-->
-        <!--                               ng-model="report.versions">-->
-        <!--                      <md-optgroup>-->
-        <!--                        <md-option-->
-        <!--                          ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"-->
-        <!--                          ng-value="version">-->
-        <!--                          {{version}}-->
-        <!--                        </md-option>-->
-        <!--                      </md-optgroup>-->
-        <!--                    </md-select>-->
-        <!--                  </md-input-container>-->
-        <!--                  <md-button class="md-icon-button md-primary"-->
-        <!--                             layout-align="start center"-->
-        <!--                             md-tooltip="Upload"-->
-        <!--                             ng-disabled="!report.versions.length"-->
-        <!--                             upload="$ctrl.uploadConfig">-->
-        <!--                    <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
-        <!--                    <md-tooltip md-autohide="true"-->
-        <!--                                md-delay="200"-->
-        <!--                                md-direction="top"-->
-        <!--                                md-visible="false">Localizar Arquivo-->
-        <!--                    </md-tooltip>-->
-        <!--                  </md-button>-->
-
-
-        <!--        <div class="theme" layout="row" layout-align="center center" ng-if="$ctrl.activityVersionsAvailable.length">-->
-        <!--          <md-input-container layout="row">-->
-        <!--            <label>Versão</label>-->
-        <!--            <md-select aria-label="selecionar versões"-->
-        <!--                       class="margin-zero select-multiple-versions"-->
-        <!--                       md-on-close="$mdSelect.destroy()"-->
-        <!--                       multiple-->
-        <!--                       ng-model="report.versions">-->
-        <!--              <md-optgroup>-->
-        <!--                <md-option-->
-        <!--                  ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"-->
-        <!--                  ng-value="version">-->
-        <!--                  {{version}}-->
-        <!--                </md-option>-->
-        <!--              </md-optgroup>-->
-        <!--            </md-select>-->
-        <!--          </md-input-container>-->
-        <!--          <md-button class="md-icon-button md-primary"-->
-        <!--                     layout-align="start center"-->
-        <!--                     md-tooltip="Upload"-->
-        <!--                     ng-disabled="!report.versions.length"-->
-        <!--                     upload="$ctrl.uploadConfig">-->
-        <!--            <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
-        <!--            <md-tooltip md-autohide="true"-->
-        <!--                        md-delay="200"-->
-        <!--                        md-direction="top"-->
-        <!--                        md-visible="false">Localizar Arquivo-->
-        <!--            </md-tooltip>-->
-        <!--          </md-button>-->
-        <!--        </div>-->
-
-
-        <!--        <span flex="30" layout="row" ng-if="$ctrl.activityVersionsAvailable.length">-->
-        <!--          <span class="md-subhead">Enviar Relatório:</span>-->
-        <!--        <md-select aria-label="selecionar versões"-->
-        <!--                   class="margin-zero select-multiple-versions"-->
-        <!--                   md-on-close="$ctrl.cancelSelectVersion(report)"-->
-        <!--                   multiple-->
-        <!--                   ng-model="report.versions">-->
-        <!--          <md-optgroup>-->
-        <!--            <md-button class="md-mini md-primary" ng-click="$ctrl.infoSelectVersion(report)">Informar Versão-->
-        <!--            </md-button>-->
-        <!--            <md-option-->
-        <!--              ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"-->
-        <!--              ng-value="version">-->
-        <!--              {{version}}-->
-        <!--            </md-option>-->
-        <!--          </md-optgroup>-->
-        <!--        </md-select>-->
-        <!--        <md-button ng-disabled = "!report.versions.length"-->
-        <!--                     class="md-icon-button md-primary"-->
-        <!--                   layout-align="start center"-->
-        <!--                   md-tooltip="Upload"-->
-        <!--                   upload="$ctrl.uploadConfig">-->
-        <!--          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
-        <!--          <md-tooltip md-autohide="true"-->
-        <!--                      md-delay="200"-->
-        <!--                      md-direction="top"-->
-        <!--                      md-visible="false">Enviar</md-tooltip>-->
-        <!--        </md-button>-->
-        <!--        </span>-->
-
       <md-card-content>
-        <md-divider></md-divider>
-
         <!-- Template for Empty ActivityReport list -->
-        <md-whiteframe class="md-whiteframe-1dp" layout ng-if="!$ctrl.persistentActivityReport">
-          <div flex="90" layout="row" layout-align="center center" layout-margin>
-            <p>FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO</p>
-          </div>
-          <div flex="10" layout="row" layout-align="end center" layout-margin>
-            <md-button aria-label="upload relatório" class="md-icon-button" ng-click="$ctrl.uploadReport()">
-              <md-icon aria-label="upload relatório" md-font-library="material-icons">
-                file_upload
-              </md-icon>
+        <div layout="row">
+          <div flex="33"></div>
+          <div flex="66>">
+            <md-button class="md-primary" layout-margin="right"
+                       layout-align="center center"
+                       ng-click="$ctrl.loadActivityReport($event)"
+                       ng-if="!$ctrl.persistentActivityReport">FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO
               <md-tooltip md-direction="bottom">Upload relatório</md-tooltip>
             </md-button>
           </div>
-        </md-whiteframe>
+        </div>
+
 
         <!-- Template for List of ActivitityrReports with items -->
+        <md-divider></md-divider>
         <md-list ng-if=$ctrl.persistentActivityReport>
           <md-list-item aria-label="template"
                         ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
@@ -377,8 +264,8 @@
               </div>
             </div>
             <div flex="20" layout="row" layout-align="end right" layout-margin>
-              <md-button aria-label="deletar relatório" class="md-icon-button" ng-click="$ctrl.deleteReport(report)">
-                <md-icon aria-label="deletar relatório" md-font-library="material-icons">delete</md-icon>
+              <md-button aria-label="deleteReport" class="md-icon-button" ng-click="$ctrl.deleteReport(report)">
+                <md-icon aria-label="deleteReport" md-font-library="material-icons">delete</md-icon>
                 <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
               </md-button>
             </div>

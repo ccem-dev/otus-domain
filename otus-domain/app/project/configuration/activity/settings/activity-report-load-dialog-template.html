@@ -7,8 +7,24 @@
       Siga as instruções abaixo para inserir um novo relatório
     </md-content>
     <md-content class="autoScroll" layout-padding>
-      1. Procure o Template a ser carregado no sistema.
-      <md-button class="md-icon-button md-primary"
+    <md-content class="autoScroll" layout="row" layout-padding>
+      1. Selecione uma versão compatível
+      <md-select aria-label="selectVersions"
+                 class="margin-zero select-multiple-versions"
+                 md-on-close="$mdSelect.destroy()"
+                 multiple
+                 ng-model="$ctrl.availableVersions">
+        <md-optgroup>
+          <md-option
+            ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"
+            ng-value="version">
+            {{version}}
+          </md-option>
+        </md-optgroup>
+      </md-select>
+    </md-content>
+      2. Procure o Template a ser carregado no sistema.
+      <md-button class="md-icon-button md-primary" ng-disabled="!$ctrl.availableVersions.length"
                  layout-align="start center"
                  md-tooltip="Upload"
                  ng-disabled="report.versions.length"
@@ -21,30 +37,11 @@
         </md-tooltip>
       </md-button>
     </md-content>
-    <md-content class="autoScroll" layout="row" layout-padding>
-      2. Selecione uma versão compatível
-      <md-select aria-label="selectVersions"
-                 class="margin-zero select-multiple-versions"
-                 md-on-close="$mdSelect.destroy()"
-                 multiple
-                 ng-model="report.versions">
-<!--        <md-optgroup>-->
-<!--          <md-option-->
-<!--            ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"-->
-<!--            ng-value="version">-->
-<!--            {{version}}-->
-<!--          </md-option>-->
-<!--        </md-optgroup>-->
-      </md-select>
-    </md-content>
   </md-dialog-content>
   <md-dialog-actions>
-
     <md-button class="md-raised" ng-click="$ctrl.cancel({ action: 'cancel' })">Cancelar</md-button>
-    <md-button class="md-raised md-primary" ng-click="$ctrl.confirm({ action: 'confirm' })">ENVIAR</md-button>
+    <md-button class="md-raised md-primary" ng-click="$ctrl.publishReport({action:'ok'})">ENVIAR</md-button>
   </md-dialog-actions>
-
-
 </md-dialog>
 
 
