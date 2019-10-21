@@ -284,7 +284,7 @@
 
         $mdDialog.show(confirm).then(() => {
           ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
-            .then(() => _toastCalled("Solicitação OK: Versões Atualizadas"))
+            .then(() => _toastCalled("Versões Atualizadas"))
             .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
             .catch(error => console.log(error));
         });

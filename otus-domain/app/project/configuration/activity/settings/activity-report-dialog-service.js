@@ -42,6 +42,7 @@
       };
 
       vm.cancel = function() {
+        console.log("tst cancel")
         $mdDialog.cancel();
       };
 

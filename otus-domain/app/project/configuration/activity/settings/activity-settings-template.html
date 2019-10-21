@@ -22,8 +22,14 @@
     text-align: center !important;
   }
 
-  md-chips-wrap {
-    width: 100%;
+  md-select {
+    margin: 0;
+    padding: 0;
+  }
+
+  #uploadDialog{
+    margin: 0;
+    padding: 0;
   }
 
 </style>
@@ -181,65 +187,78 @@
 
       </md-card-title>
       <div layout="row" layout-margin>
-        <p class="md-subhead" flex="40" layout-align="start center">Lista de Relatórios Armazenados</p>
-        <p flex></p>
+        <div class="md-subhead" flex="40">Lista de Relatórios Armazenados</div>
+        <div flex="40"></div>
 
         <!--types of scenarios for report persistence-->
-        <div flex="15">
+
           <md-button class="md-primary"
                      layout-align="end none"
                      ng-disabled="true"
                      ng-if="!$ctrl.activityVersionsAvailable.length">versões em uso
           </md-button>
 
-          <md-button class="md-primary"
-                     layout-align="end none"
+          <md-button id="uploadDialog" class="md-icon-button md-primary"
+                     layout-align="start center"
+                     md-tooltip="Upload"
                      ng-click="$ctrl.loadActivityReport($event)"
-                     ng-if="$ctrl.activityVersionsAvailable.length">Enviar Template
+                     ng-if="$ctrl.activityVersionsAvailable.length">
+            <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+            <md-tooltip md-autohide="true"
+                        md-delay="200"
+                        md-direction="top"
+                        md-visible="false">Enviar
+            </md-tooltip>
           </md-button>
         </div>
 
-<!--        <md-button class="md-icon-button md-primary"-->
-<!--                   layout-align="start center"-->
-<!--                   md-tooltip="Upload"-->
-<!--                   ng-disabled="report.versions.length"-->
-<!--                   upload="$ctrl.uploadConfig">-->
-<!--          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
-<!--          <md-tooltip md-autohide="true"-->
-<!--                      md-delay="200"-->
-<!--                      md-direction="top"-->
-<!--                      md-visible="false">Localizar Arquivo-->
-<!--          </md-tooltip>-->
-<!--        </md-button>-->
+<!--          <md-button class="md-primary"-->
+<!--                     layout-align="end none"-->
+<!--                     ng-click="$ctrl.loadActivityReport($event)"-->
+<!--                     ng-if="$ctrl.activityVersionsAvailable.length">Enviar Template-->
+<!--          </md-button>-->
 
 
-<!--                    <md-select aria-label="selecionar versões"-->
-<!--                               class="margin-zero select-multiple-versions"-->
-<!--                               md-on-close="$mdSelect.destroy()"-->
-<!--                               multiple-->
-<!--                               ng-model="report.versions">-->
-<!--                      <md-optgroup>-->
-<!--                        <md-option-->
-<!--                          ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"-->
-<!--                          ng-value="version">-->
-<!--                          {{version}}-->
-<!--                        </md-option>-->
-<!--                      </md-optgroup>-->
-<!--                    </md-select>-->
-<!--                  </md-input-container>-->
-<!--                  <md-button class="md-icon-button md-primary"-->
-<!--                             layout-align="start center"-->
-<!--                             md-tooltip="Upload"-->
-<!--                             ng-disabled="!report.versions.length"-->
-<!--                             upload="$ctrl.uploadConfig">-->
-<!--                    <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
-<!--                    <md-tooltip md-autohide="true"-->
-<!--                                md-delay="200"-->
-<!--                                md-direction="top"-->
-<!--                                md-visible="false">Localizar Arquivo-->
-<!--                    </md-tooltip>-->
-<!--                  </md-button>-->
+        <!--        <md-button class="md-icon-button md-primary"-->
+        <!--                   layout-align="start center"-->
+        <!--                   md-tooltip="Upload"-->
+        <!--                   ng-disabled="report.versions.length"-->
+        <!--                   upload="$ctrl.uploadConfig">-->
+        <!--          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
+        <!--          <md-tooltip md-autohide="true"-->
+        <!--                      md-delay="200"-->
+        <!--                      md-direction="top"-->
+        <!--                      md-visible="false">Localizar Arquivo-->
+        <!--          </md-tooltip>-->
+        <!--        </md-button>-->
 
+
+        <!--                    <md-select aria-label="selecionar versões"-->
+        <!--                               class="margin-zero select-multiple-versions"-->
+        <!--                               md-on-close="$mdSelect.destroy()"-->
+        <!--                               multiple-->
+        <!--                               ng-model="report.versions">-->
+        <!--                      <md-optgroup>-->
+        <!--                        <md-option-->
+        <!--                          ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"-->
+        <!--                          ng-value="version">-->
+        <!--                          {{version}}-->
+        <!--                        </md-option>-->
+        <!--                      </md-optgroup>-->
+        <!--                    </md-select>-->
+        <!--                  </md-input-container>-->
+        <!--                  <md-button class="md-icon-button md-primary"-->
+        <!--                             layout-align="start center"-->
+        <!--                             md-tooltip="Upload"-->
+        <!--                             ng-disabled="!report.versions.length"-->
+        <!--                             upload="$ctrl.uploadConfig">-->
+        <!--                    <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>-->
+        <!--                    <md-tooltip md-autohide="true"-->
+        <!--                                md-delay="200"-->
+        <!--                                md-direction="top"-->
+        <!--                                md-visible="false">Localizar Arquivo-->
+        <!--                    </md-tooltip>-->
+        <!--                  </md-button>-->
 
 
         <!--        <div class="theme" layout="row" layout-align="center center" ng-if="$ctrl.activityVersionsAvailable.length">-->
@@ -303,7 +322,7 @@
         <!--                      md-visible="false">Enviar</md-tooltip>-->
         <!--        </md-button>-->
         <!--        </span>-->
-      </div>
+
       <md-card-content>
         <md-divider></md-divider>
 
@@ -331,13 +350,20 @@
               <p class="md-body-1">Enviado em:{{report.sendDate}}</p>
               <div>
                 <md-input-container>
-                  <label class="md-title ">Versões</label>
+                  <label>Versões</label>
                   <md-select class="margin-zero select-multiple-versions"
                              md-on-close="$ctrl.cancelSelectVersion(report)" multiple
                              ng-model="report.versions">
-                    <md-optgroup class="select-version" label="versões">
-                      <md-button class="md-mini" ng-click="$ctrl.cancelSelectVersion(report)">Cancelar</md-button>
-                      <md-button class="md-mini md-primary" ng-click="$ctrl.updateSelectVersion(report)">Atualizar
+                    <md-optgroup class="select-version">
+                      <md-button class="md-icon-button" ng-click="$ctrl.updateSelectVersion(report)">
+                        <md-icon aria-label="update versions" md-font-library="material-icons">
+                          sync_alt
+                        </md-icon>
+                      </md-button>
+                      <md-button class="md-icon-button" ng-click="$ctrl.cancelSelectVersion(report)">
+                        <md-icon aria-label="cancel" md-font-library="material-icons">
+                          clear
+                        </md-icon>
                       </md-button>
                       <md-option
                         ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}"
