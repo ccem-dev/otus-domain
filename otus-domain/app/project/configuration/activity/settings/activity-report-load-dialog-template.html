@@ -40,7 +40,8 @@
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-raised" ng-click="$ctrl.cancel({ action: 'cancel' })">Cancelar</md-button>
-    <md-button class="md-raised md-primary" ng-click="$ctrl.publishReport({action:'ok'})">ENVIAR</md-button>
+    <md-button class="md-raised md-primary" ng-click="$ctrl.publishReport({action:'ok'})"
+               ng-disabled="!$ctrl.uploadButtonState">ENVIAR</md-button>
   </md-dialog-actions>
 </md-dialog>
 

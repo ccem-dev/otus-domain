@@ -248,6 +248,7 @@
     }
 
     function _loadListOfOutOfReportVersions(activityVersions) {
+      let candidateReportVersions = angular.copy(activityVersions);
       if (self.activityReportList.length) {
         let candidateReportVersions = angular.copy(activityVersions);
         self.activityReportList.forEach(report => {
@@ -277,7 +278,7 @@
         $mdDialog.show(confirm).then(() => {
           ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
             .then(() => _toastCalled("Versões Atualizadas"))
-            .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+            .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
             .catch(error => console.log(error));
         });
       } else {
@@ -321,42 +322,14 @@
 
       $mdDialog.show(confirm).then(() => {
         ProjectConfigurationService.deleteActivityReport(report.id)
-          .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+          .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
       });
     }
 
-    function loadActivityReport(ev) {
-        ActivityReportDialogService.loadActivityReport(ev, self);
+    function loadActivityReport() {
+      if(!self.activityReportList.length) self.activityVersionsAvailable = self.versions;
+        ActivityReportDialogService.loadActivityReport(self);
     }
-
-    // function uploadFile(fileList) {
-    //   fileList.forEach(function (file) {
-    //     if (fileList[0].name.split('.')[1] === 'json') {
-    //       _fileParser(file).then(function (templateObject) {
-    //         self.uploadedObject = JSON.parse(templateObject);
-    //         self.uploadedFile = templateObject;
-    //       })
-    //         .then(() => _publishReport())
-    //     }
-    //   });
-    // }
-    //
-    // function _fileParser(file) {
-    //   var deferred = $q.defer();
-    //   var reader = new FileReader();
-    //   reader.onload = function () {
-    //     deferred.resolve(reader.result);
-    //   };
-    //   reader.readAsText(file);
-    //   return deferred.promise;
-    // }
-
-    // function _publishReport() {
-    //   ProjectConfigurationService.publishActivityReport(self.uploadedFile)
-    //     .then(() => _toastCalled("Solicitação Atendida (Relatório Adicionado)"))
-    //     .then(() => _loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-    //     .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"));
-    // }
   }
 
 }());

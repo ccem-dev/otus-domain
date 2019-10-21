@@ -201,8 +201,8 @@
           <md-button id="uploadDialog" class="md-icon-button md-primary"
                      layout-align="start center"
                      md-tooltip="Upload"
-                     ng-click="$ctrl.loadActivityReport($event)"
-                     ng-if="$ctrl.activityVersionsAvailable.length">
+                     ng-click="$ctrl.loadActivityReport()"
+                     ng-if="!$ctrl.persistentActivityReport.length && $ctrl.activityVersionsAvailable.length">
             <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
             <md-tooltip md-autohide="true"
                         md-delay="200"
@@ -217,9 +217,9 @@
         <div layout="row">
           <div flex="33"></div>
           <div flex="66>">
-            <md-button class="md-primary" layout-margin="right"
+            <md-button class="md-primary"
                        layout-align="center center"
-                       ng-click="$ctrl.loadActivityReport($event)"
+                       ng-click="$ctrl.loadActivityReport()"
                        ng-if="!$ctrl.persistentActivityReport">FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO
               <md-tooltip md-direction="bottom">Upload relatório</md-tooltip>
             </md-button>

@@ -22,43 +22,28 @@
 
     }
 
-    function loadActivityReport(ev, ComponentCtrl){
+    function loadActivityReport(ComponentCtrl){
+      self.ComponentCtrl = ComponentCtrl;
       $mdDialog.show({
         controller: DialogController,
         controllerAs: '$ctrl',
         templateUrl: 'app/project/configuration/activity/settings/activity-report-load-dialog-template.html',
         parent: angular.element(document.body),
-        targetEvent: ev,
         clickOutsideToClose:true
-      })
-        .then(function(answer) {
-          self.status = 'You said the information was "' + answer + '".';
-        }, function() {
-          self.status = 'You cancelled the dialog.';
-        });
-      self.ComponentCtrl = ComponentCtrl;
-      //self.ProjectConfigurationService = ProjectConfigurationService;
-
-
+      });
     }
 
     function DialogController($mdDialog) {
       const vm = this;
+      vm.uploadButtonState = false;
+      vm.activityVersionsAvailable = self.ComponentCtrl.activityVersionsAvailable;
 
       vm.publishReport = publishReport;
 
-      vm.activityVersionsAvailable = self.ComponentCtrl.activityVersionsAvailable;
 
-      vm.hide = function() {
-        $mdDialog.hide();
-      };
 
       vm.cancel = function() {
         $mdDialog.cancel();
-      };
-
-      vm.answer = function(answer) {
-        $mdDialog.hide(answer);
       };
 
       vm.uploadConfig = {
@@ -69,17 +54,14 @@
       vm.uploadedObject = {};
       vm.uploadedFile = {};
 
-
       function uploadFile(fileList) {
         fileList.forEach(function (file) {
           if (fileList[0].name.split('.')[1] === 'json') {
             _fileParser(file).then(function (templateObject) {
               self.uploadedObject = JSON.parse(templateObject);
-              console.log(self.uploadedObject);
               self.uploadedObject.versions = vm.availableVersions;
-              // self.uploadedFile = templateObject;
               self.uploadedFile = JSON.stringify(self.uploadedObject);
-            })
+            }).then(() => vm.uploadButtonState = true)
           }
         });
       }
