@@ -228,35 +228,20 @@
     function loadActivityReportList(acronym) {
       _cleanCollections();
       ProjectConfigurationService.getActivityReports(acronym)
-        .then(activityReports => {
-          console.log("1 -resolveu a promisse da lista de report")
-          self.activityReportList = ActivitySettingsService.getActivityReports(activityReports);
-        })
-        .then(() => {
-          _getSurveyVersions(),
-            console.log("2 - pegou as versions")
-        })
-        .then(() => {
-          _loadListOfOutOfReportVersions(self.versions),
-            console.log("3 chamou o comparador de version disponivel")
-        })
-        .then(() => {
-          self.persistentActivityReport = true,
-            console.log("4 - ativou o state da lista")
-        })
+        .then(activityReports => self.activityReportList = ActivitySettingsService.getActivityReports(activityReports))
+        .then(() => _getSurveyVersions())
+        .then(() => _loadListOfOutOfReportVersions(self.versions))
+        .then(() => self.persistentActivityReport = true)
         .catch(() => self.persistentActivityReport = false);
     }
 
     function _loadListOfOutOfReportVersions(activityVersions) {
-      let candidateReportVersions = angular.copy(activityVersions);
       if (self.activityReportList.length) {
         let candidateReportVersions = angular.copy(activityVersions);
         self.activityReportList.forEach(report => {
           report.versions.forEach(reportVersion => {
             let index = candidateReportVersions.indexOf(reportVersion);
-            if (index !== -1) {
-              candidateReportVersions.splice(index, 1);
-            }
+            if (index !== -1) candidateReportVersions.splice(index, 1);
           })
         });
         self.activityVersionsAvailable = candidateReportVersions;
