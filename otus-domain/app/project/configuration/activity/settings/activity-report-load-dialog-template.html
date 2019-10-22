@@ -1,51 +1,58 @@
-<md-dialog aria-label="upload ActivityReport" md-theme="layoutTheme">
-  <md-dialog-content>
-    <md-toolbar class="md-toolbar-tools">
-      <span>Carregamento de Relatório de atividade</span>
-    </md-toolbar>
-    <md-content class="md-subhead" layout-padding>
-      Siga as instruções abaixo para inserir um novo relatório
-    </md-content>
-    <md-content class="autoScroll" layout-padding>
-    <md-content class="autoScroll" layout="row" layout-padding>
-      1. Selecione uma versão compatível
-      <md-select aria-label="selectVersions"
-                 class="margin-zero select-multiple-versions"
-                 md-on-close="$mdSelect.destroy()"
-                 multiple
-                 ng-model="$ctrl.availableVersions">
-        <md-optgroup>
-          <md-option
-            ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"
-            ng-value="version">
-            {{version}}
-          </md-option>
-        </md-optgroup>
-      </md-select>
-    </md-content>
-      2. Procure o Template a ser carregado no sistema.
-      <md-button class="md-icon-button md-primary" ng-disabled="!$ctrl.availableVersions.length"
-                 layout-align="start center"
-                 md-tooltip="Upload"
-                 ng-disabled="report.versions.length"
-                 upload="$ctrl.uploadConfig">
-        <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
-        <md-tooltip md-autohide="true"
-                    md-delay="200"
-                    md-direction="top"
-                    md-visible="false">Localizar Arquivo
-        </md-tooltip>
-      </md-button>
-    </md-content>
-  </md-dialog-content>
-  <md-dialog-actions>
-    <md-button class="md-raised" ng-click="$ctrl.cancel({ action: 'cancel' })">Cancelar</md-button>
-    <md-button class="md-raised md-primary" ng-click="$ctrl.publishReport({action:'ok'})"
-               ng-disabled="!$ctrl.uploadButtonState">ENVIAR</md-button>
-  </md-dialog-actions>
+<md-dialog>
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <span>Carregamento de Relatório</span>
+    </div>
+    <md-button ng-click="$ctrl.cancel()">
+      <md-icon>close</md-icon>
+    </md-button>
+  </md-toolbar>
+  <form>
+    <md-dialog-content>
+
+      <md-content class="md-subhead" layout-align="center center" layout-padding>
+        Siga as instruções abaixo para inserir um novo relatório
+      </md-content>
+
+      <div layout="column" layout-padding>
+        <div layout="row" layout-align="start center">
+          <span flex>1. Selecione uma versão compatível</span>
+          <md-select aria-label="selectVersions"
+                     class="margin-zero select-multiple-versions"
+                     flex="30"
+                     md-on-close="$mdSelect.destroy()"
+                     multiple ng-model="$ctrl.availableVersions">
+            <md-optgroup>
+              <md-option
+                ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"
+                ng-value="version">
+                {{version}}
+              </md-option>
+            </md-optgroup>
+          </md-select>
+        </div>
+        <div layout="row" layout-align="start center">
+          <span flex>2. Procure o Template a ser carregado no sistema.</span>
+          <md-button class="md-icon-button md-primary" flex="20"
+                     layout-align="start center"
+                     md-tooltip="Upload"
+                     ng-disabled="report.versions.length"
+                     ng-disabled="!$ctrl.availableVersions.length" upload="$ctrl.uploadConfig">
+            <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+            <md-tooltip md-autohide="true"
+                        md-delay="200"
+                        md-direction="top"
+                        md-visible="false">Localizar Arquivo
+            </md-tooltip>
+          </md-button>
+        </div>
+      </div>
+      </md-content>
+      <md-dialog-actions>
+        <md-button class="md-raised md-primary" ng-click="$ctrl.publishReport({action:'ok'})"
+                   ng-disabled="!$ctrl.uploadButtonState">ENVIAR
+        </md-button>
+      </md-dialog-actions>
+    </md-dialog-content>
+  </form>
 </md-dialog>
-
-
-
-
-

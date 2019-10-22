@@ -275,7 +275,7 @@
       $mdToast.show(
         $mdToast.simple()
           .textContent(message)
-          .hideDelay(5000)
+          .hideDelay(4000)
       );
     }
 
