@@ -269,7 +269,6 @@
           ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
             .then(() => _toastCalled("Versões Atualizadas"))
             .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
-            .catch(error => console.log(error));
         });
       } else {
         _toastCalled("Não é permitido relatório sem versão");

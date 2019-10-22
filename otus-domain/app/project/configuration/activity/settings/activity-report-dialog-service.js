@@ -79,7 +79,7 @@
       function publishReport() {
         let acronym = self.ComponentCtrl.currentSurvey.surveyTemplate.identity.acronym;
         if(self.uploadedObject.acronym !== acronym){
-          _toastCalled("Erro: Relatório referente a outra atividade");
+          _toastCalled("Relatório pertence a outra atividade");
           vm.cancel();
           throw new Error('report with different acronym');
         }
