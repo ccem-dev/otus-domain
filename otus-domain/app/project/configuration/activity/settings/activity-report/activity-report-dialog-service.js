@@ -27,7 +27,7 @@
       $mdDialog.show({
         controller: DialogController,
         controllerAs: '$ctrl',
-        templateUrl: 'app/project/configuration/activity/settings/activity-report-load-dialog-template.html',
+        templateUrl: 'app/project/configuration/activity/settings/activity-report/activity-report-load-dialog-template.html',
         parent: angular.element(document.body),
         clickOutsideToClose:true
       });
