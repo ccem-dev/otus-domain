@@ -21,7 +21,7 @@
     "gulp": "gulp",
     "start": "npm run gulp browser-sync",
     "karma": "karma",
-    "build": "npm install --production && npm test && gulp compress",
+    "build": "gulp compress",
     "replace-env": "gulp replace-env"
   },
   "dependencies": {

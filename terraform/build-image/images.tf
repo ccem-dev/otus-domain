@@ -1,34 +1,62 @@
 ###############################################
 ###               Variables                 ###
 ###############################################
+variable "otus-domain-frontend-dockerfile" {
+  default = "."  
+}
+
 variable "otus-domain-frontend-name" {
   default = "otus-domain-frontend"  
 }
+
 variable "otus-domain-frontend-directory" {
   default = "otus-domain"  
 }
+
 variable "otus-domain-frontend-source" {
   default = "source"  
 }
 
+variable "otus-domain-frontend-npminstall" {
+  default = "npm install --production"
+}
+
+variable "otus-domain-frontend-npmtest" {
+  default = "npm test"
+}
+
 variable "otus-domain-frontend-npmbuild" {
-  default = "run build"
-  
+  default = "npm run build"
 }
 
 ###############################################
 ###  OTUS-DOMAIN : Build Image Front-End    ###
 ###############################################
-resource "null_resource" "otus-domain-frontend-build" {
+resource "null_resource" "otus-domain-frontend-install" {
   provisioner "local-exec" {
-    working_dir = "source"
-    command = "npm ${var.otus-domain-frontend-npmbuild}"
+    working_dir = "${var.otus-domain-frontend-source}"
+    command = "${var.otus-domain-frontend-npminstall}"
+  }
+}
+
+resource "null_resource" "otus-domain-frontend-test" {
+  depends_on = [null_resource.otus-domain-frontend-install]
+  provisioner "local-exec" {
+    working_dir = "${var.otus-domain-frontend-source}"
+    command = "${var.otus-domain-frontend-npmtest}"
+  }
+}
+resource "null_resource" "otus-domain-frontend-build" {
+  depends_on = [null_resource.otus-domain-frontend-test]
+  provisioner "local-exec" {
+    working_dir = "${var.otus-domain-frontend-source}"
+    command = "${var.otus-domain-frontend-npmbuild}"
   }
 }
 
 resource "null_resource" "otus-domain-frontend" {
   depends_on = [null_resource.otus-domain-frontend-build]
   provisioner "local-exec" {
-    command = "docker build -t ${var.otus-domain-frontend-name} ."
+    command = "docker build -t ${var.otus-domain-frontend-name} ${var.otus-domain-frontend-dockerfile}"
   }
 }
