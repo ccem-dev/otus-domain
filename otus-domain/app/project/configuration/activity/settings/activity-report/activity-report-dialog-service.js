@@ -35,24 +35,24 @@
 
     function DialogController($mdDialog) {
       const vm = this;
-      vm.uploadButtonState = false;
+
       vm.activityVersionsAvailable = self.ComponentCtrl.activityVersionsAvailable;
-
-      vm.publishReport = publishReport;
-
-
-
-      vm.cancel = function() {
-        $mdDialog.cancel();
-      };
-
+      vm.uploadButtonState = false;
+      vm.uploadedObject = {};
+      vm.uploadedFile = {};
       vm.uploadConfig = {
         'callback': uploadFile,
         'type': 'json'
       };
 
-      vm.uploadedObject = {};
-      vm.uploadedFile = {};
+
+      vm.publishReport = publishReport;
+      vm.cancel = cancel;
+
+      function cancel() {
+        $mdDialog.cancel();
+      };
+
 
       function uploadFile(fileList) {
         fileList.forEach(function (file) {

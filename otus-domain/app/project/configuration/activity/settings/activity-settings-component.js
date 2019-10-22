@@ -256,12 +256,12 @@
           .title('Deseja confirmar as seguintes alterações no relatório ?')
 
           .htmlContent(` 
-                         <md-content class="md-subhead" layout-align="center center" layout-padding>
-                          <h4>Versões compatíveis</h4>
-                           <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
-                           <p class="md-body-1">Solicitadas: ${versionCandidates}</p>
+                         <md-content>
+                            <p class="md-subhead">Prévia sobre as Versões</p>
+                            <p class="md-subhead">Atuais: ${report.getCurrentVersions()}</p>
+                            <p class="md-subhead">Mudança Solicitadas: ${versionCandidates}</p> 
                          </md-content>
-                         </div>  `)
+                         `)
           .ok('SIM')
           .cancel('NÃO');
 
@@ -301,10 +301,11 @@
     function deleteReport(report) {
       let confirm = $mdDialog.confirm()
         .title('Você tem certeza que deseja excluir este RELATÓRIO?')
-        .htmlContent(`
-                      <p class="md-body-1">Atividade ${report.acronym}</p>
-                      <p class="md-body-1">Titulo: ${report.label}</p>
-                      <p class="md-body-1">Versões: ${report.versions}</p>`)
+        .htmlContent(`<md-content>
+                         <p class="md-subhead">Atividade ${report.acronym}</p>
+                         <p class="md-subhead">Titulo: ${report.label}</p>
+                         <p class="md-subhead">Versões: ${report.versions}</p> 
+                      </md-content>`)
         .ariaLabel('delete confirmation')
         .ok('SIM')
         .cancel('NÃO');
