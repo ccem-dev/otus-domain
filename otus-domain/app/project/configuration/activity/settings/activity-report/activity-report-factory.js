@@ -17,7 +17,7 @@
   }
 
   function ActivityReport(activityReportData) {
-    var self = this;
+    const self = this;
     var _currentVersions = activityReportData.versions;
 
     self.id = activityReportData._id;

@@ -13,11 +13,7 @@
     const self = this;
     let activityReports = [];
 
-    self.$onInit = onInit;
     self.getActivityReports = getActivityReports;
-
-    function onInit() {
-    }
 
     function getActivityReports(jsonActivityReports){
       activityReports = [];

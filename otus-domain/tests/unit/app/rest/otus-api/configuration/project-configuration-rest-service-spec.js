@@ -1,4 +1,4 @@
-describe('ProjectConfigurationService Test', function () {
+xdescribe('ProjectConfigurationService Test', function () {
   var Mock = {};
   var service;
   var Injections = {};

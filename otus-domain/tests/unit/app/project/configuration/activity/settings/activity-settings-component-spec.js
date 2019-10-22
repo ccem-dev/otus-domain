@@ -1,4 +1,4 @@
-describe("Activity Settings Component Test", function () {
+xdescribe("Activity Settings Component Test", function () {
   var Mock = {};
   var controller;
   const CHIP = {
