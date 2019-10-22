@@ -27,11 +27,6 @@
     padding: 0;
   }
 
-  #uploadDialog {
-    margin: 0;
-    padding: 0;
-  }
-
 </style>
 
 <md-content class="md-padding autocomplete" flex layout="column">
@@ -174,8 +169,6 @@
   </md-card>
   <!-- ActivityReports -->
   <md-card layout="column">
-    <md-content layout-padding>
-    </md-content>
     <md-content layout="column">
       <md-card-title flex layout="row">
         <p class="md-title">Relatório</p>
@@ -186,47 +179,42 @@
         </md-button>
 
       </md-card-title>
-      <div layout="row" layout-margin>
-        <div class="md-subhead" flex="40">Lista de Relatórios Armazenados</div>
-        <div flex="40"></div>
+      <div layout="row" layout-padding layout-align="start center">
+        <div class="md-subhead" flex>Lista de Relatórios Armazenados</div>
+        <div flex></div>
+        <div layout="column">
+          <!--types of scenarios for report persistence-->
+          <md-button class="md-icon-button md-primary"
+                     id="uploadDialog"
+                     md-tooltip="Upload"
+                     ng-click="$ctrl.loadActivityReport()"
+                     ng-if="$ctrl.activityVersionsAvailable.length || !$ctrl.activityReportList.length" flex="10">
+            <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+            <md-tooltip md-autohide="true"
+                        md-delay="200"
+                        md-direction="top"
+                        md-visible="false">Enviar
+            </md-tooltip>
+          </md-button>
 
-        <!--types of scenarios for report persistence-->
-        <md-button class="md-primary"
-                   layout-align="end none"
-                   ng-disabled="true"
-                   ng-if="!$ctrl.activityVersionsAvailable.length && $ctrl.persistentActivityReport"
-        ">versões em uso
-        </md-button>
+          <md-button class="md-icon-button md-primary"
+                     ng-disabled="true"
+                     id="versionInUse"
+                     md-tooltip="Upload"
+                     ng-if="!$ctrl.activityVersionsAvailable.length && $ctrl.persistentActivityReport" flex="10">
+            <md-icon aria-label="version in use" md-font-library="material-icons">unarchive</md-icon>
+            <md-tooltip md-autohide="true"
+                        md-delay="200"
+                        md-direction="top"
+                        md-visible="true">Versões em uso
+            </md-tooltip>
+          </md-button>
 
-        <md-button class="md-icon-button md-primary" id="uploadDialog"
-                   layout-align="start center"
-                   md-tooltip="Upload"
-                   ng-click="$ctrl.loadActivityReport()"
-                   ng-if="!$ctrl.persistentActivityReport.length && $ctrl.activityVersionsAvailable.length">
-          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
-          <md-tooltip md-autohide="true"
-                      md-delay="200"
-                      md-direction="top"
-                      md-visible="false">Enviar
-          </md-tooltip>
-        </md-button>
+        </div>
       </div>
 
+      <!-- Template for List of ActivitityrReports with items -->
       <md-card-content>
-        <!-- Template for Empty ActivityReport list -->
-        <div layout="row">
-          <div flex="33"></div>
-          <div flex="66>">
-            <md-button class="md-primary"
-                       layout-align="center center"
-                       ng-click="$ctrl.loadActivityReport()"
-                       ng-if="!$ctrl.persistentActivityReport">FAÇA O UPLOAD DO TEMPLATE DO RELATÓRIO
-              <md-tooltip md-direction="bottom">Upload relatório</md-tooltip>
-            </md-button>
-          </div>
-        </div>
-
-        <!-- Template for List of ActivitityrReports with items -->
         <md-divider></md-divider>
         <md-list ng-if=$ctrl.persistentActivityReport>
           <md-list-item aria-label="template"
