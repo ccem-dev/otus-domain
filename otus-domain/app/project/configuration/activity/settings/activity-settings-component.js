@@ -254,9 +254,14 @@
       if (versionCandidates.length) {
         let confirm = $mdDialog.confirm()
           .title('Deseja confirmar as seguintes alterações no relatório ?')
-          .htmlContent(` <h3>Versões compatíveis</h3>
-                       <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
-                       <p class="md-body-1">Solicitadas: ${versionCandidates}</p>`)
+
+          .htmlContent(` 
+                         <md-content class="md-subhead" layout-align="center center" layout-padding>
+                          <h4>Versões compatíveis</h4>
+                           <p class="md-body-1">Original: ${report.getCurrentVersions()}</p>
+                           <p class="md-body-1">Solicitadas: ${versionCandidates}</p>
+                         </md-content>
+                         </div>  `)
           .ok('SIM')
           .cancel('NÃO');
 
@@ -296,8 +301,8 @@
 
     function deleteReport(report) {
       let confirm = $mdDialog.confirm()
-        .title('Exclusão de RELATÓRIO')
-        .htmlContent(`<h3>Você tem certeza que deseja excluir este RELATÓRIO?</h3>
+        .title('Você tem certeza que deseja excluir este RELATÓRIO?')
+        .htmlContent(`
                       <p class="md-body-1">Atividade ${report.acronym}</p>
                       <p class="md-body-1">Titulo: ${report.label}</p>
                       <p class="md-body-1">Versões: ${report.versions}</p>`)

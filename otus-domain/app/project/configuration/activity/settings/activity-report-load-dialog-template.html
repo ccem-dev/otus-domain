@@ -1,7 +1,7 @@
 <md-dialog>
   <md-toolbar layout="row">
     <div class="md-toolbar-tools">
-      <span>Carregamento de Relatório</span>
+      <span>Envio de Relatório</span>
     </div>
     <md-button ng-click="$ctrl.cancel()">
       <md-icon>close</md-icon>
@@ -11,7 +11,7 @@
     <md-dialog-content>
 
       <md-content class="md-subhead" layout-align="center center" layout-padding>
-        Siga as instruções abaixo para inserir um novo relatório
+        Siga as instruções abaixo
       </md-content>
 
       <div layout="column" layout-padding>
@@ -19,7 +19,7 @@
           <span flex>1. Selecione uma versão compatível</span>
           <md-select aria-label="selectVersions"
                      class="margin-zero select-multiple-versions"
-                     flex="30"
+                     flex="20"
                      md-on-close="$mdSelect.destroy()"
                      multiple ng-model="$ctrl.availableVersions">
             <md-optgroup>
@@ -32,7 +32,7 @@
           </md-select>
         </div>
         <div layout="row" layout-align="start center">
-          <span flex>2. Procure o Template a ser carregado no sistema.</span>
+          <span flex>2. Carregue o Template.</span>
           <md-button class="md-icon-button md-primary" flex="20"
                      layout-align="start center"
                      md-tooltip="Upload"
