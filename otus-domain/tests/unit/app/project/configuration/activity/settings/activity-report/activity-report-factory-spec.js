@@ -5,7 +5,7 @@ describe('ActivityReportFactory_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusDomain.dashboard');
     angular.mock.inject($injector => {
-      factory = $injector.get('ActivityReporFactory');
+      factory = $injector.get('ActivityReportFactory');
       Mock.activityReportData = Test.utils.data.activityReport;
       activityReport = factory.create(Mock.activityReportData);
     });
@@ -30,7 +30,7 @@ describe('ActivityReportFactory_UnitTest_Suite', () => {
     expect(activityReport.versions.length).toBe(1);
   });
 
-  it('should_get_and_update_methods_should_renew_and_return_the_new_versionValues', () => {
+  it('get_and_update_CurrentVersions_methods_should_renew_and_return_the_new_versionValues', () => {
     expect(activityReport.versions[0]).toEqual(1);
     activityReport.versions = [2];
     activityReport.updateCurrentVersions();

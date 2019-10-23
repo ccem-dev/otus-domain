@@ -3,7 +3,7 @@
 
   angular
     .module('otusDomain.dashboard')
-    .factory('ActivityReporFactory', factory);
+    .factory('ActivityReportFactory', factory);
 
   function factory() {
     const self = this;

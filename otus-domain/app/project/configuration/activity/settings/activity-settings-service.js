@@ -6,7 +6,7 @@
     .service('activitySettingsService', Service);
 
   Service.$inject = [
-    'ActivityReporFactory'
+    'ActivityReportFactory'
   ];
 
   function Service(ActivityReporFactory) {

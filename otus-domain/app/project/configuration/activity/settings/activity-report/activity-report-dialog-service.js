@@ -22,14 +22,14 @@
 
     }
 
-    function loadActivityReport(ComponentCtrl){
+    function loadActivityReport(ComponentCtrl) {
       self.ComponentCtrl = ComponentCtrl;
       $mdDialog.show({
         controller: DialogController,
         controllerAs: '$ctrl',
         templateUrl: 'app/project/configuration/activity/settings/activity-report/activity-report-load-dialog-template.html',
         parent: angular.element(document.body),
-        clickOutsideToClose:true
+        clickOutsideToClose: true
       });
     }
 
@@ -78,7 +78,7 @@
 
       function publishReport() {
         let acronym = self.ComponentCtrl.currentSurvey.surveyTemplate.identity.acronym;
-        if(self.uploadedObject.acronym !== acronym){
+        if (self.uploadedObject.acronym !== acronym) {
           _toastCalled("Relatório pertence a outra atividade");
           vm.cancel();
           throw new Error('report with different acronym');
@@ -88,7 +88,7 @@
           .then(() => _toastCalled("Relatório Adicionado"))
           .then(() => self.ComponentCtrl.loadActivityReportList(acronym))
           .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"))
-          .then(()=> vm.cancel());
+          .then(() => vm.cancel());
       }
 
       function _toastCalled(message) {
