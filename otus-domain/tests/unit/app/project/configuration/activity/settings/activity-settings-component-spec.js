@@ -1,4 +1,4 @@
-xdescribe("Activity Settings Component Test", function () {
+describe("Activity Settings Component Test", function () {
   var Mock = {};
   var controller;
   const CHIP = {
@@ -21,6 +21,10 @@ xdescribe("Activity Settings Component Test", function () {
       $provide.value('SurveyFactory', Mock.SurveyFactory);
       $provide.value("otusDomain.rest.configuration.ProjectConfigurationService", Mock.ProjectConfigurationService);
       $provide.value('otusDomain.dashboard.business.SurveyTemplateTranslateService', Mock.SurveyTemplateTranslateService);
+      $provide.value('$mdDialog', Mock.mdDialog);
+      $provide.value('$mdSelect', Mock.mdSelect);
+      $provide.value('ActivitySettingsService', Mock.ActivitySettingsService);
+      $provide.value('ActivityReportDialogService', Mock.ActivityReportDialogService);
     });
 
     inject(function (_$controller_) {
@@ -33,7 +37,6 @@ xdescribe("Activity Settings Component Test", function () {
     spyOn(Mock.mdToast, "show").and.callThrough();
 
     controller.$onInit();
-
   });
 
   var originalTimeout;
@@ -219,6 +222,9 @@ xdescribe("Activity Settings Component Test", function () {
       },
       getSurveyTemplatesByAcronym: function () {
         return Promise.resolve();
+      },
+      getActivityReports: function(){
+        return Promise.resolve()
       }
     };
 
@@ -249,6 +255,25 @@ xdescribe("Activity Settings Component Test", function () {
         };
         return self;
       }
+    },
+
+    Mock.mdDialog = {
+      confirm: () => {}
+    }
+
+    Mock.mdSelect = {
+      destroy: () => {},
+      cancel: () => {}
+    }
+
+    Mock.ActivitySettingsService = {
+      getActivityReports: () => {
+        return []
+      }
+    }
+
+    Mock.ActivityReportDialogService = {
+      loadActivityReport: () => {}
     }
   }
 

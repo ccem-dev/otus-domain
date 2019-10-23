@@ -3,7 +3,7 @@
 
   angular
     .module('otusDomain.dashboard')
-    .service('activitySettingsService', Service);
+    .service('ActivitySettingsService', Service);
 
   Service.$inject = [
     'ActivityReportFactory'

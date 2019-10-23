@@ -18,14 +18,13 @@
     'otusDomain.dashboard.business.SurveyTemplateTranslateService',
     '$mdDialog',
     '$mdSelect',
-    'activitySettingsService',
-    '$q',
+    'ActivitySettingsService',
     'ActivityReportDialogService'
   ];
 
   function Controller($mdToast, LoadingScreenService, ActivityConfigurationManagerService, ActivityPermissionFactory, SurveyFactory,
                       ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService,
-                      $q, ActivityReportDialogService) {
+                      ActivityReportDialogService) {
 
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
