@@ -9,7 +9,7 @@
     'ActivityReportFactory'
   ];
 
-  function Service(ActivityReporFactory) {
+  function Service(ActivityReportFactory) {
     const self = this;
     let activityReports = [];
 
@@ -19,7 +19,7 @@
       activityReports = [];
       if(jsonActivityReports.length){
         jsonActivityReports.forEach(report =>{
-          activityReports.push(ActivityReporFactory.create(report));
+          activityReports.push(ActivityReportFactory.create(report));
         });
       }
       return activityReports;
