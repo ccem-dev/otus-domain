@@ -15,12 +15,7 @@
   function Service($mdDialog, $q, $mdToast, ProjectConfigurationService) {
     const self = this;
 
-    self.$onInit = onInit;
     self.loadActivityReport = loadActivityReport;
-
-    function onInit() {
-
-    }
 
     function loadActivityReport(ComponentCtrl) {
       self.ComponentCtrl = ComponentCtrl;
