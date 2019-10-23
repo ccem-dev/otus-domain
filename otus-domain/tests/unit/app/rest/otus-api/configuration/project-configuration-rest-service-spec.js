@@ -1,4 +1,4 @@
-xdescribe('ProjectConfigurationService Test', function () {
+describe('ProjectConfigurationService Test', function () {
   var Mock = {};
   var service;
   var Injections = {};
@@ -46,6 +46,10 @@ xdescribe('ProjectConfigurationService Test', function () {
         expect(service.updateUsersExclusiveDisjunction).toBeDefined();
         expect(service.getCollectionOfPermissions).toBeDefined();
         expect(service.fetchUsers).toBeDefined();
+        expect(service.getActivityReports).toBeDefined();
+        expect(service.updateActivityReport ).toBeDefined();
+        expect(service.deleteActivityReport ).toBeDefined();
+        expect(service.publishActivityReport).toBeDefined();
       });
     });
   });
@@ -112,7 +116,12 @@ xdescribe('ProjectConfigurationService Test', function () {
             return Promise.resolve({});
           }
         };
+      },
+
+      getReportResourceFactory: () => {
+         return Promise.resolve({});
       }
+
     };
   }
 });
