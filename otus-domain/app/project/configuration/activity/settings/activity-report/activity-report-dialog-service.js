@@ -15,6 +15,14 @@
 
   function Service($mdDialog, $q, $mdToast, ProjectConfigurationService, $mdSelect) {
     const self = this;
+    const UPLOAD_REPORT_MESSAGES = {
+      addSuccess:"Relatório Adicionado",
+      addFail: "Ocorreu um erro interno: Relatório não foi adicionado",
+      acronymInvalid: "Relatório pertence a outra atividade",
+      acronymInvalidError:"report with different acronym"
+
+
+    }
 
     self.loadActivityReport = loadActivityReport;
 
@@ -78,15 +86,15 @@
       function publishReport() {
         let acronym = self.ComponentCtrl.currentSurvey.surveyTemplate.identity.acronym;
         if (self.uploadedObject.acronym !== acronym) {
-          _toastCalled("Relatório pertence a outra atividade");
+          _toastCalled(UPLOAD_REPORT_MESSAGES.acronymInvalid);
           vm.cancel();
-          throw new Error('report with different acronym');
+          throw new Error(UPLOAD_REPORT_MESSAGES.acronymInvalidError);
         }
 
         ProjectConfigurationService.publishActivityReport(self.uploadedFile)
-          .then(() => _toastCalled("Relatório Adicionado"))
+          .then(() => _toastCalled(UPLOAD_REPORT_MESSAGES.addSuccess))
           .then(() => self.ComponentCtrl.loadActivityReportList(acronym))
-          .catch(() => _toastCalled("Ocorreu um erro interno: Relatório não foi adicionado"))
+          .catch(() => _toastCalled(UPLOAD_REPORT_MESSAGES.addFail))
           .then(() => vm.cancel());
       }
 

@@ -26,6 +26,13 @@
                       ProjectConfigurationService, SurveyTemplateTranslateService, $mdDialog, $mdSelect, ActivitySettingsService,
                       ActivityReportDialogService) {
 
+    const ACTIVITY_REPORT_MESSAGES = {
+      versionChangeConfirmationTitle: 'Deseja confirmar as seguintes alterações no relatório ?',
+      reportConfirmationButtonYes: 'SIM',
+      reportConfirmationButtonNo: 'NÃO',
+      versionDeleteConfirmationTitle: 'Você tem certeza que deseja excluir este RELATÓRIO?'
+    }
+
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
     var USER_DEL = "Usuário removido com sucesso.";
@@ -252,15 +259,15 @@
 
       if (versionCandidates.length) {
         let confirm = $mdDialog.confirm()
-          .title('Deseja confirmar as seguintes alterações no relatório ?')
+          .title(ACTIVITY_REPORT_MESSAGES.versionChangeConfirmationTitle)
           .htmlContent(` 
                          <md-content>
                             <p class="md-subhead">Atual: [${report.getCurrentVersions()}]</p>
                             <p class="md-subhead">Modificado: [${versionCandidates}]</p> 
                          </md-content>
                          `)
-          .ok('SIM')
-          .cancel('NÃO');
+          .ok(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonYes)
+          .cancel(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonNo);
 
         $mdDialog.show(confirm).then(() => {
           ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
@@ -297,14 +304,14 @@
 
     function deleteReport(report) {
       let confirm = $mdDialog.confirm()
-        .title('Você tem certeza que deseja excluir este RELATÓRIO?')
+        .title(ACTIVITY_REPORT_MESSAGES.versionDeleteConfirmationTitle)
         .htmlContent(`<md-content>                         
                          <p class="md-subhead">Titulo: ${report.label}</p>
-                         <p class="md-subhead">Versões: [${report.versions}]</p> 
+                         <p class="md-subhead">Versão: [${report.versions}]</p> 
                       </md-content>`)
         .ariaLabel('delete confirmation')
-        .ok('SIM')
-        .cancel('NÃO');
+        .ok(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonYes)
+        .cancel(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonNo);
 
       $mdDialog.show(confirm).then(() => {
         ProjectConfigurationService.deleteActivityReport(report.id)
