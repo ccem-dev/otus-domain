@@ -24,7 +24,7 @@
     self.objectType = "ActivityReport";
     self.template = activityReportData.template;
     self.label = activityReportData.label;
-    self.sendingDate = activityReportData.sendingDate;
+    self.sendingDate = moment(activityReportData.sendingDate).format('DD-MM-YYYY  HH:mm:ss');
     self.acronym = activityReportData.acronym;
     self.versions = activityReportData.versions;
     self.datasources = activityReportData.datasources;

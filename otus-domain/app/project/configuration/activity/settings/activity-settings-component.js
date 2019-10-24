@@ -299,10 +299,9 @@
     function deleteReport(report) {
       let confirm = $mdDialog.confirm()
         .title('Você tem certeza que deseja excluir este RELATÓRIO?')
-        .htmlContent(`<md-content>
-                         <p class="md-subhead">Atividade ${report.acronym}</p>
+        .htmlContent(`<md-content>                         
                          <p class="md-subhead">Titulo: ${report.label}</p>
-                         <p class="md-subhead">Versões: ${report.versions}</p> 
+                         <p class="md-subhead">Versões: [${report.versions}]</p> 
                       </md-content>`)
         .ariaLabel('delete confirmation')
         .ok('SIM')
