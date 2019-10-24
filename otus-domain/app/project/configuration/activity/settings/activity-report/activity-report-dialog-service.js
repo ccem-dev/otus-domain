@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular
     .module('otusDomain.dashboard')
@@ -31,7 +31,6 @@
 
     function DialogController($mdDialog) {
       const vm = this;
-
       vm.activityVersionsAvailable = self.ComponentCtrl.activityVersionsAvailable;
       vm.uploadButtonState = false;
       vm.uploadedObject = {};
@@ -41,14 +40,13 @@
         'type': 'json'
       };
 
-
       vm.publishReport = publishReport;
       vm.cancel = cancel;
       vm.skipSelect = skipSelect;
 
       function cancel() {
         $mdDialog.cancel();
-      };
+      }
 
       function skipSelect() {
         console.log("teste")
@@ -99,8 +97,8 @@
             .hideDelay(4000)
         );
       }
-    }
 
+    }
   }
 
 })();

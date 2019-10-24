@@ -1,5 +1,7 @@
 describe('ActivityReportFactory_UnitTest_Suite', () => {
   let factory, activityReport;
+
+
   let Mock = {};
 
   beforeEach(() => {
@@ -8,6 +10,7 @@ describe('ActivityReportFactory_UnitTest_Suite', () => {
       factory = $injector.get('ActivityReportFactory');
       Mock.activityReportData = Test.utils.data.activityReport;
       activityReport = factory.create(Mock.activityReportData);
+
     });
   });
 

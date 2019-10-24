@@ -20,11 +20,12 @@
     const self = this;
     var _currentVersions = activityReportData.versions;
 
+
     self.id = activityReportData._id;
     self.objectType = "ActivityReport";
     self.template = activityReportData.template;
     self.label = activityReportData.label;
-    self.sendingDate = moment(activityReportData.sendingDate).format('DD-MM-YYYY  HH:mm:ss');
+    self.sendingDate = activityReportData.sendingDate;
     self.acronym = activityReportData.acronym;
     self.versions = activityReportData.versions;
     self.datasources = activityReportData.datasources;

@@ -64,13 +64,13 @@
       self.surveyTemplatesList = [];
       self.currentSurvey = ActivityConfigurationManagerService.getSurveyOfContext();
       self.permission = ActivityConfigurationManagerService.getPermissionOfContext();
-      _getUsers();
-      _getSurveyVersions();
-      _getSurveyTemplates();
-
       self.activityReportList = [];
       self.outOfReportVersionList = [];
       self.persistentActivityReport = false;
+
+      _getUsers();
+      _getSurveyVersions();
+      _getSurveyTemplates();
       self.loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym);
     }
 
@@ -253,7 +253,6 @@
       if (versionCandidates.length) {
         let confirm = $mdDialog.confirm()
           .title('Deseja confirmar as seguintes alterações no relatório ?')
-
           .htmlContent(` 
                          <md-content>
                             <p class="md-subhead">Atual: [${report.getCurrentVersions()}]</p>
