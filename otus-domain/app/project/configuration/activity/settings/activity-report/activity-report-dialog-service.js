@@ -9,10 +9,11 @@
     '$mdDialog',
     '$q',
     '$mdToast',
-    'otusDomain.rest.configuration.ProjectConfigurationService'
+    'otusDomain.rest.configuration.ProjectConfigurationService',
+    '$mdSelect'
   ];
 
-  function Service($mdDialog, $q, $mdToast, ProjectConfigurationService) {
+  function Service($mdDialog, $q, $mdToast, ProjectConfigurationService, $mdSelect) {
     const self = this;
 
     self.loadActivityReport = loadActivityReport;
@@ -43,11 +44,16 @@
 
       vm.publishReport = publishReport;
       vm.cancel = cancel;
+      vm.skipSelect = skipSelect;
 
       function cancel() {
         $mdDialog.cancel();
       };
 
+      function skipSelect() {
+        console.log("teste")
+        $mdSelect.destroy();
+      }
 
       function uploadFile(fileList) {
         fileList.forEach(function (file) {

@@ -256,9 +256,8 @@
 
           .htmlContent(` 
                          <md-content>
-                            <p class="md-subhead">Prévia sobre as Versões</p>
-                            <p class="md-subhead">Atuais: ${report.getCurrentVersions()}</p>
-                            <p class="md-subhead">Mudança Solicitadas: ${versionCandidates}</p> 
+                            <p class="md-subhead">Atual: [${report.getCurrentVersions()}]</p>
+                            <p class="md-subhead">Modificado: [${versionCandidates}]</p> 
                          </md-content>
                          `)
           .ok('SIM')

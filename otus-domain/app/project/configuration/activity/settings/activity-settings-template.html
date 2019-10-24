@@ -30,8 +30,6 @@
   .md-container-ignore {
     padding: 0;
   }
-
-
 </style>
 
 <md-content class="md-padding autocomplete" flex layout="column">
@@ -175,85 +173,80 @@
   <!-- ActivityReports -->
   <md-card layout="column">
     <md-content layout="column">
-      <md-card-title flex layout="row">
-        <p class="md-title">Relatório</p>
-        <p flex></p>
+      <md-card-title flex layout="row" layout-align="space-between center">
+        <span class="md-title" flex>Relatório</span>
+        <span flex></span>
         <md-button class="md-icon-button">
           <md-icon>help</md-icon>
           <md-tooltip>Versões disponíveis habilitam o botão de enviar</md-tooltip>
         </md-button>
-
       </md-card-title>
-      <div layout="row" layout-align="start center" layout-padding>
-        <div class="md-subhead" flex>Lista de Relatórios Armazenados</div>
-        <div flex></div>
-        <div layout="column">
-          <!--types of scenarios for report persistence-->
-          <md-button class="md-icon-button md-primary"
-                     flex="10"
-                     id="uploadDialog"
-                     md-tooltip="Upload"
-                     ng-click="$ctrl.loadActivityReport()" ng-if="$ctrl.activityVersionsAvailable.length || !$ctrl.activityReportList.length">
-            <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
-            <md-tooltip md-autohide="true"
-                        md-delay="200"
-                        md-direction="top"
-                        md-visible="false">Enviar
-            </md-tooltip>
-          </md-button>
+      <md-card-title layout="row" layout-align="space-between center" ng-class="">
+        <span class="md-subhead" flex>Lista de Relatórios Armazenados</span>
+        <span flex></span>
+        <!--types of scenarios for report persistence-->
+        <md-button class="md-icon-button md-primary"
+                   id="uploadDialog"
+                   md-tooltip="Upload"
+                   ng-click="$ctrl.loadActivityReport()"
+                   ng-if="$ctrl.activityVersionsAvailable.length || !$ctrl.activityReportList.length">
+          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+          <md-tooltip md-autohide="true"
+                      md-delay="200"
+                      md-direction="top"
+                      md-visible="false">Enviar
+          </md-tooltip>
+        </md-button>
 
-          <md-button class="md-icon-button md-primary"
-                     flex="10"
-                     id="versionInUse"
-                     md-tooltip="Upload"
-                     ng-disabled="true" ng-if="!$ctrl.activityVersionsAvailable.length && $ctrl.persistentActivityReport">
-            <md-icon aria-label="version in use" md-font-library="material-icons">unarchive</md-icon>
-          </md-button>
-
-        </div>
-      </div>
+        <md-button class="md-icon-button md-primary"
+                   id="versionInUse"
+                   md-tooltip="Upload"
+                   ng-disabled="true" ng-if="!$ctrl.activityVersionsAvailable.length && $ctrl.persistentActivityReport">
+          <md-icon aria-label="version in use" md-font-library="material-icons">unarchive</md-icon>
+        </md-button>
+      </md-card-title>
 
       <!-- Template for List of ActivitityrReports with items -->
-      <md-card-content>
+      <md-card-content layout-align="space-between center">
         <md-divider></md-divider>
         <md-list ng-if=$ctrl.persistentActivityReport>
           <md-list-item aria-label="template"
                         ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
-            <div flex="80" layout="column" layout-align="left left" layout-margin>
-              <p class="md-body-2">Titulo: {{report.label}}</p>
-              <p class="md-body-1">Enviado em:{{report.sendDate}}</p>
-              <div>
-                <md-input-container>
-                  <label>Versões</label>
-                  <md-select class="margin-zero select-multiple-versions"
-                             md-on-close="$ctrl.cancelSelectVersion(report)" multiple
-                             ng-model="report.versions">
-                    <md-optgroup class="select-version">
-                      <md-button class="md-icon-button" ng-click="$ctrl.updateSelectVersion(report)">
-                        <md-icon aria-label="update versions" md-font-library="material-icons">
-                          save
-                        </md-icon>
-                      </md-button>
-                      <md-button class="md-icon-button" ng-click="$ctrl.cancelSelectVersion(report)">
-                        <md-icon aria-label="cancel" md-font-library="material-icons">clear
-                        </md-icon>
-                      </md-button>
-                      <md-option
-                        ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}"
-                        ng-repeat="version in $ctrl.versions | orderBy: $index"
-                        ng-value="version">
-                        {{version}}
-                      </md-option>
-                    </md-optgroup>
-                  </md-select>
-                </md-input-container>
+            <div flex="90" layout="row" layout-align="start center" layout-margin layout-xs="column">
+              <md-input-container>
+                <label>Versões</label>
+                <md-select class="margin-zero select-multiple-versions"
+                           md-on-close="$ctrl.cancelSelectVersion(report)" multiple
+                           ng-model="report.versions">
+                  <md-optgroup class="select-version">
+                    <md-button class="md-icon-button" ng-click="$ctrl.updateSelectVersion(report)">
+                      <md-icon aria-label="update versions" md-font-library="material-icons">
+                        save
+                      </md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="$ctrl.cancelSelectVersion(report)">
+                      <md-icon aria-label="cancel" md-font-library="material-icons">clear
+                      </md-icon>
+                    </md-button>
+                    <md-option
+                      ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}"
+                      ng-repeat="version in $ctrl.versions | orderBy: $index"
+                      ng-value="version">
+                      {{version}}
+                    </md-option>
+                  </md-optgroup>
+                </md-select>
+              </md-input-container>
+              <div layout="column">
+                <span class="md-body-2">Titulo: {{report.label}}</span>
+                <span class="md-body-1">Enviado em:{{report.sendDate}}</span>
               </div>
             </div>
-            <div flex="20" layout="row" layout-align="end right" layout-margin>
-              <md-button aria-label="deleteReport" class="md-icon-button" ng-click="$ctrl.deleteReport(report)">
-                <md-icon aria-label="deleteReport" md-font-library="material-icons">delete</md-icon>
-                <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
-              </md-button>
+            <div flex layout-padding>
+            <md-button aria-label="deleteReport" class="md-icon-button" ng-click="$ctrl.deleteReport(report)">
+              <md-icon aria-label="deleteReport" md-font-library="material-icons">delete</md-icon>
+              <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
+            </md-button>
             </div>
             <md-divider></md-divider>
           </md-list-item>

@@ -10,18 +10,12 @@
   <form>
     <md-dialog-content>
 
-      <md-content class="md-subhead" layout-align="center center" layout-padding>
-        Siga as instruções abaixo
-      </md-content>
-
       <div layout="column" layout-padding>
         <div layout="row" layout-align="start center">
-          <span flex>1. Selecione uma versão compatível</span>
-          <md-select aria-label="selectVersions"
+          <span flex>1. Selecione versão compatível</span>
+          <md-select aria-label="selectVersions" multiple
                      class="margin-zero select-multiple-versions"
-                     flex="20"
-                     md-on-close="$mdSelect.destroy()"
-                     multiple ng-model="$ctrl.availableVersions">
+                     ng-model="$ctrl.availableVersions" flex="20">
             <md-optgroup>
               <md-option
                 ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"
@@ -33,15 +27,14 @@
         </div>
         <div layout="row" layout-align="start center">
           <span flex>2. Carregue o Template.</span>
-          <md-button class="md-icon-button md-primary" flex="20"
+          <md-button class="md-icon-button md-primary" flex="20" md-ink-ripple="false"
                      layout-align="start center"
-                     md-tooltip="Upload"
                      ng-disabled="!$ctrl.availableVersions.length"
                      upload="$ctrl.uploadConfig">
             <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
             <md-tooltip md-autohide="true"
                         md-delay="200"
-                        md-direction="top"
+                        md-direction="down"
                         md-visible="false">Localizar Arquivo
             </md-tooltip>
           </md-button>
