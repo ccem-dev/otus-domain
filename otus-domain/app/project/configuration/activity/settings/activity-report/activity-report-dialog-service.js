@@ -49,7 +49,6 @@
       }
 
       function skipSelect() {
-        console.log("teste")
         $mdSelect.destroy();
       }
 
@@ -59,6 +58,7 @@
             _fileParser(file).then(function (templateObject) {
               self.uploadedObject = JSON.parse(templateObject);
               self.uploadedObject.versions = vm.availableVersions;
+              self.uploadedObject.sendingDate = new Date().toISOString();
               self.uploadedFile = JSON.stringify(self.uploadedObject);
             }).then(() => vm.uploadButtonState = true)
           }
