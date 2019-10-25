@@ -18,7 +18,7 @@ variable "otus-domain-frontend-source" {
 }
 
 variable "otus-domain-frontend-npminstall" {
-  default = "npm install --production"
+  default = "npm install"
 }
 
 variable "otus-domain-frontend-npmtest" {
@@ -26,7 +26,11 @@ variable "otus-domain-frontend-npmtest" {
 }
 
 variable "otus-domain-frontend-npmbuild" {
-  default = "npm run build"
+  default = "npm run production"
+}
+
+variable "otus-domain-frontend-npmprune" {
+  default = "npm prune --production"
 }
 
 ###############################################
@@ -46,6 +50,7 @@ resource "null_resource" "otus-domain-frontend-test" {
     command = "${var.otus-domain-frontend-npmtest}"
   }
 }
+
 resource "null_resource" "otus-domain-frontend-build" {
   depends_on = [null_resource.otus-domain-frontend-test]
   provisioner "local-exec" {
@@ -54,8 +59,16 @@ resource "null_resource" "otus-domain-frontend-build" {
   }
 }
 
-resource "null_resource" "otus-domain-frontend" {
+resource "null_resource" "otus-domain-frontend-prune" {
   depends_on = [null_resource.otus-domain-frontend-build]
+  provisioner "local-exec" {
+    working_dir = "${var.otus-domain-frontend-source}"
+    command = "${var.otus-domain-frontend-npmprune}"
+  }
+}
+
+resource "null_resource" "otus-domain-frontend" {
+  depends_on = [null_resource.otus-domain-frontend-prune]
   provisioner "local-exec" {
     command = "docker build -t ${var.otus-domain-frontend-name} ${var.otus-domain-frontend-dockerfile}"
   }
