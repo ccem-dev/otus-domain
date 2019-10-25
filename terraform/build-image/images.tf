@@ -66,7 +66,7 @@ resource "null_resource" "otus-domain-frontend-prune" {
     command = "${var.otus-domain-frontend-npmprune}"
   }
 }
-
+ 
 resource "null_resource" "otus-domain-frontend" {
   depends_on = [null_resource.otus-domain-frontend-prune]
   provisioner "local-exec" {
