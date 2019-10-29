@@ -3,7 +3,6 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/index.html
 RUN rm -rf /usr/share/nginx/html/50x.html
 
-ENV ENV_FILE_SERVER="/usr/share/nginx/html/otus-domain/app/config/env.js"
 ENV API_URL="http://localhost:51006"
 
 COPY source /usr/share/nginx/html/otus-domain

@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-envsubst '"$API_URL"' < ${ENV_FILE_SERVER} > ${ENV_FILE_SERVER}'updated'
-rm -rf ${ENV_FILE_SERVER}
-mv ${ENV_FILE_SERVER}'updated' ${ENV_FILE_SERVER}
+envsubst '${API_URL}' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf-updated
+rm -rf /etc/nginx/conf.d/default.conf
+mv /etc/nginx/conf.d/default.conf-updated /etc/nginx/conf.d/default.conf
 exit 0;
