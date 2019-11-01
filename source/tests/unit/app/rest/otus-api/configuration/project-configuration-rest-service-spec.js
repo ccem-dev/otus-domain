@@ -50,6 +50,7 @@ describe('ProjectConfigurationService Test', function () {
         expect(service.updateActivityReport ).toBeDefined();
         expect(service.deleteActivityReport ).toBeDefined();
         expect(service.publishActivityReport).toBeDefined();
+        expect(service.updateSurveyRequiredExternalID).toBeDefined();
       });
     });
   });
@@ -120,8 +121,14 @@ describe('ProjectConfigurationService Test', function () {
 
       getReportResourceFactory: () => {
          return Promise.resolve({});
+      },
+      getSurveyResource: () => {
+        return {
+          updateSurveyRequiredExternalID: () => {
+            return Promise.resolve({});
+          }
+        }
       }
-
     };
   }
 });
