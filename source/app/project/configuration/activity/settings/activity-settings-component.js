@@ -46,7 +46,6 @@
     self.usersList;
     self.surveyTemplatesList;
     self.persistentActivityReport;
-    self.externalID;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -72,7 +71,6 @@
       self.usersList = [];
       self.surveyTemplatesList = [];
       self.currentSurvey = ActivityConfigurationManagerService.getSurveyOfContext();
-      self.externalID = self.currentSurvey.requiredExternalID;
       self.permission = ActivityConfigurationManagerService.getPermissionOfContext();
       self.activityReportList = [];
       self.outOfReportVersionList = [];
@@ -328,8 +326,9 @@
     }
 
     function isRequiredExternalID() {
-      self.currentSurvey.requiredExternalID = !self.externalID;
-      ProjectConfigurationService.updateSurveyRequiredExternalID(self.currentSurvey)
+      let surveyID = self.currentSurvey._id;
+      self.externalID = !self.currentSurvey.requiredExternalID;
+      ProjectConfigurationService.updateSurveyRequiredExternalID(surveyID, self.externalID)
           .then(() => _toastCalled("ID externo Atualizado"));
     }
   }

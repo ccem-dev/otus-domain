@@ -186,6 +186,19 @@ describe("Activity Settings Component Test", function () {
     });
   });
 
+  it('isRequiredExternalIDmethod should add user on update', function (done) {
+    spyOn(Mock.ProjectConfigurationService, "updateSurveyRequiredExternalID").and.returnValue(Promise.resolve({}));
+    controller.isRequiredExternalID();
+    expect(controller.externalID).toBeTruthy();
+    Mock.ProjectConfigurationService.updateSurveyRequiredExternalID().then(function () {
+      expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
+      setTimeout(function () {
+        done();
+      }, 200);
+    });
+    done();
+  });
+
   function mockInjections() {
 
     Mock.ActivityConfigurationManagerService = {
@@ -225,6 +238,9 @@ describe("Activity Settings Component Test", function () {
       },
       getActivityReports: function(){
         return Promise.resolve()
+      },
+      updateSurveyRequiredExternalID: () => {
+        return Promise.resolve({});
       }
     };
 
@@ -284,6 +300,7 @@ describe("Activity Settings Component Test", function () {
       'surveyFormType': "FORM_INTERVIEW",
       'version': 1,
       'isDiscarded': false,
+      'requiredExternalID': false,
       'surveyTemplate': {
         'identity': {
           'name': 'DIARIO DE SONO',
@@ -298,6 +315,7 @@ describe("Activity Settings Component Test", function () {
       'surveyFormType': "FORM_INTERVIEW",
       'version': 1,
       'isDiscarded': false,
+      'requiredExternalID': false,
       'surveyTemplate': {
         'identity': {
           'name': 'DIARIO DE SONO',
