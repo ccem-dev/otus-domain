@@ -16,6 +16,7 @@
     var _permissionConfiguration;
     var _userResource;
     var _reportResource;
+    var _surveyResource;
     var self = this;
 
     /* Public methods */
@@ -40,6 +41,7 @@
     self.updateActivityReport = updateActivityReport;
     self.deleteActivityReport = deleteActivityReport;
     self.publishActivityReport = publishActivityReport;
+    self.updateSurveyRequiredExternalID = updateSurveyRequiredExternalID;
 
     onInit();
 
@@ -49,6 +51,7 @@
       _permissionConfiguration = OtusRestResourceService.getPermissionConfigurationResource();
       _userResource = OtusRestResourceService.getUserResource();
       _reportResource = OtusRestResourceService.getReportResourceFactory();
+      _surveyResource = OtusRestResourceService.getSurveyResource();
     }
 
     function fetchUsers() {
@@ -301,6 +304,17 @@
             defer.reject(response.MESSAGE);
           }
         });
+      return defer.promise;
+    }
+
+     function updateSurveyRequiredExternalID(requiredExternalId) {
+      var defer = $q.defer();
+      if (!_surveyResource) {
+        throw new Error('REST resource is not initialized.');
+      }
+      _surveyResource.updateSurveyRequiredExternalID(requiredExternalId, function () {
+        defer.resolve();
+      });
       return defer.promise;
     }
 

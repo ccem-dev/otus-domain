@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('otusDomain.dashboard')
-    .component('activitySettings', {
-      controller: "activitySettingsCtrl as $ctrl",
-      templateUrl: 'app/project/configuration/activity/settings/activity-settings-template.html'
-    }).controller("activitySettingsCtrl", Controller);
+      .module('otusDomain.dashboard')
+      .component('activitySettings', {
+        controller: "activitySettingsCtrl as $ctrl",
+        templateUrl: 'app/project/configuration/activity/settings/activity-settings-template.html'
+      }).controller("activitySettingsCtrl", Controller);
 
   Controller.$inject = [
     '$mdToast',
@@ -31,7 +31,7 @@
       reportConfirmationButtonYes: 'SIM',
       reportConfirmationButtonNo: 'NÃO',
       versionDeleteConfirmationTitle: 'Você tem certeza que deseja excluir este RELATÓRIO?'
-    }
+    };
 
     const GENERIC_ERROR = 'Não foi possível apresentar os dados. Por favor, tente novamente em alguns minutos.';
     var USER_ADD = "Usuário adicionado com sucesso.";
@@ -46,6 +46,7 @@
     self.usersList;
     self.surveyTemplatesList;
     self.persistentActivityReport;
+    self.externalID;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -61,6 +62,7 @@
     self.cancelSelectVersion = cancelSelectVersion;
     self.loadActivityReport = loadActivityReport;
     self.loadActivityReportList = loadActivityReportList;
+    self.isRequiredExternalID = isRequiredExternalID;
 
     function onInit() {
       self.error = false;
@@ -70,6 +72,7 @@
       self.usersList = [];
       self.surveyTemplatesList = [];
       self.currentSurvey = ActivityConfigurationManagerService.getSurveyOfContext();
+      self.externalID = self.currentSurvey.requiredExternalID;
       self.permission = ActivityConfigurationManagerService.getPermissionOfContext();
       self.activityReportList = [];
       self.outOfReportVersionList = [];
@@ -186,23 +189,23 @@
     function _getSurveyVersions() {
       let acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       ProjectConfigurationService.getSurveyVersions(acronym)
-        .then(function (data) {
-          self.versions = data;
-        })
-        .catch(function () {
-          self.error = true;
-          self.message = GENERIC_ERROR;
-        });
+          .then(function (data) {
+            self.versions = data;
+          })
+          .catch(function () {
+            self.error = true;
+            self.message = GENERIC_ERROR;
+          });
     }
 
     function _getSurveyTemplates() {
       LoadingScreenService.start();
       var acronym = self.currentSurvey.surveyTemplate.identity.acronym;
       ProjectConfigurationService.getSurveyTemplatesByAcronym(acronym)
-        .then(function (data) {
-          self.surveyTemplatesList = data;
-          LoadingScreenService.finish();
-        }).catch(function () {
+          .then(function (data) {
+            self.surveyTemplatesList = data;
+            LoadingScreenService.finish();
+          }).catch(function () {
         self.error = true;
         self.message = GENERIC_ERROR;
         LoadingScreenService.finish();
@@ -234,11 +237,11 @@
     function loadActivityReportList(acronym) {
       _cleanCollections();
       ProjectConfigurationService.getActivityReports(acronym)
-        .then(activityReports => self.activityReportList = ActivitySettingsService.getActivityReports(activityReports))
-        .then(() => _getSurveyVersions())
-        .then(() => _loadListOfOutOfReportVersions(self.versions))
-        .then(() => self.persistentActivityReport = true)
-        .catch(() => self.persistentActivityReport = false);
+          .then(activityReports => self.activityReportList = ActivitySettingsService.getActivityReports(activityReports))
+          .then(() => _getSurveyVersions())
+          .then(() => _loadListOfOutOfReportVersions(self.versions))
+          .then(() => self.persistentActivityReport = true)
+          .catch(() => self.persistentActivityReport = false);
     }
 
     function _loadListOfOutOfReportVersions(activityVersions) {
@@ -259,20 +262,20 @@
 
       if (versionCandidates.length) {
         let confirm = $mdDialog.confirm()
-          .title(ACTIVITY_REPORT_MESSAGES.versionChangeConfirmationTitle)
-          .htmlContent(` 
+            .title(ACTIVITY_REPORT_MESSAGES.versionChangeConfirmationTitle)
+            .htmlContent(` 
                          <md-content>
                             <p class="md-subhead">Atual: [${report.getCurrentVersions()}]</p>
                             <p class="md-subhead">Modificado: [${versionCandidates}]</p> 
                          </md-content>
                          `)
-          .ok(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonYes)
-          .cancel(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonNo);
+            .ok(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonYes)
+            .cancel(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonNo);
 
         $mdDialog.show(confirm).then(() => {
           ProjectConfigurationService.updateActivityReport(report.id, versionCandidates)
-            .then(() => _toastCalled("Versões Atualizadas"))
-            .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+              .then(() => _toastCalled("Versões Atualizadas"))
+              .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
         });
       } else {
         _toastCalled("Não é permitido relatório sem versão");
@@ -281,9 +284,9 @@
 
     function _toastCalled(message) {
       $mdToast.show(
-        $mdToast.simple()
-          .textContent(message)
-          .hideDelay(4000)
+          $mdToast.simple()
+              .textContent(message)
+              .hideDelay(4000)
       );
     }
 
@@ -304,25 +307,30 @@
 
     function deleteReport(report) {
       let confirm = $mdDialog.confirm()
-        .title(ACTIVITY_REPORT_MESSAGES.versionDeleteConfirmationTitle)
-        .htmlContent(`<md-content>                         
+          .title(ACTIVITY_REPORT_MESSAGES.versionDeleteConfirmationTitle)
+          .htmlContent(`<md-content>                         
                          <p class="md-subhead">Titulo: ${report.label}</p>
                          <p class="md-subhead">Versão: [${report.versions}]</p> 
                       </md-content>`)
-        .ariaLabel('delete confirmation')
-        .ok(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonYes)
-        .cancel(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonNo);
+          .ariaLabel('delete confirmation')
+          .ok(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonYes)
+          .cancel(ACTIVITY_REPORT_MESSAGES.reportConfirmationButtonNo);
 
       $mdDialog.show(confirm).then(() => {
         ProjectConfigurationService.deleteActivityReport(report.id)
-          .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
+            .then(() => loadActivityReportList(self.currentSurvey.surveyTemplate.identity.acronym))
       });
     }
 
     function loadActivityReport() {
-      if(!self.activityReportList.length) self.activityVersionsAvailable = self.versions;
-        ActivityReportDialogService.loadActivityReport(self);
+      if (!self.activityReportList.length) self.activityVersionsAvailable = self.versions;
+      ActivityReportDialogService.loadActivityReport(self);
+    }
+
+    function isRequiredExternalID() {
+      self.currentSurvey.requiredExternalID = !self.externalID;
+      ProjectConfigurationService.updateSurveyRequiredExternalID(self.currentSurvey)
+          .then(() => _toastCalled("ID externo Atualizado"));
     }
   }
-
 }());
