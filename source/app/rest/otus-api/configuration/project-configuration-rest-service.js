@@ -306,14 +306,14 @@
       return defer.promise;
     }
 
-     function updateSurveyRequiredExternalID(id, requiredExternalId) {
+     function updateSurveyRequiredExternalID(id, requiredExternalID) {
       var defer = $q.defer();
       if (! _configurationResource) {
         throw new Error('REST resource is not initialized.');
       }
        _configurationResource.updateSurveyRequiredExternalID({
           'id': id,
-          'requiredExternalId': requiredExternalId
+          'requiredExternalID': requiredExternalID
       }, function (response) {
           if (response.data) {
               defer.resolve(response);
