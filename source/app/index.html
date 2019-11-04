@@ -10,21 +10,23 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <!-- ASSETS -->
+  <!-- uncache(rename:true, append:hash) -->
   <!-- application -->
   <link href="app/assets/css/styles.css" rel="stylesheet" />
   <link href="app/assets/css/login.css" rel="stylesheet" />
   <link href="app/assets/css/user-register.css" rel="stylesheet" />
   <link href="app/assets/css/initial-config.css" rel="stylesheet" />
-  <!-- library -->
-  <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
-  <link href="node_modules/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet" />
-  <link href="node_modules/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css" />
-  <!-- uncache(rename:true, append:hash) -->
+
+
   <!-- build:css css/otus.min.css -->
   <link href="app/assets/css/please-wait-style.css" rel="stylesheet">
   <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
   <!-- endbuild -->
   <!-- enduncache -->
+  <!-- library -->
+  <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
+  <link href="node_modules/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet" />
+  <link href="node_modules/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="md-body-1" md-theme="layoutTheme">
@@ -32,6 +34,7 @@
 </body>
 
 <!-- Script imports -->
+<!-- uncache(rename:true, append:hash) -->
 <!-- ************************************* jQuery ************************************* -->
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
@@ -47,15 +50,21 @@
 <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 
+<!-- OTUS-MODEL -->
+<script src="node_modules/otus-model-js/dist/otus-model.js"></script>
+<script src="node_modules/otus-model-js/dist/st-utils.min.js"></script>
+
+<!-- OTUS-VALIDATION -->
+<script src="node_modules/otus-validation-js/dist/otus-validation-min.js"></script>
+
+<!-- OTUS-CLIENT -->
+<script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
+
 <!-- ************************************* i18next ************************************* -->
 <script src="node_modules/i18next/i18next.min.js"></script>
 <script src="node_modules/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
 <script src="node_modules/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
 <script src="node_modules/ng-i18next/dist/ng-i18next.min.js"></script>
-
-<!-- OTUS-MODEL -->
-<script src="node_modules/otus-model-js/dist/otus-model.js"></script>
-<script src="node_modules/otus-model-js/dist/st-utils.min.js"></script>
 
 <!-- ************************************* Color Picker ************************************* -->
 <script src="node_modules/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
@@ -68,14 +77,13 @@
 
 <!-- ************************************** Please-wait ************************************** -->
 <script src="node_modules/please-wait/build/please-wait.min.js"></script>
+<!-- enduncache -->
 
 <!-- ***************************************** Utils ***************************************** -->
 <!-- Utils -->
+<!-- uncache(rename:true, append:hash) -->
 <script src="app/components/st-utils/st-utils-module.js"></script>
 <script src="app/components/st-password/st-password-module.js"></script>
-
-<!-- OTUS-VALIDATION -->
-<script src="node_modules/otus-validation-js/dist/otus-validation-min.js"></script>
 
 <!-- ************************************** Otus Domain ************************************** -->
 <script src="app/app.js"></script>
@@ -212,9 +220,6 @@
 <script src="app/project/datasource/datasource-factory.js"></script>
 <script src="app/project/datasource/datasource-manager-component.js"></script>
 
-<!-- OTUS-CLIENT -->
-<script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
-
 <!-- INTERCEPTORS ERRORS -->
 <script src="app/response-error/interceptors/interceptor-configuration.js"></script>
 <script src="app/response-error/interceptors/response-interceptor.js"></script>
@@ -232,5 +237,6 @@
 
 <!-- # Deploy > Loading Screen -->
 <script src="app/utils/loading-screen/loading-screen-service.js"></script>
+<!-- enduncache -->
 
 </html>
