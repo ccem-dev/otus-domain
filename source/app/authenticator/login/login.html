@@ -1,0 +1,35 @@
+<div class="header-box" flex>
+  <img ng-src="app/assets/img/banner.png" flex="100"/>
+</div>
+<div layout="row" layout-align="center center">
+  <div class="md-whiteframe-5dp login-box" layout-padding layout="row" flex="50" flex-xs="100">
+    <form novalidate flex>
+      <div layout="column" flex>
+        <md-input-container flex>
+          <label>Email</label>
+          <input name="userEmail" ng-model="user.email" required/>
+
+          <div ng-messages="loginForm.userEmail.$error">
+            <div ng-message="required">Obrigatório</div>
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Senha</label>
+          <input name="userPassword" ng-model="user.password" type="password" required/>
+
+          <div ng-messages="loginForm.userPassword.$error">
+            <div ng-message="required">Obrigatório</div>
+          </div>
+        </md-input-container>
+        <div layout="row" layout-xs="column" layout-sm="column" flex>
+          <md-button type="submit" class="md-raised md-primary" ng-click="authenticate(user)"
+                     ng-disabled="loginForm.$invalid">Logar
+          </md-button>
+          <md-button class="md-raised" ng-click="register()">Cadastrar-se</md-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

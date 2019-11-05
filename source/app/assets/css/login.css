@@ -1,0 +1,11 @@
+.header-box{
+  background-color:#448AFE;
+}
+
+@media screen and (min-width: 600px){
+  .login-box {
+    position: relative;
+    top: -30px;
+    background-color: white;
+  }
+}

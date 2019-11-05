@@ -1,0 +1,46 @@
+<div layout="row" layout-align="center center" flex>
+  <div layout="column" flex="80" flex-xs="100">
+    <md-subheader hide-xs class="md-primary">Usuários Domain
+      <div layout="row" layout-align="center center" flex>
+        <md-input-container flex-gt-md=50 flex=90>
+          <md-icon md-font-library="material-icons">search</md-icon>
+          <input ng-model="query" placeholder="Buscar por Nome ou Email"></input>
+        </md-input-container>
+      </div>
+    </md-subheader>
+    <md-content flex layout="column">
+      <md-subheader hide-gt-xs class="md-primary">Usuários Domain
+        <div layout="row" layout-align="center center" flex>
+          <md-input-container flex-gt-md=50 flex=90>
+            <md-icon md-font-library="material-icons">search</md-icon>
+            <input ng-model="query" placeholder="Buscar por Nome ou Email"></input>
+          </md-input-container>
+        </div>
+      </md-subheader>
+      <div layout="column" flex="80"
+           ng-repeat="user in $ctrl.users | orderBy:['name', 'email'] | filter : query track by $index">
+        <div layout-margin layout-align="center center" layout="row">
+          <div layout-margin layout="column" layout-align="center center">
+            <md-icon md-font-set="material-icons">face</md-icon>
+          </div>
+          <div layout="column" flex>
+            <div layout="row">
+              <span class="md-subhead">{{user.name}} {{user.surname}}</span>
+            </div>
+            <span class="md-body1">{{user.email}}</span>
+            <div ng-show="user.admin" layout="row" layout-align="start">
+              <span class="md-body1">Administrador</span>
+            </div>
+          </div>
+          <div layout="column" layout-align="center center">
+            <md-switch ng-disabled="user.admin" aria-label="status" ng-model="user.enable"
+                       class="md-primary" md-no-ink ng-change="$ctrl.confirmDialog(user)"></md-switch>
+          </div>
+        </div>
+        <div>
+          <md-divider></md-divider>
+        </div>
+      </div>
+    </md-content>
+  </div>
+</div>

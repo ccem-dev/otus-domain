@@ -1,0 +1,186 @@
+md-sidenav {
+  position: fixed !important;
+  width: 320px;
+  min-width: 320px !important;
+}
+
+md-backdrop {
+  position: fixed !important;
+}
+
+md-backdrop ~ md-tab {
+  position: fixed;
+}
+
+@media (max-width: 456px) {
+  md-sidenav,
+  md-sidenav.md-locked-open,
+  md-sidenav.md-closed.md-locked-open-add-active {
+    position: fixed !important;
+    min-width: 320px !important;
+  }
+}
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.close-colorpicker {
+  display: none;
+}
+
+.toolbar-icon {
+  float: right;
+  width: 45px;
+  height: 45px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.image-brand {
+  border-radius: 25px;
+  height: 47px;
+  padding: 1px;
+  margin: 10px;
+  min-width: 45px;
+  min-height: 45px;
+}
+
+.icon-clickable {
+  cursor: pointer;
+}
+
+md-input-container.md-input-invalid>md-icon {
+  color: red;
+}
+
+.offline-card:hover {
+  cursor: pointer;
+  background-color: rgba(158, 158, 158, 0.2) !important;
+}
+
+.offline {
+  color: red !important;
+}
+
+.margin-zero {
+  margin: 0px;
+}
+
+.margin-small-top {
+  top:-2px !important;
+  margin: 10px;
+}
+
+.field-user-position {
+  position: relative;
+  top: 8px;
+}
+
+.user-title-position {
+  position: relative;
+  top: 2.5px;
+  left: 5px;
+}
+
+.user-ips-opacity {
+  opacity: 0.5;
+}
+
+.md-subheader.md-layoutTheme-theme.backgroud-color-default {
+  background-color: unset;
+}
+
+.otus-panel{
+  margin-top: 80px;
+  margin-bottom: 20px;
+  background-color: #f5f7f9;
+  padding: 10px;
+}
+
+.otus-panel-subheader{
+  color:white;
+  font-size: 1.2em;
+  border-radius: 3px;
+  position: relative;
+  top: -50px;
+  margin-bottom: -60px;
+  padding: 20px;
+}
+
+.color-center{
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border: 4px solid #fff;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+  box-shadow: 5px 5px 5px 0px rgba(186, 184, 186, 0.7);
+}
+
+.removeMarginBottom {
+  margin-bottom: 0px;
+}
+
+md-input-container.remove-errors-spacer .md-errors-spacer {
+  min-height: 0;
+}
+
+.md-fab-bottom-right {
+  top: auto !important;
+  right: 20px !important;
+  bottom: 20px !important;
+  left: auto !important;
+  position: fixed !important;
+}
+
+.select-multiple-centers {
+  min-width: 200px;
+  margin: 15px;
+  /* padding: 20px; */
+}
+
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#header .md-chips{
+  box-shadow: 0 0px !important;
+}
+
+.selectdemoSelectHeader .demo-header-searchbox {
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 50%;
+  padding: 0;
+  min-width: 400px;
+}
+.selectdemoSelectHeader .demo-select-header {
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+  padding-left: 10.667px;
+  height: 48px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto; }
+.selectdemoSelectHeader md-content._md {
+  max-height: 240px; }
+
+.selectdemoSelectHeader>md-select-menu {
+  margin-top: 45px !important;
+}
+md-chips-wrap {
+  width: 100%;
+}
+md-chips-wrap > div{
+  width: 100%;
+}
+
+.report-card-title-text{
+  min-width: 312px !important;
+}

@@ -1,0 +1,248 @@
+<style xmlns:text-align="http://www.w3.org/1999/xhtml">
+  .current-version {
+    background-color: #448aff !important;
+    color: #FAFAFA !important;
+  }
+
+  .questionPositionChip {
+    width: 40px !important;
+    height: 40px !important;
+    padding: 5px 4px !important;
+    margin-right: 10px !important;
+    text-align: center !important;
+    border-radius: 0px !important;
+  }
+
+  .select-multiple-versions {
+    width: 100px;
+    margin: 15px;
+  }
+
+  .select-version {
+    text-align: center !important;
+  }
+
+  md-select {
+    margin: 0;
+    padding: 0;
+  }
+
+  .md-container-ignore {
+    padding: 0;
+  }
+</style>
+
+<md-content class="md-padding autocomplete" flex layout="column">
+  <h2 class="md-headline">Configuração de Atividade</h2>
+  <!-- current version -->
+  <md-card flex layout="column">
+    <md-content class="autocomplete" layout="column">
+      <md-card-title flex layout="row" layout-align="start center">
+        <span class="md-title">Versão atual</span>
+        <span flex></span>
+        <md-button class="md-icon-button" layout-fill="" ng-click="$ctrl.saveSettings()">
+          <md-icon>help</md-icon>
+          <md-tooltip>Versões atual da atividade, seu dicionário de variaveis e template</md-tooltip>
+        </md-button>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item aria-label="template" class="md-2-line">
+            <div flex="80" layout="row" layout-align="start center" layout-margin>
+              <div class="current-version" layout-padding md-whiteframe="1dp">
+                <span class="md-title">{{$ctrl.currentSurvey.version}}</span>
+                <md-tooltip md-direction="left">Versão</md-tooltip>
+              </div>
+              <div class="md-list-item-text" layout-align="center start" layout-margin>
+                <h3>{{$ctrl.currentSurvey.surveyTemplate.identity.acronym}}</h3>
+                <p>{{$ctrl.currentSurvey.surveyTemplate.identity.name}}</p>
+              </div>
+            </div>
+            <div flex="20" layout="row" layout-align="end center" layout-margin>
+              <div>
+                <md-button aria-label="baixar template" class="md-icon-button" ng-click="$ctrl.downloadTemplate()">
+                  <md-icon aria-label="baixar template" md-font-library="material-icons" style="color:#448aff">
+                    file_download
+                  </md-icon>
+                  <md-tooltip md-direction="left">Baixar template</md-tooltip>
+                </md-button>
+                <md-button aria-label="baixar dicionário de variáveis" class="md-icon-button"
+                           ng-click="$ctrl.downloadVariables()">
+                  <md-icon aria-label="baixar dicionário de variáveis" md-font-library="material-icons"
+                           style="color:#448aff">assignment_returned
+                  </md-icon>
+                  <md-tooltip md-direction="left">Baixar dicionário de variáveis</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-content>
+  </md-card>
+  <!-- dictionary and template -->
+  <md-card flex layout="column">
+    <md-content class="autocomplete" layout="column">
+      <md-card-title flex layout="row" layout-align="start center">
+        <span class="md-title">Versões anteriores</span>
+        <span flex></span>
+        <md-button class="md-icon-button" layout-fill="" ng-click="$ctrl.saveSettings()">
+          <md-icon>help</md-icon>
+          <md-tooltip>Versões anteriores da atividade, seu dicionário de variaveis e template</md-tooltip>
+        </md-button>
+      </md-card-title>
+      <md-card-content>
+        <md-list ng-if="!$ctrl.error">
+          <md-list-item aria-label="template"
+                        class="md-2-line"
+                        ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index">
+            <div flex="80" layout="row" layout-align="start center" layout-margin>
+              <div layout-padding md-whiteframe="1dp">
+                <span class="md-title">{{surveyForm.version}}</span>
+                <md-tooltip md-direction="left">Versão</md-tooltip>
+              </div>
+              <div class="md-list-item-text" layout-align="center start" layout-margin>
+                <h3>{{surveyForm.surveyTemplate.identity.acronym}}</h3>
+                <p>{{surveyForm.surveyTemplate.identity.name}}</p>
+              </div>
+            </div>
+            <div flex="20" layout="row" layout-align="end center" layout-margin>
+              <div>
+                <md-button aria-label="baixar template" class="md-icon-button"
+                           ng-click="$ctrl.downloadTemplate(surveyForm.version)">
+                  <md-icon aria-label="baixar template" md-font-library="material-icons">file_download</md-icon>
+                  <md-tooltip md-direction="left">Baixar template</md-tooltip>
+                </md-button>
+                <md-button aria-label="baixar dicionário de variáveis" class="md-icon-button"
+                           ng-click="$ctrl.downloadVariables(surveyForm.version)">
+                  <md-icon aria-label="baixar dicionário de variáveis" md-font-library="material-icons">
+                    assignment_returned
+                  </md-icon>
+                  <md-tooltip md-direction="left">Baixar dicionário de variáveis</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+        <md-content flex layout="row" ng-if="$ctrl.error">
+          <div flex layout="row" layout-align="center center">
+            <div class="label-light-gray">
+              <p class="md-2-line">{{$ctrl.message}}</p>
+            </div>
+          </div>
+        </md-content>
+      </md-card-content>
+    </md-content>
+  </md-card>
+  <!-- Blinding between users -->
+  <md-card flex layout="column">
+    <md-content class="autocomplete" layout="column">
+      <md-card-title flex layout="row" layout-align="start center">
+        <span class="md-title">Cegamento entre usuários</span>
+        <span flex></span>
+        <md-button class="md-icon-button" layout-fill="" ng-click="$ctrl.saveSettings()">
+          <md-icon>help</md-icon>
+          <md-tooltip>As configurações realizadas serão salvas automaticamente.</md-tooltip>
+        </md-button>
+      </md-card-title>
+      <div layout="column" layout-margin>
+        <span class="md-subhead">Caso algum dos usuários listados abaixo realize a edição da atividade os demais,
+          pertencentes ao grupo, perderam o acesso a ela.</span>
+        <span class="md-caption remove-errors-spacer">Cegar esta atividade entre os seguintes usuários:</span>
+        <div flex layout="row">
+          <md-chips flex md-autocomplete-snap md-on-add="$ctrl.onAdd($chip)" md-on-remove="$ctrl.onRemove($chip)"
+                    md-require-match="true" md-transform-chip="ctrl.transformChip($chip)" ng-model="$ctrl.users">
+            <md-autocomplete do md-item-text="item.name"
+                             md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                             md-search-text="$ctrl.searchText" md-selected-item="$ctrl.selectedItem" nome o
+                             placeholder=Digite usuário>
+              <span md-highlight-text="ctrl.searchText">{{item.name}}</span>
+            </md-autocomplete>
+            <md-chip-template>
+              <span>
+                <strong>{{$chip.name}}</strong>
+              </span>
+            </md-chip-template>
+          </md-chips>
+        </div>
+      </div>
+    </md-content>
+  </md-card>
+  <!-- ActivityReports -->
+  <md-card layout="column">
+    <md-content layout="column">
+      <md-card-title flex layout="row" layout-align="space-between center">
+        <span class="md-title" flex>Relatório</span>
+        <span flex></span>
+        <md-button class="md-icon-button">
+          <md-icon>help</md-icon>
+          <md-tooltip>Versões disponíveis habilitam o botão de enviar</md-tooltip>
+        </md-button>
+      </md-card-title>
+      <md-card-title layout="row" layout-align="space-between center" ng-class="">
+        <span class="md-subhead" flex>Lista de Templates Armazenados</span>
+        <span flex></span>
+        <!--types of scenarios for report persistence-->
+        <md-button class="md-icon-button md-primary"
+                   id="uploadDialog"
+                   ng-click="$ctrl.loadActivityReport()"
+                   ng-if="$ctrl.activityVersionsAvailable.length || !$ctrl.activityReportList.length">
+          <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+          <md-tooltip md-direction="top">Enviar</md-tooltip>
+        </md-button>
+
+        <md-button class="md-icon-button md-primary"
+                   id="versionInUse"
+                   ng-disabled="true" ng-if="!$ctrl.activityVersionsAvailable.length && $ctrl.persistentActivityReport">
+          <md-icon aria-label="version in use" md-font-library="material-icons">unarchive</md-icon>
+          <md-tooltip md-direction="top">Enviar</md-tooltip>
+        </md-button>
+      </md-card-title>
+
+      <!-- Template for List of ActivitityrReports with items -->
+      <md-card-content layout-align="space-between center">
+        <md-divider></md-divider>
+        <md-list ng-if=$ctrl.persistentActivityReport>
+          <md-list-item aria-label="template"
+                        ng-repeat="report in $ctrl.activityReportList | filter : search track by $index">
+            <div flex="90" layout="row" layout-align="start center" layout-margin layout-xs="column">
+              <md-input-container>
+                <label>Versões</label>
+                <md-select class="margin-zero select-multiple-versions" md-on-close="$ctrl.cancelSelectVersion(report)"
+                           multiple
+                           ng-model="report.versions">
+                  <md-optgroup class="select-version">
+                    <md-button class="md-icon-button" ng-click="$ctrl.updateSelectVersion(report)">
+                      <md-icon aria-label="update versions" md-font-library="material-icons">save</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="$ctrl.cancelSelectVersion(report)">
+                      <md-icon aria-label="cancel" md-font-library="material-icons">clear</md-icon>
+                    </md-button>
+                    <md-option
+                      ng-disabled="{{!$ctrl.activityVersionsAvailable.includes(version) && !report.versions.includes(version)}}"
+                      ng-repeat="version in $ctrl.versions | orderBy: $index"
+                      ng-value="version">
+                      {{version}}
+                    </md-option>
+                  </md-optgroup>
+                </md-select>
+              </md-input-container>
+              <div layout="column">
+                <span class="md-body-2">Titulo: {{report.label}}</span>
+                <span class="md-body-2">Enviado em: {{report.sendingDate | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+              </div>
+            </div>
+            <div flex layout-padding>
+              <md-button aria-label="deleteReport" class="md-icon-button" ng-click="$ctrl.deleteReport(report)">
+                <md-icon aria-label="deleteReport" md-font-library="material-icons">delete</md-icon>
+                <md-tooltip md-direction="bottom">deletar relatório</md-tooltip>
+              </md-button>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+  </md-card>
+</md-content>

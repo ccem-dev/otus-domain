@@ -1,0 +1,38 @@
+<div layout="row" layout-align="center center" flex>
+
+<div layout-padding layout="column" flex="80" flex-xs="100">
+  <span class="md-primary">Atividades</span>
+
+  <md-input-container layout-align="center center" layout="row" flex="60" flex-xs="100">
+    <input type="text" ng-model="search" placeholder="Busca por nome" />
+  </md-input-container>
+
+  <div layout="row" layout-align="end center">
+    <span ng-hide="!$ctrl.disableSaving" class="md-body-1">Nova Atividade :</span>
+
+    <span ng-hide="$ctrl.disableSaving" class="md-body-1">{{$ctrl.uploadedObject.identity.acronym}} -
+        {{$ctrl.uploadedObject.identity.name}}</span>
+
+    <md-button class="md-icon-button md-primary" md-tooltip="Enviar Template" upload="$ctrl.uploadConfig">
+      <md-icon md-font-library="material-icons" aria-label="Load">unarchive</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Enviar Template
+      </md-tooltip>
+    </md-button>
+    <md-button id="saveBtn" class="md-icon-button md-primary" ng-disabled="$ctrl.disableSaving"
+      ng-click="$ctrl.publishTemplate()">
+      <md-icon md-font-library="material-icons" aria-label="Save">save</md-icon>
+      <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
+        Salvar
+      </md-tooltip>
+    </md-button>
+  </div>
+
+  <md-card ng-repeat="surveyForm in $ctrl.surveyTemplatesList | filter : search track by $index"
+    aria-label="formulário">
+    <survey-template-configuration class="md-list-item-text" flex survey-form="surveyForm"
+      mirror-edit-mode-status="$ctrl.groupEditMode(status)" bloc-edit="$ctrl.groupEditModeStatus"
+      survey-templates="$ctrl.surveyTemplatesList"></survey-template-configuration>
+  </md-card>
+</div>
+</div>

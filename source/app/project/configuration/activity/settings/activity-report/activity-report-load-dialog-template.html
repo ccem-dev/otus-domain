@@ -1,0 +1,47 @@
+<md-dialog>
+  <md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+      <span>Envio de Relatório</span>
+    </div>
+    <md-button ng-click="$ctrl.cancel()">
+      <md-icon>close</md-icon>
+    </md-button>
+  </md-toolbar>
+  <form>
+    <md-dialog-content>
+
+      <div layout="column" layout-padding>
+        <div layout="row" layout-align="start center">
+          <span flex="80">1. Selecione versão compatível</span>
+          <md-select aria-label="selectVersions" multiple
+                     class="margin-zero select-multiple-versions"
+                     ng-model="$ctrl.availableVersions">
+            <md-optgroup>
+              <md-option
+                ng-repeat="version in $ctrl.activityVersionsAvailable | orderBy: $index"
+                ng-value="version">
+                {{version}}
+              </md-option>
+            </md-optgroup>
+          </md-select>
+        </div>
+        <div layout="row" layout-align="start center">
+          <span flex="80">2. Carregue o Template.</span>
+          <md-button class="md-icon-button md-primary"
+                     layout-align="start center"
+                     ng-disabled="!$ctrl.availableVersions.length"
+                     upload="$ctrl.uploadConfig">
+            <md-icon aria-label="Load" md-font-library="material-icons">unarchive</md-icon>
+            <md-tooltip md-direction="left">Localizar Arquivo</md-tooltip>
+          </md-button>
+        </div>
+      </div>
+      </md-content>
+      <md-dialog-actions>
+        <md-button class="md-raised md-primary" ng-click="$ctrl.publishReport({action:'ok'})"
+                   ng-disabled="!$ctrl.uploadButtonState">ENVIAR
+        </md-button>
+      </md-dialog-actions>
+    </md-dialog-content>
+  </form>
+</md-dialog>
