@@ -23,7 +23,8 @@
       'ngMaterial',
       'ngSanitize',
       'md.data.table',
-      'jm.i18next'
+      'jm.i18next',
+       'ngCookies'
     ]).run(Runner);
 
   Runner.$inject = [];

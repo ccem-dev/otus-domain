@@ -40,6 +40,7 @@
         "angular-messages": "1.6.4",
         "angular-resource": "1.5.3",
         "angular-sanitize": "1.6.4",
+        "angular-cookies": "1.5.11",
         "angular-ui-mask": "1.8.7",
         "angular-ui-router": "^0.3.1",
         "jquery": "2.2.0",

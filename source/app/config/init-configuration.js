@@ -2,14 +2,11 @@
 
     angular
         .module('otusDomain')
-        .run(['RestResourceService', '$window', 'UserService', initConfiguration]);
+        .run(['RestResourceService', 'UserService', '$cookies', initConfiguration]);
 
-    function initConfiguration(RestResourceService, $window, UserService) {
-        var __env = $window.__env;
-
-        RestResourceService.setUrl(__env.apiUrl);
+    function initConfiguration(RestResourceService, UserService,$cookies) {
+        RestResourceService.setUrl($cookies.get('Backend-Address'));
         UserService.reloadLoggedUser();
-
     }
 
 }());
