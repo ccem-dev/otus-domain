@@ -17,6 +17,8 @@
     var runSequence = require('run-sequence');
     var embedTemplates = require('gulp-angular-embed-templates');
     var uncache = require('gulp-uncache');
+    var clean = require('gulp-clean');
+
 
     gulp.task('browser-sync', function () {
         console.log(process.argv);
@@ -44,9 +46,13 @@
         ]).on('change', browserSync.reload);
     });
 
-    gulp.task('compress', function (a, b, c, d) {
-        // runSequence('copy_code', 'embeded_template', 'copy_node_modules');
-        runSequence('copy_code', 'embeded_template', 'copy_node_modules', 'compress-hash');
+    gulp.task('compress', function () {
+        runSequence('clean_dist', 'copy_code', 'embeded_template', 'copy_node_modules', 'compress-hash');
+    });
+
+    gulp.task('clean_dist', function () {
+        return gulp.src('dist/', {read: false})
+            .pipe(clean());
     });
 
 
