@@ -66,6 +66,7 @@
         "concurrently": "^1.0.0",
         "gulp": "^3.9.1",
         "gulp-angular-embed-templates": "^2.2.0",
+        "browser-sync-middleware-spa": "^1.0.0",
         "gulp-babel": "^7.0.1",
         "gulp-bump": "2.1.0",
         "gulp-clean": "^0.4.0",
