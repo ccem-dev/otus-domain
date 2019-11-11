@@ -2,28 +2,19 @@ describe('ProjectConfigurationService Test', function () {
   var Mock = {};
   var service;
   var Injections = {};
-
-  beforeEach(function () {
-    angular.mock.module('otusDomain.rest');
-  });
-
-  describe('serviceInstance', function () {
+  var UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
 
     beforeEach(function () {
-      mockInjections();
+      mocks();
+      angular.mock.module('otusDomain.rest');
+      angular.mock.module('otus.client');
 
-      angular.mock.module('otusDomain.rest', function ($provide) {
-        $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
-      });
-    });
-
-    beforeEach(function () {
-      inject(function (_$injector_) {
+      inject(function ($injector) {
         Injections = {
-          OtusRestResourceService: Mock.OtusRestResourceService,
-          $q: _$injector_.get('$q')
+          OtusRestResourceService: $injector.get('OtusRestResourceService'),
+          $q: $injector.get('$q')
         };
-        service = _$injector_.get('otusDomain.rest.configuration.ProjectConfigurationService', Injections);
+        service = $injector.get('otusDomain.rest.configuration.ProjectConfigurationService', Injections);
       });
     });
 
@@ -50,78 +41,74 @@ describe('ProjectConfigurationService Test', function () {
         expect(service.updateActivityReport ).toBeDefined();
         expect(service.deleteActivityReport ).toBeDefined();
         expect(service.publishActivityReport).toBeDefined();
+        expect(service.updateSurveyRequiredExternalID).toBeDefined();
       });
     });
-  });
 
-  function mockInjections() {
-    Mock.OtusRestResourceService = {
-      getConfigurationResource: () => {
-        return {
-          getAllSurveys: () => {
-            return Promise.resolve({});
-          },
-          getByAcronym: () => {
-            return Promise.resolve({});
-          },
-          getSurveyVersions: () => {
-            return Promise.resolve({});
-          },
-          updateSurveyTemplateType: function () {
-            return Promise.resolve({});
-          },
-          deleteSurveyTemplate: function () {
-            return Promise.resolve({});
-          },
-          publishTemplate: function () {
-            return Promise.resolve({});
-          },
-          getVisualIdentity: function () {
-            return Promise.resolve({});
-          },
-          updateVisualIdentity: function () {
-            return Promise.resolve({});
-          }
-        };
-      },
-      getProjectConfigurationResource: () => {
-        return {
-          getProjectConfiguration: () => {
-            return Promise.resolve({});
-          },
-          allowNewParticipants: () => {
-            return Promise.resolve({});
-          },
-          autoGenerateRecruitmentNumber: () => {
-            return Promise.resolve({});
-          }
-        };
-      },
-      getPermissionConfigurationResource: () => {
-        return {
-          create: () => {
-            return Promise.resolve({});
-          },
-          update: () => {
-            return Promise.resolve({});
-          },
-          getAll: () => {
-            return Promise.resolve({});
-          }
-        };
-      },
-      getUserResource: () => {
-        return {
-          list: () => {
-            return Promise.resolve({});
-          }
-        };
-      },
+    it('updateSurveyRequiredExternalID_method should add user on update', function (){
+      spyOn(Injections.OtusRestResourceService, "getConfigurationResource").and.returnValue(Mock.getConfigurationResource);
+      service.$onInit();
+      expect(Injections.OtusRestResourceService.getConfigurationResource).toHaveBeenCalledTimes(1);
+      expect(JSON.stringify(service.updateSurveyRequiredExternalID({},{}))).toEqual(Mock.resultUpdateSurveyRequiredExternalID);
+    });
 
-      getReportResourceFactory: () => {
-         return Promise.resolve({});
+  function mocks() {
+    Mock.resultUpdateSurveyRequiredExternalID = '{"$$state":{"status":0}}';
+    Mock.getConfigurationResource = {
+      getAllSurveys: () => {
+        return Promise.resolve({});
+      },
+      getByAcronym: () => {
+        return Promise.resolve({});
+      },
+      getSurveyVersions: () => {
+        return Promise.resolve({});
+      },
+      updateSurveyTemplateType: function () {
+        return Promise.resolve({});
+      },
+      deleteSurveyTemplate: function () {
+        return Promise.resolve({});
+      },
+      publishTemplate: function () {
+        return Promise.resolve({});
+      },
+      getVisualIdentity: function () {
+        return Promise.resolve({});
+      },
+      updateVisualIdentity: function () {
+        return Promise.resolve({});
+      },
+      updateSurveyRequiredExternalID: () => {
+        return Promise.resolve({});
       }
-
+    };
+    Mock.getProjectConfigurationResource = {
+      getProjectConfiguration: () => {
+        return Promise.resolve({});
+      },
+      allowNewParticipants: () => {
+        return Promise.resolve({});
+      },
+      autoGenerateRecruitmentNumber: () => {
+        return Promise.resolve({});
+      }
+    };
+    Mock.getPermissionConfigurationResource = {
+      create: () => {
+        return Promise.resolve({});
+      },
+      update: () => {
+        return Promise.resolve({});
+      },
+      getAll: () => {
+        return Promise.resolve({});
+      }
+    };
+    Mock.getUserResource = {
+      list: () => {
+        return Promise.resolve({});
+      }
     };
   }
 });
