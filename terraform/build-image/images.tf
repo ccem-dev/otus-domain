@@ -26,7 +26,7 @@ variable "otus-domain-frontend-npmtest" {
 }
 
 variable "otus-domain-frontend-npmbuild" {
-  default = "npm run production"
+  default = "npm run build"
 }
 
 variable "otus-domain-frontend-npmprune" {
