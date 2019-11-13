@@ -26,9 +26,6 @@
 
   function stateConfiguration($stateProvider, $urlRouterProvider) {
 
-    var dashboardMenu = 'app/dashboard/menu/dashboard-menu.html';
-    var mainDashBoardTemplate = 'app/dashboard/template/main-dashboard-template.html';
-
     $stateProvider
       .state('installer', {
         url: '/installer',
@@ -90,11 +87,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@user-activation': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
 
           },
           'system-content@user-activation': {
@@ -120,11 +117,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@user-otus-management': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@user-otus-management': {
             template: '<otus-user-dashboard></otus-user-dashboard>'
@@ -146,11 +143,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@field-center': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@field-center': {
             templateUrl: 'app/project/fieldCenter/field-center-template.html',
@@ -176,11 +173,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@activity_configuration': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@activity_configuration': {
             template: '<activity-configuration flex></activity-configuration>'
@@ -204,11 +201,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@activity_settings': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@activity_settings': {
             template: '<activity-settings flex="80"></activity-settings>'
@@ -231,11 +228,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@report_manager': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@report_manager': {
             template: '<report-manager flex></report-manager>'
@@ -258,11 +255,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@datasource_manager': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@datasource_manager': {
             template: '<datasource-manager flex></datasource-manager>'
@@ -278,11 +275,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@home': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@home': {
             templateUrl: 'app/dashboard/template/dashboard-content-template.html'
@@ -314,11 +311,11 @@
         },
         views: {
           'system-wrap': {
-            templateUrl: mainDashBoardTemplate,
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
           'dashboard-menu@configuration-center': {
-            templateUrl: dashboardMenu
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@configuration-center': {
             templateUrl: 'app/project/configuration/configuration-template.html',
