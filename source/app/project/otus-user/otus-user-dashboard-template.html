@@ -31,8 +31,8 @@
   }
 </style>
 <div layout="row" layout-align="center center" flex>
-  <md-content flex="80"  flex-xs="100" layout-align="center start">
-    <md-subheader class="md-primary" flex="50">Usuários Otus</md-subheader>
+  <div flex="80"  flex-xs="100" layout-align="center start">
+    <h2 layout="row" layout-align-xs="center center" class="md-primary" flex="50">Usuários Otus</h2>
     <div layout="column" style="background-color: #FAFAFA" class="md-padding">
       <form ng-submit="$event.preventDefault()" name="searchForm">
         <div layout="row" layout-align="start center" flex>
@@ -102,6 +102,6 @@
                        flex></otus-user-manager>
     <permission-grid-component ng-if="$ctrl.selectedUser"
                                user-email="$ctrl.selectedUser.email"></permission-grid-component>
-  </md-content>
+  </div>
 </div>
 
