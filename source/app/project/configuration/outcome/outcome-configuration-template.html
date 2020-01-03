@@ -1,0 +1,134 @@
+<md-content layout="row" layout-align="center center" flex>
+
+
+    <md-content layout-padding layout="column" flex="80" flex-xs="100" layout-margin="">
+        <h1 ng-if="!$ctrl.isEditFollowUp" class="md-primary md-title">
+            Configuração de Desfechos
+            <!--            <md-button class="md-icon-button" ng-click="$ctrl.init()" ng-if="!$ctrl.outcome">-->
+            <!--                <md-icon>play_circle_outline</md-icon>-->
+            <!--                <md-tooltip>Iniciar configuração</md-tooltip>-->
+            <!--            </md-button>-->
+
+        </h1>
+        <h1 class="md-primary md-title" ng-if="$ctrl.isEditFollowUp">Configuração de Seguimento</h1>
+        <span class="md-subheader">
+            {{$ctrl.outcome.description}}
+        </span>
+        <div layout="row" flex ng-if="$ctrl.preOutcome" layout-align="center center">
+            <md-input-container flex>
+                <label>Descrição (opcional)</label>
+                <input ng-model="$ctrl.preOutcome.description" ng-value="$ctrl.preOutcome.description">
+                <md-icon ng-click="$ctrl.saveOutcome()" class="md-primary" layout-margin="" style="cursor: pointer">
+                    save
+                </md-icon>
+            </md-input-container>
+
+
+        </div>
+
+
+        <div layout="column" layout-align="start start" ng-if="$ctrl.isEditFollowUp" layout-fill>
+            <div layout="row" layout-wrap flex="100" layout-align="start start" layout-fill>
+                <md-input-container flex="45" flex-xs="100">
+                    <label>Nome</label>
+                    <input ng-model="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].label"
+                           ng-value="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].label">
+                </md-input-container>
+                <span flex-gt-xs="10"></span>
+                <md-input-container flex="45" flex-xs="100">
+                    <label>Duração (em dias)</label>
+                    <input ng-model="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].time"
+                           ng-value="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].time" numbers-only>
+                </md-input-container>
+                <md-input-container flex="45" flex-xs="100" ng-if="$ctrl.selectedFollowUp > 0">
+                    <label>Janela (em dias)</label>
+                    <input ng-model="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].windowBetween"
+                           ng-value="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].windowBetween"
+                           numbers-only>
+                </md-input-container>
+                <span flex-gt-xs="10" ng-if="$ctrl.selectedFollowUp > 0"></span>
+
+
+                <div layout="row" flex="45" flex-xs="100">
+                    <md-input-container flex>
+                        <label>Tipo de evento</label>
+                        <md-select ng-model="$ctrl.typeEvent">
+                            <md-option><em>None</em></md-option>
+                            <md-option ng-repeat="event in $ctrl.events" ng-value="event.template">
+                                {{event.label}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-button class="md-fab md-mini" ng-click="$ctrl.addEvent()" ng-disabled="!$ctrl.typeEvent">
+                        <md-icon>add</md-icon>
+                    </md-button>
+                </div>
+                <span flex-gt-xs="55" ng-if="$ctrl.selectedFollowUp == 0"></span>
+
+
+                <div id="events" layout="row" layout-wrap="" flex="100"></div>
+
+
+            </div>
+            <div layout="row" layout-wrap flex="100" layout-align="start start" layout-fill>
+
+                <md-list layout-align="start center" flex="100"
+                         ng-if="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].events.length">
+                    <md-subheader class="md-no-sticky">Eventos</md-subheader>
+                    <md-list-item class="md-2-line"
+                                  ng-repeat="event in $ctrl.outcome.followUps[$ctrl.selectedFollowUp].events track by $index"
+                                  ng-click="$ctrl.editFollowUp($index)">
+                        <md-icon>{{event.icon}}</md-icon>
+                        <div class="md-list-item-text">
+                            <p>{{event.name}}</p>
+                            <span class="md-mini md-caption">{{event.description}}</span>
+                        </div>
+                        <md-button class="md-mini md-icon-button" ng-click="$ctrl.outcome.followUps[$ctrl.selectedFollowUp].removeEvent($index)">
+
+                            <md-icon style="color:red">delete_forever</md-icon>
+                        </md-button>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                    <h2 ng-if="!$ctrl.outcome.followUps.length">Não há seguimentos.</h2>
+
+                </md-list>
+            </div>
+        </div>
+
+        <md-list layout-align="start center" flex ng-if="$ctrl.outcome && !$ctrl.isEditFollowUp">
+            <md-subheader class="md-no-sticky">Seguimentos</md-subheader>
+            <md-list-item ng-if="$ctrl.outcome.followUps.length" class="md-2-line"
+                          ng-repeat="follow in $ctrl.outcome.followUps track by $index"
+                          ng-click="$ctrl.editFollowUp($index)">
+                <md-icon>track_changes</md-icon>
+                <div class="md-list-item-text">
+                    <p>{{follow.label}}</p>
+                </div>
+                <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeFollowUp($index)">
+
+                    <md-icon style="color:red">delete_forever</md-icon>
+                </md-button>
+                <md-divider></md-divider>
+            </md-list-item>
+            <h2 ng-if="!$ctrl.outcome.followUps.length">Não há seguimentos.</h2>
+
+        </md-list>
+    </md-content>
+
+    <md-button class="md-fab md-fab-bottom-right" aria-label="Gerenciar Desfechos" ng-click="$ctrl.action()">
+        <md-icon md-svg-icon="plus" ng-if="$ctrl.outcome && !$ctrl.isEditFollowUp"></md-icon>
+        <md-icon ng-if="!$ctrl.outcome && !$ctrl.preOutcome">play_arrow</md-icon>
+        <md-icon ng-if="$ctrl.preOutcome">close</md-icon>
+        <md-icon ng-if="$ctrl.isEditFollowUp">save</md-icon>
+        <md-tooltip md-direction="left" ng-if="$ctrl.outcome && !$ctrl.isEditFollowUp">Adicionar seguimento</md-tooltip>
+        <md-tooltip md-direction="left" ng-if="!$ctrl.outcome && !$ctrl.preOutcome">Iniciar configuração</md-tooltip>
+        <md-tooltip md-direction="left" ng-if="$ctrl.preOutcome">Cancelar</md-tooltip>
+        <md-tooltip md-direction="left" ng-if="$ctrl.isEditFollowUp">Salvar</md-tooltip>
+    </md-button>
+    <md-button ng-if="$ctrl.isEditFollowUp" class="md-fab md-fab-bottom-left md-mini md-accent md-raised"
+               aria-label="Cancelar" ng-click="$ctrl.cancel()">
+        <md-icon>arrow_back</md-icon>
+        <md-tooltip md-direction="left" ng-if="$ctrl.preOutcome">Cancelar</md-tooltip>
+    </md-button>
+
+</md-content>

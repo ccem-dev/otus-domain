@@ -30,6 +30,7 @@
     self.goToActivitySettings = goToActivitySettings;
     self.goToProjectReportManager = goToProjectReportManager;
     self.goToProjectDatasourceManager = goToProjectDatasourceManager;
+    self.goToOutcomeConfiguration = goToOutcomeConfiguration;
     self.logout = logout;
 
     init();
@@ -97,6 +98,11 @@
     function goToProjectConfiguration() {
       self.currentState = 'Configurações de Projeto';
       $state.go(APP_STATE.PROJECT_CONFIGURATION);
+    }
+
+    function goToOutcomeConfiguration() {
+      self.currentState = 'Configurações de Desfechos';
+      $state.go(APP_STATE.OUTCOME_CONFIGURATION);
     }
 
     function goToErrorOffline() {

@@ -1,0 +1,32 @@
+<md-card layout-fill="">
+    <md-card-content layout="row" layout-wrap flex="100" layout-align="start start">
+        <md-input-container flex="30" flex-xs="100">
+            <label>Acrônimo</label>
+            <md-select ng-model="$ctrl.selectedSurvey" ng-change="$ctrl.select()">
+                <md-option><em>None</em></md-option>
+                <md-option ng-repeat="survey in $ctrl.surveys" ng-value="survey.surveyTemplate.identity">
+                    {{survey.surveyTemplate.identity.acronym}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <span flex-gt-xs="5"></span>
+        <md-input-container flex="65" flex-xs="100">
+            <label>Nome</label>
+            <input ng-model="$ctrl.data.name"
+                   ng-value="$ctrl.data.name" ng-disabled="true">
+        </md-input-container>
+        <md-input-container flex="100">
+            <label>Descrição</label>
+            <textarea ng-maxlength="150" rows="2" ng-model="$ctrl.data.description"
+                      ng-value="$ctrl.data.description"></textarea>
+        </md-input-container>
+        <md-button class="md-raised md-warn md-mini" ng-click="$ctrl.cancel()()">
+            <md-icon>delete_forever</md-icon>
+        </md-button>
+        <md-button class="md-raised md-primary md-mini" ng-click="$ctrl.save()($ctrl.data.objectType, $ctrl.data)">
+            <md-icon>add</md-icon> ADD
+        </md-button>
+    </md-card-content>
+
+
+</md-card>

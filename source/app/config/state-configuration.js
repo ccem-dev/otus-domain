@@ -15,6 +15,7 @@
       'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
+      'OUTCOME_CONFIGURATION': 'outcome',
       'DATASOURCE_MANAGER':'datasource_manager',
       'REPORT_MANAGER': 'report_manager'
     });
@@ -321,6 +322,34 @@
             templateUrl: 'app/project/configuration/configuration-template.html',
             controller: 'otusjs.otus-domain.project.configuration.ProjectConfigurationController',
             controllerAs: 'configController'
+          }
+        }
+      })
+      .state({
+        name: 'outcome',
+        url: '/project/outcome',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
+            ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@outcome': {
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
+          },
+          'system-content@outcome': {
+            template: '<outcome-configuration flex></outcome-configuration>'
           }
         }
       })
