@@ -335,9 +335,10 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService, OutcomeRestService) {
             ActivityConfigurationRestService.initialize();
             SurveyGroupRestService.initialize();
+            OutcomeRestService.initialize();
           }
         },
         views: {

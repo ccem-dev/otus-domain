@@ -6,12 +6,11 @@
     .service('otusDomain.dashboard.outcome.OutcomeConfigurationService', Service);
 
   Service.$inject = [
-    '$q',
-    'SurveyGroupRestService',
+    'OutcomeRestService',
     'otusjs.model.outcome.OutcomeFactory'
   ];
 
-  function Service($q, SurveyGroupRestService, OutcomeFactory) {
+  function Service(OutcomeRestService, OutcomeFactory) {
 
     var self = this;
     self.initialize = initialize;
@@ -29,24 +28,15 @@
     }
     
     function loadConfiguration() {
-      var deferred = $q.defer();
-      if (true) deferred.resolve();
-      return deferred.promise;
+      return OutcomeRestService.list();
     }
     
-    function saveConfiguration() {
-      var deferred = $q.defer();
-      if (true) deferred.resolve();
-      return deferred.promise;
+    function saveConfiguration(outcome) {
+      return OutcomeRestService.create(outcome);
     }
 
-    function updateConfiguration() {
-      var deferred = $q.defer();
-      if (true) deferred.resolve();
-      return deferred.promise;
+    function updateConfiguration(outcome) {
+      return OutcomeRestService.update(outcome);
     }
-
-
-
   }
 }());

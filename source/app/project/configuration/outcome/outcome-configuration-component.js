@@ -23,9 +23,9 @@
         var self = this;
 
 
-        self.followUps = [];
+        // self.followUps = [];
         self.isNewFollowUp = true;
-        self.selectedFollowUp = 0;
+        self.selectedFollowUp = null;
         self.typeEvent = null;
         self.init = init;
         self.saveOutcome = saveOutcome;
@@ -40,10 +40,8 @@
         self.saveEvent = saveEvent;
         self.cancelEvent = cancelEvent;
 
-
         var elem;
 
-        _reset();
         /* Lifecycle hooks */
         self.$onInit = onInit;
         self.isCreating = false;
@@ -58,6 +56,7 @@
 
 
         function onInit() {
+            _reset();
             OutcomeConfigurationService.loadConfiguration().then(function (response) {
                 self.outcome = response;
             });
@@ -68,7 +67,6 @@
         }
 
         function saveConfiguration() {
-
             _confirm("Salvar configurações", "Deseja salvar as alterações?").then(function () {
                 self.isEditFollowUp = false;
                 _reset();
@@ -106,6 +104,7 @@
             if (self.isEditFollowUp) {
                 OutcomeConfigurationService.updateConfiguration(self.outcome).then(function () {
                     _message('Configurações salvas com sucesso.');
+                    self.isNewFollowUp = false;
                 });
             } else if (self.outcome) {
                 self.outcome.addFollowUp();
@@ -147,10 +146,6 @@
             self.isEditFollowUp = false;
             self.selectedFollowUp = null;
             self.isNewFollowUp = true;
-        }
-
-        function select(followUp) {
-            self.selectedFollowUp = followUp
         }
 
         function cancel() {
