@@ -14,16 +14,12 @@
         .controller('autoFillCtrl', Controller);
 
     Controller.$inject = [
-        '$q',
-        '$mdToast',
-        '$mdDialog',
-        '$scope',
         'otusDomain.LoadingScreenService',
         'otusjs.model.outcome.ActivityAutoFillEventFactory',
         'otusDomain.rest.configuration.ProjectConfigurationService'
     ];
 
-    function Controller($q, $mdToast, $mdDialog, $scope, LoadingScreenService, ActivityAutoFillEventFactory, ProjectConfigurationService) {
+    function Controller(LoadingScreenService, ActivityAutoFillEventFactory, ProjectConfigurationService) {
         var self = this;
 
         self.preEvent = {};
@@ -35,19 +31,13 @@
         self.select = select;
 
 
-
-        function onInit(){
-            if (self.json){
-                self.data = ActivityAutoFillEventFactory.fromJson(self.json);
-            } else {
-                self.data = ActivityAutoFillEventFactory.create()
-            }
+        function onInit() {
+            self.data = ActivityAutoFillEventFactory.create();
             _getTemplatesList();
-
         }
 
 
-        function onDestroy(){
+        function onDestroy() {
             delete self.data;
         }
 

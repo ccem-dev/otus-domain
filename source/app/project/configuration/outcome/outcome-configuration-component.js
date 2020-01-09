@@ -141,6 +141,10 @@
             self.typeEvent = null;
         }
 
+        function select(followUp) {
+            self.selectedFollowUp = followUp
+        }
+
 
         function _reset() {
             self.isEditFollowUp = false;

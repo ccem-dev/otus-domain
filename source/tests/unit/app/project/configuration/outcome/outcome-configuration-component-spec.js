@@ -1,7 +1,7 @@
 describe('Outcome Configuration Component Tests', function () {
 
     var ctrl;
-    var rest, scope;
+    var rest, scope, service, dialog;
     var Mock = {};
     var Injections = {};
     const CONTROLLER_NAME = 'outcomeController';
@@ -28,11 +28,16 @@ describe('Outcome Configuration Component Tests', function () {
         angular.mock.module('otusDomain.rest');
         angular.mock.module('otusDomain.dashboard');
         angular.mock.module('ngMaterial');
-        angular.mock.inject((_$controller_, _OutcomeRestService_, $injector, _$rootScope_, _$mdToast_, _$q_, _$compile_) => {
+        angular.mock.inject((_$controller_, _$mdDialog_, _OutcomeRestService_, $injector, _$rootScope_, _$mdToast_, _$q_, _$compile_) => {
             scope = _$rootScope_.$new();
+            dialog = _$mdDialog_;
+            service = $injector.get('otusDomain.dashboard.outcome.OutcomeConfigurationService');
+
             Injections = {
                 "$mdToast": _$mdToast_,
                 "$scope": scope,
+                "$mdDialog": dialog,
+                "OutcomeConfigurationService": service
             };
             rest = _OutcomeRestService_;
             ctrl = _$controller_(CONTROLLER_NAME, Injections);
@@ -41,6 +46,10 @@ describe('Outcome Configuration Component Tests', function () {
         spyOn(rest, 'create').and.returnValue(Promise.resolve());
         spyOn(rest, 'list').and.returnValue(Promise.resolve());
         spyOn(rest, 'update').and.returnValue(Promise.resolve());
+        spyOn(service, 'loadConfiguration').and.returnValue(Promise.resolve([]));
+        spyOn(service, 'initialize').and.returnValue({});
+        spyOn(service, 'saveConfiguration').and.returnValue(Promise.resolve(true));
+        spyOn(dialog, 'show').and.returnValue(Promise.resolve());
     });
 
     it('should create ctrl', function () {
@@ -71,16 +80,25 @@ describe('Outcome Configuration Component Tests', function () {
         expect(ctrl.events.length).toEqual(1);
     });
 
-    describe('onInit method', function(){});
-    describe('init method', function(){});
-    describe('saveConfiguration method', function(){});
-    describe('saveEvent method', function(){});
-    describe('cancelEvent method', function(){});
-    describe('saveOutcome method', function(){});
-    describe('action method', function(){});
-    describe('editFollowUp method', function(){});
-    describe('removeFollowUp method', function(){});
-    describe('createFollowUp method', function(){});
-    describe('addEvent method', function(){});
-    describe('cancel method', function(){});
+    it('should init component', function () {
+        ctrl.$onInit();
+        expect(service.loadConfiguration).toHaveBeenCalledTimes(1);
+    });
+
+    it('should init object', function () {
+        ctrl.init();
+        expect(service.initialize).toHaveBeenCalledTimes(1);
+    });
+
+    it('should save outcome object', function () {
+        ctrl.saveConfiguration();
+        dialog.show().then(function() {
+
+            expect(service.saveConfiguration).toHaveBeenCalledTimes(1);
+        });
+        expect(service.saveConfiguration).toHaveBeenCalledTimes(1);
+
+    });
+
+
 });
