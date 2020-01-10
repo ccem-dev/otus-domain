@@ -68,10 +68,9 @@
 
         function saveConfiguration() {
             _confirm("Salvar configurações", "Deseja salvar as alterações?").then(function () {
-                self.isEditFollowUp = false;
                 _reset();
                 _message('Configurações salvas com sucesso.');
-                OutcomeConfigurationService.saveConfiguration(self.outcome).then(function (response) {
+                OutcomeConfigurationService.updateConfiguration(self.outcome).then(function (response) {
                     if (response) _message('Configurações salvas com sucesso.')
                 }).catch(function (error) {
                     _message('não foi possível salvar as alterações!')

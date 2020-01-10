@@ -47,9 +47,11 @@ describe('Outcome Configuration Component Tests', function () {
         spyOn(rest, 'list').and.returnValue(Promise.resolve());
         spyOn(rest, 'update').and.returnValue(Promise.resolve());
         spyOn(service, 'loadConfiguration').and.returnValue(Promise.resolve([]));
+        spyOn(service, 'updateConfiguration').and.returnValue(Promise.resolve([]));
         spyOn(service, 'initialize').and.returnValue({});
         spyOn(service, 'saveConfiguration').and.returnValue(Promise.resolve(true));
-        spyOn(dialog, 'show').and.returnValue(Promise.resolve());
+        spyOn(Injections.$mdDialog, 'show').and.returnValue(Promise.resolve());
+        spyOn(Injections.$mdToast, 'show').and.returnValue(Promise.resolve());
     });
 
     it('should create ctrl', function () {
@@ -90,15 +92,17 @@ describe('Outcome Configuration Component Tests', function () {
         expect(service.initialize).toHaveBeenCalledTimes(1);
     });
 
-    it('should save outcome object', function () {
+    it('should save configuration', function () {
+        ctrl.editFollowUp(1);
         ctrl.saveConfiguration();
-        dialog.show().then(function() {
-
-            expect(service.saveConfiguration).toHaveBeenCalledTimes(1);
-        });
-        expect(service.saveConfiguration).toHaveBeenCalledTimes(1);
-
+        expect(Injections.$mdDialog.show).toHaveBeenCalledTimes(1);
     });
 
+    it('should save outcome object', function () {
+        spyOn(service, 'load');
+        ctrl.saveOutcome();
+        expect(service.load).toHaveBeenCalledTimes(1);
+        expect(service.saveConfiguration).toHaveBeenCalledTimes(1);
+    });
 
 });
