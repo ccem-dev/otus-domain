@@ -16,6 +16,7 @@
     var _permissionConfiguration;
     var _userResource;
     var _reportResource;
+    var _surveyResource;
     var self = this;
 
     /* Public methods */
@@ -40,6 +41,7 @@
     self.updateActivityReport = updateActivityReport;
     self.deleteActivityReport = deleteActivityReport;
     self.publishActivityReport = publishActivityReport;
+    self.updateSurveyRequiredExternalID = updateSurveyRequiredExternalID;
 
     onInit();
 
@@ -301,6 +303,24 @@
             defer.reject(response.MESSAGE);
           }
         });
+      return defer.promise;
+    }
+
+     function updateSurveyRequiredExternalID(id, requiredExternalID) {
+      var defer = $q.defer();
+      if (! _configurationResource) {
+        throw new Error('REST resource is not initialized.');
+      }
+       _configurationResource.updateSurveyRequiredExternalID({
+          'id': id,
+          'requiredExternalID': requiredExternalID
+      }, function (response) {
+          if (response.data) {
+              defer.resolve(response);
+          } else {
+              defer.reject(response);
+          }
+      });
       return defer.promise;
     }
 
