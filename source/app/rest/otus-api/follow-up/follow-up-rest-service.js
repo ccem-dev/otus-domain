@@ -3,31 +3,39 @@
 
   angular
     .module('otusDomain.rest')
-    .service('OutcomeRestService', OutcomeRestService);
+    .service('FollowUpRestService', FollowUpRestService);
 
-  OutcomeRestService.$inject = [
+  FollowUpRestService.$inject = [
     'OtusRestResourceService'
   ];
 
-  function OutcomeRestService(OtusRestResourceService) {
+  function FollowUpRestService(OtusRestResourceService) {
     var self = this;
     var _rest = null;
 
     /* Public methods */
     self.initialize = initialize;
     self.update = update;
+    self.deactivate = deactivate;
     self.list = list;
-    self.create = create;
+    self.add = add;
 
     function initialize() {
-      _rest = OtusRestResourceService.getOutcomeResourceFactory();
+       _rest = OtusRestResourceService.getFollowUpResourceFactory();
     }
 
-    function create(data) {
+    function add(followUp) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.create(data).$promise;
+      return _rest.add({}, followUp);
+    }
+
+    function deactivate(id) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.deactivate({id}).$promise;
     }
 
     function list() {
@@ -37,11 +45,11 @@
       return _rest.list().$promise;
     }
 
-    function update(data) {
+    function update(followUp) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.update(data).$promise;
+      return _rest.update({}, followUp).$promise;
     }
   }
 }());

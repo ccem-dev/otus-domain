@@ -1,4 +1,4 @@
-describe('Outcome Rest Service', function () {
+describe('Event Rest Service', function () {
     const ID = 'medicamentos';
 
     var Mock = {};
@@ -26,7 +26,7 @@ describe('Outcome Rest Service', function () {
                 Injections = {
                     OtusRestResourceService: Mock.OtusRestResourceService
                 };
-                service = _$injector_.get('OutcomeRestService');
+                service = _$injector_.get('EventRestService');
                 service.initialize();
 
             });
@@ -35,24 +35,23 @@ describe('Outcome Rest Service', function () {
         describe('initialize method', function () {
             beforeEach(function () {
                 spyOn(service, 'initialize').and.callThrough();
-                spyOn(Injections.OtusRestResourceService, 'getOutcomeResourceFactory').and.callThrough();
+                spyOn(Injections.OtusRestResourceService, 'getEventResourceFactory').and.callThrough();
                 service.initialize();
             });
 
             it('should initialize be defined', function () {
                 expect(service.initialize).toHaveBeenCalled();
                 expect(service.initialize).not.toBeNull();
-                expect(Injections.OtusRestResourceService.getOutcomeResourceFactory).toHaveBeenCalled();
+                expect(Injections.OtusRestResourceService.getEventResourceFactory).toHaveBeenCalled();
             });
 
         });
 
         describe('create method', function () {
             beforeEach(function () {
-                service.initialize();
                 spyOn(service, 'create').and.callThrough();
-                // spyOn(service, 'create').and.returnValue(Promise.resolve(123));
-                service.create(Mock.outcomeConfig);
+                service.create();
+
             });
 
             it('should create be defined', function () {
@@ -61,27 +60,15 @@ describe('Outcome Rest Service', function () {
             });
         });
 
-        describe('update method', function () {
+        describe('deactivate method', function () {
             beforeEach(function () {
-                spyOn(service, 'update').and.callThrough();
-                service.update();
+                spyOn(service, 'deactivate').and.callThrough();
+                service.deactivate();
             });
 
-            it('should update be defined', function () {
-                expect(service.update).toHaveBeenCalled();
-                expect(service.update).not.toBeNull();
-            });
-        });
-
-        describe('list method', function () {
-            beforeEach(function () {
-                spyOn(service, 'list').and.callThrough();
-                service.list();
-            });
-
-            it('should update be defined', function () {
-                expect(service.list).toHaveBeenCalled();
-                expect(service.list).not.toBeNull();
+            it('should deactivate be defined', function () {
+                expect(service.deactivate).toHaveBeenCalled();
+                expect(service.deactivate).not.toBeNull();
             });
         });
 
@@ -93,7 +80,7 @@ describe('Outcome Rest Service', function () {
             };
 
             Mock.OtusRestResourceService = {
-                getOutcomeResourceFactory: function() {
+                getEventResourceFactory: function() {
                     return {
                         create: function(data) {
                             return Promise.resolve({data: data});
@@ -102,6 +89,9 @@ describe('Outcome Rest Service', function () {
                             return Promise.resolve({data: data});
                         },
                         list: () => {
+                            return Promise.resolve({data: Mock.outcomeConfig});
+                        },
+                        deactivate: () => {
                             return Promise.resolve({data: Mock.outcomeConfig});
                         }
                     };

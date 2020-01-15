@@ -5,7 +5,7 @@
         .module('otusDomain.dashboard')
         .component('activityAutoFillEvent', {
             controller: 'autoFillCtrl as $ctrl',
-            templateUrl: 'app/project/configuration/outcome/follow-up/events/activity-auto-fill-template.html',
+            templateUrl: 'app/project/configuration/follow-up/events/activity-auto-fill-template.html',
             bindings: {
                 save: '&',
                 cancel: '&'

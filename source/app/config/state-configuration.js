@@ -15,7 +15,7 @@
       'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
-      'OUTCOME_CONFIGURATION': 'outcome',
+      'FOLLOW_UP_CONFIGURATION': 'follow-up',
       'DATASOURCE_MANAGER':'datasource_manager',
       'REPORT_MANAGER': 'report_manager'
     });
@@ -326,8 +326,8 @@
         }
       })
       .state({
-        name: 'outcome',
-        url: '/project/outcome',
+        name: 'follow-up',
+        url: '/project/follow-up',
         resolve: {
           loggedUser: function (RouteRulesResolver) {
             return RouteRulesResolver.loggedUser();
@@ -335,10 +335,11 @@
           selectedProject: function (RouteRulesResolver) {
             return RouteRulesResolver.selectedProject();
           },
-          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService, OutcomeRestService) {
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService, FollowUpRestService, EventRestService) {
             ActivityConfigurationRestService.initialize();
             SurveyGroupRestService.initialize();
-            OutcomeRestService.initialize();
+            FollowUpRestService.initialize();
+            EventRestService.initialize();
           }
         },
         views: {
@@ -346,11 +347,11 @@
             templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
-          'dashboard-menu@outcome': {
+          'dashboard-menu@follow-up': {
             templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
-          'system-content@outcome': {
-            template: '<outcome-configuration flex></outcome-configuration>'
+          'system-content@follow-up': {
+            template: '<follow-up-configuration flex></follow-up-configuration>'
           }
         }
       })
