@@ -70,7 +70,7 @@
         function onInit() {
             _reset();
             FollowUpConfigurationService.loadConfiguration().then(function (response) {
-                self.followUps = response;
+                self.followUps = response['data'];
             });
         }
 
@@ -119,7 +119,7 @@
                 case "SAVE_FOLLOW":
                     FollowUpConfigurationService.addFollowUp(self.followUpActive.toJSON()).then(function (response) {
                         if (response.id) {
-                            self.followUpActive._id = response.id;
+                            self.followUpActive._id = response.data.id;
                             self.followUps.push(angular.copy(self.followUpActive));
                             _reset();
                             _message('Seguimento criado com sucesso.');
@@ -167,7 +167,7 @@
                         if(response.id) {
                             _message('Evento salvo com sucesso.');
                             elem.html('');
-                            self.eventActive._id = response.id;
+                            self.eventActive._id = response.data.id;
                             self.followUpActive.events.push(angular.copy(self.eventActive));
                         }
                     }).catch(function () {
