@@ -61,7 +61,7 @@
         self.$onInit = onInit;
         self.events = [
             {
-                label: "Atividade Auto Preenchida", objectType: "ActivityAutoFillEvent",
+                description: "Atividade Auto Preenchida", objectType: "ActivityAutoFillEvent",
                 template: '<activity-auto-fill-event flex="100" save="$ctrl.saveEvent" cancel="$ctrl.cancelEvent"></activity-auto-fill-event>'
             }
         ];
@@ -70,7 +70,7 @@
         function onInit() {
             _reset();
             FollowUpConfigurationService.loadConfiguration().then(function (response) {
-                self.followUps = response['data'];
+                self.followUps = response['data'] ? FollowUpFactory.fromArray(response['data']) : [];
             });
         }
 
@@ -108,17 +108,19 @@
         }
 
 
-        function addFollowUp() {
+        function addFollowUp(index) {
             self.isEditFollowUp = true;
             self.option = SAVE_FOLLOW;
             self.followUpActive = FollowUpFactory.create();
+            self.selectedFollowUp = index
         }
 
         function action() {
             switch (self.option) {
                 case "SAVE_FOLLOW":
+                    self.followUpActive.windowBetween = isFirst() ? 0 : self.followUpActive.windowBetween;
                     FollowUpConfigurationService.addFollowUp(self.followUpActive.toJSON()).then(function (response) {
-                        if (response.id) {
+                        if (response.data.id) {
                             self.followUpActive._id = response.data.id;
                             self.followUps.push(angular.copy(self.followUpActive));
                             _reset();
@@ -142,7 +144,7 @@
                     self.addFollowUp();
                     break;
                 case "DEACTIVATE_FOLLOW":
-                    FollowUpConfigurationService.deactivateFollowUp(self.followUpActive.toJSON()._id).then(function (response) {
+                    FollowUpConfigurationService.deactivateFollowUp(self.followUps[self.selectedFollowUp].toJSON()._id).then(function (response) {
                         if (response) {
                             _message('Seguimento removido com sucesso.');
                             self.followUps.splice(self.selectedFollowUp , 1);
@@ -163,8 +165,8 @@
                     });
                     break;
                 case "SAVE_EVENT":
-                    FollowUpConfigurationService.addEvent(self.eventActive).then(function (response) {
-                        if(response.id) {
+                    FollowUpConfigurationService.addEvent(self.followUps[self.selectedFollowUp].toJSON()._id,self.eventActive).then(function (response) {
+                        if(response.data.id) {
                             _message('Evento salvo com sucesso.');
                             elem.html('');
                             self.eventActive._id = response.data.id;

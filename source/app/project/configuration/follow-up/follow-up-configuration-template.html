@@ -12,8 +12,8 @@
             <div layout="row" layout-wrap flex="100" layout-align="start start" layout-fill>
                 <md-input-container flex="45" flex-xs="100" >
                     <label>Nome</label>
-                    <input ng-model="$ctrl.followUpActive.label"
-                           ng-value="$ctrl.followUpActive.label">
+                    <input ng-model="$ctrl.followUpActive.description"
+                           ng-value="$ctrl.followUpActive.description">
                 </md-input-container>
                 <span flex-gt-xs="5" flex></span>
                 <md-input-container flex="45" flex-xs="100">
@@ -36,7 +36,7 @@
                         <md-select ng-model="$ctrl.typeEvent">
                             <md-option><em>None</em></md-option>
                             <md-option ng-repeat="event in $ctrl.events" ng-value="event.template">
-                                {{event.label}}
+                                {{event.description}}
                             </md-option>
                         </md-select>
                     </md-input-container>
@@ -84,7 +84,7 @@
                           ng-click="$ctrl.editFollowUp($index)">
                 <md-icon>track_changes</md-icon>
                 <div class="md-list-item-text">
-                    <p>{{follow.label}}</p>
+                    <p>{{follow.description}}</p>
                 </div>
                 <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeFollowUp($index)">
 

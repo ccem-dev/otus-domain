@@ -28,7 +28,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.add({}, followUp);
+      return _rest.add({}, followUp).$promise;
     }
 
     function deactivate(id) {

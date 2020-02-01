@@ -51,9 +51,9 @@
         "jquery": "2.2.0",
         "moment": "2.12.0",
         "ng-i18next": "1.0.5",
-        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#1.18.0",
+        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-1",
         "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#1.1.0",
-        "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#1.25.0",
+        "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#feature/OTUS-1",
         "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#1.1.0",
         "please-wait": "0.0.5",
         "require-dir": "^1.2.0"
