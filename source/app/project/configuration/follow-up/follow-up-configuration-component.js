@@ -155,7 +155,7 @@
                     });
                     break;
                 case "DEACTIVATE_EVENT":
-                    FollowUpConfigurationService.deactivateEvent(self.followUpActive._id).then(function (response) {
+                    FollowUpConfigurationService.deactivateEvent(self.followUpActive.events[self.indexEvent]._id).then(function (response) {
                         if (response) {
                             _message('Evento removido com sucesso.');
                             self.followUpActive.events.splice(self.indexEvent, 1);
@@ -165,6 +165,7 @@
                     });
                     break;
                 case "SAVE_EVENT":
+                    self.editFollowUp(self.selectedFollowUp);
                     FollowUpConfigurationService.addEvent(self.followUps[self.selectedFollowUp].toJSON()._id,self.eventActive).then(function (response) {
                         if(response.data.id) {
                             _message('Evento salvo com sucesso.');
