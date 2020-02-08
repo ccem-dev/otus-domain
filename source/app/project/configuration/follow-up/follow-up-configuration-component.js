@@ -145,23 +145,24 @@
                     break;
                 case "DEACTIVATE_FOLLOW":
                     FollowUpConfigurationService.deactivateFollowUp(self.followUps[self.selectedFollowUp].toJSON()._id).then(function (response) {
-                        if (response) {
+                        if (response.data) {
                             _message('Seguimento removido com sucesso.');
                             self.followUps.splice(self.selectedFollowUp , 1);
                             _reset();
+                        } else {
+                            _message('Não foi possível salvar as alterações! Tente novamente.');
                         }
-                    }).catch(function () {
-                        _message('Não foi possível salvar as alterações! Tente novamente.');
                     });
                     break;
                 case "DEACTIVATE_EVENT":
+                    self.editFollowUp(self.selectedFollowUp);
                     FollowUpConfigurationService.deactivateEvent(self.followUpActive.events[self.indexEvent]._id).then(function (response) {
-                        if (response) {
+                        if (response.data) {
                             _message('Evento removido com sucesso.');
                             self.followUpActive.events.splice(self.indexEvent, 1);
+                        } else {
+                            _message('Não foi possível salvar as alterações! Tente novamente.');
                         }
-                    }).catch(function () {
-                        _message('Não foi possível salvar as alterações! Tente novamente.');
                     });
                     break;
                 case "SAVE_EVENT":
@@ -172,9 +173,9 @@
                             elem.html('');
                             self.eventActive._id = response.data.id;
                             self.followUpActive.events.push(angular.copy(self.eventActive));
+                        } else {
+                            _message('Não foi possível salvar as alterações! Tente novamente.');
                         }
-                    }).catch(function () {
-                        _message('Não foi possível salvar as alterações! Tente novamente.');
                     });
                     break;
             }
