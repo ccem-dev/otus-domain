@@ -30,6 +30,7 @@
     self.goToActivitySettings = goToActivitySettings;
     self.goToProjectReportManager = goToProjectReportManager;
     self.goToProjectDatasourceManager = goToProjectDatasourceManager;
+    self.goToFollowUpConfiguration = goToFollowUpConfiguration;
     self.logout = logout;
 
     init();
@@ -97,6 +98,11 @@
     function goToProjectConfiguration() {
       self.currentState = 'Configurações de Projeto';
       $state.go(APP_STATE.PROJECT_CONFIGURATION);
+    }
+
+    function goToFollowUpConfiguration() {
+      self.currentState = 'Configurações de Seguimentos';
+      $state.go(APP_STATE.FOLLOW_UP_CONFIGURATION);
     }
 
     function goToErrorOffline() {

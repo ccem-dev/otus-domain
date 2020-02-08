@@ -135,6 +135,14 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
   position: fixed !important;
 }
 
+.md-fab-bottom-left {
+  top: auto !important;
+  left: 20px !important;
+  bottom: 20px !important;
+  right: auto !important;
+  position: fixed !important;
+}
+
 .select-multiple-centers {
   min-width: 200px;
   margin: 15px;
