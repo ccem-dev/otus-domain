@@ -1,6 +1,6 @@
 {
     "name": "otus-domain",
-    "version": "1.15.0",
+    "version": "1.16.0",
     "description": "The tool to control repositories and users Otus.",
     "keywords": [
         "otus",
@@ -51,10 +51,10 @@
         "jquery": "2.2.0",
         "moment": "2.12.0",
         "ng-i18next": "1.0.5",
-        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#dev",
-        "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#1.1.0",
-        "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#dev",
-        "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#1.1.0",
+        "otus-client-js": "1.21.0",
+        "otus-domain-client": "1.1.0",
+        "otus-model-js": "1.28.0",
+        "otus-validation-js": "1.1.0",
         "please-wait": "0.0.5",
         "require-dir": "^1.2.0"
     },
