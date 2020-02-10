@@ -15,6 +15,7 @@
       'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
+      'FOLLOW_UP_CONFIGURATION': 'follow-up',
       'DATASOURCE_MANAGER':'datasource_manager',
       'REPORT_MANAGER': 'report_manager'
     });
@@ -321,6 +322,36 @@
             templateUrl: 'app/project/configuration/configuration-template.html',
             controller: 'otusjs.otus-domain.project.configuration.ProjectConfigurationController',
             controllerAs: 'configController'
+          }
+        }
+      })
+      .state({
+        name: 'follow-up',
+        url: '/project/follow-up',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService, FollowUpRestService, EventRestService) {
+            ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
+            FollowUpRestService.initialize();
+            EventRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@follow-up': {
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
+          },
+          'system-content@follow-up': {
+            template: '<follow-up-configuration flex></follow-up-configuration>'
           }
         }
       })

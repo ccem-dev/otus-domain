@@ -29,6 +29,7 @@
     self.openProjectActivityConfiguration = openProjectActivityConfiguration;
     self.openReportManager = openReportManager;
     self.openDatasourceManager = openDatasourceManager;
+    self.openFollowUpConfiguration = openFollowUpConfiguration;
 
     function getSelectedSystemArea() {
       return DashboardStateService.currentState;
@@ -79,6 +80,11 @@
 
     function openProjectConfiguration() {
       DashboardStateService.goToProjectConfiguration();
+      close();
+    }
+
+    function openFollowUpConfiguration() {
+      DashboardStateService.goToFollowUpConfiguration();
       close();
     }
 
