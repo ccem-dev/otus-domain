@@ -30,6 +30,7 @@
     self.openReportManager = openReportManager;
     self.openDatasourceManager = openDatasourceManager;
     self.openFollowUpConfiguration = openFollowUpConfiguration;
+    self.openLocationPoint = openLocationPoint;
 
     function getSelectedSystemArea() {
       return DashboardStateService.currentState;
@@ -80,6 +81,11 @@
 
     function openProjectConfiguration() {
       DashboardStateService.goToProjectConfiguration();
+      close();
+    }
+
+    function openLocationPoint() {
+      DashboardStateService.goToLocationPoint();
       close();
     }
 

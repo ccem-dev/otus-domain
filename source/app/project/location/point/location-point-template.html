@@ -1,0 +1,131 @@
+<md-content layout="row" layout-align="center center">
+    <md-content layout="column" flex="80" flex-xs="100">
+        <md-subheader hide-xs class="md-primary">Pontos de localização</md-subheader>
+        <div layout="row" layout-align="center start" flex ng-if="!$ctrl.showLocationRegister">
+            <md-input-container flex-gt-md=50 flex=90>
+                <md-icon md-font-library="material-icons">search</md-icon>
+                <input ng-model="$ctrl.query" placeholder="Buscar por Nome"/>
+            </md-input-container>
+            <md-button class="md-primary md-raised md-mini" ng-click="$ctrl.addLocationPoint()">
+                <md-icon>add</md-icon>
+                <md-tooltip md-direction="top">Adicionar Ponto</md-tooltip>
+            </md-button>
+        </div>
+
+
+        <md-content layout="column">
+            <md-subheader hide-gt-xs class="md-primary">Pontos de localização
+                <div layout="row" layout-align="center center" flex ng-if="!$ctrl.showLocationRegister">
+                    <md-input-container flex-gt-md=50 flex=90>
+                        <md-icon md-font-library="material-icons">search</md-icon>
+                        <input ng-model="$ctrl.query" placeholder="Buscar por Nome"></input>
+                    </md-input-container>
+                    <md-button class="md-primary md-raised md-mini" ng-click="$ctrl.addLocationPoint()">
+                        <md-icon>add</md-icon>
+                        <md-tooltip md-direction="top">Adicionar Ponto</md-tooltip>
+                    </md-button>
+                </div>
+            </md-subheader>
+            <md-list flex ng-if="!$ctrl.showLocationRegister">
+                <md-subheader>Lista de pontos</md-subheader>
+                <md-list-item class="md-2-line" ng-click="$ctrl.select($index, locationPoint)"
+                              ng-repeat="locationPoint in $ctrl.locationsPoints | filter : {name: $ctrl.query} : false track by $index">
+                    <md-icon md-font-set="material-icons">directions</md-icon>
+                    <div class="md-list-item-text">
+                        <h3 class="md-title">{{locationPoint.name}}</h3>
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+
+    </md-content>
+</md-content>
+<md-content layout="column" flex-offset="10" flex="80" flex-xs="100" ng-if="$ctrl.showLocationRegister">
+    <md-card layout="row" flex="80" flex-xs="100">
+        <div layout="column" flex="95" layout-align="start space-around">
+            <div layout-margin layout-align="center center" layout="row">
+                <div layout-margin layout="column" layout-align="center center">
+                    <md-icon md-font-set="material-icons">directions</md-icon>
+                </div>
+                <div layout="column" flex>
+                    <span class="md-title">{{::$ctrl.selectedLocationPoint.name || 'Novo ponto de localização'}}</span>
+                </div>
+            </div>
+            <div layout="column" layout-margin="">
+                <span flex></span>
+                <md-input-container flex>
+                    <label>Nome</label>
+                    <input ng-model="$ctrl.selectedLocationPoint.name" flex>
+                </md-input-container>
+            </div>
+        </div>
+        <div layout="column" layout-padding="">
+            <div layout="row" layout-align="end center">
+                <md-button class="md-icon-button md-warn" ng-if="!$ctrl.safeMode" ng-click="$ctrl.removeLocation()">
+                    <md-icon>delete_forever</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
+                    <md-icon>cancel</md-icon>
+                </md-button>
+            </div>
+            <span flex="80"></span>
+            <div layout="row" layout-align="end center">
+
+                <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
+                    <md-icon>save</md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-card>
+<span flex-offset="10" flex="20" layout-margin="" ng-if="!$ctrl.safeMode">
+    <label class="md-title" layout-padding>Adicione usuários ao ponto de localização.</label>
+</span>
+    <div flex layout="row" layout-wrap layout-align="start center" layout-fill ng-if="!$ctrl.safeMode">
+        <span flex-xs="5"></span>
+        <md-autocomplete flex="70" flex-xs="100"  layout-margin style="top: -8px"
+                         id="custom-template"
+                         md-selected-item="$ctrl.selectedItem"
+                         md-selected-item-change="$ctrl.selectedItemChange(item)"
+                         md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                         md-item-text="$ctrl.getLabelSelected(item)"
+                         md-search-text="$ctrl.searchText"
+                         md-escape-options="clear"
+                         placeholder="Informe o nome ou email do usuário"
+                         md-menu-class="autocomplete-custom-template"
+                         md-menu-container-class="custom-container">
+            <md-item-template>
+                <span class="item-title">
+                    <md-icon>person</md-icon>
+                    <span class="md-title">{{item.name}} {{item.surname}}</span>
+                </span>
+                <span class="item-metadata">
+
+                    <span class="md-caption">{{item.email}}</span>
+                </span>
+                <md-divider
+            </md-item-template>
+            <md-not-found>
+                Nenhum usuário para "{{ctrl.searchText}}" foi encontrado.
+            </md-not-found>
+        </md-autocomplete>
+        <span flex-xs="5"></span>
+        <md-button class="md-primary md-raised" flex-xs="80" layout-margin ng-click="$ctrl.saveUser()">
+            <md-icon>add</md-icon>
+            <md-tooltip md-direction="top">Adicionar usuário</md-tooltip>
+        </md-button>
+        <span flex="5"></span>
+    </div>
+
+    <md-list flex ng-show="$ctrl.selectedLocationPoint.users.length">
+        <md-subheader>Usuários</md-subheader>
+        <md-list-item class="md-1-line" ng-repeat="email in $ctrl.selectedLocationPoint.users">
+            <span>{{email}}</span>
+            <span flex></span>
+            <md-button class="md-icon-button md-mini" ng-click="$ctrl.removeUser(email)">
+                <md-icon class="md-raised">delete_forever</md-icon>
+            </md-button>
+            <md-divider></md-divider>
+        </md-list-item>
+    </md-list>
+</md-content>

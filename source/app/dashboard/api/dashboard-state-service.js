@@ -31,6 +31,7 @@
     self.goToProjectReportManager = goToProjectReportManager;
     self.goToProjectDatasourceManager = goToProjectDatasourceManager;
     self.goToFollowUpConfiguration = goToFollowUpConfiguration;
+    self.goToLocationPoint = goToLocationPoint;
     self.logout = logout;
 
     init();
@@ -98,6 +99,11 @@
     function goToProjectConfiguration() {
       self.currentState = 'Configurações de Projeto';
       $state.go(APP_STATE.PROJECT_CONFIGURATION);
+    }
+
+    function goToLocationPoint() {
+      self.currentState = 'Configurações de Destino para transporte';
+      $state.go(APP_STATE.LOCATION_POINT);
     }
 
     function goToFollowUpConfiguration() {
