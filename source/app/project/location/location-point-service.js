@@ -27,15 +27,15 @@
         }
 
         function removeLocation(locationPoint) {
-            return LocationPointRestService.deleteLocationPoint(locationPoint._id);
+            return LocationPointRestService.deleteLocationPoint(locationPoint._id.$oid);
         }
 
         function saveUserLocation(locationPoint, user) {
-            return LocationPointRestService.saveUserLocation(locationPoint._id, user);
+            return LocationPointRestService.saveUserLocation(locationPoint._id.$oid, user);
         }
 
         function removeUserLocation(locationPoint, user) {
-            return LocationPointRestService.removeUserLocation(locationPoint._id, user.email);
+            return LocationPointRestService.removeUserLocation(locationPoint._id.$oid, user);
         }
 
         function getAll() {

@@ -48,25 +48,25 @@
       return _rest.updateLocationPoint(data).$promise;
     }
 
-    function deleteLocationPoint(id) {
+    function deleteLocationPoint(locationPointId) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.deleteLocationPoint(id).$promise;
+      return _rest.deleteLocationPoint({locationPointId}).$promise;
     }
 
-    function saveUserLocation(locationId, user) {
+    function saveUserLocation(locationPointId, user) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.saveUserLocation({location: locationId}, user).$promise;
+      return _rest.saveUserLocation({locationPointId}, user).$promise;
     }
 
-    function removeUserLocation(locationId, userEmail) {
+    function removeUserLocation(locationPointId, user) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.removeUserLocation({location: locationId},{email: userEmail}).$promise;
+      return _rest.removeUserLocation({locationPointId}, user).$promise;
     }
 
   }

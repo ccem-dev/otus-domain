@@ -1,5 +1,5 @@
-<md-content layout="row" layout-align="center center">
-    <md-content layout="column" flex="80" flex-xs="100">
+<div layout="row" layout-align="center center">
+    <div layout="column" flex="80" flex-xs="100">
         <md-subheader hide-xs class="md-primary">Pontos de localização</md-subheader>
         <div layout="row" layout-align="center start" flex ng-if="!$ctrl.showLocationRegister">
             <md-input-container flex-gt-md=50 flex=90>
@@ -13,7 +13,7 @@
         </div>
 
 
-        <md-content layout="column">
+        <div layout="column">
             <md-subheader hide-gt-xs class="md-primary">Pontos de localização
                 <div layout="row" layout-align="center center" flex ng-if="!$ctrl.showLocationRegister">
                     <md-input-container flex-gt-md=50 flex=90>
@@ -29,7 +29,7 @@
             <md-list flex ng-if="!$ctrl.showLocationRegister">
                 <md-subheader>Lista de pontos</md-subheader>
                 <md-list-item class="md-2-line" ng-click="$ctrl.select($index, locationPoint)"
-                              ng-repeat="locationPoint in $ctrl.locationsPoints | filter : {name: $ctrl.query} : false track by $index">
+                              ng-repeat="locationPoint in $ctrl.locationsPoints | filter : {name: $ctrl.query} track by $index">
                     <md-icon md-font-set="material-icons">directions</md-icon>
                     <div class="md-list-item-text">
                         <h3 class="md-title">{{locationPoint.name}}</h3>
@@ -37,12 +37,12 @@
                     <md-divider></md-divider>
                 </md-list-item>
             </md-list>
-        </md-content>
+        </div>
 
-    </md-content>
-</md-content>
-<md-content layout="column" flex-offset="10" flex="80" flex-xs="100" ng-if="$ctrl.showLocationRegister">
-    <md-card layout="row" flex="80" flex-xs="100">
+    </div>
+</div>
+<div layout="column" flex-offset="10" flex="80" flex-xs="100" ng-if="$ctrl.showLocationRegister">
+    <md-card layout="row" flex="80" flex-xs="100" style="background-color: #FAFAFA">
         <div layout="column" flex="95" layout-align="start space-around">
             <div layout-margin layout-align="center center" layout="row">
                 <div layout-margin layout="column" layout-align="center center">
@@ -57,6 +57,7 @@
                 <md-input-container flex>
                     <label>Nome</label>
                     <input ng-model="$ctrl.selectedLocationPoint.name" flex>
+                    <span class="md-caption md-hint md-mini">*mínimo de 2 caractéres.</span>
                 </md-input-container>
             </div>
         </div>
@@ -72,7 +73,7 @@
             <span flex="80"></span>
             <div layout="row" layout-align="end center">
 
-                <md-button class="md-button md-raised md-primary" ng-click="$ctrl.save()">
+                <md-button class="md-button md-raised md-primary" ng-disabled="!$ctrl.selectedLocationPoint.name.length || $ctrl.selectedLocationPoint.name.length<2" ng-click="$ctrl.save()">
                     <md-icon>save</md-icon>
                 </md-button>
             </div>
@@ -83,7 +84,7 @@
 </span>
     <div flex layout="row" layout-wrap layout-align="start center" layout-fill ng-if="!$ctrl.safeMode">
         <span flex-xs="5"></span>
-        <md-autocomplete flex="70" flex-xs="100"  layout-margin style="top: -8px"
+        <md-autocomplete flex="70" flex-xs="100"  layout-margin style="top: -8px; background-color: #FAFAFA;"
                          id="custom-template"
                          md-selected-item="$ctrl.selectedItem"
                          md-selected-item-change="$ctrl.selectedItemChange(item)"
@@ -110,7 +111,7 @@
             </md-not-found>
         </md-autocomplete>
         <span flex-xs="5"></span>
-        <md-button class="md-primary md-raised" flex-xs="80" layout-margin ng-click="$ctrl.saveUser()">
+        <md-button class="md-primary md-raised" flex-xs="80" ng-disabled="!$ctrl.selectedItem" layout-margin ng-click="$ctrl.saveUser()">
             <md-icon>add</md-icon>
             <md-tooltip md-direction="top">Adicionar usuário</md-tooltip>
         </md-button>
@@ -128,4 +129,4 @@
             <md-divider></md-divider>
         </md-list-item>
     </md-list>
-</md-content>
+</div>
