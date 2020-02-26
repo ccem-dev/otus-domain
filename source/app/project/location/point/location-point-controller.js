@@ -6,9 +6,9 @@
         .controller('locationPointCtrl', Controller);
 
 
-    Controller.$inject = ['RestResourceService', 'otusjs.model.locationPoint.LocationPointFactory', 'LocationPointService', 'ProjectFieldCenterService', '$mdToast'];
+    Controller.$inject = ['OtusRestResourceService', 'otusjs.model.locationPoint.LocationPointFactory', 'LocationPointService', 'ProjectFieldCenterService', '$mdToast'];
 
-    function Controller(RestResourceService, LocationPointFactory, LocationPointService, ProjectFieldCenterService, $mdToast) {
+    function Controller(OtusRestResourceService, LocationPointFactory, LocationPointService, ProjectFieldCenterService, $mdToast) {
 
         var self = this;
         self.$onInit = onInit;
@@ -29,7 +29,7 @@
 
 
         function onInit() {
-            _rest = RestResourceService.getUserResource();
+            _rest = OtusRestResourceService.getUserResource();
             _getAllConfiguration();
         }
 
@@ -57,21 +57,24 @@
         function save() {
             if (self.safeMode) {
                 LocationPointService.saveLocationPoint(self.selectedLocationPoint.toJSON()).then(function (response) {
-                    self.locationsPoints.push(LocationPointFactory.fromJsonObject(response.data));
-                    _getAllConfiguration();
-                    _messageShow('Localização salva com sucesso.');
-                }).catch(function () {
-                    _messageShow('Não foi possível salvar localização! Tente novamente mais tarde.');
-
+                    if (response.MESSAGE) {
+                        _messageShow('Não foi possível salvar localização! Tente novamente mais tarde.');
+                    } else {
+                        self.locationsPoints.push(LocationPointFactory.fromJsonObject(response.data));
+                        _getAllConfiguration();
+                        _messageShow('Localização salva com sucesso.');
+                    }
                 });
             } else {
                 LocationPointService.updateLocationPoint(self.selectedLocationPoint.toJSON()).then(function (response) {
-                    self.locationsPoints.splice(self.selectedIndex, 1);
-                    self.locationsPoints.splice(self.selectedIndex, 0, LocationPointFactory.fromJsonObject(response.data));
-                    _getAllConfiguration();
-                    _messageShow('Localização atualizada com sucesso.');
-                }).catch(function () {
-                    _messageShow('Não foi possível atualizar localização! Tente novamente mais tarde.');
+                    if (response.MESSAGE) {
+                        _messageShow('Não foi possível atualizar localização! Tente novamente mais tarde.');
+                    } else {
+                        self.locationsPoints.splice(self.selectedIndex, 1);
+                        self.locationsPoints.splice(self.selectedIndex, 0, LocationPointFactory.fromJsonObject(response.data));
+                        _getAllConfiguration();
+                        _messageShow('Localização atualizada com sucesso.');
+                    }
                 });
             }
         }
@@ -82,9 +85,10 @@
                     self.locationsPoints.splice(self.selectedIndex, 1);
                     _clearData();
                     _messageShow('Localização removida com sucesso.');
+                } else {
+                    _messageShow('Não foi possível remover a localização.');
+
                 }
-            }).catch(function () {
-                _messageShow('Não foi possível remover a localização.');
             });
         }
 
@@ -143,12 +147,14 @@
         function saveUser() {
             if (self.selectedUser){
                 LocationPointService.saveUserLocation(self.selectedLocationPoint, self.selectedUser).then(function (response) {
-                    self.selectedLocationPoint.setUser(self.selectedUser.email);
-                    delete self.selectedItem;
-                    _messageShow('Usuário salvo com sucesso.');
-                }).catch(function () {
-                    _messageShow('Não foi possível salvar usuário! Tente novamente mais tarde.');
-                });
+                    if(response.MESSAGE){
+                        _messageShow('Não foi possível salvar usuário! Tente novamente mais tarde.');
+                    } else {
+                        self.selectedLocationPoint.setUser(self.selectedUser.email);
+                        delete self.selectedItem;
+                        _messageShow('Usuário salvo com sucesso.');
+                    }
+                })
             }
         }
 
@@ -157,12 +163,14 @@
                 return user.email === email;
             });
             LocationPointService.removeUserLocation(self.selectedLocationPoint, _user).then(function (response) {
-                self.selectedLocationPoint.removeUser(email);
-                _listUsers();
-                _messageShow('Usuário removido com sucesso.');
-            }).catch(function () {
-                _messageShow('Não foi possível remover usuário! Tente novamente mais tarde.');
-            });
+                if (response.MESSAGE) {
+                    _messageShow('Não foi possível remover usuário! Tente novamente mais tarde.');
+                } else {
+                    self.selectedLocationPoint.removeUser(email);
+                    _listUsers();
+                    _messageShow('Usuário removido com sucesso.');
+                }
+            })
         }
 
         function createFilterFor(query) {
