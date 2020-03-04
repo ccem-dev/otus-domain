@@ -26,6 +26,16 @@
         self.safeMode = true;
         self.destination = [];
         var _rest;
+        const NOT_SAVE_LOCATION_MSG = 'Não foi possível salvar localização! Tente novamente mais tarde.';
+        const SAVE_LOCATION_MSG = 'Localização salva com sucesso.';
+        const NOT_UPDATE_LOCATION_MSG = 'Não foi possível atualizar localização! Tente novamente mais tarde.';
+        const UPDATE_LOCATION_MSG = 'Localização atualizada com sucesso.';
+        const REMOVE_LOCATION_MSG = 'Localização removida com sucesso.';
+        const NOT_REMOVE_LOCATION_MSG = 'Não foi possível remover a localização.';
+        const NOT_SAVE_USER_MSG = 'Não foi possível salvar usuário! Tente novamente mais tarde.';
+        const SAVE_USER_MSG = 'Usuário salvo com sucesso.';
+        const NOT_REMOVE_USER_MSG = 'Não foi possível remover usuário! Tente novamente mais tarde.';
+        const REMOVE_USER_MSG = 'Usuário removido com sucesso.';
 
 
         function onInit() {
@@ -58,22 +68,22 @@
             if (self.safeMode) {
                 LocationPointService.saveLocationPoint(self.selectedLocationPoint.toJSON()).then(function (response) {
                     if (response.MESSAGE) {
-                        _messageShow('Não foi possível salvar localização! Tente novamente mais tarde.');
+                        _messageShow(NOT_SAVE_LOCATION_MSG);
                     } else {
                         self.locationsPoints.push(LocationPointFactory.fromJsonObject(response.data));
                         _getAllConfiguration();
-                        _messageShow('Localização salva com sucesso.');
+                        _messageShow(SAVE_LOCATION_MSG);
                     }
                 });
             } else {
                 LocationPointService.updateLocationPoint(self.selectedLocationPoint.toJSON()).then(function (response) {
                     if (response.MESSAGE) {
-                        _messageShow('Não foi possível atualizar localização! Tente novamente mais tarde.');
+                        _messageShow(NOT_UPDATE_LOCATION_MSG);
                     } else {
                         self.locationsPoints.splice(self.selectedIndex, 1);
                         self.locationsPoints.splice(self.selectedIndex, 0, LocationPointFactory.fromJsonObject(response.data));
                         _getAllConfiguration();
-                        _messageShow('Localização atualizada com sucesso.');
+                        _messageShow(UPDATE_LOCATION_MSG);
                     }
                 });
             }
@@ -84,9 +94,9 @@
                 if (response.data) {
                     self.locationsPoints.splice(self.selectedIndex, 1);
                     _clearData();
-                    _messageShow('Localização removida com sucesso.');
+                    _messageShow(REMOVE_LOCATION_MSG);
                 } else {
-                    _messageShow('Não foi possível remover a localização.');
+                    _messageShow(NOT_REMOVE_LOCATION_MSG);
 
                 }
             });
@@ -148,11 +158,11 @@
             if (self.selectedUser){
                 LocationPointService.saveUserLocation(self.selectedLocationPoint, self.selectedUser).then(function (response) {
                     if(response.MESSAGE){
-                        _messageShow('Não foi possível salvar usuário! Tente novamente mais tarde.');
+                        _messageShow(NOT_SAVE_USER_MSG);
                     } else {
                         self.selectedLocationPoint.setUser(self.selectedUser.email);
                         delete self.selectedItem;
-                        _messageShow('Usuário salvo com sucesso.');
+                        _messageShow(SAVE_USER_MSG);
                     }
                 })
             }
@@ -164,11 +174,11 @@
             });
             LocationPointService.removeUserLocation(self.selectedLocationPoint, _user).then(function (response) {
                 if (response.MESSAGE) {
-                    _messageShow('Não foi possível remover usuário! Tente novamente mais tarde.');
+                    _messageShow(NOT_REMOVE_USER_MSG);
                 } else {
                     self.selectedLocationPoint.removeUser(email);
                     _listUsers();
-                    _messageShow('Usuário removido com sucesso.');
+                    _messageShow(REMOVE_USER_MSG);
                 }
             })
         }

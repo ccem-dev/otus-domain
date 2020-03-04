@@ -28,45 +28,34 @@
     }
 
     function getConfiguration() {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getConfiguration().$promise;
+      return _callRestResource(_rest.getConfiguration);
     }
 
     function saveLocationPoint(data) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.createLocationPoint({locationName: data.name}).$promise;
+      return _callRestResource(_rest.createLocationPoint, {locationName: data.name});
     }
 
     function updateLocationPoint(data) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.updateLocationPoint(data).$promise;
+      return _callRestResource(_rest.updateLocationPoint, data);
     }
 
     function deleteLocationPoint(locationPointId) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.deleteLocationPoint({locationPointId}).$promise;
+      return _callRestResource(_rest.deleteLocationPoint, {locationPointId});
     }
 
     function saveUserLocation(locationPointId, user) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.saveUserLocation({locationPointId}, user).$promise;
+      return _callRestResource(_rest.saveUserLocation, {locationPointId}, user);
     }
 
     function removeUserLocation(locationPointId, user) {
+      return _callRestResource(_rest.removeUserLocation, {locationPointId}, user);
+    }
+
+    function _callRestResource(callback, params, body){
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.removeUserLocation({locationPointId}, user).$promise;
+      return callback(params, body).$promise;
     }
 
   }
