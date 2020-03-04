@@ -16,6 +16,7 @@
       /* Possibly shared modules */
       'otusDomain.project.configuration',
       'otusDomain.project.datasource',
+      'otusDomain.project.location',
       'otus.domain.client',
       'otus.client',
       'otusDomain.user',
