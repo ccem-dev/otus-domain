@@ -21,7 +21,7 @@
         self.getLabelSelected = getLabelSelected;
         self.querySearch = querySearch;
         self.selectedItemChange = selectedItemChange;
-        self.removeLocation = removeLocation;
+        // self.removeLocation = removeLocation;//TODO: ODFE-6 Temporary deletion removal
         self.saveUser = saveUser;
         self.safeMode = true;
         self.destination = [];
