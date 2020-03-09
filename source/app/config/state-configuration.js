@@ -17,7 +17,8 @@
       'PROJECT_CONFIGURATION': 'configuration-center',
       'FOLLOW_UP_CONFIGURATION': 'follow-up',
       'DATASOURCE_MANAGER':'datasource_manager',
-      'REPORT_MANAGER': 'report_manager'
+      'REPORT_MANAGER': 'report_manager',
+      'LOCATION_POINT': 'location-point'
     });
 
   stateConfiguration.$inject = [
@@ -157,6 +158,34 @@
           }
         }
       })
+        .state('location-point', {
+          url: '/project/location/point',
+          resolve: {
+            loggedUser: function (RouteRulesResolver) {
+              return RouteRulesResolver.loggedUser();
+            },
+            selectedProject: function (RouteRulesResolver) {
+              return RouteRulesResolver.selectedProject();
+            },
+            loadLocations: function (LocationPointRestService) {
+              LocationPointRestService.initialize();
+            }
+          },
+          views: {
+            'system-wrap': {
+              templateUrl: 'app/dashboard/template/main-dashboard-template.html',
+              controller: 'DashboardMenuController as dashboardMenu'
+            },
+            'dashboard-menu@location-point': {
+              templateUrl: 'app/dashboard/menu/dashboard-menu.html'
+            },
+            'system-content@location-point': {
+              templateUrl: 'app/project/location/point/location-point-template.html',
+              controller: 'locationPointCtrl',
+              controllerAs: '$ctrl'
+            }
+          }
+        })
       .state({
         name: 'activity_configuration',
         url: '/project/activity_configuration',
