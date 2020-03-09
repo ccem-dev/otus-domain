@@ -1,6 +1,6 @@
 {
     "name": "otus-domain",
-    "version": "1.16.0",
+    "version": "1.16.1",
     "description": "The tool to control repositories and users Otus.",
     "keywords": [
         "otus",

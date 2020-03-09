@@ -1,6 +1,11 @@
 <div layout="row" layout-align="center center">
     <div layout="column" flex="80" flex-xs="100">
-        <md-subheader hide-xs class="md-primary">Pontos de localização</md-subheader>
+        <div layout="row" layout-align="end center" flex>
+            <md-subheader hide-xs class="md-primary" flex="95">Pontos de localização</md-subheader>
+            <md-button class="md-icon-button" ng-click="$ctrl.cancel()" ng-if="$ctrl.showLocationRegister">
+                <md-icon>close</md-icon>
+            </md-button>
+        </div>
         <div layout="row" layout-align="center start" flex ng-if="!$ctrl.showLocationRegister">
             <md-input-container flex-gt-md=50 flex=90>
                 <md-icon md-font-library="material-icons">search</md-icon>
@@ -63,12 +68,12 @@
         </div>
         <div layout="column" layout-padding="">
             <div layout="row" layout-align="end center">
-<!--                <md-button class="md-icon-button md-warn" ng-if="!$ctrl.safeMode" ng-click="$ctrl.removeLocation()">--> TODO: ODFE-6 Temporary deletion removal
-<!--                    <md-icon>delete_forever</md-icon>-->
+<!--                <md-button class="md-icon-button md-warn" ng-if="!$ctrl.safeMode" ng-click="$ctrl.removeLocation()">TODO: ODFE-6 Temporary deletion removal-->
+                <!--                    <md-icon>delete_forever</md-icon>-->
 <!--                </md-button>-->
-                <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
-                    <md-icon>cancel</md-icon>
-                </md-button>
+<!--                <md-button class="md-icon-button" ng-click="$ctrl.cancel()">-->
+<!--                    <md-icon>cancel</md-icon>-->
+<!--                </md-button>-->
             </div>
             <span flex="80"></span>
             <div layout="row" layout-align="end center">
