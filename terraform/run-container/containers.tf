@@ -2,6 +2,10 @@ variable "otus-domain-frontend-port" {
   default = 51006
 }
 
+variable "otus-api-network" {
+  default = "otus-api-network"
+}
+
 variable "otus-domain-frontend-apiurl" {
   default = "http://otus-domain-api:8080"  
 }
@@ -22,4 +26,8 @@ resource "docker_container" "otus-domain-frontend" {
 	internal = 80
 	external = "${var.otus-domain-frontend-port}"
   }
+	  networks_advanced {
+    name    = "${var.otus-api-network}"
+  }
+	
 }
