@@ -36,7 +36,7 @@
     }
 
     function updateLocationPoint(data) {
-      return _callRestResource(_rest.updateLocationPoint, data);
+      return _callRestResource(_rest.updateLocationPoint,{}, data);
     }
 
     function deleteLocationPoint(locationPointId) {
