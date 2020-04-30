@@ -48,7 +48,7 @@
         "i18next": "17.0.4",
         "i18next-browser-languagedetector": "3.0.1",
         "i18next-xhr-backend": "3.0.0",
-        "jquery": "2.2.0",
+        "jquery": "3.5.0",
         "moment": "2.12.0",
         "ng-i18next": "1.0.5",
         "otus-client-js": "1.23.0",
