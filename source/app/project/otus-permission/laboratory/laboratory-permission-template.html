@@ -1,29 +1,220 @@
 <div flex="100" layout="row" layout-align="center center" layout-margin="">
 
-  <form name="permissionForm" layout="row" flex layout-align="start center">
+    <form name="permissionForm" layout="row" flex layout-align="start center">
+        <div flex="column" layout-align="start center">
+            <mat-list layout="column" layout-align="start start">
+                <mat-list-item layout="column" layout-fill>
+                    <div layout="row" layout-align="space-between center">
+                        <h4>
+                            <md-icon>science</md-icon>
+                            permissões de laboratório
+                        </h4>
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.laboratoryActive" class="md-primary"></md-switch>
+                        </div>
+                    </div>
+                    <div layout="column" layout-align="start center" ng-show="$ctrl.laboratoryActive != false">
 
-      <div layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
-        <h4>
-          <md-icon>view_module</md-icon> <!-- todo: change icon-->
-          Permitir visualização de Laboratório
-        </h4>
-        <span flex="5"></span>
+                        <div layout="row" layout-fill>
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>local_shipping</md-icon> Transporte de amostra</h4>
 
-        <md-input-container>
-          <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-          <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary" ng-model=$ctrl.permission.access></md-switch>
-        </md-input-container>
-        <span flex="100"></span>
-      </div>
+                                <div layout="column" layout-align="center center">
+                                    <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                    <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                                </div>
+                            </div>
+                        </div>
 
-      <div flex="20" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
-        <md-button class="md-primary md-default md-icon-button" ng-show="$ctrl.initialValue !== $ctrl.permission.access" aria-label="Save"
-                   ng-click="$ctrl.save()">
-          <md-icon>save</md-icon>
-          <md-tooltip md-direction="top">Salvar permissão.</md-tooltip>
-        </md-button>
-      </div>
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>event_note</md-icon>
+                                    Lotes de exames
+                                </h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
 
-  </form>
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>event_available</md-icon>
+                                    Envios de exames
+                                </h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>event_available</md-icon>
+                                    Laboratório Desvinculado</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+                    </div>
+                </mat-list-item>
+                <span flex="10"></span>
+                <mat-list-item layout="column" layout-fill>
+                    <div layout="row" layout-align="space-between center">
+                        <h4>
+                            <md-icon>assessment</md-icon>
+                            Permissões de monitoramento
+                        </h4>
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.Monitoring" class="md-primary"></md-switch>
+                        </div>
+                    </div>
+                    <div layout="column" layout-align="start center" ng-show="$ctrl.Monitoring != false">
+
+                        <div layout="row" layout-fill>
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>description</md-icon> Atividades do centro</h4>
+
+                                <div layout="column" layout-align="center center">
+                                    <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                    <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>flag</md-icon> Flags para atividades</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>flag</md-icon> Flags para laboratório</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>assignment_turned_in</md-icon> Controle laboratorial</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>visibility</md-icon> Visualizador de pendências</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+                    </div>
+                </mat-list-item>
+
+                <span flex="10"></span>
+
+                <mat-list-item layout="column" layout-fill>
+                    <div layout="row" layout-align="space-between center">
+                        <h4>
+                            <md-icon>perm_identity</md-icon>
+                            Permissões de participante
+                        </h4>
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.participant" class="md-primary"></md-switch>
+                        </div>
+                    </div>
+                    <div layout="column" layout-align="start center" ng-show="$ctrl.participant != false">
+
+                        <div layout="row" layout-fill>
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>people_alt</md-icon> Lista de participantes</h4>
+                                <div layout="column" layout-align="center center">
+                                    <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                    <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>person_add</md-icon> Criação de participante</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-fill layout-align="space-between center">
+                            <span flex="5"></span>
+                            <div layout="row" layout-fill layout-align="space-between center">
+                                <h4><md-icon>person</md-icon> Participante anonimo</h4>
+                            </div>
+                            <div layout="column" layout-align="center center">
+                                <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                                <md-switch name="switch" ng-if="!$ctrl.error" class="md-primary"></md-switch>
+                            </div>
+                        </div>
+
+                    </div>
+                </mat-list-item>
+
+                <span flex="10"></span>
+
+                <mat-list-item layout="column" layout-fill>
+                    <div layout="row" layout-align="space-between center">
+                        <h4>
+                            <md-icon>how_to_reg</md-icon>
+                            Permissão de atividade de participante
+                        </h4>
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.participantActivity" class="md-primary"></md-switch>
+                        </div>
+                    </div>
+                </mat-list-item>
+
+            </mat-list>
+        </div>
+        <div flex="20" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+            <md-button class="md-primary md-default md-icon-button" ng-show="$ctrl.initialValue !== $ctrl.permission.access" aria-label="Save"
+                       ng-click="$ctrl.save()">
+                <md-icon>save</md-icon>
+                <md-tooltip md-direction="top">Salvar permissão.</md-tooltip>
+            </md-button>
+        </div>
+
+    </form>
 
 </div>

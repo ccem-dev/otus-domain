@@ -24,6 +24,11 @@
     self.$onInit =  _fetchPermission;
     self.save = save;
 
+    self.laboratoryActive = false
+    self.Monitoring = false
+    self.participant = false
+    self.participantActivity = false
+
     function _fetchPermission() {
       try {
         self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.LABORATORY );
