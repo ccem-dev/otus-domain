@@ -5,13 +5,12 @@
             <div layout="row" layout-align="center center" layout-fill>
                 <div layout="row" layout-fill layout-align="space-between center">
                     <h4>
-                        <md-icon>science</md-icon>
-                        permissões de laboratório
+                        <md-icon>perm_identity</md-icon>
+                        Permissões de participante
                     </h4>
                     <div layout="column" layout-align="center center">
                         <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.active"
-                                   ng-change="$ctrl.activeAll()" class="md-primary"></md-switch>
+                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.active" class="md-primary"></md-switch>
                     </div>
                 </div>
                 <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
@@ -23,63 +22,49 @@
                 </div>
             </div>
             <div layout="column" layout-align="start center" ng-show="$ctrl.active != false">
+
                 <div layout="row" layout-fill>
                     <span flex="5"></span>
                     <div layout="row" layout-fill layout-align="space-between center">
-                        <h4><md-icon>local_shipping</md-icon> Transporte de amostra</h4>
-
+                        <h4><md-icon>people_alt</md-icon> Lista de participantes</h4>
                         <div layout="column" layout-align="center center">
                             <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.sampleTransportationAccess" class="md-primary"></md-switch>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.participantListAccess" class="md-primary"></md-switch>
                         </div>
                     </div>
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+
                     </div>
                 </div>
 
                 <div layout="row" layout-fill layout-align="space-between center">
                     <span flex="5"></span>
                     <div layout="row" layout-fill layout-align="space-between center">
-                        <h4><md-icon>event_note</md-icon>
-                            Lotes de exames
-                        </h4>
-                    </div>
-                    <div layout="column" layout-align="center center">
-                        <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.examLotsAccess" class="md-primary"></md-switch>
+                        <h4><md-icon>person_add</md-icon> Criação de participante</h4>
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.participantCreateAccess" class="md-primary"></md-switch>
+                        </div>
                     </div>
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+
                     </div>
                 </div>
 
                 <div layout="row" layout-fill layout-align="space-between center">
                     <span flex="5"></span>
                     <div layout="row" layout-fill layout-align="space-between center">
-                        <h4><md-icon>event_available</md-icon>
-                            Envios de exames
-                        </h4>
-                    </div>
-                    <div layout="column" layout-align="center center">
-                        <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.examSendingAccess" class="md-primary"></md-switch>
+                        <h4><md-icon>person</md-icon> Participante anonimo</h4>
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.anonymousParticipantAccess" class="md-primary"></md-switch>
+                        </div>
                     </div>
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+
                     </div>
                 </div>
 
-                <div layout="row" layout-fill layout-align="space-between center">
-                    <span flex="5"></span>
-                    <div layout="row" layout-fill layout-align="space-between center">
-                        <h4><md-icon>event_available</md-icon>
-                            Laboratório Desvinculado</h4>
-                    </div>
-                    <div layout="column" layout-align="center center">
-                        <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.unattachedLaboratoriesAccess" class="md-primary"></md-switch>
-                    </div>
-                    <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
-                    </div>
-                </div>
             </div>
         </div>
 
