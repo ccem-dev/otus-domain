@@ -39,7 +39,7 @@
     }
     
     function save() {
-      if(self.initialValue != self.permission.participantActivityAccess){
+      if(self.initialValue === self.permission.participantActivityAccess){
        return _showToast("sem alterações nas permissões")
       }
       self.permission.participantActivityAccess == self.initialValue

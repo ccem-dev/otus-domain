@@ -22,6 +22,7 @@
 
     self.$onInit =  _fetchPermission;
     self.save = save;
+    self.activeAll = activeAll;
 
     self.active = false
 
@@ -32,6 +33,7 @@
       try {
         self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.PARTICIPANT);
         self.permissionGroup = {...self.permission}
+        isActive()
       } catch (e) {
         self.error = true;
         throw "Erro ao recuperar informações de " + PERMISSION_LIST.PARTICIPANT ;
@@ -39,7 +41,7 @@
     }
     
     function save() {
-      if(isEqual()){
+      if(!isEqual(self.permission, self.permissionGroup)){
        return _showToast("sem alterações nas permissões")
       }
       ProjectPermissionService.savePermission(self.permissionGroup)
@@ -68,8 +70,21 @@
     function isActive(){
       return(self.permission.participantListAccess) ||
       (self.permission.participantCreateAccess) ||
-      (self.permission.anonymousParticipantAccess)
+      (self.permission.anonymousParticipantAccess) ? self.active = true : self.active = false
     }
+
+    function activeAll(){
+      if(self.active){
+        self.permissionGroup.participantListAccess = true
+        self.permissionGroup.participantCreateAccess = true
+        self.permissionGroup.anonymousParticipantAccess = true
+        return;
+      }
+      self.permissionGroup.participantListAccess = false
+      self.permissionGroup.participantCreateAccess = false
+      self.permissionGroup.anonymousParticipantAccess = false
+    }
+
     return self;
   }
 })();

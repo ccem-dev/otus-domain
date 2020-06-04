@@ -73,22 +73,22 @@
             return (self.permission.sampleTransportationAccess) ||
                 (self.permission.examLotsAccess) ||
                 (self.permission.examSendingAccess) ||
-                (self.permission.unattachedLaboratoriesAccess)
+                (self.permission.unattachedLaboratoriesAccess) ? self.active = true : self.active = false
         }
 
         function activeAll(){
-          if(self.active){
-            self.permissionGroup.sampleTransportationAccess = true
-            self.permissionGroup.examLotsAccess = true
-            self.permissionGroup.examSendingAccess = true
-            self.permissionGroup.unattachedLaboratoriesAccess = true
+          if(self.active) {
+              self.permissionGroup.sampleTransportationAccess = true
+              self.permissionGroup.examLotsAccess = true
+              self.permissionGroup.examSendingAccess = true
+              self.permissionGroup.unattachedLaboratoriesAccess = true
+              return;
           }
-          if(!self.active){
-            self.permissionGroup.sampleTransportationAccess = false
-            self.permissionGroup.examLotsAccess = false
-            self.permissionGroup.examSendingAccess = false
-            self.permissionGroup.unattachedLaboratoriesAccess = false
-          }
+          self.permissionGroup.sampleTransportationAccess = false
+          self.permissionGroup.examLotsAccess = false
+          self.permissionGroup.examSendingAccess = false
+          self.permissionGroup.unattachedLaboratoriesAccess = false
+
         }
 
         return self;

@@ -22,6 +22,7 @@
 
     self.$onInit =  _fetchPermission;
     self.save = save;
+    self.activeAll = activeAll;
 
     self.active = false
 
@@ -32,6 +33,7 @@
       try {
         self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.MONITORING);
         self.permissionGroup = {...self.permission}
+        isActive()
       } catch (e) {
         self.error = true;
         throw "Erro ao recuperar informações de " + PERMISSION_LIST.MONITORING ;
@@ -39,7 +41,7 @@
     }
     
     function save() {
-      if(isEqual()){
+      if(!isEqual(self.permission, self.permissionGroup)){
        return _showToast("sem alterações nas permissões")
       }
       ProjectPermissionService.savePermission(self.permissionGroup)
@@ -73,7 +75,22 @@
           (self.permission.activityFlagsAccess) ||
           (self.permission.laboratoryFlagsAccess) ||
           (self.permission.laboratoryControlAccess) ||
-          (self.permission.pendencyVisualizerAccess)
+          (self.permission.pendencyVisualizerAccess)? self.active = true : self.active = false
+    }
+    function activeAll(){
+      if(self.active){
+        self.permissionGroup.centerActivitiesAccess = true
+        self.permissionGroup.activityFlagsAccess = true
+        self.permissionGroup.laboratoryFlagsAccess = true
+        self.permissionGroup.laboratoryControlAccess = true
+        self.permissionGroup.pendencyVisualizerAccess = true
+        return;
+      }
+      self.permissionGroup.centerActivitiesAccess = false
+      self.permissionGroup.activityFlagsAccess = false
+      self.permissionGroup.laboratoryFlagsAccess = false
+      self.permissionGroup.laboratoryControlAccess = false
+      self.permissionGroup.pendencyVisualizerAccess = true
     }
 
     return self;

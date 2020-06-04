@@ -10,7 +10,7 @@
                     </h4>
                     <div layout="column" layout-align="center center">
                         <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.active" class="md-primary"></md-switch>
+                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.active" ng-change="$ctrl.activeAll()" class="md-primary"></md-switch>
                     </div>
                 </div>
                 <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
