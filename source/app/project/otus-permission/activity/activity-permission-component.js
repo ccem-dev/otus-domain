@@ -22,9 +22,11 @@
 
     self.$onInit =  _fetchPermission;
     self.save = save;
+    self.isEqual = isEqual;
     self.activeAll = activeAll
 
     self.active = false
+    self.equal = false
 
     self.permission = {}
     self.permissionGroup = {}
@@ -42,12 +44,8 @@
     }
     
     function save() {
-      if(!isEqual(self.permission, self.permissionGroup)){
-       return _showToast("sem alterações nas permissões")
-      }
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
-          console.info(self.permission.participantActivityAccess)
           _showToast("Permissão de atividades salva com sucesso.");
         })
         .catch(function () {
@@ -64,9 +62,10 @@
       );
     }
 
-    function isEqual(permission, permissionGroup){
-      return (permission.participantActivityAccess !== permissionGroup.participantActivityAccess) ||
-             (permission.offlineActivitySincAccess !== permissionGroup.offlineActivitySincAccess)
+    function isEqual(){
+      return (self.permission.participantActivityAccess !== self.permissionGroup.participantActivityAccess) ||
+             (self.permission.offlineActivitySincAccess !== self.permissionGroup.offlineActivitySincAccess)
+              ? self.equal = true : self.equal = false
     }
 
     function isActive() {
@@ -78,10 +77,11 @@
       if (self.active) {
         self.permission.participantActivityAccess = true
         self.permission.offlineActivitySincAccess = true
-        return;
+        return self.equal = true ;
       }
       self.permission.participantActivityAccess = false
       self.permission.offlineActivitySincAccess = false
+      self.equal = false;
     }
 
   }

@@ -15,7 +15,7 @@
                 </div>
                 <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
                     <md-button class="md-primary md-default md-icon-button" aria-label="Save"
-                               ng-click="$ctrl.save()">
+                               ng-click="$ctrl.save()" ng-show="$ctrl.equal != false">
                         <md-icon>save</md-icon>
                         <md-tooltip md-direction="top">Salvar permissão.</md-tooltip>
                     </md-button>
@@ -29,7 +29,9 @@
                         <h4><md-icon>people_alt</md-icon> Lista de participantes</h4>
                         <div layout="column" layout-align="center center">
                             <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.participantListAccess" class="md-primary"></md-switch>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.participantListAccess" class="md-primary"
+                                       ng-change="$ctrl.isEqual()"
+                            ></md-switch>
                         </div>
                     </div>
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
@@ -43,7 +45,9 @@
                         <h4><md-icon>person_add</md-icon> Criação de participante</h4>
                         <div layout="column" layout-align="center center">
                             <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.participantCreateAccess" class="md-primary"></md-switch>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.participantCreateAccess" class="md-primary"
+                                       ng-change="$ctrl.isEqual()"
+                            ></md-switch>
                         </div>
                     </div>
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
@@ -57,7 +61,9 @@
                         <h4><md-icon>person</md-icon> Participante anonimo</h4>
                         <div layout="column" layout-align="center center">
                             <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.anonymousParticipantAccess" class="md-primary"></md-switch>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.anonymousParticipantAccess" class="md-primary"
+                                       ng-change="$ctrl.isEqual()"
+                            ></md-switch>
                         </div>
                     </div>
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
