@@ -16,7 +16,7 @@
                 </div>
                 <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
                     <md-button class="md-primary md-default md-icon-button" aria-label="Save"
-                               ng-click="$ctrl.save() " ng-show="$ctrl.equal != false">
+                               ng-click="$ctrl.save() " ng-show="!$ctrl.equal">
                         <md-icon>save</md-icon>
                         <md-tooltip md-direction="top">Salvar permissão.</md-tooltip>
                     </md-button>

@@ -27,7 +27,7 @@
     self.activeAll = activeAll;
 
     self.active = false
-    self.equal = false
+    self.equal = true
 
     self.permission = {}
     self.permissionGroup = {}
@@ -46,6 +46,8 @@
     function save() {
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
+          self.equal = true
+          self.permissionGroup = {...self.permission}
           _showToast("Permissão de Monitoramento salva com sucesso.");
         })
         .catch(function () {
@@ -67,7 +69,7 @@
       (self.permission.laboratoryFlagsAccess !== self.permissionGroup.laboratoryFlagsAccess) ||
       (self.permission.laboratoryControlAccess !== self.permissionGroup.laboratoryControlAccess) ||
       (self.permission.pendencyVisualizerAccess !== self.permissionGroup.pendencyVisualizerAccess)
-          ? self.equal = true : self.equal = false;
+          ? self.equal = false : self.equal = true;
 
     }
 
@@ -85,15 +87,15 @@
         self.permission.laboratoryFlagsAccess = true
         self.permission.laboratoryControlAccess = true
         self.permission.pendencyVisualizerAccess = true
-        return self.equal = true ;
+        return isEqual();
 
       }
       self.permission.centerActivitiesAccess = false
       self.permission.activityFlagsAccess = false
       self.permission.laboratoryFlagsAccess = false
       self.permission.laboratoryControlAccess = false
-      self.permission.pendencyVisualizerAccess = true
-      self.equal = false;
+      self.permission.pendencyVisualizerAccess = false
+      isEqual();
     }
 
     return self;

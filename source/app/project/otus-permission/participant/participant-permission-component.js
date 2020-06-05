@@ -26,7 +26,7 @@
     self.activeAll = activeAll;
 
     self.active = false
-    self.equal = false
+    self.equal = true
 
     self.permission = {}
     self.permissionGroup = {}
@@ -46,6 +46,8 @@
 
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
+          self.equal = true
+          self.permissionGroup = {...self.permission}
           _showToast("Permissão de Participante salva com sucesso.");
         })
         .catch(function () {
@@ -65,7 +67,8 @@
     function isEqual(){
       return (self.permission.participantListAccess != self.permissionGroup.participantListAccess) ||
           (self.permission.participantCreateAccess !== self.permissionGroup.participantCreateAccess) ||
-          (self.permission.anonymousParticipantAccess !== self.permissionGroup.anonymousParticipantAccess) ? self.equal = true : self.equal = false
+          (self.permission.anonymousParticipantAccess !== self.permissionGroup.anonymousParticipantAccess)
+          ? self.equal = false : self.equal = true
     }
 
     function isActive(){
@@ -79,12 +82,12 @@
         self.permission.participantListAccess = true
         self.permission.participantCreateAccess = true
         self.permission.anonymousParticipantAccess = true
-        return self.equal = true;
+        return isEqual();
       }
       self.permission.participantListAccess = false
       self.permission.participantCreateAccess = false
       self.permission.anonymousParticipantAccess = false
-      self.equal = false
+      isEqual();
     }
 
     return self;

@@ -26,7 +26,7 @@
     self.activeAll = activeAll
 
     self.active = false
-    self.equal = false
+    self.equal = true
 
     self.permission = {}
     self.permissionGroup = {}
@@ -46,6 +46,8 @@
     function save() {
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
+          self.equal = true
+          self.permissionGroup = {...self.permission}
           _showToast("Permissão de atividades salva com sucesso.");
         })
         .catch(function () {
@@ -65,23 +67,23 @@
     function isEqual(){
       return (self.permission.participantActivityAccess !== self.permissionGroup.participantActivityAccess) ||
              (self.permission.offlineActivitySincAccess !== self.permissionGroup.offlineActivitySincAccess)
-              ? self.equal = true : self.equal = false
+              ? self.equal = false : self.equal = true
     }
 
     function isActive() {
       return (self.permission.participantActivityAccess) ||
-      (self.permission.offlineActivitySincAccess) ? self.active = true : self.active = false
+             (self.permission.offlineActivitySincAccess) ? self.active = true : self.active = false
     }
 
     function activeAll() {
       if (self.active) {
         self.permission.participantActivityAccess = true
         self.permission.offlineActivitySincAccess = true
-        return self.equal = true ;
+        return isEqual();
       }
       self.permission.participantActivityAccess = false
       self.permission.offlineActivitySincAccess = false
-      self.equal = false;
+      isEqual();
     }
 
   }
