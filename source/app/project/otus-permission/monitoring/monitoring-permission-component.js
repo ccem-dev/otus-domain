@@ -44,8 +44,7 @@
       if(!isEqual(self.permission, self.permissionGroup)){
        return _showToast("sem alterações nas permissões")
       }
-      self.permission = {...self.permissionGroup}
-      ProjectPermissionService.savePermission(self.permissionGroup)
+      ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
           _showToast("Permissão de Grupo salva com sucesso.");
         })
