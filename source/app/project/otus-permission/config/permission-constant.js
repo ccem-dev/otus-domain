@@ -7,6 +7,6 @@
       "LABORATORY" : "LaboratoryPermission",
       "MONITORING" : "MonitoringPermission",
       "PARTICIPANT" : "ParticipantPermission",
-      "ACTIVITY" : "participantActivityAccess"
+      "ACTIVITY" : "ActivityPermission"
     });
 }());

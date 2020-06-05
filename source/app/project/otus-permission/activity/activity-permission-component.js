@@ -22,16 +22,19 @@
 
     self.$onInit =  _fetchPermission;
     self.save = save;
+    self.activeAll = activeAll
 
     self.active = false
 
-    self.permission = true
-    self.initialValue = false
+    self.permission = {}
+    self.permissionGroup = {}
 
     function _fetchPermission() {
       try {
-        self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.PARTICIPANT);
-        self.initialValue = self.permission.participantActivityAccess
+        self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.ACTIVITY);
+        self.permissionGroup = {...self.permission}
+        console.info(self.permissionGroup)
+        isActive();
       } catch (e) {
         self.error = true;
         throw "Erro ao recuperar informações de " + PERMISSION_LIST.PARTICIPANT ;
@@ -39,11 +42,11 @@
     }
     
     function save() {
-      if(self.initialValue === self.permission.participantActivityAccess){
+      if(!isEqual(self.permission, self.permissionGroup)){
        return _showToast("sem alterações nas permissões")
       }
-      self.permission.participantActivityAccess == self.initialValue
-      ProjectPermissionService.savePermission(self.permission)
+      self.permission = {...self.permissionGroup}
+      ProjectPermissionService.savePermission(self.permissionGroup)
         .then(function (response) {
           console.info(self.permission.participantActivityAccess)
           _showToast("Permissão de Grupo salva com sucesso.");
@@ -60,6 +63,26 @@
               .position("bottom right")
               .hideDelay(3000)
       );
+    }
+
+    function isEqual(permission, permissionGroup){
+      return (permission.participantActivityAccess !== permissionGroup.participantActivityAccess) ||
+             (permission.offlineActivitySincAccess !== permissionGroup.offlineActivitySincAccess)
+    }
+
+    function isActive() {
+      return (self.permission.participantActivityAccess) ||
+      (self.permission.offlineActivitySincAccess) ? self.active = true : self.active = false
+    }
+
+    function activeAll() {
+      if (self.active) {
+        self.permissionGroup.participantActivityAccess = true
+        self.permissionGroup.offlineActivitySincAccess = true
+        return;
+      }
+      self.permissionGroup.participantActivityAccess = false
+      self.permissionGroup.offlineActivitySincAccess = false
     }
 
   }

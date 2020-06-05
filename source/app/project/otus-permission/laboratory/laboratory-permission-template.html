@@ -80,6 +80,19 @@
                     <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
                     </div>
                 </div>
+                <div layout="row" layout-fill layout-align="space-between center">
+                    <span flex="5"></span>
+                    <div layout="row" layout-fill layout-align="space-between center">
+                        <h4><md-icon>people_outline</md-icon>
+                            Acesso ao laboratório por participante</h4>
+                    </div>
+                    <div layout="column" layout-align="center center">
+                        <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permissionGroup.participantLaboratoryAccess" class="md-primary"></md-switch>
+                    </div>
+                    <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+                    </div>
+                </div>
             </div>
         </div>
 

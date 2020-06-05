@@ -33,6 +33,7 @@
             try {
                 self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.LABORATORY);
                 self.permissionGroup = {...self.permission}
+                console.info("lab: ", self.permissionGroup)
                 isActive();
             } catch (e) {
                 self.error = true;
@@ -43,7 +44,7 @@
         function save() {
             if(!isEqual(self.permission, self.permissionGroup))
                 return _showToast("sem alterações nas permissões")
-
+            self.permission = {...self.permissionGroup}
             ProjectPermissionService.savePermission(self.permissionGroup)
                 .then(function (response) {
                     _showToast("Permissão de Grupo salva com sucesso.");
@@ -66,14 +67,16 @@
             return (permission.sampleTransportationAccess != permissionGroup.sampleTransportationAccess) ||
                 (permission.examLotsAccess !== permissionGroup.examLotsAccess) ||
                 (permission.examSendingAccess !== permissionGroup.examSendingAccess) ||
-                (permission.unattachedLaboratoriesAccess !== permissionGroup.unattachedLaboratoriesAccess)
+                (permission.unattachedLaboratoriesAccess !== permissionGroup.unattachedLaboratoriesAccess) ||
+                (permission.participantLaboratoryAccess !== permissionGroup.participantLaboratoryAccess)
         }
 
         function isActive() {
             return (self.permission.sampleTransportationAccess) ||
                 (self.permission.examLotsAccess) ||
                 (self.permission.examSendingAccess) ||
-                (self.permission.unattachedLaboratoriesAccess) ? self.active = true : self.active = false
+                (self.permission.unattachedLaboratoriesAccess) ||
+                (self.permission.participantLaboratoryAccess) ? self.active = true : self.active = false
         }
 
         function activeAll(){
@@ -82,12 +85,14 @@
               self.permissionGroup.examLotsAccess = true
               self.permissionGroup.examSendingAccess = true
               self.permissionGroup.unattachedLaboratoriesAccess = true
+              self.permissionGroup.participantLaboratoryAccess = true
               return;
           }
           self.permissionGroup.sampleTransportationAccess = false
           self.permissionGroup.examLotsAccess = false
           self.permissionGroup.examSendingAccess = false
           self.permissionGroup.unattachedLaboratoriesAccess = false
+          self.permissionGroup.participantLaboratoryAccess = false
 
         }
 

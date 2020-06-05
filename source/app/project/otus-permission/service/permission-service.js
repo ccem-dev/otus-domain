@@ -51,7 +51,39 @@
     }
 
     function _setPermissionManager(managerData, email) {
-      _permissionManager = PermissionManagerFactory.create(managerData, email);
+      _permissionManager = PermissionManagerFactory.create([
+        {
+          "objectType": "ActivityPermission",
+          "participantActivityAccess": false,
+          "offlineActivitySincAccess": false
+        },
+        {
+          "objectType": "ParticipantPermission",
+          "participantListAccess": false,
+          "participantCreateAccess": false,
+          "anonymousParticipantAccess": false
+        },
+        {
+          "objectType": "MonitoringPermission",
+          "centerActivitiesAccess": false,
+          "activityFlagsAccess": false,
+          "laboratoryFlagsAccess": false,
+          "laboratoryControlAccess": false,
+          "pendencyVisualizerAccess": false
+        },
+        {
+          "objectType": "SurveyGroupPermission",
+          "groups": []
+        },
+        {
+          "objectType": "LaboratoryPermission",
+          "participantLaboratoryAccess": false,
+          "sampleTransportationAccess": false,
+          "examLotsAccess": false,
+          "examSendingAccess": false,
+          "unattachedLaboratoriesAccess": false
+        }
+      ], email);
     }
 
   }
