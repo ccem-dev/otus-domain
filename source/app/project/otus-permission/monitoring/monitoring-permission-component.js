@@ -42,14 +42,14 @@
     
     function save() {
       if(!isEqual(self.permission, self.permissionGroup)){
-       return _showToast("sem alterações nas permissões")
+       return _showToast("sem alterações nas permissões de monitoramento")
       }
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
-          _showToast("Permissão de Grupo salva com sucesso.");
+          _showToast("Permissão de Monitoramento salva com sucesso.");
         })
         .catch(function () {
-          _showToast("Não foi possível salvar permissão.");
+          _showToast("Não foi possível salvar a permissão de Monitoramento.");
         })
     }
 
@@ -79,18 +79,18 @@
     }
     function activeAll(){
       if(self.active){
-        self.permissionGroup.centerActivitiesAccess = true
-        self.permissionGroup.activityFlagsAccess = true
-        self.permissionGroup.laboratoryFlagsAccess = true
-        self.permissionGroup.laboratoryControlAccess = true
-        self.permissionGroup.pendencyVisualizerAccess = true
+        self.permission.centerActivitiesAccess = true
+        self.permission.activityFlagsAccess = true
+        self.permission.laboratoryFlagsAccess = true
+        self.permission.laboratoryControlAccess = true
+        self.permission.pendencyVisualizerAccess = true
         return;
       }
-      self.permissionGroup.centerActivitiesAccess = false
-      self.permissionGroup.activityFlagsAccess = false
-      self.permissionGroup.laboratoryFlagsAccess = false
-      self.permissionGroup.laboratoryControlAccess = false
-      self.permissionGroup.pendencyVisualizerAccess = true
+      self.permission.centerActivitiesAccess = false
+      self.permission.activityFlagsAccess = false
+      self.permission.laboratoryFlagsAccess = false
+      self.permission.laboratoryControlAccess = false
+      self.permission.pendencyVisualizerAccess = true
     }
 
     return self;

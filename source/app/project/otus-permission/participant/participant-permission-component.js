@@ -46,10 +46,10 @@
       }
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
-          _showToast("Permissão de Grupo salva com sucesso.");
+          _showToast("Permissão de Participante salva com sucesso.");
         })
         .catch(function () {
-          _showToast("Não foi possível salvar permissão.");
+          _showToast("Não foi possível salvar permissão de Participante.");
         })
     }
 
@@ -75,14 +75,14 @@
 
     function activeAll(){
       if(self.active){
-        self.permissionGroup.participantListAccess = true
-        self.permissionGroup.participantCreateAccess = true
-        self.permissionGroup.anonymousParticipantAccess = true
+        self.permission.participantListAccess = true
+        self.permission.participantCreateAccess = true
+        self.permission.anonymousParticipantAccess = true
         return;
       }
-      self.permissionGroup.participantListAccess = false
-      self.permissionGroup.participantCreateAccess = false
-      self.permissionGroup.anonymousParticipantAccess = false
+      self.permission.participantListAccess = false
+      self.permission.participantCreateAccess = false
+      self.permission.anonymousParticipantAccess = false
     }
 
     return self;

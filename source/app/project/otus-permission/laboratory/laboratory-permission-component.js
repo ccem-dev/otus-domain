@@ -46,10 +46,10 @@
                 return _showToast("sem alterações nas permissões")
             ProjectPermissionService.savePermission(self.permission)
                 .then(function (response) {
-                    _showToast("Permissão de Grupo salva com sucesso.");
+                    _showToast("Permissão de Laboratório salva com sucesso.");
                 })
                 .catch(function () {
-                    _showToast("Não foi possível salvar permissão.");
+                    _showToast("Não foi possível salvar permissão de Laboratório.");
                 })
         }
 
@@ -80,18 +80,18 @@
 
         function activeAll(){
           if(self.active) {
-              self.permissionGroup.sampleTransportationAccess = true
-              self.permissionGroup.examLotsAccess = true
-              self.permissionGroup.examSendingAccess = true
-              self.permissionGroup.unattachedLaboratoriesAccess = true
-              self.permissionGroup.participantLaboratoryAccess = true
+              self.permission.sampleTransportationAccess = true
+              self.permission.examLotsAccess = true
+              self.permission.examSendingAccess = true
+              self.permission.unattachedLaboratoriesAccess = true
+              self.permission.participantLaboratoryAccess = true
               return;
           }
-          self.permissionGroup.sampleTransportationAccess = false
-          self.permissionGroup.examLotsAccess = false
-          self.permissionGroup.examSendingAccess = false
-          self.permissionGroup.unattachedLaboratoriesAccess = false
-          self.permissionGroup.participantLaboratoryAccess = false
+          self.permission.sampleTransportationAccess = false
+          self.permission.examLotsAccess = false
+          self.permission.examSendingAccess = false
+          self.permission.unattachedLaboratoriesAccess = false
+          self.permission.participantLaboratoryAccess = false
 
         }
 

@@ -48,10 +48,10 @@
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
           console.info(self.permission.participantActivityAccess)
-          _showToast("Permissão de Grupo salva com sucesso.");
+          _showToast("Permissão de atividades salva com sucesso.");
         })
         .catch(function () {
-          _showToast("Não foi possível salvar permissão.");
+          _showToast("Não foi possível salvar permissão de atividades.");
         })
     }
 
@@ -76,12 +76,12 @@
 
     function activeAll() {
       if (self.active) {
-        self.permissionGroup.participantActivityAccess = true
-        self.permissionGroup.offlineActivitySincAccess = true
+        self.permission.participantActivityAccess = true
+        self.permission.offlineActivitySincAccess = true
         return;
       }
-      self.permissionGroup.participantActivityAccess = false
-      self.permissionGroup.offlineActivitySincAccess = false
+      self.permission.participantActivityAccess = false
+      self.permission.offlineActivitySincAccess = false
     }
 
   }
