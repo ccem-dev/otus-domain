@@ -5,20 +5,51 @@
             <div layout="row" layout-align="center center" layout-fill>
                 <div layout="row" layout-fill layout-align="space-between center">
                     <h4>
-                        <md-icon>how_to_reg</md-icon>
-                        Permissão de atividade de participante
+                        <md-icon>view_list</md-icon>
+                        Permissões de atividades
                     </h4>
                     <div layout="column" layout-align="center center">
                         <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
-                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.participantActivityAccess" class="md-primary"></md-switch>
+                        <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.active" class="md-primary"
+                                   ng-change="$ctrl.activeAll()"></md-switch>
                     </div>
                 </div>
                 <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
                     <md-button class="md-primary md-default md-icon-button" aria-label="Save"
-                               ng-click="$ctrl.save()">
+                               ng-click="$ctrl.save()" ng-show="!$ctrl.equal">
                         <md-icon>save</md-icon>
                         <md-tooltip md-direction="top">Salvar permissão.</md-tooltip>
                     </md-button>
+                </div>
+            </div>
+            <div layout="column" layout-align="start center" ng-show="$ctrl.active !== false">
+                <div layout="row" layout-fill>
+                    <span flex="5"></span>
+                    <div layout="row" layout-fill layout-align="space-between center">
+                        <h4><md-icon>how_to_reg</md-icon> permissão de atividade de participante</h4>
+
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.participantActivityAccess" class="md-primary"
+                                       ng-change="$ctrl.isEqual()"></md-switch>
+                        </div>
+                    </div>
+                    <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+                    </div>
+                </div>
+                <div layout="row" layout-fill>
+                    <span flex="5"></span>
+                    <div layout="row" layout-fill layout-align="space-between center">
+                        <h4><md-icon>portable_wifi_off</md-icon> Sincronização de atividade offline</h4>
+
+                        <div layout="column" layout-align="center center">
+                            <span class="md-warn" ng-if="$ctrl.error">Erro ao carregar permissão</span>
+                            <md-switch name="switch" ng-if="!$ctrl.error" ng-model="$ctrl.permission.offlineActivitySincAccess" class="md-primary"
+                                       ng-change="$ctrl.isEqual()"></md-switch>
+                        </div>
+                    </div>
+                    <div flex="10" flex-gt-sm="10" flex-gt-md="5" layout="row" layout-align="end center">
+                    </div>
                 </div>
             </div>
         </div>

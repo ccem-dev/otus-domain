@@ -22,9 +22,12 @@
 
     self.$onInit =  _fetchPermission;
     self.save = save;
+    self.isEqual = isEqual;
+
     self.activeAll = activeAll;
 
     self.active = false
+    self.equal = true
 
     self.permission = {}
     self.permissionGroup = {}
@@ -41,15 +44,14 @@
     }
     
     function save() {
-      if(!isEqual(self.permission, self.permissionGroup)){
-       return _showToast("sem alterações nas permissões")
-      }
-      ProjectPermissionService.savePermission(self.permissionGroup)
+      ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
-          _showToast("Permissão de Grupo salva com sucesso.");
+          self.equal = true
+          self.permissionGroup = {...self.permission}
+          _showToast("Permissão de Monitoramento salva com sucesso.");
         })
         .catch(function () {
-          _showToast("Não foi possível salvar permissão.");
+          _showToast("Não foi possível salvar a permissão de Monitoramento.");
         })
     }
 
@@ -67,6 +69,7 @@
       (self.permission.laboratoryFlagsAccess !== self.permissionGroup.laboratoryFlagsAccess) ||
       (self.permission.laboratoryControlAccess !== self.permissionGroup.laboratoryControlAccess) ||
       (self.permission.pendencyVisualizerAccess !== self.permissionGroup.pendencyVisualizerAccess)
+          ? self.equal = false : self.equal = true;
 
     }
 
@@ -79,18 +82,20 @@
     }
     function activeAll(){
       if(self.active){
-        self.permissionGroup.centerActivitiesAccess = true
-        self.permissionGroup.activityFlagsAccess = true
-        self.permissionGroup.laboratoryFlagsAccess = true
-        self.permissionGroup.laboratoryControlAccess = true
-        self.permissionGroup.pendencyVisualizerAccess = true
-        return;
+        self.permission.centerActivitiesAccess = true
+        self.permission.activityFlagsAccess = true
+        self.permission.laboratoryFlagsAccess = true
+        self.permission.laboratoryControlAccess = true
+        self.permission.pendencyVisualizerAccess = true
+        return isEqual();
+
       }
-      self.permissionGroup.centerActivitiesAccess = false
-      self.permissionGroup.activityFlagsAccess = false
-      self.permissionGroup.laboratoryFlagsAccess = false
-      self.permissionGroup.laboratoryControlAccess = false
-      self.permissionGroup.pendencyVisualizerAccess = true
+      self.permission.centerActivitiesAccess = false
+      self.permission.activityFlagsAccess = false
+      self.permission.laboratoryFlagsAccess = false
+      self.permission.laboratoryControlAccess = false
+      self.permission.pendencyVisualizerAccess = false
+      isEqual();
     }
 
     return self;

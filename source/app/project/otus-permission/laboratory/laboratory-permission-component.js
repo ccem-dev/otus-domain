@@ -22,9 +22,11 @@
 
         self.$onInit = _fetchPermission;
         self.save = save;
+        self.isEqual = isEqual
         self.activeAll = activeAll;
 
         self.active = false
+        self.equal = true
 
         self.permission = {}
         self.permissionGroup = {}
@@ -41,15 +43,14 @@
         }
 
         function save() {
-            if(!isEqual(self.permission, self.permissionGroup))
-                return _showToast("sem alterações nas permissões")
-
-            ProjectPermissionService.savePermission(self.permissionGroup)
+            ProjectPermissionService.savePermission(self.permission)
                 .then(function (response) {
-                    _showToast("Permissão de Grupo salva com sucesso.");
+                    self.equal = true
+                    self.permissionGroup = {...self.permission}
+                    _showToast("Permissão de Laboratório salva com sucesso.");
                 })
                 .catch(function () {
-                    _showToast("Não foi possível salvar permissão.");
+                    _showToast("Não foi possível salvar permissão de Laboratório.");
                 })
         }
 
@@ -62,33 +63,39 @@
             );
         }
 
-        function isEqual(permission, permissionGroup) {
-            return (permission.sampleTransportationAccess != permissionGroup.sampleTransportationAccess) ||
-                (permission.examLotsAccess !== permissionGroup.examLotsAccess) ||
-                (permission.examSendingAccess !== permissionGroup.examSendingAccess) ||
-                (permission.unattachedLaboratoriesAccess !== permissionGroup.unattachedLaboratoriesAccess)
+        function isEqual() {
+            return (self.permission.sampleTransportationAccess != self.permissionGroup.sampleTransportationAccess) ||
+                (self.permission.examLotsAccess !== self.permissionGroup.examLotsAccess) ||
+                (self.permission.examSendingAccess !== self.permissionGroup.examSendingAccess) ||
+                (self.permission.unattachedLaboratoriesAccess !== self.permissionGroup.unattachedLaboratoriesAccess) ||
+                (self.permission.participantLaboratoryAccess !== self.permissionGroup.participantLaboratoryAccess)
+                ? self.equal = false : self.equal = true
         }
 
         function isActive() {
             return (self.permission.sampleTransportationAccess) ||
                 (self.permission.examLotsAccess) ||
                 (self.permission.examSendingAccess) ||
-                (self.permission.unattachedLaboratoriesAccess) ? self.active = true : self.active = false
+                (self.permission.unattachedLaboratoriesAccess) ||
+                (self.permission.participantLaboratoryAccess) ? self.active = true : self.active = false
         }
 
         function activeAll(){
           if(self.active) {
-              self.permissionGroup.sampleTransportationAccess = true
-              self.permissionGroup.examLotsAccess = true
-              self.permissionGroup.examSendingAccess = true
-              self.permissionGroup.unattachedLaboratoriesAccess = true
-              return;
-          }
-          self.permissionGroup.sampleTransportationAccess = false
-          self.permissionGroup.examLotsAccess = false
-          self.permissionGroup.examSendingAccess = false
-          self.permissionGroup.unattachedLaboratoriesAccess = false
+              self.permission.sampleTransportationAccess = true
+              self.permission.examLotsAccess = true
+              self.permission.examSendingAccess = true
+              self.permission.unattachedLaboratoriesAccess = true
+              self.permission.participantLaboratoryAccess = true
 
+              return isEqual();
+          }
+          self.permission.sampleTransportationAccess = false
+          self.permission.examLotsAccess = false
+          self.permission.examSendingAccess = false
+          self.permission.unattachedLaboratoriesAccess = false
+          self.permission.participantLaboratoryAccess = false
+          isEqual();
         }
 
         return self;

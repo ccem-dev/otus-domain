@@ -22,9 +22,11 @@
 
     self.$onInit =  _fetchPermission;
     self.save = save;
+    self.isEqual = isEqual;
     self.activeAll = activeAll;
 
     self.active = false
+    self.equal = true
 
     self.permission = {}
     self.permissionGroup = {}
@@ -41,15 +43,15 @@
     }
     
     function save() {
-      if(!isEqual(self.permission, self.permissionGroup)){
-       return _showToast("sem alterações nas permissões")
-      }
-      ProjectPermissionService.savePermission(self.permissionGroup)
+
+      ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
-          _showToast("Permissão de Grupo salva com sucesso.");
+          self.equal = true
+          self.permissionGroup = {...self.permission}
+          _showToast("Permissão de Participante salva com sucesso.");
         })
         .catch(function () {
-          _showToast("Não foi possível salvar permissão.");
+          _showToast("Não foi possível salvar permissão de Participante.");
         })
     }
 
@@ -61,10 +63,12 @@
           .hideDelay(3000)
       );
     }
+
     function isEqual(){
       return (self.permission.participantListAccess != self.permissionGroup.participantListAccess) ||
           (self.permission.participantCreateAccess !== self.permissionGroup.participantCreateAccess) ||
           (self.permission.anonymousParticipantAccess !== self.permissionGroup.anonymousParticipantAccess)
+          ? self.equal = false : self.equal = true
     }
 
     function isActive(){
@@ -75,14 +79,15 @@
 
     function activeAll(){
       if(self.active){
-        self.permissionGroup.participantListAccess = true
-        self.permissionGroup.participantCreateAccess = true
-        self.permissionGroup.anonymousParticipantAccess = true
-        return;
+        self.permission.participantListAccess = true
+        self.permission.participantCreateAccess = true
+        self.permission.anonymousParticipantAccess = true
+        return isEqual();
       }
-      self.permissionGroup.participantListAccess = false
-      self.permissionGroup.participantCreateAccess = false
-      self.permissionGroup.anonymousParticipantAccess = false
+      self.permission.participantListAccess = false
+      self.permission.participantCreateAccess = false
+      self.permission.anonymousParticipantAccess = false
+      isEqual();
     }
 
     return self;

@@ -53,7 +53,7 @@
     function _setPermissionManager(managerData, email) {
       _permissionManager = PermissionManagerFactory.create(managerData, email);
     }
-
   }
+
 }());
 
