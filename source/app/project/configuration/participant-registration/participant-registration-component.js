@@ -37,6 +37,7 @@
         .then(function (data) {
           self.participantRegistration = data.participantRegistration;
           self.autoGenerateRecruitmentNumber = data.autoGenerateRecruitmentNumber;
+          console.info(self.participantRegistration);
         }).catch(function () {
           self.error = true;
           $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));

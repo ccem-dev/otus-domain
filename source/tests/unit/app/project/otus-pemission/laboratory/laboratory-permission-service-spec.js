@@ -57,12 +57,10 @@ describe('Laboratory Permission Component Tests', function () {
   })
   it('should call method isEqual', function () {
     controller.$onInit();
-    Mock.permission.participantLaboratoryAccess = true;
-    Mock.permission.sampleTransportationAccess = true;
-    Mock.permission.examLotsAccess = true;
-    Mock.permission.examSendingAccess = true;
-    Mock.permission.unattachedLaboratoriesAccess = true;
+    controller.permission = Mock.permission;
+    controller.permissionGroup = Mock.permissionGroup;
     controller.isEqual();
+    expect(controller.equal).toEqual(true);
   })
   it('should call method isActive', function () {
     controller.$onInit()
@@ -71,7 +69,9 @@ describe('Laboratory Permission Component Tests', function () {
     Mock.permission.examLotsAccess = true;
     Mock.permission.examSendingAccess = true;
     Mock.permission.unattachedLaboratoriesAccess = true;
+    controller.permission = Mock.permission;
     controller.isActive();
+    expect(controller.active).toEqual(true)
   })
 
   it('should call method activeAll', function () {
@@ -114,6 +114,15 @@ describe('Laboratory Permission Component Tests', function () {
 
   function mockInjections(_$injector_) {
     Mock.permission = {
+      objectType : "Laboratory",
+      email: "otus@solutions.com",
+      participantLaboratoryAccess: false,
+      sampleTransportationAccess: false,
+      examLotsAccess: false,
+      examSendingAccess: false,
+      unattachedLaboratoriesAccess: false
+    };
+    Mock.permissionGroup = {
       objectType : "Laboratory",
       email: "otus@solutions.com",
       participantLaboratoryAccess: false,

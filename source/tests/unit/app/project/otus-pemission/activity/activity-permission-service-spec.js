@@ -54,17 +54,18 @@ describe('Activity Permission Component Tests', function () {
 
     it('should call method isEqual', function () {
         controller.$onInit();
-        Mock.permission.participantActivityAccess = true;
-        Mock.permission.offlineActivitySincAccess = true;
-        Mock.permissionGroup.participantActivityAccess = true;
-        Mock.permissionGroup.participantActivityAccess = true
+        controller.permission = Mock.permission;
+        controller.permissionGroup = Mock.permissionGroup;
         controller.isEqual();
+        expect(controller.equal).toEqual(true)
     })
     it('should call method isActive', function () {
         controller.$onInit()
         Mock.permission.participantActivityAccess = true;
         Mock.permission.offlineActivitySincAccess = true;
+        controller.permission = Mock.permission
         controller.isActive();
+        expect(controller.active).toEqual(true)
     })
 
     it('should call method activeAll', function () {

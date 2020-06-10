@@ -68,6 +68,7 @@
       return (self.permission.participantActivityAccess !== self.permissionGroup.participantActivityAccess) ||
              (self.permission.offlineActivitySincAccess !== self.permissionGroup.offlineActivitySincAccess)
               ? self.equal = false : self.equal = true
+
     }
 
     function isActive() {

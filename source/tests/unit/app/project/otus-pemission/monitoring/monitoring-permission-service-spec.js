@@ -58,12 +58,10 @@ describe('Monitoring Permission Component Tests', function () {
 
     it('should call method isEqual', function () {
         controller.$onInit();
-        Mock.permission.centerActivitiesAccess = true;
-        Mock.permission.activityFlagsAccess = true;
-        Mock.permission.laboratoryFlagsAccess = true;
-        Mock.permission.laboratoryControlAccess = true;
-        Mock.permission.pendencyVisualizerAccess = true;
+        controller.permission = Mock.permission;
+        controller.permissionGroup = Mock.permissionGroup;
         controller.isEqual();
+        expect(controller.equal).toEqual(true)
     })
     it('should call method isActive', function () {
         controller.$onInit()
@@ -72,7 +70,9 @@ describe('Monitoring Permission Component Tests', function () {
         Mock.permission.laboratoryFlagsAccess = true;
         Mock.permission.laboratoryControlAccess = true;
         Mock.permission.pendencyVisualizerAccess = true;
+        controller.permission = Mock.permission;
         controller.isActive();
+        expect(controller.active).toEqual(true)
     })
 
     it('should call method activeAll', function () {
@@ -115,6 +115,15 @@ describe('Monitoring Permission Component Tests', function () {
 
     function mockInjections(_$injector_) {
         Mock.permission = {
+            objectType : "Monitoring",
+            email: "otus@solutions.com",
+            centerActivitiesAccess: false,
+            activityFlagsAccess: false,
+            laboratoryFlagsAccess: false,
+            laboratoryControlAccess: false,
+            pendencyVisualizerAccess: false
+        };
+        Mock.permissionGroup = {
             objectType : "Monitoring",
             email: "otus@solutions.com",
             centerActivitiesAccess: false,
