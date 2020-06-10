@@ -24,6 +24,7 @@
         self.save = save;
         self.isEqual = isEqual
         self.activeAll = activeAll;
+        self.isActive = isActive;
 
         self.active = false
         self.equal = true
@@ -34,8 +35,9 @@
         function _fetchPermission() {
             try {
                 self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.LABORATORY);
-                self.permissionGroup = {...self.permission}
-                isActive();
+                self.permissionGroup = angular.copy(self.permission)
+
+                self.isActive();
             } catch (e) {
                 self.error = true;
                 throw "Erro ao recuperar informações de " + PERMISSION_LIST.LABORATORY;
@@ -46,7 +48,7 @@
             ProjectPermissionService.savePermission(self.permission)
                 .then(function (response) {
                     self.equal = true
-                    self.permissionGroup = {...self.permission}
+                    self.permissionGroup = angular.copy(self.permission)
                     _showToast("Permissão de Laboratório salva com sucesso.");
                 })
                 .catch(function () {
@@ -70,6 +72,7 @@
                 (self.permission.unattachedLaboratoriesAccess !== self.permissionGroup.unattachedLaboratoriesAccess) ||
                 (self.permission.participantLaboratoryAccess !== self.permissionGroup.participantLaboratoryAccess)
                 ? self.equal = false : self.equal = true
+
         }
 
         function isActive() {

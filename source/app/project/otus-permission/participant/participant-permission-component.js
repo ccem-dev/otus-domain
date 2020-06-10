@@ -24,6 +24,7 @@
     self.save = save;
     self.isEqual = isEqual;
     self.activeAll = activeAll;
+    self.isActive = isActive;
 
     self.active = false
     self.equal = true
@@ -34,8 +35,8 @@
     function _fetchPermission() {
       try {
         self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.PARTICIPANT);
-        self.permissionGroup = {...self.permission}
-        isActive()
+        self.permissionGroup = angular.copy(self.permission)
+        self.isActive()
       } catch (e) {
         self.error = true;
         throw "Erro ao recuperar informações de " + PERMISSION_LIST.PARTICIPANT ;
@@ -43,11 +44,10 @@
     }
     
     function save() {
-
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
           self.equal = true
-          self.permissionGroup = {...self.permission}
+          self.permissionGroup = angular.copy(self.permission)
           _showToast("Permissão de Participante salva com sucesso.");
         })
         .catch(function () {

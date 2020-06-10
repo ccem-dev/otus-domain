@@ -23,7 +23,7 @@
     self.$onInit =  _fetchPermission;
     self.save = save;
     self.isEqual = isEqual;
-
+    self.isActive = isActive;
     self.activeAll = activeAll;
 
     self.active = false
@@ -35,8 +35,8 @@
     function _fetchPermission() {
       try {
         self.permission = ProjectPermissionService.getPermissionByType(PERMISSION_LIST.MONITORING);
-        self.permissionGroup = {...self.permission}
-        isActive()
+        self.permissionGroup = angular.copy(self.permission)
+        self.isActive();
       } catch (e) {
         self.error = true;
         throw "Erro ao recuperar informações de " + PERMISSION_LIST.MONITORING ;
@@ -47,7 +47,7 @@
       ProjectPermissionService.savePermission(self.permission)
         .then(function (response) {
           self.equal = true
-          self.permissionGroup = {...self.permission}
+          self.permissionGroup = angular.copy(self.permission)
           _showToast("Permissão de Monitoramento salva com sucesso.");
         })
         .catch(function () {

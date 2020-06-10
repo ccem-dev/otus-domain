@@ -46,10 +46,50 @@ describe('Laboratory Permission Component Tests', function () {
 
   it('should call save method save', function () {
     controller.$onInit();
-    Mock.permission.access = true;
+    Mock.permission.participantLaboratoryAccess = true;
+    Mock.permission.sampleTransportationAccess = true;
+    Mock.permission.examLotsAccess = true;
+    Mock.permission.examSendingAccess = true;
+    Mock.permission.unattachedLaboratoriesAccess = false;
+
     controller.save(Mock.permission);
     expect(Mock.ProjectPermissionService.savePermission).toHaveBeenCalledWith(Mock.permission);
-  });
+  })
+  it('should call method isEqual', function () {
+    controller.$onInit();
+    Mock.permission.participantLaboratoryAccess = true;
+    Mock.permission.sampleTransportationAccess = true;
+    Mock.permission.examLotsAccess = true;
+    Mock.permission.examSendingAccess = true;
+    Mock.permission.unattachedLaboratoriesAccess = true;
+    controller.isEqual();
+  })
+  it('should call method isActive', function () {
+    controller.$onInit()
+    Mock.permission.participantLaboratoryAccess = true;
+    Mock.permission.sampleTransportationAccess = true;
+    Mock.permission.examLotsAccess = true;
+    Mock.permission.examSendingAccess = true;
+    Mock.permission.unattachedLaboratoriesAccess = true;
+    controller.isActive();
+  })
+
+  it('should call method activeAll', function () {
+    controller.$onInit()
+    Mock.permission.participantLaboratoryAccess = false;
+    Mock.permission.sampleTransportationAccess = false;
+    Mock.permission.examLotsAccess = false;
+    Mock.permission.examSendingAccess = false;
+    Mock.permission.unattachedLaboratoriesAccess = false;
+    controller.active = true;
+    controller.activeAll();
+    expect(Mock.permission.participantLaboratoryAccess).toEqual(true);
+    expect(Mock.permission.sampleTransportationAccess).toEqual(true);
+    expect(Mock.permission.examLotsAccess).toEqual(true);
+    expect(Mock.permission.examSendingAccess).toEqual(true);
+    expect(Mock.permission.unattachedLaboratoriesAccess).toEqual(true);
+
+  })
 
   function mockDependencies() {
     Mock.$mdToast = {
@@ -76,7 +116,11 @@ describe('Laboratory Permission Component Tests', function () {
     Mock.permission = {
       objectType : "Laboratory",
       email: "otus@solutions.com",
-      access: false
+      participantLaboratoryAccess: false,
+      sampleTransportationAccess: false,
+      examLotsAccess: false,
+      examSendingAccess: false,
+      unattachedLaboratoriesAccess: false
     };
 
     Mock.response = {data:[]};
