@@ -77,12 +77,12 @@
       if(!self.permission.participantCreateAccess){
         if(self.permission.anonymousParticipantAccess){
           self.permission.anonymousParticipantAccess = false;
-          return _showToast("para ativar permissão de usuario anonimo, é preciso ativar a criação de usuário");
+          return _showToast("para ativar a permissão de usuario anonimo, é preciso ativar a criação de participante");
         }
       }
       if(!self.projectPermission){
         if(self.permission.participantCreateAccess || self.permission.anonymousParticipantAccess) {
-          _showToast("será preciso ativar as permissões de projeto para ativar permissões de criação");
+          _showToast("será preciso ativar as permissões de projeto para ativar as permissões de criação");
         }
       }
     }
@@ -90,9 +90,9 @@
     function _showToast(message) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent(message)
-          .position("bottom right")
-          .hideDelay(3000)
+        .textContent(message)
+        .position("bottom right")
+        .hideDelay(3500)
       );
     }
 
