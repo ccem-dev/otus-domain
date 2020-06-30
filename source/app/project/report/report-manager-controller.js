@@ -50,7 +50,6 @@
       self.reports = null;
     }
 
-
     function uploadReport(file) {
       ReportManagerService.uploadReport(file)
         .then(function (report) {
@@ -108,6 +107,7 @@
 
 
     function _save() {
+
       self.reportsOld = angular.copy(self.reports);
     }
 

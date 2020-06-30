@@ -28,7 +28,7 @@
     function getReportList() {
       return ReportRestService.list()
         .then(function (response) {
-          var reportList = response.data;
+          const reportList = response.data;
           return reportList.map(function (reportData) {
             return ReportFactory.create(reportData);
           });
