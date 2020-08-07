@@ -3,7 +3,7 @@ var browserSync = require('browser-sync').create();
 
 gulp.task('browser-sync', function() {
   var index = process.argv.indexOf("--api-url");
-  var apiurl = process.argv[index + 1] || 'https://localhost:51002';
+  var apiurl = process.argv[index + 1] || 'http://localhost:51006';
   browserSync.init({
     server: {
       open: 'external',

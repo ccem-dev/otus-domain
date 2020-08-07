@@ -15,7 +15,7 @@
         <div layout="row" layout-xs="column" flex>
           <md-card-title layout="row" layout-xs="column" layout-align="center center" flex>
             <md-card-title-media layout="row" flex="10">
-              <div class="md-media-sm card-media" layout="row" flex>
+              <div class="md-media-sm card-media" layout="column" flex>
                 <i class="material-icons iconBigger" ng-click="$ctrl.exportReport(report)">file_download
                   <md-tooltip md-direction="bottom">
                     Baixar
@@ -48,6 +48,12 @@
                         <md-tooltip md-direction="bottom">Centros</md-tooltip>
                       </md-select>
                     </md-input-container>
+                    <div layout="row">
+                      <md-switch name="switch" ng-model="report.isInApp" class="md-primary"
+                                 ng-change="">
+                        Disponibilizar no App
+                      </md-switch>
+                    </div>
                   </div>
                 </div>
               </div>
