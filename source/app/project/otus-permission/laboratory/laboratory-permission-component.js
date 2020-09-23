@@ -70,7 +70,8 @@
                 (self.permission.examLotsAccess !== self.permissionGroup.examLotsAccess) ||
                 (self.permission.examSendingAccess !== self.permissionGroup.examSendingAccess) ||
                 (self.permission.unattachedLaboratoriesAccess !== self.permissionGroup.unattachedLaboratoriesAccess) ||
-                (self.permission.participantLaboratoryAccess !== self.permissionGroup.participantLaboratoryAccess)
+                (self.permission.participantLaboratoryAccess !== self.permissionGroup.participantLaboratoryAccess) ||
+                (self.permission.laboratoryMaterialManagerAccess !== self.permissionGroup.laboratoryMaterialManagerAccess)
                 ? self.equal = false : self.equal = true
 
         }
@@ -80,7 +81,8 @@
                 (self.permission.examLotsAccess) ||
                 (self.permission.examSendingAccess) ||
                 (self.permission.unattachedLaboratoriesAccess) ||
-                (self.permission.participantLaboratoryAccess) ? self.active = true : self.active = false
+                (self.permission.participantLaboratoryAccess) ||
+                (self.permission.laboratoryMaterialManagerAccess) ? self.active = true : self.active = false
         }
 
         function activeAll(){
@@ -90,6 +92,7 @@
               self.permission.examSendingAccess = true
               self.permission.unattachedLaboratoriesAccess = true
               self.permission.participantLaboratoryAccess = true
+              self.permission.laboratoryMaterialManagerAccess = true
 
               return isEqual();
           }
@@ -98,6 +101,7 @@
           self.permission.examSendingAccess = false
           self.permission.unattachedLaboratoriesAccess = false
           self.permission.participantLaboratoryAccess = false
+          self.permission.laboratoryMaterialManagerAccess = false
           isEqual();
         }
 
