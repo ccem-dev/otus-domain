@@ -1,5 +1,5 @@
 variable "otus-domain-frontend-port" {
-  default = 51006
+  default = 51005
 }
 
 variable "otus-api-network" {
