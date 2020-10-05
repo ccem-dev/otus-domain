@@ -15,14 +15,14 @@
         self.loadStages = loadStages;
 
         function addStage(stageData){
-            return stageFactory.create(stage);
+            return stageFactory.create(stageData);
         }
 
         function loadStages(){
             let stages = [];
-            let stage1 = stageFactory.create({ name: "Onda 1"});
-            let stage2 = stageFactory.create({ name: "Onda 2"});
-            let stage3 = stageFactory.create({ name: "Covid"});
+            let stage1 = addStage({ _id: "1i", name: "Onda 1"});
+            let stage2 = addStage({ _id: "2i", name: "Onda 2"});
+            let stage3 = addStage({ _id: "3i", name: "Covid"});
             stages.push(stage1);
             stages.push(stage2);
             stages.push(stage3);

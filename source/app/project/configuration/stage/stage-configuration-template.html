@@ -3,13 +3,25 @@
         <span class="md-headline">{{$ctrl.stageValues.titles.main}}</span>
         <span class="md-subheader">{{$ctrl.stageValues.titles.secondary}}</span>
 
-        <div></div>
+        <div layout="column" layout-align="start start" ng-show="$ctrl.isEditStage">
+            <form name="$ctrl.stageForm" layout-fill novalidate class="ng-pristine ng-invalid ng-invalid-required">
+                <md-input-container layout-fill>
+                    <label>Nome</label>
+                    <input class="form-control" type="text" ng-model="$ctrl.stage.name" ng-value="ctrl.stage.name" name="name" ng-required="true" />
+                </md-input-container>
+                <md-button type="submit" class="md-fab md-fab-bottom-right" aria-label="action button"
+                           ng-click="$ctrl.saveStage()" ng-if="$ctrl.isEditStage">
+                    <md-icon ng-if="$ctrl.isEditStage">{{$ctrl.stageValues.buttons.save.icon}}</md-icon>
+                    <md-tooltip md-direction="left" ng-if="$ctrl.isEditStage">{{$ctrl.stageValues.buttons.save.text}}</md-tooltip>
+                </md-button>
+            </form>
+        </div>
         <div layout="row" layout-wrap flex="100" layout-align="start start" layout-fill>
             <md-list layout-align="start center" flex="100" ng-if="$ctrl.stages.length">
                 <md-subheader class="md-no-sticky">{{$ctrl.stageValues.titles.listStages}}</md-subheader>
                 <md-list-item class="md-2-line"
                               ng-repeat="stage in $ctrl.stages track by $index"
-                              ng-click="$ctrl.editStage($index)">
+                              ng-click="$ctrl.editStage(stage)">
                     <md-icon>{{$ctrl.stageValues.icon.stage}}</md-icon>
                     <div class="md-list-item-text">
                         <span>{{stage.name}}</span>
@@ -21,18 +33,16 @@
                     <md-divider></md-divider>
                 </md-list-item>
             </md-list>
-            <span class="md-title" ng-if="!ctrl.stages.length">{{$ctrl.stageValues.titles.emptyList}}</span>
+            <span class="md-title" ng-if="ctrl.stages.length">{{$ctrl.stageValues.titles.emptyList}}</span>
         </div>
 
-
     </md-content>
-    <md-button class="md-fab md-fab-bottom-right" aria-label="action button" ng-click="$ctrl.addStage()">
+    <md-button class="md-fab md-fab-bottom-right" aria-label="action button" ng-click="$ctrl.addStage()" ng-if="!$ctrl.isEditStage">
         <md-icon md-svg-icon={{$ctrl.stageValues.buttons.add.icon}} ng-if="!$ctrl.isEditStage"></md-icon>
-        <md-icon md-svg-icon={{$ctrl.stageValues.buttons.save.icon}} ng-if="$ctrl.isEditStage"></md-icon>
         <md-tooltip md-direction="left" ng-if="!$ctrl.isEditStage">{{$ctrl.stageValues.buttons.add.text}}</md-tooltip>
-        <md-tooltip md-direction="left" ng-if="$ctrl.isEditStage">{{$ctrl.stageValues.buttons.save.text}}</md-tooltip>
     </md-button>
-    <md-button ng-if="$ctrl.isEditStage" class="md-fab md-fab-bottom-left md-mini md-accent md-raised"
+
+    <md-button class="md-fab md-fab-bottom-left md-mini md-accent md-raised" ng-if="$ctrl.isEditStage" aria-label="cancel button"
                aria-label={{$ctrl.stageValues.buttons.cancel.text}} ng-click="$ctrl.cancel()">
         <md-icon>{{$ctrl.stageValues.buttons.cancel.icon}}</md-icon>
         <md-tooltip md-direction="left">{{$ctrl.stageValues.buttons.cancel.text}}</md-tooltip>
