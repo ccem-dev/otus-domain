@@ -20,6 +20,14 @@
 
     function Controller($q, $mdToast, $compile, $scope, $mdDialog, LoadingScreenService) {
         var self = this;
+
+        self.isEditStage = false;
+        self.addStage = addStage;
+
+
+        function addStage(){
+            confirm("addStage")
+        }
     }
 
 }());

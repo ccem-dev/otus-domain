@@ -1,5 +1,23 @@
-<md-content>
-    <h1 class="md-primary md-title">Etapas</h1>
-</md-content>
+<md-content layout="row" layout-align="center center" flex>
+    <md-content layout="column" layout-padding flex="80" flex-xs="100" layout-margin>
+        <h1 class="md-primary md-title">Etapas</h1>
+        <span class="md-subheader">Configuração para Identificação de Ondas</span>
 
-teste
+        <div></div>
+
+
+
+
+    </md-content>
+    <md-button class="md-fab md-fab-bottom-right" aria-label="adicionar nova etapa" ng-click="$ctrl.addStage()">
+        <md-icon md-svg-icon="plus" ng-if="!$ctrl.isEditStage"></md-icon>
+        <md-icon md-svg-icon="save" ng-if="$ctrl.isEditStage"></md-icon>
+        <md-tooltip md-direction="left" ng-if="!$ctrl.isEditStage">Adicionar Etapa</md-tooltip>
+        <md-tooltip md-direction="left" ng-if="$ctrl.isEditStage">Salvar</md-tooltip>
+    </md-button>
+    <md-button ng-if="$ctrl.isEditStage" class="md-fab md-fab-bottom-left md-mini md-accent md-raised"
+               aria-label="Cancelar" ng-click="$ctrl.cancel()">
+        <md-icon>arrow_back</md-icon>
+        <md-tooltip md-direction="left">Cancelar</md-tooltip>
+    </md-button>
+</md-content>
