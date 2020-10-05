@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('otusDomain.dashboard')
-        .value('otusDomain.dashboard.stageValues', {
+        .value('otusDomain.dashboard.StageValues', {
             titles: {
                 main: "Etapas",
                 secondary: "Configuração para Identificação de Ondas",

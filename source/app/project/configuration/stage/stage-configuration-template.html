@@ -14,7 +14,7 @@
                     <div class="md-list-item-text">
                         <span>{{stage.name}}</span>
                     </div>
-                    <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeStage($index)">
+                    <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeStage(stage._id)">
                         <md-icon>{{$ctrl.stageValues.buttons.delete.icon}}</md-icon>
                         <md-tooltip md-direction="left">{{$ctrl.stageValues.buttons.delete.text}}</md-tooltip>
                     </md-button>

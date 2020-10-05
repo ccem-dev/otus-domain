@@ -16,25 +16,23 @@
         '$scope',
         '$mdDialog',
         'otusDomain.LoadingScreenService',
-        'otusDomain.dashboard.stageValues'
+        'otusDomain.dashboard.StageValues',
+        'otusDomain.dashboard.StageConfigurationService'
     ];
 
-    function Controller($q, $mdToast, $compile, $scope, $mdDialog, LoadingScreenService, stageValues) {
+    function Controller($q, $mdToast, $compile, $scope, $mdDialog, LoadingScreenService, StageValues, StageConfigurationService) {
         var self = this;
 
-        self.stages = [
-            {name: "Onda 1"},
-            {name: "Onda 2"},
-        ];
+        self.stages = [];
         self.isEditStage = false;
 
         self.$onInit = onInit;
         self.addStage = addStage;
 
         function onInit() {
-            self.stageValues = stageValues;
+            self.stageValues = StageValues;
+            self.stages = StageConfigurationService.loadStages();
         }
-
 
         function addStage(){
             confirm("addStage")
