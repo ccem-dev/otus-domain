@@ -7,7 +7,8 @@
                 main: "Etapas",
                 secondary: "Configuração para Identificação de Ondas",
                 emptyList: "Não há etapas cadastradas.",
-                listStages: "Registros"
+                listStages: "Registros",
+                inputName: "Nome"
             },
             buttons: {
                 add: {
@@ -29,6 +30,11 @@
             },
             icon: {
                 stage: "stacked_line_chart"
+            },
+
+            errors: {
+                required: "Campo obrigatório"
+
             }
 
         });
