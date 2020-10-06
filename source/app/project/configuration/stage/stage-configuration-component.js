@@ -21,23 +21,30 @@
     ];
 
     function Controller($q, $mdToast, $compile, $scope, $mdDialog,
-                        LoadingScreenService, StageValues, StageConfigurationService) {
+                        loadingScreenService, stageValues, stageConfigurationService) {
         var self = this;
 
         self.stages = [];
         self.stage = {}
-        self.isEditStage;
+        self.isEditStage = false;
 
         self.$onInit = onInit;
-        self.addStage = addStage;
+        self.loadStages = loadStages;
         self.editStage = editStage;
+        self.addStage = addStage;
         self.saveStage = saveStage;
-        self.cancel = cancel;
+        self.deleteStage = deleteStage;
+        self.reload = reload;
 
         function onInit() {
             self.isEditStage = false;
-            self.stageValues = StageValues;
-            self.stages = StageConfigurationService.loadStages();
+            self.stageValues = stageValues;
+            loadStages();
+
+        }
+
+        function loadStages(){
+            stageConfigurationService.loadStages().then(stages => self.stages = stages);
         }
 
         function addStage(){
@@ -54,23 +61,52 @@
                 return;
             }
 
-            if(self.stage._id){
-                confirm(self.stage.getId());
-            }else{
-                confirm("não é instance");
-            }
+            self.stage._id ? updateStage(self.stage) : createStage(self.stage)
+
+            // if(self.stage._id){
+            //     console.log(self.stage)
+            //     stageConfigurationService.updateStage(self.stage)
+            //     //     .then(response => console.info(response.data))
+            //     //     .then(() => reload());
+            // }else{
+            //     stageConfigurationService.addStage(self.stage)
+            //         .then(response => console.info(response.data))
+            //         .then(() => reload());
+            // }
+        }
+
+        function updateStage(stage){
+            stageConfigurationService.updateStage(stage)
+                 .then(response => console.info(response.data))
+                 .then(() => reload());
+        }
+
+        function createStage(stage){
+            stageConfigurationService.createStage(self.stage)
+                .then(response => console.info(response.data))
+                .then(() => reload());
+        }
+
+
+
+
+
+        function deleteStage(stage){
+            stageConfigurationService.deleteStage(stage.getId()).then(()=>{});
         }
 
         function reset(){
             self.stage = {};
-            self.stageForm.$setPristine;
+            self.stageForm.$setPristine();
+            self.stageForm.$setUntouched();
+            self.stageForm.$rollbackViewValue();
         }
 
-        function cancel(){
+        function reload(){
             reset();
-            onInit();
+            self.isEditStage = false;
+            loadStages();
         }
-
     }
 
 }());

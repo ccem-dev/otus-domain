@@ -395,11 +395,8 @@
                     selectedProject: function (RouteRulesResolver) {
                         return RouteRulesResolver.selectedProject();
                     },
-                    initialize: function (ActivityConfigurationRestService, SurveyGroupRestService, FollowUpRestService, EventRestService) {
-                        ActivityConfigurationRestService.initialize();
-                        SurveyGroupRestService.initialize();
-                        FollowUpRestService.initialize();
-                        EventRestService.initialize();
+                    initialize: function (StageRestService) {
+                       StageRestService.initialize();
                     }
                 },
                 views: {
