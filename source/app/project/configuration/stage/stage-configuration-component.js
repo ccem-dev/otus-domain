@@ -40,10 +40,10 @@
             self.isEditStage = false;
             self.stageValues = stageValues;
             loadStages();
-
         }
 
         function loadStages() {
+            self.stages = [];
             LoadingScreenService.start();
             stageConfigurationService.loadStages()
                 .then(stages => self.stages = stages)
@@ -54,28 +54,30 @@
             self.isEditStage = true;
         }
 
-        function editStage(stage) {
+        function editStage(stageData) {
             self.isEditStage = true;
-            self.stage = stage;
+            self.stage = angular.copy(stageData);
         }
 
         function saveStage() {
+            let stage = angular.copy(stageConfigurationService.parseStage(self.stage));
             if (self.stageForm.$invalid) {
                 return;
             }
-            self.stage._id ? updateStage(self.stage) : createStage(self.stage);
+            stage.getId() ? updateStage(stage) : createStage(stage);
         }
 
         function updateStage(stage) {
-            stageConfigurationService.updateStage(stage)
-                .then(response => console.info(response.data))
-                .then(() => reload())
-                .then(() => $mdToast.show($mdToast.simple().textContent("teste toast").hideDelay(5000)))
+            $mdDialog.show(confirmation(stageValues.confirmation.updateStage, self.stage)).then(() => {
+                stageConfigurationService.updateStage(stage)
+                    .then(() => reload())
+                    .then(() => $mdToast.show($mdToast.simple()
+                        .textContent(stageValues.toast.updateSuccess).hideDelay(5000)))
+            });
         }
 
         function createStage() {
             stageConfigurationService.createStage(self.stage)
-                .then(response => console.info(response.data))
                 .then(() => reload())
                 .then(() => $mdToast.show($mdToast.simple()
                     .textContent(stageValues.toast.successMessage).hideDelay(5000)))
@@ -92,10 +94,10 @@
 
         function reset() {
             self.stage = {};
-            self.stageForm.name.$valid;
-            self.stageForm.name.$setPristine();
-            self.stageForm.name.$setUntouched();
-            self.stageForm.name.$setValidity();
+            // self.stageForm.name.$valid;
+            // self.stageForm.name.$setPristine();
+            // self.stageForm.name.$setUntouched();
+            // self.stageForm.name.$setValidity();
 
             self.stageForm.$setPristine();
             self.stageForm.$setUntouched();
@@ -110,7 +112,7 @@
 
         function confirmation(contextValues, item) {
             return $mdDialog.confirm()
-                .title(contextValues.title+ item.getName())
+                .title(contextValues.title + item.getName())
                 .textContent(contextValues.textContent)
                 .ariaLabel(contextValues.ariaLabel)
                 .ok(stageValues.confirmation.buttons.confirm)

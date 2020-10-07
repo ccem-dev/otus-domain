@@ -5,7 +5,7 @@
         .value('otusDomain.dashboard.StageValues', {
             titles: {
                 main: "Etapas",
-                secondary: "Configuração para Identificação de Ondas",
+                secondary: "Configuração para etapas do projeto",
                 emptyList: "Não há etapas cadastradas.",
                 listStages: "Registros",
                 inputName: "Nome"
@@ -39,16 +39,15 @@
             confirmation: {
                 deleteStage: {
                     title: "Exclusão de Etapa: ",
-                    textContent: "Você tem realmente certeza que deseja excluir esta etapa?",
+                    textContent: "Você realmente deseja excluir esta etapa?",
                     ariaLabel: "exclusão de etapa"
                 },
 
                 updateStage: {
                     title: "Atualização de Etapa: ",
-                    textContent: "Você deseja salvar as atgravaratualização desta etapa?",
-                    ariaLabel: "exclusão de etapa"
+                    textContent: "Você realmente completar a solicitação?",
+                    ariaLabel: "atualização de etapa"
                 },
-
 
                 buttons: {
                     confirm: "Sim",

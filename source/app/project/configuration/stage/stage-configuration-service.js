@@ -18,6 +18,7 @@
         self.updateStage = updateStage;
         self.removeStage = removeStage;
         self.getStageById = getStageById;
+        self.parseStage = parseStage;
 
 
         function loadStages(){
@@ -34,6 +35,10 @@
                 let stages = response.data.map(stageJson => stageFactory.create(stageJson));
                 return stages;
             });
+        }
+
+        function parseStage(stageData){
+            return stageFactory.create(stageData);
         }
 
         function createStage(stageData){
