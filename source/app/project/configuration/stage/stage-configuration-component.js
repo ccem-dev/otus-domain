@@ -21,7 +21,7 @@
     ];
 
     function Controller($q, $mdToast, $compile, $scope, $mdDialog,
-                        loadingScreenService, stageValues, stageConfigurationService) {
+                        LoadingScreenService, stageValues, stageConfigurationService) {
         var self = this;
 
         self.stages = [];
@@ -43,72 +43,74 @@
 
         }
 
-        function loadStages(){
-            stageConfigurationService.loadStages().then(stages => self.stages = stages);
+        function loadStages() {
+            LoadingScreenService.start();
+            stageConfigurationService.loadStages()
+                .then(stages => self.stages = stages)
+                .then(() => LoadingScreenService.finish());
         }
 
-        function addStage(){
+        function addStage() {
             self.isEditStage = true;
         }
 
-        function editStage(stage){
+        function editStage(stage) {
             self.isEditStage = true;
             self.stage = stage;
         }
 
-        function saveStage(){
-            if(self.stageForm.$invalid){
+        function saveStage() {
+            if (self.stageForm.$invalid) {
                 return;
             }
-
-            self.stage._id ? updateStage(self.stage) : createStage(self.stage)
-
-            // if(self.stage._id){
-            //     console.log(self.stage)
-            //     stageConfigurationService.updateStage(self.stage)
-            //     //     .then(response => console.info(response.data))
-            //     //     .then(() => reload());
-            // }else{
-            //     stageConfigurationService.addStage(self.stage)
-            //         .then(response => console.info(response.data))
-            //         .then(() => reload());
-            // }
+            self.stage._id ? updateStage(self.stage) : createStage(self.stage);
         }
 
-        function updateStage(stage){
+        function updateStage(stage) {
             stageConfigurationService.updateStage(stage)
-                 .then(response => console.info(response.data))
-                 .then(() => reload())
-                 .then(() => $mdToast.show($mdToast.simple().textContent("teste toast").hideDelay(5000)))
+                .then(response => console.info(response.data))
+                .then(() => reload())
+                .then(() => $mdToast.show($mdToast.simple().textContent("teste toast").hideDelay(5000)))
         }
 
-        function createStage(){
+        function createStage() {
             stageConfigurationService.createStage(self.stage)
                 .then(response => console.info(response.data))
                 .then(() => reload())
-                .then(() => $mdToast.show($mdToast.simple().textContent("criou").hideDelay(5000)))
+                .then(() => $mdToast.show($mdToast.simple()
+                    .textContent(stageValues.toast.successMessage).hideDelay(5000)))
         }
 
-        function removeStage(stage){
-            stageConfigurationService.removeStage(stage.getId())
-                .then(response => console.info(response.data))
-                .then(() => reload())
-                .then(() => $mdToast.show($mdToast.simple().textContent("apagou").hideDelay(5000)))
-
+        function removeStage(stage) {
+            $mdDialog.show(confirmation(stageValues.confirmation.stageDelete, stage)).then(() => {
+                stageConfigurationService.removeStage(stage.getId())
+                    .then(response => console.info(response.data))
+                    .then(() => reload())
+                    .then(() => $mdToast.show($mdToast.simple().textContent(stageValues.toast.deleteSucess).hideDelay(5000)))
+            })
         }
 
-        function reset(){
+        function reset() {
             self.stage = {};
-            self.stageForm.$valid;
+            self.stageForm.name.$valid;
             self.stageForm.$setPristine();
             self.stageForm.$setUntouched();
             // self.stageForm.$rollbackViewValue();
         }
 
-        function reload(){
+        function reload() {
             reset();
             self.isEditStage = false;
             loadStages();
+        }
+
+        function confirmation(contextValues, item) {
+            return $mdDialog.confirm()
+                .title(contextValues.title+ item.getName())
+                .textContent(contextValues.textContent)
+                .ariaLabel(contextValues.ariaLabel)
+                .ok(stageValues.confirmation.buttons.confirm)
+                .cancel(stageValues.confirmation.buttons.cancel);
         }
     }
 

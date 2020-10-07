@@ -48,7 +48,7 @@
                     <md-divider></md-divider>
                 </md-list-item>
             </md-list>
-            <span class="md-title" ng-if="ctrl.stages.length > 0">{{$ctrl.stageValues.titles.emptyList}}</span>
+            <span class="md-title" ng-if="!$ctrl.stages.length">{{$ctrl.stageValues.titles.emptyList}}</span>
         </div>
 
     </md-content>

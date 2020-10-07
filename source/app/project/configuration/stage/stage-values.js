@@ -20,8 +20,8 @@
                     text: "Salvar"
                 },
                 cancel: {
-                    icon:"arrow_back",
-                    text:"Cancelar"
+                    icon: "arrow_back",
+                    text: "Cancelar"
                 },
                 delete: {
                     icon: "delete",
@@ -34,8 +34,25 @@
 
             errors: {
                 required: "Campo obrigatório"
+            },
 
+            confirmation: {
+                stageDelete: {
+                    title: "Exclusão de Etapa: ",
+                    textContent: "Você tem realmente certeza que deseja excluir esta etapa?",
+                    ariaLabel: "exclusão de etapa"
+                },
+                buttons: {
+                    confirm: "Sim",
+                    cancel: "Não"
+                }
+            },
+
+            toast : {
+                successMessage:"Solicitação realizada com sucesso.",
+                failureMessage: "Ocorreu algum problema, tente novamente mais tarde",
+                deleteSucess: "Remoção realizada com sucesso",
+                updateSuccess: "Atualização realizada com sucesso"
             }
-
         });
 }());
