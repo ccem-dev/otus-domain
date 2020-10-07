@@ -37,11 +37,19 @@
             },
 
             confirmation: {
-                stageDelete: {
+                deleteStage: {
                     title: "Exclusão de Etapa: ",
                     textContent: "Você tem realmente certeza que deseja excluir esta etapa?",
                     ariaLabel: "exclusão de etapa"
                 },
+
+                updateStage: {
+                    title: "Atualização de Etapa: ",
+                    textContent: "Você deseja salvar as atgravaratualização desta etapa?",
+                    ariaLabel: "exclusão de etapa"
+                },
+
+
                 buttons: {
                     confirm: "Sim",
                     cancel: "Não"

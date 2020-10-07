@@ -34,7 +34,7 @@
 
         function update(id, data) {
             if (!_rest) restOffLine();
-            return _rest.update({id}, {data}).$promise;
+            return _rest.update({id}, data).$promise;
 
         }
 

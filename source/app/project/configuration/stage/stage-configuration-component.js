@@ -82,7 +82,7 @@
         }
 
         function removeStage(stage) {
-            $mdDialog.show(confirmation(stageValues.confirmation.stageDelete, stage)).then(() => {
+            $mdDialog.show(confirmation(stageValues.confirmation.deleteStage, stage)).then(() => {
                 stageConfigurationService.removeStage(stage.getId())
                     .then(response => console.info(response.data))
                     .then(() => reload())
@@ -93,6 +93,10 @@
         function reset() {
             self.stage = {};
             self.stageForm.name.$valid;
+            self.stageForm.name.$setPristine();
+            self.stageForm.name.$setUntouched();
+            self.stageForm.name.$setValidity();
+
             self.stageForm.$setPristine();
             self.stageForm.$setUntouched();
             // self.stageForm.$rollbackViewValue();

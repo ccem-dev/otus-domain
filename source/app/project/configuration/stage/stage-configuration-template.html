@@ -5,7 +5,7 @@
 
         <div layout="column" layout-align="start start" ng-show="$ctrl.isEditStage">
             <form name="$ctrl.stageForm" layout-fill novalidate>
-                <md-input-container class="md-block" layout-fill>
+                <md-input-container class="md-block form-group" layout-fill>
                     <label>{{$ctrl.stageValues.titles.inputName}}</label>
                     <input class="form-control" type="text" ng-model="$ctrl.stage.name"
                            ng-value="ctrl.stage.name" name="name" ng-required="true"/>
@@ -39,7 +39,7 @@
                               ng-click="$ctrl.editStage(stage)">
                     <md-icon>{{$ctrl.stageValues.icon.stage}}</md-icon>
                     <div class="md-list-item-text">
-                        <span>{{::stage.name}}</span>
+                        <span>{{stage.name}}</span>
                     </div>
                     <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeStage(stage)">
                         <md-icon>{{$ctrl.stageValues.buttons.delete.icon}}</md-icon>
