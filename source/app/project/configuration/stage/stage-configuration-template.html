@@ -20,6 +20,15 @@
                     <md-tooltip md-direction="top" ng-if="$ctrl.isEditStage">{{$ctrl.stageValues.buttons.save.text}}
                     </md-tooltip>
                 </md-button>
+
+                <md-button type="reset" class="md-fab md-fab-bottom-left md-mini md-accent md-raised"
+                           ng-if="$ctrl.isEditStage" ng-click="$ctrl.reload()"
+                           aria-label="cancel button"
+                           aria-label={{$ctrl.stageValues.buttons.cancel.text}} >
+                    <md-icon>{{$ctrl.stageValues.buttons.cancel.icon}}</md-icon>
+                    <md-tooltip md-direction="top">{{$ctrl.stageValues.buttons.cancel.text}}</md-tooltip>
+                </md-button>
+
             </form>
         </div>
         <div layout="row" layout-wrap flex="100" layout-align="start start" layout-fill>
@@ -30,9 +39,9 @@
                               ng-click="$ctrl.editStage(stage)">
                     <md-icon>{{$ctrl.stageValues.icon.stage}}</md-icon>
                     <div class="md-list-item-text">
-                        <span>{{stage.name}}</span>
+                        <span>{{::stage.name}}</span>
                     </div>
-                    <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeStage(stage._id)">
+                    <md-button class="md-mini md-icon-button" ng-click="$ctrl.removeStage(stage)">
                         <md-icon>{{$ctrl.stageValues.buttons.delete.icon}}</md-icon>
                         <md-tooltip md-direction="left">{{$ctrl.stageValues.buttons.delete.text}}</md-tooltip>
                     </md-button>
@@ -47,12 +56,5 @@
                ng-if="!$ctrl.isEditStage">
         <md-icon md-svg-icon={{$ctrl.stageValues.buttons.add.icon}} ng-if="!$ctrl.isEditStage"></md-icon>
         <md-tooltip md-direction="top" ng-if="!$ctrl.isEditStage">{{$ctrl.stageValues.buttons.add.text}}</md-tooltip>
-    </md-button>
-
-    <md-button class="md-fab md-fab-bottom-left md-mini md-accent md-raised" ng-if="$ctrl.isEditStage"
-               aria-label="cancel button"
-               aria-label={{$ctrl.stageValues.buttons.cancel.text}} ng-click="$ctrl.reload()">
-        <md-icon>{{$ctrl.stageValues.buttons.cancel.icon}}</md-icon>
-        <md-tooltip md-direction="top">{{$ctrl.stageValues.buttons.cancel.text}}</md-tooltip>
     </md-button>
 </md-content>

@@ -33,7 +33,7 @@
         self.editStage = editStage;
         self.addStage = addStage;
         self.saveStage = saveStage;
-        self.deleteStage = deleteStage;
+        self.removeStage = removeStage;
         self.reload = reload;
 
         function onInit() {
@@ -78,28 +78,31 @@
         function updateStage(stage){
             stageConfigurationService.updateStage(stage)
                  .then(response => console.info(response.data))
-                 .then(() => reload());
+                 .then(() => reload())
+                 .then(() => $mdToast.show($mdToast.simple().textContent("teste toast").hideDelay(5000)))
         }
 
-        function createStage(stage){
+        function createStage(){
             stageConfigurationService.createStage(self.stage)
                 .then(response => console.info(response.data))
-                .then(() => reload());
+                .then(() => reload())
+                .then(() => $mdToast.show($mdToast.simple().textContent("criou").hideDelay(5000)))
         }
 
+        function removeStage(stage){
+            stageConfigurationService.removeStage(stage.getId())
+                .then(response => console.info(response.data))
+                .then(() => reload())
+                .then(() => $mdToast.show($mdToast.simple().textContent("apagou").hideDelay(5000)))
 
-
-
-
-        function deleteStage(stage){
-            stageConfigurationService.deleteStage(stage.getId()).then(()=>{});
         }
 
         function reset(){
             self.stage = {};
+            self.stageForm.$valid;
             self.stageForm.$setPristine();
             self.stageForm.$setUntouched();
-            self.stageForm.$rollbackViewValue();
+            // self.stageForm.$rollbackViewValue();
         }
 
         function reload(){
