@@ -17,12 +17,13 @@
         'otusDomain.dashboard.StageConfigurationService'
     ];
 
-    function Controller($mdToast ,$mdDialog, LoadingScreenService, stageValues, stageConfigurationService) {
+    function Controller($mdToast, $mdDialog, LoadingScreenService, stageValues, stageConfigurationService) {
         const self = this;
         const SUCCESS_MESSAGE = 'successMessage';
         const FAILURE_MESSAGE = 'failureMessage';
         const DELETE_SUCCESS_MESSAGE = 'deleteSuccessMessage';
         const UPDATE_SUCCESS_MESSAGE = 'updateSuccessMessage';
+        const CONFLICT_MESSAGE = 'conflictMessage';
 
         self.stages = [];
         self.stage = {}
@@ -30,8 +31,8 @@
 
         self.$onInit = onInit;
         self.loadStages = loadStages;
-        self.editStage = editStage;
         self.addStage = addStage;
+        self.editStage = editStage;
         self.saveStage = saveStage;
         self.removeStage = removeStage;
         self.reload = reload;
@@ -47,7 +48,8 @@
             LoadingScreenService.start();
             stageConfigurationService.loadStages()
                 .then(stages => self.stages = stages)
-                .then(() => LoadingScreenService.finish());
+                .then(() => LoadingScreenService.finish())
+                .catch(() => reportFailureToast());
         }
 
         function addStage() {
@@ -71,26 +73,31 @@
         function updateStage(stage) {
             $mdDialog.show(confirmation(stageValues.confirmation.updateStage, self.stage)).then(() => {
                 stageConfigurationService.updateStage(stage)
+                    .then(data => {
+                        data.STATUS === 'CONFLICT' ?
+                            callToast(CONFLICT_MESSAGE, true) : callToast(UPDATE_SUCCESS_MESSAGE);
+                    })
                     .then(() => reload())
-                    .then(() => callToast(UPDATE_SUCCESS_MESSAGE))
-                    .catch(() =>  callToast(FAILURE_MESSAGE, true))
+                    .catch(() => reportFailureToast());
             }).catch(() => reload())
         }
 
         function createStage() {
             stageConfigurationService.createStage(self.stage)
+                .then(data => {
+                    data.STATUS === 'CONFLICT' ?
+                        callToast(CONFLICT_MESSAGE, true) : callToast(SUCCESS_MESSAGE);
+                })
                 .then(() => reload())
-                .then(() => callToast(SUCCESS_MESSAGE))
-                .catch(() => callToast(FAILURE_MESSAGE, true))
+                .catch(() => reportFailureToast());
         }
 
         function removeStage(stage) {
             $mdDialog.show(confirmation(stageValues.confirmation.deleteStage, stage)).then(() => {
                 stageConfigurationService.removeStage(stage.getId())
-                    .then(response => console.info(response.data))
                     .then(() => reload())
                     .then(() => callToast(DELETE_SUCCESS_MESSAGE))
-                    .catch(() => callToast(FAILURE_MESSAGE, true))
+                    .catch(() => reportFailureToast())
             }).catch(() => reload());
         }
 
@@ -115,10 +122,19 @@
                 .cancel(stageValues.confirmation.buttons.cancel);
         }
 
-        function callToast(msg, error){
-            return $mdToast.show($mdToast.simple()
-                .textContent(stageValues.toast[msg]).hideDelay(5000));
+        function reportFailureToast(){
+            LoadingScreenService.finish();
+            callToast(FAILURE_MESSAGE, true);
         }
+
+        function callToast(msg, error) {
+            let toastCss = error ? "md-toast-error" : "md-toast-done";
+            return $mdToast.show($mdToast.simple()
+                .toastClass(toastCss)
+                .textContent(stageValues.toast[msg])
+                .hideDelay(5000));
+        }
+
     }
 
 }());

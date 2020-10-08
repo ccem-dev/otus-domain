@@ -56,10 +56,11 @@
             },
 
             toast : {
-                successMessage:"Solicitação realizada com sucesso.",
-                failureMessage: "Ocorreu algum problema, tente novamente mais tarde",
-                deleteSuccessMessage: "Remoção realizada com sucesso",
-                updateSuccessMessage: "Atualização realizada com sucesso"
+                successMessage:"Solicitação realizada com sucesso!",
+                failureMessage: "Ocorreu algum problema, tente novamente mais tarde.",
+                deleteSuccessMessage: "Remoção realizada com sucesso!",
+                updateSuccessMessage: "Atualização realizada com sucesso!",
+                conflictMessage: "Conflito: Informação em uso!"
             }
         });
 }());
