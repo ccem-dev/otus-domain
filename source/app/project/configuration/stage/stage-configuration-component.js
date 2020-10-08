@@ -10,19 +10,19 @@
         .controller('stageController', Controller);
 
     Controller.$inject = [
-        '$q',
         '$mdToast',
-        '$compile',
-        '$scope',
         '$mdDialog',
         'otusDomain.LoadingScreenService',
         'otusDomain.dashboard.StageValues',
         'otusDomain.dashboard.StageConfigurationService'
     ];
 
-    function Controller($q, $mdToast, $compile, $scope, $mdDialog,
-                        LoadingScreenService, stageValues, stageConfigurationService) {
-        var self = this;
+    function Controller($mdToast ,$mdDialog, LoadingScreenService, stageValues, stageConfigurationService) {
+        const self = this;
+        const SUCCESS_MESSAGE = 'successMessage';
+        const FAILURE_MESSAGE = 'failureMessage';
+        const DELETE_SUCCESS_MESSAGE = 'deleteSuccessMessage';
+        const UPDATE_SUCCESS_MESSAGE = 'updateSuccessMessage';
 
         self.stages = [];
         self.stage = {}
@@ -62,6 +62,7 @@
         function saveStage() {
             let stage = angular.copy(stageConfigurationService.parseStage(self.stage));
             if (self.stageForm.$invalid) {
+                self.stageForm.$setDirty();
                 return;
             }
             stage.getId() ? updateStage(stage) : createStage(stage);
@@ -71,16 +72,16 @@
             $mdDialog.show(confirmation(stageValues.confirmation.updateStage, self.stage)).then(() => {
                 stageConfigurationService.updateStage(stage)
                     .then(() => reload())
-                    .then(() => $mdToast.show($mdToast.simple()
-                        .textContent(stageValues.toast.updateSuccess).hideDelay(5000)))
-            });
+                    .then(() => callToast(UPDATE_SUCCESS_MESSAGE))
+                    .catch(() =>  callToast(FAILURE_MESSAGE, true))
+            }).catch(() => reload())
         }
 
         function createStage() {
             stageConfigurationService.createStage(self.stage)
                 .then(() => reload())
-                .then(() => $mdToast.show($mdToast.simple()
-                    .textContent(stageValues.toast.successMessage).hideDelay(5000)))
+                .then(() => callToast(SUCCESS_MESSAGE))
+                .catch(() => callToast(FAILURE_MESSAGE, true))
         }
 
         function removeStage(stage) {
@@ -88,20 +89,15 @@
                 stageConfigurationService.removeStage(stage.getId())
                     .then(response => console.info(response.data))
                     .then(() => reload())
-                    .then(() => $mdToast.show($mdToast.simple().textContent(stageValues.toast.deleteSucess).hideDelay(5000)))
-            })
+                    .then(() => callToast(DELETE_SUCCESS_MESSAGE))
+                    .catch(() => callToast(FAILURE_MESSAGE, true))
+            }).catch(() => reload());
         }
 
         function reset() {
-            self.stage = {};
-            // self.stageForm.name.$valid;
-            // self.stageForm.name.$setPristine();
-            // self.stageForm.name.$setUntouched();
-            // self.stageForm.name.$setValidity();
-
-            self.stageForm.$setPristine();
             self.stageForm.$setUntouched();
-            // self.stageForm.$rollbackViewValue();
+            self.stageForm.$setPristine();
+            self.stage = {};
         }
 
         function reload() {
@@ -117,6 +113,11 @@
                 .ariaLabel(contextValues.ariaLabel)
                 .ok(stageValues.confirmation.buttons.confirm)
                 .cancel(stageValues.confirmation.buttons.cancel);
+        }
+
+        function callToast(msg, error){
+            return $mdToast.show($mdToast.simple()
+                .textContent(stageValues.toast[msg]).hideDelay(5000));
         }
     }
 

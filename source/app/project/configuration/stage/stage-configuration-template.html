@@ -4,18 +4,19 @@
         <span class="md-subheader">{{$ctrl.stageValues.titles.secondary}}</span>
 
         <div layout="column" layout-align="start start" ng-show="$ctrl.isEditStage">
-            <form name="$ctrl.stageForm" layout-fill novalidate>
+            <form name="$ctrl.stageForm" layout-fill novalidate ng-submit="$ctrl.saveStage()">
                 <md-input-container class="md-block form-group" layout-fill>
                     <label>{{$ctrl.stageValues.titles.inputName}}</label>
                     <input class="form-control" type="text" ng-model="$ctrl.stage.name"
-                           ng-value="ctrl.stage.name" name="name" ng-required="true"/>
-                    <div ng-messages="$ctrl.stageForm.name.$error">
-                        <small ng-message="required">{{$ctrl.stageValues.errors.required}}</small>
+                           ng-value="$ctrl.stage.name" name="name" ng-required="true"/>
+                    <div ng-messages="$ctrl.stageForm.$error">
+                        <small ng-show="$ctrl.stageForm.$dirty"
+                               ng-message="required">{{$ctrl.stageValues.errors.required}}</small>
                     </div>
                 </md-input-container>
 
                 <md-button type="submit" class="md-fab md-fab-bottom-right" aria-label="action button"
-                           ng-click="$ctrl.saveStage()" ng-if="$ctrl.isEditStage">
+                           ng-if="$ctrl.isEditStage">
                     <md-icon ng-if="$ctrl.isEditStage">{{$ctrl.stageValues.buttons.save.icon}}</md-icon>
                     <md-tooltip md-direction="top" ng-if="$ctrl.isEditStage">{{$ctrl.stageValues.buttons.save.text}}
                     </md-tooltip>
@@ -24,11 +25,10 @@
                 <md-button type="reset" class="md-fab md-fab-bottom-left md-mini md-accent md-raised"
                            ng-if="$ctrl.isEditStage" ng-click="$ctrl.reload()"
                            aria-label="cancel button"
-                           aria-label={{$ctrl.stageValues.buttons.cancel.text}} >
+                           aria-label={{$ctrl.stageValues.buttons.cancel.text}}>
                     <md-icon>{{$ctrl.stageValues.buttons.cancel.icon}}</md-icon>
                     <md-tooltip md-direction="top">{{$ctrl.stageValues.buttons.cancel.text}}</md-tooltip>
                 </md-button>
-
             </form>
         </div>
         <div layout="row" layout-wrap flex="100" layout-align="start start" layout-fill>

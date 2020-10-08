@@ -1,10 +1,8 @@
 (function () {
     'use strict';
 
-
     angular.module('otusDomain.rest')
         .service('StageRestService', StageRestService);
-
 
     StageRestService.$inject = [
         'OtusRestResourceService'
@@ -22,7 +20,6 @@
         self.getAll = getAll;
         self.getById = getById;
 
-
         function initialize() {
             _rest = OtusRestResourceService.getStageResourceFactory();
         }
@@ -35,7 +32,6 @@
         function update(id, data) {
             if (!_rest) restOffLine();
             return _rest.update({id}, data).$promise;
-
         }
 
         function remove(id) {
@@ -53,10 +49,8 @@
             return _rest.getById(id).$promise;
         }
 
-
         function restOffLine() {
             throw new Error('REST resource is not initialized.');
         }
-
     }
 }())

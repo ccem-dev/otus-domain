@@ -39,13 +39,13 @@
             confirmation: {
                 deleteStage: {
                     title: "Exclusão de Etapa: ",
-                    textContent: "Você realmente deseja excluir esta etapa?",
+                    textContent: "Você realmente deseja EXCLUIR esta etapa?",
                     ariaLabel: "exclusão de etapa"
                 },
 
                 updateStage: {
                     title: "Atualização de Etapa: ",
-                    textContent: "Você realmente completar a solicitação?",
+                    textContent: "Você realmente deseja ATUALIZAR esta etapa?",
                     ariaLabel: "atualização de etapa"
                 },
 
@@ -58,8 +58,8 @@
             toast : {
                 successMessage:"Solicitação realizada com sucesso.",
                 failureMessage: "Ocorreu algum problema, tente novamente mais tarde",
-                deleteSucess: "Remoção realizada com sucesso",
-                updateSuccess: "Atualização realizada com sucesso"
+                deleteSuccessMessage: "Remoção realizada com sucesso",
+                updateSuccessMessage: "Atualização realizada com sucesso"
             }
         });
 }());

@@ -24,8 +24,6 @@
         self.getId = getId;
         self.getName = getName;
         self.toJSON = toJSON;
-        self.fromJSON = fromJSON;
-
 
         function getId(){
             return self._id;
@@ -43,17 +41,6 @@
             }
             return json;
         }
-
-        function fromJSON(stageJson){
-            return Object.assign(new Stage(), stageJson);
-        }
-
-
-
-
-
-
-
 
         return self;
     }
