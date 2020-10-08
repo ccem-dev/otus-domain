@@ -44,8 +44,9 @@ describe('StageRestService_UnitTest_Suite', () => {
     it('create method should return promise', () => {
         spyOn(Injections.OtusRestResourceService, 'getStageResourceFactory').and.returnValue(Mock._rest);
         service.initialize();
-        console.log(service.create(Mock.stageJson));
+        expect(service.create(Mock.stageJson)).toBePromise();
     });
+
     xit('should ', () => {
     });
     xit('should ', () => {
