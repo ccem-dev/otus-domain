@@ -6,19 +6,14 @@ describe('StageFactory_UnitTest_Suite', () => {
     beforeEach(() => {
         angular.mock.module('otusDomain.dashboard');
         angular.mock.inject($injector => {
-            //Injections. = $injector.get(' ');
             factory = $injector.get('otusDomain.dashboard.StageFactory', Injections);
             mockInitialize();
-
-
-
         });
     });
 
-    function mockInitialize(){
+    function mockInitialize() {
         Mock.primitiveJson = {_id: "123456789", name: "Onda 1"};
         Mock.stageJson = '{"_id":"123456789","objectType":"Stage","name":"Onda 1"}'
-
     }
 
     it('factoryExistence_check', () => {

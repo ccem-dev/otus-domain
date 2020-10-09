@@ -33,3 +33,8 @@ Test.utils.data.activityReport = {
     }
   ]
 }
+Test.utils.data.stageJsons = [
+    {"_id": '123456', "objectType": 'Stage', "name": "Onda 1"},
+    {"_id": '645321', "objectType": 'Stage', "name": "Onda 2"},
+    {"_id": '615243', "objectType": 'Stage', "name": "Onda 3"}
+]
