@@ -12,11 +12,11 @@
     function Service(stageFactory, stageRestService) {
         const self = this;
         self.loadStages = loadStages;
+        self.parseStage = parseStage;
         self.createStage = createStage;
         self.updateStage = updateStage;
         self.removeStage = removeStage;
         self.getStageById = getStageById;
-        self.parseStage = parseStage;
 
         function loadStages(){
             return stageRestService.getAll().then( response => {
