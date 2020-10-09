@@ -82,8 +82,8 @@
             }).catch(() => reload())
         }
 
-        function createStage() {
-            stageConfigurationService.createStage(self.stage)
+        function createStage(stage) {
+            stageConfigurationService.createStage(stage)
                 .then(data => {
                     data.STATUS === 'CONFLICT' ?
                         callToast(CONFLICT_MESSAGE, true) : callToast(SUCCESS_MESSAGE);
