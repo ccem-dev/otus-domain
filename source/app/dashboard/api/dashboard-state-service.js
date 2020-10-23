@@ -31,6 +31,7 @@
     self.goToProjectReportManager = goToProjectReportManager;
     self.goToProjectDatasourceManager = goToProjectDatasourceManager;
     self.goToFollowUpConfiguration = goToFollowUpConfiguration;
+    self.goToStageConfiguration = goToStageConfiguration;
     self.goToLocationPoint = goToLocationPoint;
     self.logout = logout;
 
@@ -110,6 +111,11 @@
       self.currentState = 'Configurações de Seguimentos';
       $state.go(APP_STATE.FOLLOW_UP_CONFIGURATION);
     }
+
+      function goToStageConfiguration() {
+          self.currentState = 'Configurações de Etapas';
+          $state.go(APP_STATE.STAGE_CONFIGURATION);
+      }
 
     function goToErrorOffline() {
       self.currentState = 'Offline';

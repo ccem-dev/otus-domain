@@ -1,0 +1,7 @@
+.md-toast-done .md-toast-content{
+    color: #05f605 !important;
+}
+
+.md-toast-error .md-toast-content{
+    color: rgb(245, 12, 2) !important;
+}

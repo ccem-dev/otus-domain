@@ -30,6 +30,7 @@
     self.openReportManager = openReportManager;
     self.openDatasourceManager = openDatasourceManager;
     self.openFollowUpConfiguration = openFollowUpConfiguration;
+    self.openStageConfiguration = openStageConfiguration;
     self.openLocationPoint = openLocationPoint;
 
     function getSelectedSystemArea() {
@@ -93,6 +94,11 @@
       DashboardStateService.goToFollowUpConfiguration();
       close();
     }
+
+      function openStageConfiguration() {
+          DashboardStateService.goToStageConfiguration();
+          close();
+      }
 
     function logout() {
       LogoutDialogService.showDialog()
