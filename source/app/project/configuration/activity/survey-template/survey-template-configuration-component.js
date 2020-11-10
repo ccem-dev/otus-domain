@@ -41,10 +41,13 @@
     self.querySearch = querySearch;
     self.onModelChange = onModelChange;
     self.surveyGroupsEdit = surveyGroupsEdit;
+    self.stagesEdit = stagesEdit;
     self.updateSurveyGroups = updateSurveyGroups;
+    self.updateStages = updateStages;
 
     function onInit() {
       self.surveyGroupsEditMode = false;
+      self.stagesEditMode = false;
       self.permissionList = [];
       _dialogs();
       _fetchGroups();
@@ -64,9 +67,18 @@
         self.mirrorEditModeStatus({ status: true });
         self.surveyGroupsEditMode = true;
       } else {
-        $mdToast.show($mdToast.simple().textContent('Você já esta em modo de edição em outra atividade').hideDelay(2000));
+        $mdToast.show($mdToast.simple().textContent('Você já está em modo de edição em outra atividade').hideDelay(2000));
       }
     }
+
+      function stagesEdit() {
+          if (!self.blocEdit) {
+              self.mirrorEditModeStatus({ status: true });
+              self.stagesEditMode = true;
+          } else {
+              $mdToast.show($mdToast.simple().textContent('Primeiro finalize a outra edição em aberto').hideDelay(2000));
+          }
+      }
 
     function updateSurveyGroups() {
       SurveyGroupConfigurationService.getListOfSurveyGroups()
@@ -91,6 +103,13 @@
           self.mirrorEditModeStatus({ status: false });
           self.surveyGroupsEditMode = false;
         })
+    }
+
+    function updateStages(){
+        alert('update stages');
+        self.mirrorEditModeStatus({ status: false });
+        self.stagesEditMode = false;
+
     }
 
     function _getRemovedGroups(oldGroups) {
