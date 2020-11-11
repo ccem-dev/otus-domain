@@ -28,17 +28,17 @@
   </div>
 
     <div style="margin-bottom:15px" layout-align="start center" layout="row">
-        <md-contact-chips ng-model="$ctrl.surveyForm.groups" ng-class="{'readonly': $ctrl.readonly}"
+        <md-contact-chips ng-model="$ctrl.surveyForm.stages" ng-class="{'readonly': $ctrl.readonly}"
                           ng-if="$ctrl.stagesEditMode" ng-disabled="$ctrl.stagesEditMode"
-                          md-contacts="$ctrl.querySearch($query)" md-contact-name="name" md-require-match="true"
+                          md-contacts="$ctrl.queryStageSearch($query)" md-contact-name="name" md-require-match="true"
                           md-separator-keys="$ctrl.keys" md-highlight-flags="i" placeholder="Digite um nome de etapa"
-                          secondary-placeholder="Editar Etapas" input-aria-label="Grupos pretendidos" flex>
+                          secondary-placeholder="Editar Etapas" input-aria-label="Etapas pretendidas" flex>
         </md-contact-chips>
-        Etapas: <md-chips flex layout="row" ng-show="$ctrl.surveyForm.groups.length && !$ctrl.stagesEditMode"
-                  input-aria-label="grupos" input-aria-describedby="staticChipsNote">
-            <md-chip ng-repeat="group in $ctrl.surveyForm.groups">{{group.getName()}}</md-chip>
+        Etapas: <md-chips flex layout="row" ng-show="$ctrl.surveyForm.stages.length && !$ctrl.stagesEditMode"
+                  input-aria-label="etapas" input-aria-describedby="staticChipsNote">
+            <md-chip ng-repeat="stage in $ctrl.stages">{{stage.getName()}}</md-chip>
         </md-chips>
-        <span ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.stagesEditMode" flex></span>
+        <span ng-if="!$ctrl.surveyForm.stages.length && !$ctrl.stagesEditMode" flex></span>
         <div layout="row" layout-align="end end">
             <md-button ng-if="!$ctrl.stagesEditMode" class="md-icon-button" aria-label="Editar"
                        ng-click="$ctrl.stagesEdit()">
