@@ -36,7 +36,7 @@
         </md-contact-chips>
         Etapas: <md-chips flex layout="row" ng-show="$ctrl.surveyForm.stages.length && !$ctrl.stagesEditMode"
                   input-aria-label="etapas" input-aria-describedby="staticChipsNote">
-            <md-chip ng-repeat="stage in $ctrl.stages">{{stage.getName()}}</md-chip>
+            <md-chip ng-repeat="stage in $ctrl.surveyForm.stages">{{stage.getName()}}</md-chip>
         </md-chips>
         <span ng-if="!$ctrl.surveyForm.stages.length && !$ctrl.stagesEditMode" flex></span>
         <div layout="row" layout-align="end end">
@@ -70,14 +70,14 @@
     </md-chips>
     <span ng-if="!$ctrl.surveyForm.groups.length && !$ctrl.surveyGroupsEditMode" flex></span>
     <div layout="row" layout-align="end end">
-      <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar"
+      <md-button ng-if="!$ctrl.surveyGroupsEditMode" class="md-icon-button" aria-label="Editar Grupos"
         ng-click="$ctrl.surveyGroupsEdit()">
         <md-icon md-font-library="material-icons" aria-label="Editar">mode_edit</md-icon>
         <md-tooltip md-visible="false" md-delay="200" md-direction="top" md-autohide="true">
           Editar grupos
         </md-tooltip>
       </md-button>
-      <md-button ng-if="$ctrl.surveyGroupsEditMode" class="md-icon-button md-primary"
+      <md-button ng-if="$ctrl.surveyGroupsEditMode" class="md-icon-button md-primary" aria-label="Atualizar Grupos"
         ng-click="$ctrl.updateSurveyGroups()">
         <md-tooltip md-direction="left">
           Atualizar grupos

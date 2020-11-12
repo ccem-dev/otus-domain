@@ -57,18 +57,12 @@
             self.permissionList = [];
             _dialogs();
             _fetchGroups();
+            _fetchStages();
             _getCollectionOfPermissions();
-            _loadStages();
             self.permission = ActivityPermissionFactory.fromJsonObject({
                 acronym: self.surveyForm.surveyTemplate.identity.acronym,
                 version: self.surveyForm.version
             });
-        }
-
-        function _loadStages() {
-            StageConfigurationService.loadStages()
-                .then((res) => self.stages = res)
-                .catch(() => self.stages = []);
         }
 
         function showActivitySettings() {
@@ -123,6 +117,7 @@
 
         function updateStages() {
             alert('update stages');
+            console.log(self.surveyForm)
             self.mirrorEditModeStatus({status: false});
             self.stagesEditMode = false;
         }
@@ -241,6 +236,15 @@
                 }).catch(function () {
                 self.groups = [];
             });
+        }
+
+        function _fetchStages() {
+            StageConfigurationService.loadStages()
+                .then((data) => {
+                    self.surveyForm.stages = angular.copy(data.filter(stage => stage.getSurveyAcronyms()
+                        .includes(self.surveyForm.surveyTemplate.identity.acronym)))
+                })
+                .catch(() => self.stages = []);
         }
 
         function _dialogs() {
