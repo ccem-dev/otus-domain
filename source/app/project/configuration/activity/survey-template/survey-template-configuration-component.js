@@ -68,7 +68,6 @@
         function _loadStages() {
             StageConfigurationService.loadStages()
                 .then((res) => self.stages = res)
-                .then(() => console.info(self.stages))
                 .catch(() => self.stages = []);
         }
 
@@ -126,7 +125,6 @@
             alert('update stages');
             self.mirrorEditModeStatus({status: false});
             self.stagesEditMode = false;
-
         }
 
         function _getRemovedGroups(oldGroups) {
