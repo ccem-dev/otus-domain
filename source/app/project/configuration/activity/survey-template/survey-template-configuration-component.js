@@ -23,12 +23,12 @@
         'otusjs.model.activity.ActivityPermissionFactory',
         'DashboardStateService',
         'ActivityConfigurationManagerService',
-        'otusDomain.dashboard.StageConfigurationService'
+        'otusDomain.dashboard.SurveyTemplateConfigurationService',
     ];
 
     function Controller($q, SurveyGroupConfigurationService, ProjectConfigurationService, $mdDialog, $mdToast,
                         ActivityPermissionFactory, DashboardStateService, ActivityConfigurationManagerService,
-                        StageConfigurationService) {
+                        SurveyTemplateConfigurationService) {
 
         var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
         var timeShowMsg = 5000;
@@ -117,9 +117,9 @@
 
         function updateStages() {
             alert('update stages');
-            console.log(self.surveyForm)
             self.mirrorEditModeStatus({status: false});
             self.stagesEditMode = false;
+            console.log(self.surveyForm.stages)
         }
 
         function _getRemovedGroups(oldGroups) {
@@ -193,7 +193,6 @@
             return criteria ? self.stages.filter(_createFilterFor(criteria)) : [];
         }
 
-
         function _createFilterFor(query) {
             var lowercaseQuery = query.toLowerCase();
 
@@ -238,11 +237,12 @@
             });
         }
 
+
         function _fetchStages() {
-            StageConfigurationService.loadStages()
-                .then((data) => {
-                    self.surveyForm.stages = angular.copy(data.filter(stage => stage.getSurveyAcronyms()
-                        .includes(self.surveyForm.surveyTemplate.identity.acronym)))
+            SurveyTemplateConfigurationService.fetchStages(self.surveyForm.surveyTemplate.identity.acronym)
+                .then(data => {
+                    self.stages = data.allStages;
+                    self.surveyForm.stages = data.surveyStages;
                 })
                 .catch(() => self.stages = []);
         }
