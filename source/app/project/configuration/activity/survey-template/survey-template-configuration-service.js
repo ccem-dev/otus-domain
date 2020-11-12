@@ -13,8 +13,10 @@
 
         self.$onInit = onInit;
         self.fetchStages = fetchStages;
+        self.updateAvailableSurveyInStage = updateAvailableSurveyInStage;
 
-        function onInit() {}
+        function onInit() {
+        }
 
         function fetchStages(acronym) {
             return StageConfigurationService.loadStages()
@@ -24,6 +26,17 @@
                     return {allStages, surveyStages};
                 })
         }
+
+        function updateAvailableSurveyInStage(stageCandidates) {
+            stageCandidates.forEach(stage =>
+                StageConfigurationService.updateAvailableSurveyInStage(stage)
+                    .then(() => console.log("loop")))
+        }
+
+        // self.surveyForm.stages.forEach(stage => {
+        //     SurveyTemplateConfigurationService.updateAvailableSurveyInStage(stage)
+        //         .then(data => console.log(data))
+        // })
 
     }
 }());

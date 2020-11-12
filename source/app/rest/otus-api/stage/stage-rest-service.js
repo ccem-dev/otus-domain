@@ -19,6 +19,7 @@
         self.remove = remove;
         self.getAll = getAll;
         self.getById = getById;
+        self.updateAvailableSurveyInStage = updateAvailableSurveyInStage;
 
         function initialize() {
             _rest = OtusRestResourceService.getStageResourceFactory();
@@ -47,6 +48,15 @@
         function getById(id) {
             if (!_rest) restOffLine();
             return _rest.getById(id).$promise;
+        }
+
+        function updateAvailableSurveyInStage(stage){
+            alert("arrive in rest updateStage")
+            // return new Promise((resolve, reject) => resolve({"OK": stage}))
+            return new Promise((resolve, reject) => reject({"ERROR": "error"}))
+            // if (!_rest) restOffLine();
+            // return _rest.updateAvailableSurveyInStage(stage.getId(), stage.getSurveyAcronyms()).$promise;
+
         }
 
         function restOffLine() {

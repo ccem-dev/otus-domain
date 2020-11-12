@@ -17,6 +17,7 @@
         self.updateStage = updateStage;
         self.removeStage = removeStage;
         self.getStageById = getStageById;
+        self.updateAvailableSurveyInStage = updateAvailableSurveyInStage;
 
         function loadStages(){
             return stageRestService.getAll().then( response => {
@@ -44,6 +45,10 @@
 
         function getStageById(stageId){
             return stageRestService.getById(stageId);
+        }
+
+        function updateAvailableSurveyInStage(stage){
+            return stageRestService.updateAvailableSurveyInStage(stage);
         }
     }
 
