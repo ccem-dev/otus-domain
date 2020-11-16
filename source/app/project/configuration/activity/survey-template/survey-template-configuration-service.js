@@ -11,13 +11,9 @@
     function Service(StageConfigurationService) {
         const self = this;
 
-        self.$onInit = onInit;
         self.fetchStages = fetchStages;
         self.captureUpdateStages = captureUpdateStages;
         self.updateStagesOfSurveyAcronym = updateStagesOfSurveyAcronym;
-
-        function onInit() {
-        }
 
         function fetchStages(acronym) {
             return StageConfigurationService.loadStages()
@@ -27,7 +23,6 @@
                     return {allStages, surveyStages};
                 })
         }
-
 
         function captureUpdateStages(acronym, updateCandidateStage) {
             return fetchStages(acronym)
@@ -47,7 +42,7 @@
         }
 
         function updateStagesOfSurveyAcronym(updateStageDto) {
-            return StageConfigurationService.updateStagesOfSurveyAcronym(updateStageDto)
+            return StageConfigurationService.updateStagesOfSurveyAcronym(updateStageDto);
         }
     }
 }());
