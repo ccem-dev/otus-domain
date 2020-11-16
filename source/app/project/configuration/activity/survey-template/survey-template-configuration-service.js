@@ -27,8 +27,8 @@
         function captureUpdateStages(acronym, updateCandidateStage) {
             return fetchStages(acronym)
                 .then(data => {
-                    let originalStages = data.surveyStages.map((stage) => stage.getName());
-                    let updateStages = updateCandidateStage.map(stage => stage.getName());
+                    let originalStages = data.surveyStages.map((stage) => stage.getId());
+                    let updateStages = updateCandidateStage.map(stage => stage.getId());
 
                     let toRemove = originalStages.filter(stage => !updateStages.includes(stage));
                     let toAdd = updateStages.filter(stage => !originalStages.includes(stage));
@@ -42,6 +42,7 @@
         }
 
         function updateStagesOfSurveyAcronym(updateStageDto) {
+            console.log(updateStageDto)
             return StageConfigurationService.updateStagesOfSurveyAcronym(updateStageDto);
         }
     }

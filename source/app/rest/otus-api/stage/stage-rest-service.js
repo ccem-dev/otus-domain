@@ -50,12 +50,12 @@
             return _rest.getById(id).$promise;
         }
 
-        function updateStagesOfSurveyAcronym(updateStageDto){
+        function updateStagesOfSurveyAcronym(stageDtoJson){
             alert("arrive in rest updateStage")
-            return new Promise((resolve, reject) => resolve({"OK": updateStageDto}))
+            // return new Promise((resolve, reject) => resolve({"OK": updateStageDto}))
             // return new Promise((resolve, reject) => reject({"ERROR": "error"}))
-            // if (!_rest) restOffLine();
-            // return _rest.updateAvailableSurveyInStage(stage.getId(), stage.getSurveyAcronyms()).$promise;
+            if (!_rest) restOffLine();
+            return _rest.updateStagesOfSurveyAcronym(stageDtoJson).$promise;
         }
 
         function restOffLine() {
