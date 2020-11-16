@@ -25,6 +25,7 @@
         self.getId = getId;
         self.getName = getName;
         self.getSurveyAcronyms = getSurveyAcronyms;
+        self.updateSurveyAcronyms = updateSurveyAcronyms;
         self.toJSON = toJSON;
 
         function getId(){
@@ -38,6 +39,15 @@
         function getSurveyAcronyms(){
             return self.surveyAcronyms;
         }
+
+        function updateSurveyAcronyms(acronym){
+            let index = self.surveyAcronyms.indexOf(acronym);
+
+            (index === -1) ? self.surveyAcronyms.push(acronym): self.surveyAcronyms.splice(index, 1);
+
+            return self;
+        }
+
 
         function toJSON(){
             let json = {

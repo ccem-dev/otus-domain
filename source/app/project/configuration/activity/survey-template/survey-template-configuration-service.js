@@ -13,7 +13,8 @@
 
         self.$onInit = onInit;
         self.fetchStages = fetchStages;
-        self.updateAvailableSurveyInStage = updateAvailableSurveyInStage;
+        self.captureUpdateStages = captureUpdateStages;
+        self.updateStagesOfSurveyAcronym = updateStagesOfSurveyAcronym;
 
         function onInit() {
         }
@@ -27,16 +28,26 @@
                 })
         }
 
-        function updateAvailableSurveyInStage(stageCandidates) {
-            stageCandidates.forEach(stage =>
-                StageConfigurationService.updateAvailableSurveyInStage(stage)
-                    .then(() => console.log("loop")))
+
+        function captureUpdateStages(acronym, updateCandidateStage) {
+            return fetchStages(acronym)
+                .then(data => {
+                    let originalStages = data.surveyStages.map((stage) => stage.getName());
+                    let updateStages = updateCandidateStage.map(stage => stage.getName());
+
+                    let toRemove = originalStages.filter(stage => !updateStages.includes(stage));
+                    let toAdd = updateStages.filter(stage => !originalStages.includes(stage));
+
+                    return {
+                        "acronym": acronym,
+                        "stageIdsToAdd": toAdd,
+                        "stageIdsToRemove": toRemove
+                    }
+                })
         }
 
-        // self.surveyForm.stages.forEach(stage => {
-        //     SurveyTemplateConfigurationService.updateAvailableSurveyInStage(stage)
-        //         .then(data => console.log(data))
-        // })
-
+        function updateStagesOfSurveyAcronym(updateStageDto) {
+            return StageConfigurationService.updateStagesOfSurveyAcronym(updateStageDto)
+        }
     }
 }());

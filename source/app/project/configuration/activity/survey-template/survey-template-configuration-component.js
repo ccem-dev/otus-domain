@@ -116,16 +116,66 @@
             }
 
             function updateStages() {
-                try {
-                    SurveyTemplateConfigurationService.updateAvailableSurveyInStage(self.surveyForm.stages)
-                } catch (e) {
-                    console.log(e);
-                } finally {
-                    self.mirrorEditModeStatus({status: false});
-                    self.stagesEditMode = false;
-                    // console.log(self.surveyForm.stages)
-                }
+                let updateCandidateStage = self.surveyForm.stages;
+                let acronym = self.surveyForm.surveyTemplate.identity.acronym
+                SurveyTemplateConfigurationService.captureUpdateStages(acronym, updateCandidateStage)
+                    .then(updateStageDto => SurveyTemplateConfigurationService.updateStagesOfSurveyAcronym(updateStageDto))
+                    .then( res => console.log(res))
+                    .catch(e => console.log(e))
             }
+
+
+            // SurveyTemplateConfigurationService.fetchStages(self.surveyForm.surveyTemplate.identity.acronym)
+            //     .then(data => {
+            //         let originalStages = angular.copy(data.surveyStages);
+            //         let updateStages = angular.copy(self.surveyForm.stages);
+            //
+            //
+            //         console.log(originalStages)
+            //         console.log(updateStages)
+            //
+            //         //originalStages.forEach(stages => console.log(stages))
+            //         let toRemove = originalStages.filter(stage => !updateStages.includes(stage));
+            //         let toAdd = updateStages.filter(stage => !originalStages.includes(stage));
+            //
+            //
+            //         console.log(toRemove);
+            //         console.log(toAdd);
+
+
+            // if(oldStages.length > updateStages.length){
+            //     let removedStages = _acronymRemovalFromStage(oldStages);
+            //     removedStages.forEach(removedStage => {
+            //         console.log(removedStage)
+            //         let updatedStage = removedStage.updateremoveSurveyAcronym(self.surveyForm.surveyTemplate.identity.acronym)
+            //         console.log(updatedStage);
+            //     })
+            //      // _fetchStages();
+            // }
+            // })
+
+            // try {
+            //     SurveyTemplateConfigurationService.updateAvailableSurveyInStage(self.surveyForm.stages)
+            // } catch (e) {
+            //     console.log(e);
+            // } finally {
+            //     self.mirrorEditModeStatus({status: false});
+            //     self.stagesEditMode = false;
+            //     // console.log(self.surveyForm.stages)
+            // }
+            // }
+
+            // function _filterChangesInStages(oldStages) {
+            //     return oldStages.filter( stage => {
+            //         var foundStage = self.surveyForm.stages.filter(newStage => {
+            //             if (newStage.getName() === stage.getName()) {
+            //                 return true
+            //             }
+            //         });
+            //         return foundStage.length <= 0;
+            //     });
+            // }
+
 
             function _getRemovedGroups(oldGroups) {
                 return oldGroups.filter(function (groupName) {
