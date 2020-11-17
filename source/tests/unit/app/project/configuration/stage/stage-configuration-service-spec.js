@@ -52,7 +52,7 @@ describe('StageConfigurationService_UnitTest_Suite', () => {
     it('loadStages method should return list with 3 itens of stages', () => {
         let stages = service.loadStages();
         Mock.scope.$digest();
-        stages.then(value => expect(value.length).toBe(3))
+        stages.then(value => expect(value.length).toBe(4))
         Mock.scope.$digest();
     });
 

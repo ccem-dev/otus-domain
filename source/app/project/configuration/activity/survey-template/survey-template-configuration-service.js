@@ -17,7 +17,7 @@
 
         function fetchStages(acronym) {
             return StageConfigurationService.loadStages()
-                .then((data) => {
+                .then(data => {
                     let allStages = data;
                     let surveyStages = data.filter(stage => stage.getSurveyAcronyms().includes(acronym))
                     return {allStages, surveyStages};

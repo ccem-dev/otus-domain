@@ -34,4 +34,16 @@ describe('StageFactory_UnitTest_Suite', () => {
         Mock.stage = factory.create(Mock.primitiveJson);
         expect(JSON.stringify(Mock.stage.toJSON())).toBe(Mock.stageJson);
     });
+
+    it('updateSurveyAcronyms method should add the acronym in the array', () => {
+       Mock.stage = factory.create(Mock.primitiveJson);
+       Mock.stage.updateSurveyAcronyms('CURC');
+       expect(Mock.stage.surveyAcronyms.includes('CURC')).toBeTruthy();
+    });
+
+    it('updateSurveyAcronyms method should remove the acronym in the array', () => {
+        Mock.stage = factory.create(Mock.primitiveJson);
+        Mock.stage.updateSurveyAcronyms('TCLE');
+        expect(Mock.stage.surveyAcronyms.includes('TCLE')).toBeFalsy();
+    });
 });
