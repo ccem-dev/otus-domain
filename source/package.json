@@ -53,7 +53,7 @@
         "ng-i18next": "1.0.5",
         "please-wait": "0.0.5",
         "require-dir": "^1.2.0",
-        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-70",
+        "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#ccem-dev",
         "otus-domain-client": "1.1.0",
         "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#ccem-dev",
         "otus-validation-js": "1.1.0"
