@@ -254,7 +254,7 @@
         }
 
         function _hasModification(updateStageDto){
-            if(updateStageDto.stageIdsToRemove.length > 0 || updateStageDto.stageIdsToAdd > 0) return true;
+            if(updateStageDto.stageIdsToRemove.length > 0 || updateStageDto.stageIdsToAdd.length > 0) return true;
             return false;
         }
 
