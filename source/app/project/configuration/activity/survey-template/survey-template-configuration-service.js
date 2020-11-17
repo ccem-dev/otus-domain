@@ -42,7 +42,6 @@
         }
 
         function updateStagesOfSurveyAcronym(updateStageDto) {
-            console.log(updateStageDto)
             return StageConfigurationService.updateStagesOfSurveyAcronym(updateStageDto);
         }
     }

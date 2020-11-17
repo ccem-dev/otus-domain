@@ -247,10 +247,8 @@
                             .then(() =>  _fetchStages());
                     }
                 })
-                .catch(e => console.log(e))
             self.mirrorEditModeStatus({status: false});
             self.stagesEditMode = false;
-
         }
 
         function _hasModification(updateStageDto){
