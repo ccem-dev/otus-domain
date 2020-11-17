@@ -12,8 +12,8 @@ describe('StageFactory_UnitTest_Suite', () => {
     });
 
     function mockInitialize() {
-        Mock.primitiveJson = {_id: "123456789", name: "Onda 1"};
-        Mock.stageJson = '{"_id":"123456789","objectType":"Stage","name":"Onda 1"}'
+        Mock.primitiveJson = {_id: "123456789", name: "Onda 1", surveyAcronyms:["TCLE"]};
+        Mock.stageJson = '{"_id":"123456789","objectType":"Stage","name":"Onda 1","surveyAcronyms":["TCLE"]}'
     }
 
     it('factoryExistence_check', () => {
