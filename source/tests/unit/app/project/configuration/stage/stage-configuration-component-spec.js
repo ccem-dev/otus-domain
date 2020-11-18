@@ -63,14 +63,14 @@ describe('StageConfigurationComponent_UnitTest_Suite', () => {
         ctrl.$onInit();
         Mock.scope.$digest();
         expect(ctrl.isEditStage).toBeFalsy();
-        expect(ctrl.stages.length).toBe(3)
+        expect(ctrl.stages.length).toBe(4)
     });
 
     it('loadStages method should return list with 3 itens of stages', () => {
         expect(ctrl.stages.length).toBe(0)
         ctrl.loadStages();
         Mock.scope.$digest();
-        expect(ctrl.stages.length).toBe(3);
+        expect(ctrl.stages.length).toBe(4);
     });
 
     it('addStage method should enable edit mode', () => {

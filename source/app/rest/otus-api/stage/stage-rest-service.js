@@ -19,6 +19,7 @@
         self.remove = remove;
         self.getAll = getAll;
         self.getById = getById;
+        self.updateStagesOfSurveyAcronym = updateStagesOfSurveyAcronym;
 
         function initialize() {
             _rest = OtusRestResourceService.getStageResourceFactory();
@@ -47,6 +48,11 @@
         function getById(id) {
             if (!_rest) restOffLine();
             return _rest.getById(id).$promise;
+        }
+
+        function updateStagesOfSurveyAcronym(stageDtoJson){
+            if (!_rest) restOffLine();
+            return _rest.updateStagesOfSurveyAcronym(stageDtoJson).$promise;
         }
 
         function restOffLine() {

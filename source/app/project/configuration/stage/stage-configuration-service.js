@@ -17,6 +17,7 @@
         self.updateStage = updateStage;
         self.removeStage = removeStage;
         self.getStageById = getStageById;
+        self.updateStagesOfSurveyAcronym = updateStagesOfSurveyAcronym;
 
         function loadStages(){
             return stageRestService.getAll().then( response => {
@@ -44,6 +45,10 @@
 
         function getStageById(stageId){
             return stageRestService.getById(stageId);
+        }
+
+        function updateStagesOfSurveyAcronym(updateStageDto) {
+            return stageRestService.updateStagesOfSurveyAcronym(updateStageDto);
         }
     }
 

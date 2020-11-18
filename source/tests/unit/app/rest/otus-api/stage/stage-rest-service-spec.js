@@ -31,7 +31,17 @@ describe('StageRestService_UnitTest_Suite', () => {
             getById: () => {
                 return {$promise: Promise.resolve()}
             },
-        }
+            updateStagesOfSurveyAcronym: () => {
+                return {$promise: Promise.resolve()}
+            }
+
+        };
+        Mock.updateDto = {
+            "acronym": Mock.acronym,
+            "stageIdsToAdd": ['123456789abcdef'],
+            "stageIdsToRemove": ['fedcba987654321']
+        };
+
     }
 
     it('serviceExistence_check', () => {
@@ -45,6 +55,8 @@ describe('StageRestService_UnitTest_Suite', () => {
         expect(service.remove).toBeDefined();
         expect(service.getAll).toBeDefined();
         expect(service.getById).toBeDefined();
+        expect(service.updateStagesOfSurveyAcronym).toBeDefined();
+
     });
 
     it('initialize method should evoke getStageResourceFactory by OtusRestResourceService', () => {
@@ -83,6 +95,11 @@ describe('StageRestService_UnitTest_Suite', () => {
         expect(service.getById(Mock.stageJson._id)).toBePromise();
     });
 
+    it('updateStagesOfSurveyAcronym method should return promise by mock otus-client', () => {
+        service.initialize();
+        expect(service.updateStagesOfSurveyAcronym(Mock.stageDtoJson)).toBePromise();
+    });
+
     it('create method should throw error when the factory of client is not available', () => {
         expect(service.create).toThrowError(Error, UNINITIALIZED_REST_ERROR_MESSAGE);
     });
@@ -101,5 +118,9 @@ describe('StageRestService_UnitTest_Suite', () => {
 
     it('getById method should throw error when the factory of client is not available', () => {
         expect(service.getById).toThrowError(Error, UNINITIALIZED_REST_ERROR_MESSAGE);
+    });
+
+    it('updateStagesOfSurveyAcronym method should throw error when the factory of client is not available', () => {
+        expect(service.updateStagesOfSurveyAcronym).toThrowError(Error, UNINITIALIZED_REST_ERROR_MESSAGE);
     });
 });

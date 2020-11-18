@@ -16,6 +16,7 @@ describe('StageConfigurationService_UnitTest_Suite', () => {
             spyOn(Injections.StageRestService, 'update').and.returnValue(Mock.deferredConfirmation.promise);
             spyOn(Injections.StageRestService, 'remove').and.returnValue(Mock.deferredConfirmation.promise);
             spyOn(Injections.StageRestService, 'getById').and.returnValue(Mock.deferredById.promise);
+            spyOn(Injections.StageRestService, 'updateStagesOfSurveyAcronym');
         });
     });
 
@@ -34,6 +35,13 @@ describe('StageConfigurationService_UnitTest_Suite', () => {
         Mock.stage = service.parseStage(Mock.primitiveJson);
         Mock.deferredById = $q.defer();
         Mock.deferredById.resolve({"data": Mock.stage});
+        Mock.acronym = 'CURC';
+        Mock.updateDto = {
+            "acronym": Mock.acronym,
+            "stageIdsToAdd": ['123456789abcdef'],
+            "stageIdsToRemove": ['fedcba987654321']
+        };
+
     }
 
     it('serviceExistence_check', () => {
@@ -52,7 +60,7 @@ describe('StageConfigurationService_UnitTest_Suite', () => {
     it('loadStages method should return list with 3 itens of stages', () => {
         let stages = service.loadStages();
         Mock.scope.$digest();
-        stages.then(value => expect(value.length).toBe(3))
+        stages.then(value => expect(value.length).toBe(4))
         Mock.scope.$digest();
     });
 
@@ -85,4 +93,9 @@ describe('StageConfigurationService_UnitTest_Suite', () => {
         service.getStageById(Mock.stage.getId()).then(response => expect(response.data.objectType).toBe("Stage"))
         Mock.scope.$digest();
     });
+
+    it('updateStagesOfSurveyAcronym should evoke updateStagesOfSurveyAcronym by StageRestService', () => {
+        service.updateStagesOfSurveyAcronym(Mock.updateStageDto);
+        expect(Injections.StageRestService.updateStagesOfSurveyAcronym).toHaveBeenCalledTimes(1);
+    })
 });
