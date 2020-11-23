@@ -55,7 +55,7 @@
         "require-dir": "^1.2.0",
         "otus-client-js": "1.28.0",
         "otus-domain-client": "1.1.0",
-        "otus-model-js": "1.35.0",
+        "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#otus-dev",
         "otus-validation-js": "1.1.0"
     },
     "devDependencies": {
