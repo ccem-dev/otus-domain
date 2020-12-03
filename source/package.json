@@ -1,6 +1,6 @@
 {
     "name": "otus-domain",
-    "version": "1.19.0",
+    "version": "1.20.0",
     "description": "The tool to control repositories and users Otus.",
     "keywords": [
         "otus",
@@ -53,9 +53,9 @@
         "ng-i18next": "1.0.5",
         "please-wait": "0.0.5",
         "require-dir": "^1.2.0",
-        "otus-client-js": "1.31.0",
+        "otus-client-js": "1.32.0",
         "otus-domain-client": "1.1.0",
-        "otus-model-js": "1.37.0",
+        "otus-model-js": "1.38.0",
         "otus-validation-js": "1.1.0"
     },
     "devDependencies": {
@@ -82,6 +82,7 @@
         "gulp-uncache": "^0.4.0-beta1",
         "gulp-useref": "^3.0.4",
         "jasmine-core": "^2.8.0",
+        "jasmine-promise-matchers": "^2.6.0",
         "karma": "^0.13.22",
         "karma-babel-preprocessor": "^7.0.0",
         "karma-browserify": "^5.1.1",

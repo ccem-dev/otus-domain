@@ -26,6 +26,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
+      NODE_MODULES_ROOT_PATH + 'jasmine-promise-matchers/dist/jasmine-promise-matchers.js',
       NODE_MODULES_ROOT_PATH + 'angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js',
       NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
       NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
