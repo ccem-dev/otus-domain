@@ -4,8 +4,6 @@
     .module('otusDomain')
     .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
     .constant('APP_STATE', {
-      'LOGIN': 'login',
-      'USER_REGISTER': 'user-register',
       'INSTALLER': 'installer',
       'HOME': 'home',
       'USER_ACTIVATION': 'user-activation',
@@ -44,39 +42,6 @@
           'repository-config@installer': {
             templateUrl: 'app/survey-repository/repository.html',
             controller: 'InitialConfigController as initialConfigController'
-          }
-        }
-      })
-      .state('login', {
-        url: '/login',
-        resolve: {
-          loggedUser: function (RouteRulesResolver) {
-            return RouteRulesResolver.alreadyLogged();
-          },
-          initialConfiguration: function (RouteRulesResolver) {
-            return RouteRulesResolver.initialConfiguration();
-          }
-        },
-        views: {
-          'system-wrap': {
-            templateUrl: 'app/authenticator/login/login.html',
-            controller: 'LoginController',
-            controllerAs: 'loginController'
-          }
-        }
-      })
-      .state('user-register', {
-        url: '/user/register',
-        resolve: {
-          initialConfiguration: function (RouteRulesResolver) {
-            return RouteRulesResolver.initialConfiguration();
-          }
-        },
-        views: {
-          'system-wrap': {
-            templateUrl: 'app/user/management/registry/user-register.html',
-            controller: 'UserRegisterController',
-            controllerAs: 'userRegisterController'
           }
         }
       })
@@ -393,7 +358,5 @@
           }
         }
       });
-
-    $urlRouterProvider.otherwise('/login');
   }
 }());

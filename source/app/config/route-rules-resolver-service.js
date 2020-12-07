@@ -5,42 +5,17 @@
         .module('otusDomain')
         .service('RouteRulesResolver', RouteRulesResolver);
 
-    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService'];
+    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService', 'AuthService'];
 
-    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService) {
+    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService, AuthService) {
         var self = this;
         self.loggedUser = loggedUser;
-        self.alreadyLogged = alreadyLogged;
         self.selectedProject = selectedProject;
         self.initialConfiguration = initialConfiguration;
         self.onlyOneConfiguration = onlyOneConfiguration;
 
         function loggedUser() {
-            var deferred = $q.defer();
-
-            if (!RestResourceService.isLogged()) {
-                deferred.reject({
-                    redirectTo: APP_STATE.LOGIN
-                });
-            } else {
-                deferred.resolve();
-            }
-
-            return deferred.promise;
-        };
-
-        function alreadyLogged() {
-            var deferred = $q.defer();
-
-            if (RestResourceService.isLogged()) {
-                deferred.reject({
-                    redirectTo: APP_STATE.HOME
-                });
-            } else {
-                deferred.resolve();
-            }
-
-            return deferred.promise;
+            AuthService.verifyAuthentication()
         };
 
         function selectedProject() {
@@ -59,14 +34,13 @@
 
         function initialConfiguration() {
             var deferred = $q.defer();
-
             var installerResource = RestResourceService.getInstallerResource();
             installerResource.ready(function(response) {
                 if (response.data) {
                     deferred.resolve();
                 } else {
                     deferred.reject({
-                        redirectTo: APP_STATE.INSTALLER
+                        redirectTo: APP_STATE.HOME
                     });
                 }
             });
@@ -81,7 +55,7 @@
             installerResource.ready(function(response) {
                 if (response.data) {
                     deferred.reject({
-                        redirectTo: APP_STATE.LOGIN
+                        redirectTo: APP_STATE.HOME
                     });
                 } else {
                     deferred.resolve();

@@ -13,14 +13,12 @@
     'OtusRestResourceService'
   ];
 
-  function DashboardStateService($state, $http, APP_STATE, RestResourceService, OtusRestResourceService) {
+  function DashboardStateService($state, $http, APP_STATE, UserService, RestResourceService, OtusRestResourceService) {
     var self = this;
 
     /* Public interface */
-    self.goToLogin = goToLogin;
     self.goToHome = goToHome;
     self.goToInstaller = goToInstaller;
-    self.goToUserRegister = goToUserRegister;
     self.goToUserActivation = goToUserActivation;
     self.goToUserActivationInProject = goToUserActivationInProject;
     self.goToProjectCenters = goToProjectCenters;
@@ -121,8 +119,6 @@
       authenticatorResource.invalidate(function () {
         RestResourceService.removeSecurityToken();
         OtusRestResourceService.removeSecurityToken();
-
-        goToLogin();
       });
     }
   }

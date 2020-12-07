@@ -10,10 +10,11 @@
     'DashboardStateService',
     '$mdSidenav',
     'ProjectSelectionService',
-    'ProjectContext'
+    'ProjectContext',
+    'UserService'
   ];
 
-  function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav, ProjectSelectionService, ProjectContext) {
+  function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav, ProjectSelectionService, ProjectContext, UserService) {
     var self = this;
 
     /* Public interface */
@@ -96,7 +97,10 @@
 
     function logout() {
       LogoutDialogService.showDialog()
-        .onConfirm(DashboardStateService.logout);
+        .onConfirm(() => {
+          UserService.logout();
+          DashboardStateService.logout();
+        })
     }
   }
 

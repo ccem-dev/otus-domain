@@ -12,8 +12,10 @@
         self.create = create;
 
         function create(name, url, accessToken) {
-            var user = UserService.getLoggedUser();
-            return new Project(name, url, user.email, accessToken);
+            UserService.getLoggedUser()
+                .then(user => {
+                    return new Project(name, url, user.email, accessToken);
+                });
         }
 
         return self;
