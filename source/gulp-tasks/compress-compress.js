@@ -15,7 +15,7 @@ gulp.task('compress-compress', function () {
                     console.log(filePath)
                 }
                 return filePath.replace('app/app', 'app')
-                    .replace('app/node_modules', 'node_modules');
+                    .replace('app/node_modules', 'node_modules')
             }
         }))
         .pipe(gulp_if('*.js',
@@ -44,6 +44,11 @@ gulp.task('embeded_template', ()=> {
         })))
        .pipe(gulp_if('*.js', replace('app/assets/', 'assets/')))
        .pipe(gulp.dest('dist/otus-domain'));
+});
+
+gulp.task('copy_volumes', function() {
+    return gulp.src('./volumes/**/*')
+        .pipe(gulp.dest('dist/otus-domain/volumes'));
 });
 
 gulp.task('copy_node_modules', function () {
