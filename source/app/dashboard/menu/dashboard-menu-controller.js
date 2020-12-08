@@ -22,7 +22,6 @@
     self.open = open;
     self.close = close;
     self.openHome = openHome;
-    self.openUserActivation = openUserActivation;
     self.logout = logout;
     self.openProjectCenters = openProjectCenters;
     self.openUserActivationInProject = openUserActivationInProject;
@@ -47,11 +46,6 @@
 
     function openHome() {
       DashboardStateService.goToHome();
-      close();
-    }
-
-    function openUserActivation() {
-      DashboardStateService.goToUserActivation();
       close();
     }
 

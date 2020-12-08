@@ -5,9 +5,9 @@
         .module('otusDomain.user')
         .service('UserService', service);
 
-    service.$inject = ['RestResourceService', 'OtusRestResourceService', '$q', 'UserContext', 'AuthService'];
+    service.$inject = ['RestResourceService', 'OtusRestResourceService', '$q', 'AuthService'];
 
-    function service(domainResource, otusResource, $q, UserContext, AuthService) {
+    function service(domainResource, otusResource, $q, AuthService) {
         var self = this;
         self.getLoggedUser = getLoggedUser;
         self.logout = logout;
@@ -24,7 +24,6 @@
             return new Promise((resolve, reject) => {
                 keycloak.loadUserProfile()
                     .success(user => resolve(user))
-                    .error(err => reject(err))
             })
         }
     }

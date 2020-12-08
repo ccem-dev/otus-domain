@@ -4,9 +4,7 @@
     .module('otusDomain')
     .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
     .constant('APP_STATE', {
-      'INSTALLER': 'installer',
       'HOME': 'home',
-      'USER_ACTIVATION': 'user-activation',
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
       'PROJECT_ACTIVITY_CONFIGURATION': 'activity_configuration',
@@ -16,7 +14,8 @@
       'FOLLOW_UP_CONFIGURATION': 'follow-up',
       'DATASOURCE_MANAGER':'datasource_manager',
       'REPORT_MANAGER': 'report_manager',
-      'LOCATION_POINT': 'location-point'
+      'LOCATION_POINT': 'location-point',
+      'ERROR_MISSING_PROJECT': 'missing-project'
     });
 
   stateConfiguration.$inject = [
@@ -27,47 +26,6 @@
   function stateConfiguration($stateProvider, $urlRouterProvider) {
 
     $stateProvider
-      .state('installer', {
-        url: '/installer',
-        resolve: {
-          onlyOneConfiguration: function (RouteRulesResolver) {
-            return RouteRulesResolver.onlyOneConfiguration();
-          }
-        },
-        views: {
-          'system-wrap': {
-            templateUrl: 'app/installer/initial/initial-config.html',
-            controller: 'InitialConfigController as initialConfigController'
-          },
-          'repository-config@installer': {
-            templateUrl: 'app/survey-repository/repository.html',
-            controller: 'InitialConfigController as initialConfigController'
-          }
-        }
-      })
-      .state('user-activation', {
-        url: '/user/activation',
-        resolve: {
-          loggedUser: function (RouteRulesResolver) {
-            return RouteRulesResolver.loggedUser();
-          }
-        },
-        views: {
-          'system-wrap': {
-            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
-            controller: 'DashboardMenuController as dashboardMenu'
-          },
-          'dashboard-menu@user-activation': {
-            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
-
-          },
-          'system-content@user-activation': {
-            templateUrl: 'app/user/management/activation/user-activation.html',
-            controller: 'UserActivationController',
-            controllerAs: '$ctrl'
-          }
-        }
-      })
       .state('user-otus-management', {
         url: '/project/user',
         resolve: {
@@ -355,6 +313,15 @@
           'system-wrap': {
             templateUrl: 'app/response-error/offline/offline.html',
             controller: 'ResponseErrorOfflineController as controller'
+          }
+        }
+      })
+      .state('missing-project', {
+        url: '/missing-project',
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/response-error/missingProjectConfig/missing-project-config-template.html',
+            controller: 'ResponseErrorMissingProjectController as controller'
           }
         }
       });

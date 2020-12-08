@@ -9,7 +9,6 @@
       'otusDomain.dashboard',
       'otusDomain.rest',
       'otusDomain.authenticator',
-      'otusDomain.installer',
       'otusDomain.repository',
       'otusDomain.project',
       'otusDomain.project.fieldCenter',

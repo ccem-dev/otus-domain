@@ -5,14 +5,20 @@
         .module('otusDomain')
         .service('RouteRulesResolver', RouteRulesResolver);
 
-    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'RestResourceService', 'AuthService'];
+    RouteRulesResolver.$inject = ['$state', '$rootScope', '$q', 'ProjectContext', 'DashboardStateService', 'APP_STATE', 'AuthService', 'ProjectHttpService'];
 
-    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, RestResourceService, AuthService) {
+    function RouteRulesResolver($state, $rootScope, $q, ProjectContext, DashboardStateService, APP_STATE, AuthService, ProjectHttpService) {
         var self = this;
         self.loggedUser = loggedUser;
         self.selectedProject = selectedProject;
         self.initialConfiguration = initialConfiguration;
         self.onlyOneConfiguration = onlyOneConfiguration;
+
+        onInit()
+
+        function onInit() {
+            ProjectHttpService.initialize()
+        }
 
         function loggedUser() {
             AuthService.verifyAuthentication()
@@ -20,7 +26,6 @@
 
         function selectedProject() {
             var deferred = $q.defer();
-
             if (ProjectContext.hasProject()) {
                 deferred.resolve();
             } else {
@@ -34,9 +39,9 @@
 
         function initialConfiguration() {
             var deferred = $q.defer();
-            var installerResource = RestResourceService.getInstallerResource();
-            installerResource.ready(function(response) {
-                if (response.data) {
+            var installerResource = ProjectHttpService.installerReady();
+            installerResource.then(function(response) {
+                if (response) {
                     deferred.resolve();
                 } else {
                     deferred.reject({
@@ -51,9 +56,10 @@
         function onlyOneConfiguration() {
             var deferred = $q.defer();
 
-            var installerResource = RestResourceService.getInstallerResource();
-            installerResource.ready(function(response) {
-                if (response.data) {
+            var installerResource = ProjectHttpService.installerReady();
+
+            installerResource.then(function(response) {
+                if (response) {
                     deferred.reject({
                         redirectTo: APP_STATE.HOME
                     });
