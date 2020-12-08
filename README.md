@@ -37,7 +37,7 @@ Em project.json, está a configuração do projeto domain. Como exemplo o domain
 #### run container
 
 ```
-*host_path: local onde a pasta volumes está localizada na maquina local ou no servidor
+*host_path: caminho onde a pasta volumes está localizada na maquina local ou no servidor
 ```
 
 > terraform apply --auto-approve -var="volumes_host_path=*host_path" terraform/run-container
