@@ -5,6 +5,7 @@ RUN rm -rf /usr/share/nginx/html/50x.html
 
 ENV API_URL="http://localhost:51006"
 ENV PRODUCTION_BASE_PATH="/otus-domain"
+ENV VOLUMES_HOST_PATH="/otus-domain"
 
 COPY source/dist/otus-domain/ /usr/share/nginx/html/otus-domain/
 COPY server/nginx.conf /etc/nginx/nginx.conf

@@ -31,7 +31,8 @@ resource "docker_container" "otus-domain-frontend" {
   image = "${docker_image.otus-domain-frontend.name}"
   env = [
     "API_URL=${var.otus-domain-frontend-apiurl}",
-    "PRODUCTION_BASE_PATH=${var.otus-domain-production-base-path}"
+    "PRODUCTION_BASE_PATH=${var.otus-domain-production-base-path}",
+    "VOLUMES_HOST_PATH=${var.volumes_host_path}"
   ]
   ports {
 	internal = 80
