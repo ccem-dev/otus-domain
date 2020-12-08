@@ -85,11 +85,19 @@
       <md-list-item>
         <div layout-align="start center">
           <md-icon aria-label="Desfechos">ballot</md-icon>
-          <md-button id="project-user-management-menu" ng-click="dashboardMenu.openFollowUpConfiguration()">
+          <md-button id="follow-up-management-menu" ng-click="dashboardMenu.openFollowUpConfiguration()">
             Seguimentos
           </md-button>
         </div>
       </md-list-item>
+        <md-list-item>
+            <div layout-align="start center">
+                <md-icon aria-label="Etapas">stacked_line_chart</md-icon>
+                <md-button id="stage-management-menu" ng-click="dashboardMenu.openStageConfiguration()">
+                    Etapas
+                </md-button>
+            </div>
+        </md-list-item>
     </div>
   </md-list>
 </md-content>

@@ -1,4 +1,4 @@
-var Test = {};
+const Test = {};
 Test.utils = {};
 Test.utils.data = {}
 Test.utils.data.activityReport = {
@@ -33,3 +33,42 @@ Test.utils.data.activityReport = {
     }
   ]
 }
+Test.utils.data.stageJsons = [
+    {
+        "_id": "5f8755f9a56c24306f4df6d3",
+        "objectType": "Stage",
+        "name": "Onda 3",
+        "surveyAcronyms": [
+            "ISG",
+            "FRC",
+            "CURC"
+        ]
+    },
+    {
+        "_id": "5f9324d0f93300349b5c97f7",
+        "objectType": "Stage",
+        "name": "Onda 4",
+        "surveyAcronyms": [
+            "CURC",
+            "ISG"
+        ]
+    },
+    {
+        "_id": "5faea243cb7fe05c180673c2",
+        "objectType": "Stage",
+        "name": "Covid",
+        "surveyAcronyms": [
+            "FRC",
+            "CSP",
+            "CURC"
+        ]
+    },
+    {
+        "_id": "5faea258cb7fe05c180673c3",
+        "objectType": "Stage",
+        "name": "Onda 2",
+        "surveyAcronyms": [
+            "ISG"
+        ]
+    }
+]

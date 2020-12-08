@@ -67,38 +67,46 @@
 
         function isEqual() {
             return (self.permission.sampleTransportationAccess != self.permissionGroup.sampleTransportationAccess) ||
-                (self.permission.examLotsAccess !== self.permissionGroup.examLotsAccess) ||
-                (self.permission.examSendingAccess !== self.permissionGroup.examSendingAccess) ||
-                (self.permission.unattachedLaboratoriesAccess !== self.permissionGroup.unattachedLaboratoriesAccess) ||
-                (self.permission.participantLaboratoryAccess !== self.permissionGroup.participantLaboratoryAccess)
+            (self.permission.examLotsAccess !== self.permissionGroup.examLotsAccess) ||
+            (self.permission.examSendingAccess !== self.permissionGroup.examSendingAccess) ||
+            (self.permission.unattachedLaboratoriesAccess !== self.permissionGroup.unattachedLaboratoriesAccess) ||
+            (self.permission.participantLaboratoryAccess !== self.permissionGroup.participantLaboratoryAccess) ||
+            (self.permission.laboratoryMaterialManagerAccess !== self.permissionGroup.laboratoryMaterialManagerAccess) ||
+            (self.permission.aliquotManagerAccess !== self.permissionGroup.aliquotManagerAccess)
                 ? self.equal = false : self.equal = true
 
         }
 
         function isActive() {
             return (self.permission.sampleTransportationAccess) ||
-                (self.permission.examLotsAccess) ||
-                (self.permission.examSendingAccess) ||
-                (self.permission.unattachedLaboratoriesAccess) ||
-                (self.permission.participantLaboratoryAccess) ? self.active = true : self.active = false
+            (self.permission.examLotsAccess) ||
+            (self.permission.examSendingAccess) ||
+            (self.permission.unattachedLaboratoriesAccess) ||
+            (self.permission.participantLaboratoryAccess) ||
+            (self.permission.laboratoryMaterialManagerAccess) ||
+            (self.permission.aliquotManagerAccess)? self.active = true : self.active = false
         }
 
         function activeAll(){
-          if(self.active) {
-              self.permission.sampleTransportationAccess = true
-              self.permission.examLotsAccess = true
-              self.permission.examSendingAccess = true
-              self.permission.unattachedLaboratoriesAccess = true
-              self.permission.participantLaboratoryAccess = true
+            if(self.active) {
+                self.permission.sampleTransportationAccess = true
+                self.permission.examLotsAccess = true
+                self.permission.examSendingAccess = true
+                self.permission.unattachedLaboratoriesAccess = true
+                self.permission.participantLaboratoryAccess = true
+                self.permission.laboratoryMaterialManagerAccess = true
+                self.permission.aliquotManagerAccess = true
 
-              return isEqual();
-          }
-          self.permission.sampleTransportationAccess = false
-          self.permission.examLotsAccess = false
-          self.permission.examSendingAccess = false
-          self.permission.unattachedLaboratoriesAccess = false
-          self.permission.participantLaboratoryAccess = false
-          isEqual();
+                return isEqual();
+            }
+            self.permission.sampleTransportationAccess = false
+            self.permission.examLotsAccess = false
+            self.permission.examSendingAccess = false
+            self.permission.unattachedLaboratoriesAccess = false
+            self.permission.participantLaboratoryAccess = false
+            self.permission.laboratoryMaterialManagerAccess = false
+            self.permission.aliquotManagerAccess = false
+            isEqual();
         }
 
         return self;
