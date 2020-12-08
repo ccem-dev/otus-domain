@@ -7,7 +7,7 @@ variable "otus-api-network" {
 }
 
 variable "otus-domain-frontend-apiurl" {
-  default = "http://otus-domain-api:8080"  
+  default = "http://otus-domain-api:8080"
 }
 
 variable "otus-domain-production-base-path" {

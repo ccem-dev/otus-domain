@@ -22,10 +22,11 @@
 
         function keycloakInit() {
             const productionAddress = $cookies.get('Production-Base-Path')
+            const uri = $window.location.origin + `${productionAddress ?  productionAddress : ''}/#!/home`
             return self.keycloak.init({
                 onLoad: 'login-required',
                 flow: 'implicit',
-                redirectUri: $window.location.origin + `${productionAddress || '/#!'}/home`
+                redirectUri: uri
             })
                 .success((res) => self.keycloak)
                 .error(error => error)
