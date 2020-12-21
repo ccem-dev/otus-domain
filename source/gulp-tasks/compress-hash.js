@@ -9,12 +9,12 @@ var uglify = require('gulp-uglify');
 var gulp_if = require('gulp-if');
 
 gulp.task('compress-hash', function () {
-    return gulp.src('dist/otus-domain/index.html')
+    return gulp.src('dist/index.html')
         .pipe(uncache({
             append: 'hash',
             rename: true,
-	    srcDir:'dist/otus-domain',
-	    distDir:'dist/otus-domain'
+	    srcDir:'dist',
+	    distDir:'dist'
         }))
-        .pipe(gulp.dest('dist/otus-domain'));
+        .pipe(gulp.dest('dist'));
 });

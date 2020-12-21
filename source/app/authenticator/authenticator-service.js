@@ -7,10 +7,9 @@
 
     AuthService.$inject = [
         '$window',
-        '$cookies'
     ];
 
-    function AuthService($window, $cookies) {
+    function AuthService($window) {
         var self = this;
 
         self.minValidityToken = 2000;
@@ -21,8 +20,7 @@
         self.verifyAuthentication = verifyAuthentication;
 
         function keycloakInit() {
-            const productionAddress = $cookies.get('Production-Base-Path')
-            const uri = $window.location.origin + `${productionAddress ?  productionAddress : ''}/#!/home`
+            const uri = $window.location.origin + '/#!/home'
             return self.keycloak.init({
                 onLoad: 'login-required',
                 flow: 'implicit',
