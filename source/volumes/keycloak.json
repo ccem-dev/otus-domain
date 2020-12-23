@@ -1,11 +1,11 @@
 {
   "realm": "playground",
-  "auth-server-url": "http://id.il3.care/auth/",
+  "auth-server-url": "AUTH-SERVER-URL",
   "ssl-required": "external",
-  "resource": "il3-frontend",
+  "resource": "resource",
   "verify-token-audience": true,
   "credentials": {
-    "secret": "615eef4c-5077-4dc5-848a-32a09705449c"
+    "secret": "key"
   },
   "confidential-port": 0,
   "policy-enforcer": {}
