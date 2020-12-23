@@ -1,109 +1,101 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otusDomain.dashboard')
-        .controller('DashboardMenuController', DashboardMenuController);
+  angular
+    .module('otusDomain.dashboard')
+    .controller('DashboardMenuController', DashboardMenuController);
 
-    DashboardMenuController.$inject = [
-        'LogoutDialogService',
-        'DashboardStateService',
-        '$mdSidenav',
-        'ProjectSelectionService',
-        'ProjectContext'
-    ];
+  DashboardMenuController.$inject = [
+    'LogoutDialogService',
+    'DashboardStateService',
+    '$mdSidenav',
+    'ProjectSelectionService',
+    'ProjectContext',
+    'UserService'
+  ];
 
-    function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav, ProjectSelectionService, ProjectContext) {
-        var self = this;
+  function DashboardMenuController(LogoutDialogService, DashboardStateService, $mdSidenav, ProjectSelectionService, ProjectContext, UserService) {
+    var self = this;
 
-        /* Public interface */
-        self.getSelectedSystemArea = getSelectedSystemArea;
-        self.open = open;
-        self.close = close;
-        self.openHome = openHome;
-        self.openUserActivation = openUserActivation;
-        self.logout = logout;
-        self.openProjectCenters = openProjectCenters;
-        self.openUserActivationInProject = openUserActivationInProject;
-        self.openProjectConfiguration = openProjectConfiguration;
-        self.openProjectActivityConfiguration = openProjectActivityConfiguration;
-        self.openReportManager = openReportManager;
-        self.openDatasourceManager = openDatasourceManager;
-        self.openFollowUpConfiguration = openFollowUpConfiguration;
-        self.openStageConfiguration = openStageConfiguration;
-        self.openLocationPoint = openLocationPoint;
+    /* Public interface */
+    self.getSelectedSystemArea = getSelectedSystemArea;
+    self.open = open;
+    self.close = close;
+    self.openHome = openHome;
+    self.logout = logout;
+    self.openProjectCenters = openProjectCenters;
+    self.openUserActivationInProject = openUserActivationInProject;
+    self.openProjectConfiguration = openProjectConfiguration;
+    self.openProjectActivityConfiguration = openProjectActivityConfiguration;
+    self.openReportManager = openReportManager;
+    self.openDatasourceManager = openDatasourceManager;
+    self.openFollowUpConfiguration = openFollowUpConfiguration;
+    self.openLocationPoint = openLocationPoint;
 
-        function getSelectedSystemArea() {
-            return DashboardStateService.currentState;
-        }
-
-        function open() {
-            $mdSidenav('left').toggle();
-        }
-
-        function close() {
-            $mdSidenav('left').close();
-        }
-
-        function openHome() {
-            DashboardStateService.goToHome();
-            close();
-        }
-
-        function openUserActivation() {
-            DashboardStateService.goToUserActivation();
-            close();
-        }
-
-        function openUserActivationInProject() {
-            DashboardStateService.goToUserActivationInProject();
-            close();
-        }
-
-        function openProjectActivityConfiguration() {
-            DashboardStateService.goToProjectActivityConfiguration();
-            close();
-        }
-
-        function openReportManager() {
-            DashboardStateService.goToProjectReportManager();
-            close();
-        }
-
-        function openDatasourceManager() {
-            DashboardStateService.goToProjectDatasourceManager();
-            close();
-        }
-
-        function openProjectCenters() {
-            DashboardStateService.goToProjectCenters();
-            close();
-        }
-
-        function openProjectConfiguration() {
-            DashboardStateService.goToProjectConfiguration();
-            close();
-        }
-
-        function openLocationPoint() {
-            DashboardStateService.goToLocationPoint();
-            close();
-        }
-
-        function openFollowUpConfiguration() {
-            DashboardStateService.goToFollowUpConfiguration();
-            close();
-        }
-
-        function openStageConfiguration() {
-            DashboardStateService.goToStageConfiguration();
-            close();
-        }
-
-        function logout() {
-            LogoutDialogService.showDialog()
-                .onConfirm(DashboardStateService.logout);
-        }
+    function getSelectedSystemArea() {
+      return DashboardStateService.currentState;
     }
+
+    function open() {
+      $mdSidenav('left').toggle();
+    }
+
+    function close() {
+      $mdSidenav('left').close();
+    }
+
+    function openHome() {
+      DashboardStateService.goToHome();
+      close();
+    }
+
+    function openUserActivationInProject() {
+      DashboardStateService.goToUserActivationInProject();
+      close();
+    }
+
+    function openProjectActivityConfiguration() {
+      DashboardStateService.goToProjectActivityConfiguration();
+      close();
+    }
+
+    function openReportManager() {
+      DashboardStateService.goToProjectReportManager();
+      close();
+    }
+
+    function openDatasourceManager() {
+      DashboardStateService.goToProjectDatasourceManager();
+      close();
+    }
+
+    function openProjectCenters() {
+      DashboardStateService.goToProjectCenters();
+      close();
+    }
+
+    function openProjectConfiguration() {
+      DashboardStateService.goToProjectConfiguration();
+      close();
+    }
+
+    function openLocationPoint() {
+      DashboardStateService.goToLocationPoint();
+      close();
+    }
+
+    function openFollowUpConfiguration() {
+      DashboardStateService.goToFollowUpConfiguration();
+      close();
+    }
+
+    function logout() {
+      LogoutDialogService.showDialog()
+        .onConfirm(() => {
+          UserService.logout();
+          DashboardStateService.logout();
+        })
+    }
+  }
 
 }());
