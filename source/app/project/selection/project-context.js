@@ -44,7 +44,6 @@
 
         function loadProjects(callback) {
             _resetProjects();
-
             var projectResource = ProjectHttpService.getProjects();
             UserService.getLoggedUser().then(user => {
                 projectResource.then(function(response) {

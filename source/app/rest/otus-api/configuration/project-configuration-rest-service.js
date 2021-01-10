@@ -32,6 +32,7 @@
     self.getProjectConfiguration = getProjectConfiguration;
     self.allowNewParticipants = allowNewParticipants;
     self.autoGenerateRecruitmentNumber = autoGenerateRecruitmentNumber;
+    self.addressCensusRequired = addressCensusRequired;
     self.getUserResource = getUserResource;
     self.setUsersExclusiveDisjunction = setUsersExclusiveDisjunction;
     self.updateUsersExclusiveDisjunction = updateUsersExclusiveDisjunction;
@@ -199,6 +200,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _projectConfigurationResource.autoGenerateRecruitmentNumber({'permission': permission}).$promise;
+    }
+
+    function addressCensusRequired(permission) {
+      if (!_projectConfigurationResource) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _projectConfigurationResource.addressCensusRequired({'permission': permission}).$promise;
     }
 
     function getUserResource() {
