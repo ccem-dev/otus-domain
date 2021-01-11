@@ -19,3 +19,4 @@ npm-debug.log
 **/terraform.tfstate.backup
 **/dist/
 **/.npmrc
+**/.terraform.lock.hcl
