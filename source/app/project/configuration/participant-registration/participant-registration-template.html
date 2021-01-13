@@ -16,5 +16,10 @@
         Gerar automaticamente o número de recrutamento dos participantes
       </md-checkbox>
     </md-input-container>
+    <md-input-container class="md-block">
+      <md-checkbox ng-disabled="$ctrl.error" ng-model="$ctrl.addressCensusRequired" ng-change="$ctrl.setAddressCensusRequired()" aria-label="Censitário obrigatório no registro de endereços dos participantes">
+        Campo setor censitário obrigatório no registro de endereços dos participantes
+      </md-checkbox>
+    </md-input-container>
   </md-card-content>
 </md-card>

@@ -15,7 +15,7 @@ gulp.task('compress-compress', function () {
                     console.log(filePath)
                 }
                 return filePath.replace('app/app', 'app')
-                    .replace('app/node_modules', 'node_modules');
+                    .replace('app/node_modules', 'node_modules')
             }
         }))
         .pipe(gulp_if('*.js',
@@ -27,26 +27,31 @@ gulp.task('compress-compress', function () {
             basePath: '.'
         })))
         .pipe(gulp_if('*.css', minifyCss()))
-        .pipe(gulp.dest('dist/otus-domain'));
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('copy_code', ()=> {
     return gulp.src('./app/**/*')
     .pipe(gulp_if('index.html', replace('src="app/', 'src="')))
     .pipe(gulp_if('index.html', replace('href="app/', 'href="')))
-        .pipe(gulp.dest('dist/otus-domain'));
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('embeded_template', ()=> {
-    return gulp.src('./dist/otus-domain/**/*')
+    return gulp.src('./dist/**/*')
         .pipe(gulp_if('*.js', embedTemplates({
             basePath: '.'
         })))
        .pipe(gulp_if('*.js', replace('app/assets/', 'assets/')))
-       .pipe(gulp.dest('dist/otus-domain'));
+       .pipe(gulp.dest('dist'));
+});
+
+gulp.task('copy_volumes', function() {
+    return gulp.src('./volumes/**/*')
+        .pipe(gulp.dest('dist/volumes'));
 });
 
 gulp.task('copy_node_modules', function () {
     return gulp.src('./node_modules/**/*')
-        .pipe(gulp.dest('dist/otus-domain/node_modules'));
+        .pipe(gulp.dest('dist/node_modules'));
 });

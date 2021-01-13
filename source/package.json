@@ -1,6 +1,6 @@
 {
     "name": "otus-domain",
-    "version": "1.20.0",
+    "version": "1.21.0",
     "description": "The tool to control repositories and users Otus.",
     "keywords": [
         "otus",
@@ -49,13 +49,14 @@
         "i18next-browser-languagedetector": "3.0.1",
         "i18next-xhr-backend": "3.0.0",
         "jquery": "2.2.0",
+        "keycloak-js": "8.0.1",
         "moment": "2.12.0",
         "ng-i18next": "1.0.5",
         "please-wait": "0.0.5",
         "require-dir": "^1.2.0",
-        "otus-client-js": "1.32.0",
+        "otus-client-js": "1.33.0",
         "otus-domain-client": "1.1.0",
-        "otus-model-js": "1.38.0",
+        "otus-model-js": "1.40.0",
         "otus-validation-js": "1.1.0"
     },
     "devDependencies": {

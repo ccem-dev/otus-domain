@@ -21,12 +21,14 @@
     var self = this;
     self.participantRegistration;
     self.autoGenerateRecruitmentNumber;
+    self.addressCensusRequired;
     self.error;
 
     /* Public methods */
     self.$onInit = onInit;
     self.setAllowNewParticipants = setAllowNewParticipants;
     self.setAutoGenerateRecruitmentNumber = setAutoGenerateRecruitmentNumber;
+    self.setAddressCensusRequired = setAddressCensusRequired;
 
     function onInit() {
      _getProjectConfiguration();
@@ -37,50 +39,47 @@
         .then(function (data) {
           self.participantRegistration = data.participantRegistration;
           self.autoGenerateRecruitmentNumber = data.autoGenerateRecruitmentNumber;
+          self.addressCensusRequired = data.addressCensusRequired;
         }).catch(function () {
           self.error = true;
-          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
+          _showToast(ERROR_MESSAGE);
         });
     }
 
     function setAllowNewParticipants() {
-      if (self.participantRegistration) {
-        ProjectConfigurationService.allowNewParticipants(true)
+        ProjectConfigurationService.allowNewParticipants(self.participantRegistration)
           .then(function (data) {
-            self.participantRegistration = true;
-            $mdToast.show($mdToast.simple().textContent(SUCCESS_MESSAGE).hideDelay(5000));
-          }).catch(function () {
-            $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
+              _showToast(SUCCESS_MESSAGE);
+          })
+          .catch(function () {
+              _showToast(ERROR_MESSAGE);
           });
-      } else {
-        ProjectConfigurationService.allowNewParticipants(false)
-          .then(function (data) {
-            self.participantRegistration = false;
-            $mdToast.show($mdToast.simple().textContent(SUCCESS_MESSAGE).hideDelay(5000));
-          }).catch(function () {
-            $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
-          });
-      }
     }
 
     function setAutoGenerateRecruitmentNumber() {
-      if (self.autoGenerateRecruitmentNumber) {
-        ProjectConfigurationService.autoGenerateRecruitmentNumber(true)
-          .then(function (data) {
-            self.autoGenerateRecruitmentNumber = true;
-            $mdToast.show($mdToast.simple().textContent(SUCCESS_MESSAGE).hideDelay(5000));
-          }).catch(function () {
-          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
-        });
-      } else {
-        ProjectConfigurationService.autoGenerateRecruitmentNumber(false)
-          .then(function (data) {
-            self.autoGenerateRecruitmentNumber = false;
-            $mdToast.show($mdToast.simple().textContent(SUCCESS_MESSAGE).hideDelay(5000));
-          }).catch(function () {
-          $mdToast.show($mdToast.simple().textContent(ERROR_MESSAGE).hideDelay(5000));
-        });
-      }
+        ProjectConfigurationService.autoGenerateRecruitmentNumber(self.autoGenerateRecruitmentNumber)
+            .then(function (data) {
+                _showToast(SUCCESS_MESSAGE);
+            })
+            .catch(function () {
+                _showToast(ERROR_MESSAGE);
+            });
+    }
+
+    function setAddressCensusRequired() {
+        ProjectConfigurationService.addressCensusRequired(self.addressCensusRequired)
+            .then(data => {
+                _showToast(SUCCESS_MESSAGE);
+            })
+            .catch(() => {
+                _showToast(ERROR_MESSAGE);
+            });
+    }
+
+    function _showToast(text) {
+        $mdToast.show($mdToast.simple()
+            .textContent(text)
+            .hideDelay(5000));
     }
   }
 }());

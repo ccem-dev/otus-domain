@@ -3,7 +3,7 @@
 
     angular
         .module('otusDomain')
-        .controller('ResponseErrorOfflineController', controller);
+        .controller('ResponseErrorMissingProjectController', controller);
 
     controller.$inject = ['DashboardStateService'];
 

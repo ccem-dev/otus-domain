@@ -5,9 +5,9 @@
         .module('otusDomain.project')
         .service('ProjectContext', ProjectContext);
 
-    ProjectContext.$inject = ['RestResourceService', 'ProjectFactory'];
+    ProjectContext.$inject = ['RestResourceService', 'ProjectFactory', 'ProjectHttpService', 'UserService'];
 
-    function ProjectContext(RestResourceService, ProjectFactory) {
+    function ProjectContext(RestResourceService, ProjectFactory, ProjectHttpService, UserService) {
         var self = this;
         var current = null;
         var projects = [];
@@ -18,6 +18,12 @@
         self.getCurrentProject = getCurrentProject;
         self.loadProjects = loadProjects;
         self.registerObserver = registerObserver;
+
+        onInit();
+
+        function onInit() {
+            ProjectHttpService.initialize()
+        }
 
         function _resetProjects() {
             projects = [];
@@ -38,20 +44,20 @@
 
         function loadProjects(callback) {
             _resetProjects();
+            var projectResource = ProjectHttpService.getProjects();
+            UserService.getLoggedUser().then(user => {
+                projectResource.then(function(response) {
+                    response.forEach(function(element, index, array) {
+                        var name = element.projectName;
+                        var url = element.projectRestUrl;
+                        var accessToken = element.projectToken;
+                        var project = ProjectFactory.create(name, url, user, accessToken);
+                        projects.push(project);
+                    });
 
-            var projectResource = RestResourceService.getOtusProjectResource();
-            projectResource.list(function(response) {
-
-                response.data.forEach(function(element, index, array) {
-                    var name = element.projectName;
-                    var url = element.projectRestUrl;
-                    var accessToken = element.projectToken;
-                    var project = ProjectFactory.create(name, url, accessToken);
-                    projects.push(project);
-                });
-
-                callback(projects);
-            });
+                    callback(projects);
+                })
+            })
         }
 
         function registerObserver(callback) {
