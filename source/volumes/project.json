@@ -1,15 +1,17 @@
 {
-  "projects": [{
-    "projectToken" : "token",
-    "projectRestUrl" : "http://localhost:51002/otus-rest/v01",
-    "projectName" : "LOCAL"
-  }],
+  "projects": [
+    {
+      "projectToken": "token",
+      "projectRestUrl": "http://localhost:51002/otus-rest/v01",
+      "projectName": "LOCAL"
+    }
+  ],
   "installer": {
-    "ready" : true,
+    "ready": true,
     "emailSender": {
-      "emailAddress" : "email-address",
-      "password" : "password",
-      "name" : "Otus"
+      "emailAddress": "email-address",
+      "password": "password",
+      "name": "Otus"
     }
   }
 }
