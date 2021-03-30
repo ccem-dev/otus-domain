@@ -5,15 +5,14 @@
         .module('otusDomain.project')
         .factory('ProjectFactory', factory);
 
-    factory.$inject = ['UserService'];
+    factory.$inject = [];
 
-    function factory(UserService) {
+    function factory() {
         var self = this;
         self.create = create;
 
-        function create(name, url, accessToken) {
-            var user = UserService.getLoggedUser();
-            return new Project(name, url, user.email, accessToken);
+        function create(name, url, user, accessToken) {
+            return new Project(name, url, user.email, accessToken)
         }
 
         return self;

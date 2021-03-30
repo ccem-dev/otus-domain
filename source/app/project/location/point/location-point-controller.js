@@ -6,9 +6,9 @@
         .controller('locationPointCtrl', Controller);
 
 
-    Controller.$inject = ['OtusRestResourceService', 'otusjs.model.locationPoint.LocationPointFactory', 'LocationPointService', 'ProjectFieldCenterService', '$mdToast'];
+    Controller.$inject = ['OtusRestResourceService', 'otusjs.model.locationPoint.LocationPointFactory', 'LocationPointService', 'ProjectFieldCenterService', '$mdToast', 'AuthService'];
 
-    function Controller(OtusRestResourceService, LocationPointFactory, LocationPointService, ProjectFieldCenterService, $mdToast) {
+    function Controller(OtusRestResourceService, LocationPointFactory, LocationPointService, ProjectFieldCenterService, $mdToast, AuthService) {
 
         var self = this;
         self.$onInit = onInit;
