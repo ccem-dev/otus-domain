@@ -1,0 +1,26 @@
+<div layout="row" layout-align="center center" flex>
+  <div layout-padding layout="column" flex="80" flex-xs="100" style="max-width: 1300px; margin: 0 auto;">
+    <div layout="column" layout-align="center center" layout-padding="1px">
+      <span class="md-headline" layout-align="center center">Laboratório</span>
+      <span class="md-subheader">orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pulvinar in odio et tempus.</span>
+    </div>
+    <tube-moment selected-tube="$ctrl.selectedTube"
+                 selected-moment="$ctrl.selectedMoment">
+    </tube-moment>
+    <div flex="100" layout-align="center start"  layout="row">
+      <div flex="50">
+        <exam-component selected-exams="$ctrl.selectedExams"></exam-component>
+      </div>
+      <div flex="50">
+        <aliquots-component selected-exams="$ctrl.selectedExams"
+                            selected-aliquots="$ctrl.selectedAliquots"></aliquots-component>
+      </div>
+    </div>
+    <div>
+      <aliquots-exams-component selected-aliquots="$ctrl.selectedAliquots" selected-exams="$ctrl.selectedExams"></aliquots-exams-component>
+    </div>
+    <md-button class="md-raised md-primary">
+      Finalizar
+    </md-button>
+  </div>
+</div>

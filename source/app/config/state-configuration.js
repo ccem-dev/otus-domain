@@ -8,6 +8,7 @@
       'USER_ACTIVATION_IN_PROJECT': 'user-otus-management',
       'PROJECT_CENTER': 'field-center',
       'PROJECT_ACTIVITY_CONFIGURATION': 'activity_configuration',
+      'LABORATORY_CONFIGURATION_FLOW': 'laboratory_configuration_flow',
       'ACTIVITY_SETTINGS': 'activity_settings',
       'ERROR_OFFLINE': 'offline',
       'PROJECT_CONFIGURATION': 'configuration-center',
@@ -324,6 +325,33 @@
             controller: 'ResponseErrorMissingProjectController as controller'
           }
         }
-      });
+      }).state({
+      name: 'laboratory_configuration_flow',
+      url: '/project/laboratory-configuration-flow',
+      resolve: {
+        loggedUser: function (RouteRulesResolver) {
+          return RouteRulesResolver.loggedUser();
+        },
+        selectedProject: function (RouteRulesResolver) {
+          return RouteRulesResolver.selectedProject();
+        },
+        initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
+          ActivityConfigurationRestService.initialize();
+          SurveyGroupRestService.initialize();
+        }
+      },
+      views: {
+        'system-wrap': {
+          templateUrl: 'app/dashboard/template/main-dashboard-template.html',
+          controller: 'DashboardMenuController as dashboardMenu'
+        },
+        'dashboard-menu@laboratory_configuration_flow': {
+          templateUrl: 'app/dashboard/menu/dashboard-menu.html'
+        },
+        'system-content@laboratory_configuration_flow': {
+          template: '<laboratory-configuration-flow flex></laboratory-configuration-flow>'
+        }
+      }
+    });
   }
 }());

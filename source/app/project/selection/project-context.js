@@ -22,7 +22,7 @@
         onInit();
 
         function onInit() {
-            ProjectHttpService.initialize()
+            ProjectHttpService.initialize();
         }
 
         function _resetProjects() {

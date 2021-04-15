@@ -1,0 +1,8 @@
+<md-input-container layout-fill="">
+  <label>{{$ctrl.labelText}}</label>
+  <md-select ng-model="$ctrl.model" placeholder="{{$ctrl.placeholder}}">
+    <md-option ng-repeat="value in $ctrl.data" ng-value="{{value}}">
+      {{value.hasOwnProperty($ctrl.field) ? value[$ctrl.field] : value}}
+    </md-option>
+  </md-select>
+</md-input-container>
