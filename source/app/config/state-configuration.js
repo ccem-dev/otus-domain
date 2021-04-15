@@ -15,7 +15,8 @@
       'DATASOURCE_MANAGER':'datasource_manager',
       'REPORT_MANAGER': 'report_manager',
       'LOCATION_POINT': 'location-point',
-      'ERROR_MISSING_PROJECT': 'missing-project'
+      'ERROR_MISSING_PROJECT': 'missing-project',
+      'LABORATORY_CONFIGURATION': 'laboratory_configuration'
     });
 
   stateConfiguration.$inject = [
@@ -322,6 +323,34 @@
           'system-wrap': {
             templateUrl: 'app/response-error/missingProjectConfig/missing-project-config-template.html',
             controller: 'ResponseErrorMissingProjectController as controller'
+          }
+        }
+      })
+      .state({
+        name: 'laboratory_configuration',
+        url: '/project/laboratory_configuration',
+        resolve: {
+          loggedUser: function (RouteRulesResolver) {
+            return RouteRulesResolver.loggedUser();
+          },
+          selectedProject: function (RouteRulesResolver) {
+            return RouteRulesResolver.selectedProject();
+          },
+          initialize: function (ActivityConfigurationRestService, SurveyGroupRestService) {
+            ActivityConfigurationRestService.initialize();
+            SurveyGroupRestService.initialize();
+          }
+        },
+        views: {
+          'system-wrap': {
+            templateUrl: 'app/dashboard/template/main-dashboard-template.html',
+            controller: 'DashboardMenuController as dashboardMenu'
+          },
+          'dashboard-menu@activity_configuration': {
+            templateUrl: 'app/dashboard/menu/dashboard-menu.html'
+          },
+          'system-content@laboratory_configuration': {
+            template: '<laboratory-configuration flex></laboratory-configuration>'
           }
         }
       });

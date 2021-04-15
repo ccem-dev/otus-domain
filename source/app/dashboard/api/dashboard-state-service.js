@@ -29,6 +29,7 @@
     self.goToFollowUpConfiguration = goToFollowUpConfiguration;
     self.goToLocationPoint = goToLocationPoint;
     self.goToErrorMissingProject = goToErrorMissingProject;
+    self.goToLaboratoryConfiguration = goToLaboratoryConfiguration;
     self.logout = logout;
 
     init();
@@ -99,6 +100,10 @@
       $state.go(APP_STATE.ERROR_MISSING_PROJECT);
     }
 
+    function goToLaboratoryConfiguration() {
+      self.currentState = 'Configurações de laboratório';
+      $state.go(APP_STATE.LABORATORY_CONFIGURATION);
+    }
 
     function logout() {
       var authenticatorResource = RestResourceService.getAuthenticatorResource();

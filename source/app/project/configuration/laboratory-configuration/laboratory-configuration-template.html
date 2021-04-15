@@ -1,0 +1,39 @@
+<style>
+
+</style>
+
+<div layout="row" layout-align="center center" flex>
+    <div layout-padding layout="column" flex="80" flex-xs="100">
+        <md-subheader hide-xs class="md-primary" flex="95">Laboratório</md-subheader>
+
+            <md-card align="center">
+                <md-card-title>Criaçao do tubo</md-card-title>
+                <md-card-content> tubos em lista aqui </md-card-content>
+            </md-card>
+        <md-card>
+            <md-card-title><span class="md-headline">Tubos/Materiais biológicos</span></md-card-title>
+            <md-card-content>
+                <label>Tem tabela:<input type="checkbox" ng-model="checked" ng-init="checked=true"/></label><br/>
+                <p align="center" ng-if="checked">
+                    A Tabela/lista aqui.
+                </p>
+                <p align="center" ng-if="!checked">
+                    <md-button class="md-primary" style="height: 300px; width: 300px">
+                        <md-icon layout-fill="center center" style="font-size: 300px">add_circle_outline</md-icon>
+                    </md-button>
+                    <br>Criar tubo/material biológico</br></style>
+                </p>
+                <md-button class="md-raised md-primary" ng-if="checked">Criar tubo</md-button>
+
+            </md-card-content>
+        </md-card>
+        <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button class="md-raised md-primary" ng-disabled="!checked">
+                <md-icon>add</md-icon>
+                Adicionar Alíquota
+            </md-button>
+            </span>
+        </section>
+    </div>
+
+</div>

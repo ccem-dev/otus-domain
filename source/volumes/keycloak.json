@@ -1,12 +1,8 @@
 {
-  "realm": "playground",
-  "auth-server-url": "AUTH-SERVER-URL",
+  "realm": "publiweb",
+  "auth-server-url": "http://0.0.0.0:8080/auth/",
   "ssl-required": "external",
-  "resource": "resource",
-  "verify-token-audience": true,
-  "credentials": {
-    "secret": "key"
-  },
-  "confidential-port": 0,
-  "policy-enforcer": {}
+  "resource": "publiweb-frontend",
+  "public-client": true,
+  "confidential-port": 0
 }
