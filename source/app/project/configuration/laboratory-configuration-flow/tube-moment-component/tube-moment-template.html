@@ -6,16 +6,16 @@
     <md-input-container layout-fill="">
       <label>Tubo</label>
       <md-select ng-model="$ctrl.selectedTube" placeholder="Selecione um tubo">
-        <md-option ng-repeat="tube in $ctrl.tubes" value="{{tube}}">
-          {{tube.label}}
+        <md-option ng-repeat="tube in $ctrl.tubesMoments" ng-value="tube">
+          {{tube[0].type}}
         </md-option>
       </md-select>
     </md-input-container>
     <md-input-container layout-fill="">
       <label>Momento</label>
       <md-select ng-model="$ctrl.selectedMoment" placeholder="Selecione um momento">
-        <md-option ng-repeat="moment in $ctrl.moments" value="{{moment}}">
-          {{moment.label}}
+        <md-option ng-repeat="tube in $ctrl.selectedTube" ng-value="tube">
+          {{tube.moment}}
         </md-option>
       </md-select>
     </md-input-container>

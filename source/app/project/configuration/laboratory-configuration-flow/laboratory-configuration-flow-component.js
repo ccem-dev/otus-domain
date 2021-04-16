@@ -21,6 +21,7 @@
     var self = this;
 
     /*variables*/
+    self.groupedTubesMoments = [];
     self.selectedTube = {};
     self.selectedMoment = {};
     self.selectedExams = [];
