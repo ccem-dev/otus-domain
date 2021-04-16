@@ -346,7 +346,7 @@
             templateUrl: 'app/dashboard/template/main-dashboard-template.html',
             controller: 'DashboardMenuController as dashboardMenu'
           },
-          'dashboard-menu@activity_configuration': {
+          'dashboard-menu@laboratory_configuration': {
             templateUrl: 'app/dashboard/menu/dashboard-menu.html'
           },
           'system-content@laboratory_configuration': {
