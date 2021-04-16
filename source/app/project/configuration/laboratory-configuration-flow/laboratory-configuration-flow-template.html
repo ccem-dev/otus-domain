@@ -4,6 +4,11 @@
       <span class="md-headline" layout-align="center center">Laboratório</span>
       <span class="md-subheader">orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pulvinar in odio et tempus.</span>
     </div>
+    <div layout="row" layout-align="end end">
+      <md-button class="md-raised md-primary" disabled="">
+        Finalizar
+      </md-button>
+    </div>
     <tube-moment selected-tube="$ctrl.selectedTube"
                  selected-moment="$ctrl.selectedMoment">
     </tube-moment>
@@ -19,8 +24,11 @@
     <div>
       <aliquots-exams-component selected-aliquots="$ctrl.selectedAliquots" selected-exams="$ctrl.selectedExams"></aliquots-exams-component>
     </div>
-    <md-button class="md-raised md-primary">
-      Finalizar
-    </md-button>
+    <div layout="row" layout-align="end end">
+      <md-button class="md-raised md-primary" disabled="">
+        Finalizar
+      </md-button>
+    </div>
+    <laboratory-configuration-list></laboratory-configuration-list>
   </div>
 </div>
