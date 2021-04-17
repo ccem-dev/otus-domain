@@ -1,0 +1,32 @@
+.menu-icon {
+    transition: transform .4s cubic-bezier(.25,.8,.25,1);
+}
+
+.menu-icon.open {
+    transform: rotate(180deg);
+}
+
+.expansive-content.ng-hide {
+  max-height: 0;
+  transition: max-height .4s cubic-bezier(.25,.8,.25,1);
+  overflow: hidden;
+  position: relative;
+}
+
+.expansive-content {
+  transition: max-height .4s cubic-bezier(.25,.8,.25,1);
+  overflow: hidden;
+  position: relative;
+  max-height: 85vh;
+}
+
+ng-transclude {
+  height: 100%;
+  width: 100%;
+}
+
+md-card {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}

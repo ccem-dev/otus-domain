@@ -9,39 +9,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.laboratory-materials-table {
-    overflow: auto;
-    position: relative;
-    min-height: 20rem;
-    max-height: 30rem;
-}
-
-.laboratory-materials-table table {
-    position: relative;
-}
-
-.laboratory-materials-table th {
-    position: sticky;
-    background: #FFF;
-    top: 0;
-    z-index: 1;
-}
-
-.laboratory-materials-table thead tr {
-    text-align: left;
-}
-
-.color-icon {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: center;
-}
-
-.color-icon md-card {
-    width: 5px;
-    height: 18px;
-    margin: 0;
-    margin-right: 8px;
-}

@@ -4,165 +4,58 @@
     <div layout-padding layout="column" flex="80" flex-xs="100">
         <md-subheader hide-xs class="md-primary" flex="95">Laboratório</md-subheader>
 
-        <md-card>
-            <md-card-title>
-                <span class="md-headline">Tubos/Materiais biológicos</span>
-            </md-card-title>
+        <expansive-panel
+            label="Tubos/Materiais biológicos"
+            confirm-label="Criar tubo"
+            confirm-action="$ctrl.createTube"
+            ng-if="$ctrl.tubeRecords && $ctrl.tubeRecords.length > 0"
+        >
+            <responsive-table
+                headers="$ctrl.tubeHeaders"
+                records="$ctrl.tubeRecords"
+                color-header="color"
+                edit="$ctrl.editRecord"
+                delete="$ctrl.deleteRecord"
+            ></responsive-table>
 
-            <md-card-content layout="row" layout-align="center center">
-                <md-card class="laboratory-materials-table" flex ng-if="$ctrl.tubes && $ctrl.tubes.length > 0">
-                    <table layout-padding style="width: 100%;">
-                        <colgroup>
-                            <col span="1">
-                            <col span="1">
-                            <col span="1">
-                            <col span="1" style="width: 75px;">
-                            <col span="1" style="width: 75px;">
-                        </colgroup>
-
-                        <thead>
-                            <tr layout-padding>
-                                <th>Cor</th>
-                                <th>Tipo</th>
-                                <th>Label</th>
-                                <th>Editar</th>
-                                <th>Remover</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="tube in $ctrl.tubes" layout-padding>
-                                <td>
-                                    <span class="color-icon">
-                                        <md-card ng-style="{'background-color': tube.color}"></md-card>
-                                        {{ tube.color }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    {{ tube.type }}
-                                </td>
-
-                                <td>
-                                    {{ tube.label }}
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini">
-                                        <md-icon>edit</md-icon>
-                                    </md-button>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini md-warn">
-                                        <md-icon>delete</md-icon>
-                                    </md-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </md-card>
-
-                <span ng-if="!$ctrl.tubes || $ctrl.tubes.length === 0">
-                    <md-button class="md-icon-button md-primary big-plus">
-                        <md-icon layout-fill="center center">
-                            add_circle_outline
-                        </md-icon>
-                    </md-button>
-
-                    <br>Criar tubo/material biológico</br>
-                </span>
-            </md-card-content>
-
-            <md-card-actions layout="row" layout-align="end center" ng-if="$ctrl.tubes && $ctrl.tubes.length > 0">
-                <md-button class="md-raised md-primary">
-                    Criar tubo
+            <span ng-if="!$ctrl.tubeRecords || $ctrl.tubeRecords.length === 0">
+                <md-button class="md-icon-button md-primary big-plus">
+                    <md-icon layout-fill="center center">
+                        add_circle_outline
+                    </md-icon>
                 </md-button>
-            </md-card-actions>
-        </md-card>
+
+                <br>Criar tubo/material biológico</br>
+            </span>
+        </expansive-panel>
 
         <div
             layout="row"
             layout-sm="column"
             layout-align="center center"
             layout-wrap
-            ng-if="!$ctrl.aliquots || $ctrl.aliquots.length === 0"
+            ng-if="!$ctrl.aliquotsRecords || $ctrl.aliquotsRecords.length === 0"
         >
-            <md-button class="md-raised md-primary" ng-disabled="!$ctrl.tubes || $ctrl.tubes.length === 0">
+            <md-button class="md-raised md-primary" ng-disabled="!$ctrl.tubeRecords || $ctrl.tubeRecords.length === 0">
                 <md-icon>add</md-icon>
                 Adicionar Alíquota
             </md-button>
             </span>
         </div>
 
-        <md-card ng-if="$ctrl.aliquots && $ctrl.aliquots.length > 0">
-            <md-card-title>
-                <span class="md-headline">Alíquotas</span>
-            </md-card-title>
-
-            <md-card-content layout="row" layout-align="center center">
-                <md-card class="laboratory-materials-table" flex>
-                    <table layout-padding style="width: 100%;">
-                        <colgroup>
-                            <col span="1">
-                            <col span="1">
-                            <col span="1" style="width: 75px;">
-                            <col span="1" style="width: 75px;">
-                        </colgroup>
-
-                        <thead class="md-primary">
-                            <tr layout-padding >
-                                <th>Nome</th>
-                                <th>Tipo</th>
-                                <th>Editar</th>
-                                <th>Remover</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="aliquot in $ctrl.aliquots" layout-padding>
-                                <td>
-                                    <span>
-                                        {{ aliquot.name }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span>
-                                        {{ aliquot.type }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini">
-                                        <md-icon>edit</md-icon>
-                                    </md-button>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini md-warn">
-                                        <md-icon>delete</md-icon>
-                                    </md-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </md-card>
-            </md-card-content>
-
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary">
-                    Criar alíquota
-                </md-button>
-            </md-card-actions>
-        </md-card>
+        <expansive-panel label="Alíquotas" confirm-label="Criar alíquota" ng-if="$ctrl.aliquotsRecords && $ctrl.aliquotsRecords.length > 0">
+            <responsive-table
+                headers="$ctrl.aliquotsHeaders"
+                records="$ctrl.aliquotsRecords"
+            ></responsive-table>
+        </expansive-panel>
 
         <div
             layout="row"
             layout-sm="column"
             layout-align="center center"
             layout-wrap
-            ng-if="$ctrl.aliquots && $ctrl.aliquots.length > 0 && (!$ctrl.moments || $ctrl.moments.length === 0)"
+            ng-if="$ctrl.aliquotsRecords && $ctrl.aliquotsRecords.length > 0 && (!$ctrl.momentsRecords || $ctrl.momentsRecords.length === 0)"
         >
             <md-button class="md-raised md-primary">
                 <md-icon>add</md-icon>
@@ -171,74 +64,19 @@
             </span>
         </div>
 
-        <md-card ng-if="$ctrl.moments && $ctrl.moments.length > 0">
-            <md-card-title>
-                <span class="md-headline">Momentos</span>
-            </md-card-title>
-
-            <md-card-content layout="row" layout-align="center center">
-                <md-card class="laboratory-materials-table" flex>
-                    <table layout-padding style="width: 100%;">
-                        <colgroup>
-                            <col span="1">
-                            <col span="1">
-                            <col span="1" style="width: 75px;">
-                            <col span="1" style="width: 75px;">
-                        </colgroup>
-
-                        <thead class="md-primary">
-                            <tr layout-padding >
-                                <th>Nome</th>
-                                <th>Label</th>
-                                <th>Editar</th>
-                                <th>Remover</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="moment in $ctrl.moments" layout-padding>
-                                <td>
-                                    <span>
-                                        {{ moment.name }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span>
-                                        {{ moment.label }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini">
-                                        <md-icon>edit</md-icon>
-                                    </md-button>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini md-warn">
-                                        <md-icon>delete</md-icon>
-                                    </md-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </md-card>
-            </md-card-content>
-
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary">
-                    Criar momento
-                </md-button>
-            </md-card-actions>
-        </md-card>
+        <expansive-panel label="Momentos" confirm-label="Criar momento" ng-if="$ctrl.momentsRecords && $ctrl.momentsRecords.length > 0">
+            <responsive-table
+                headers="$ctrl.momentsHeaders"
+                records="$ctrl.momentsRecords"
+            ></responsive-table>
+        </expansive-panel>
 
         <div
             layout="row"
             layout-sm="column"
             layout-align="center center"
             layout-wrap
-            ng-if="$ctrl.moments && $ctrl.moments.length > 0 && (!$ctrl.exams || $ctrl.exams.length === 0)"
+            ng-if="$ctrl.momentsRecords && $ctrl.momentsRecords.length > 0 && (!$ctrl.examsRecords || $ctrl.examsRecords.length === 0)"
         >
             <md-button class="md-raised md-primary">
                 <md-icon>add</md-icon>
@@ -247,74 +85,40 @@
             </span>
         </div>
 
-        <md-card ng-if="$ctrl.exams && $ctrl.exams.length > 0">
-            <md-card-title>
-                <span class="md-headline">Exames</span>
-            </md-card-title>
-
-            <md-card-content layout="row" layout-align="center center">
-                <md-card class="laboratory-materials-table" flex>
-                    <table layout-padding style="width: 100%;">
-                        <colgroup>
-                            <col span="1">
-                            <col span="1">
-                            <col span="1" style="width: 75px;">
-                            <col span="1" style="width: 75px;">
-                        </colgroup>
-
-                        <thead class="md-primary">
-                            <tr layout-padding >
-                                <th>Nome</th>
-                                <th>Label</th>
-                                <th>Editar</th>
-                                <th>Remover</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr ng-repeat="exam in $ctrl.exams" layout-padding>
-                                <td>
-                                    <span>
-                                        {{ exam.name }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <span>
-                                        {{ exam.label }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini">
-                                        <md-icon>edit</md-icon>
-                                    </md-button>
-                                </td>
-
-                                <td>
-                                    <md-button class="md-icon-button md-mini md-warn">
-                                        <md-icon>delete</md-icon>
-                                    </md-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </md-card>
-            </md-card-content>
-
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button class="md-raised md-primary">
-                    Criar exame
-                </md-button>
-            </md-card-actions>
-        </md-card>
+        <expansive-panel label="Exames" confirm-label="Criar exame" ng-if="$ctrl.examsRecords && $ctrl.examsRecords.length > 0">
+            <responsive-table
+                headers="$ctrl.examsHeaders"
+                records="$ctrl.examsRecords"
+            ></responsive-table>
+        </expansive-panel>
 
         <div
             layout="row"
             layout-sm="column"
             layout-align="center center"
             layout-wrap
-            ng-if="$ctrl.exams && $ctrl.exams.length > 0"
+            ng-if="$ctrl.examsRecords && $ctrl.examsRecords.length > 0 && (!$ctrl.groupsRecords || $ctrl.groupsRecords.length === 0)"
+        >
+            <md-button class="md-raised md-primary">
+                <md-icon>add</md-icon>
+                Adicionar grupo
+            </md-button>
+            </span>
+        </div>
+
+        <expansive-panel label="Grupos" confirm-label="Criar grupo" ng-if="$ctrl.groupsRecords && $ctrl.groupsRecords.length > 0">
+            <responsive-table
+                headers="$ctrl.groupsHeaders"
+                records="$ctrl.groupsRecords"
+            ></responsive-table>
+        </expansive-panel>
+
+        <div
+            layout="row"
+            layout-sm="column"
+            layout-align="center center"
+            layout-wrap
+            ng-if="$ctrl.groupsRecords && $ctrl.groupsRecords.length > 0"
         >
             <md-button class="md-raised md-primary">
                 <md-icon>settings</md-icon>

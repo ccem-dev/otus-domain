@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="app/project/components/expansive-panel/expansive-panel-styles.css">
+
+<md-card>
+    <md-card-title layout="row" layout-align="space-between center">
+        <span class="md-headline">{{ $ctrl.label }}</span>
+
+        <md-button class="md-icon-button" ng-click="$ctrl.togglePanel()">
+            <md-icon ng-class="$ctrl.panelOpen ? 'menu-icon open' : 'menu-icon'">
+                expand_more
+            </md-icon>
+        </md-button>
+    </md-card-title>
+
+    <div ng-show="$ctrl.panelOpen" class="expansive-content">
+        <md-card-content layout="row" layout-align="center center">
+            <ng-transclude></ng-transclude>
+        </md-card-content>
+        
+        <md-card-actions
+            layout="row"
+            layout-align="end center"
+            ng-if="$ctrl.cancelLabel || $ctrl.cancelAction || $ctrl.confirmLabel || $ctrl.confirmAction"
+        >
+            <md-button class="md-raised" ng-show="$ctrl.cancelLabel || $ctrl.cancelAction" ng-click="$ctrl.cancelAction()">
+                {{ $ctrl.cancelLabel || 'cancelar' }}
+            </md-button>
+        
+            <md-button class="md-raised md-primary" ng-show="$ctrl.confirmLabel || $ctrl.confirmAction" ng-click="$ctrl.confirmAction()">
+                {{ $ctrl.confirmLabel || 'Confirmar' }}
+            </md-button>
+        </md-card-actions>        
+    </div>
+</md-card>
