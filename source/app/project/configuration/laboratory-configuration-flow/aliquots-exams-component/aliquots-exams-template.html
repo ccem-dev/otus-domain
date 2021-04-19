@@ -5,33 +5,33 @@
   <md-card-content layout-padding="">
     <md-list ng-if="$ctrl.selectedAliquots.length">
       <md-list-item layout-padding="" layout="row" layout-align="center start" ng-repeat="aliquot in $ctrl.selectedAliquots">
-        <md-card flex="50" layout-padding="">
-            <span class="md-subhead">{{aliquot.label}}</span>
-        </md-card>
-        <div flex="50">
-          <select-input-component placeholder="'Selecione um exame'"
-                                  label-text="'Exame'"
-                                  data="$ctrl.selectedExams"
-                                  field="'label'"
-                                  model="$ctrl.selectedExam">
-          </select-input-component>
-          <add-button-component
-                  button-text="'Exame'"
-                  button-class="'md-raised md-primary'"
-                  action="$ctrl.addExam"
-                  action-value="aliquot">
-          </add-button-component>
-          <div layout="column" ng-if="aliquot.exams.length">
-            <span>Exames({{aliquot.label}})</span>
-            <md-card ng-repeat="exam in aliquot.exams"
-                     layout-padding="" layout-fill="" layout="row" layout-align="space-between center">
-              <span>{{exam.label}}</span>
-              <md-button class="md-icon-button" ng-click="$ctrl.removeAliquotsExam(aliquot, exam)">
-                <md-icon>highlight_off</md-icon>
-              </md-button>
-            </md-card>
+        <md-card layout-fill="" layout-padding="">
+          <span class="md-subhead">{{aliquot.label}}</span>
+          <div>
+            <select-input-component placeholder="'Selecione um exame'"
+                                    label-text="'Exame'"
+                                    data="$ctrl.selectedExams"
+                                    field="'label'"
+                                    model="$ctrl.selectedExam">
+            </select-input-component>
+            <add-button-component
+                    button-text="'Exame'"
+                    button-class="'md-raised md-primary'"
+                    action="$ctrl.addExam"
+                    action-value="aliquot">
+            </add-button-component>
+            <div layout="column" ng-if="aliquot.exams.length">
+              <span>Exames({{aliquot.label}})</span>
+              <md-card ng-repeat="exam in aliquot.exams"
+                       layout-padding="" layout-fill="" layout="row" layout-align="space-between center">
+                <span>{{exam.label}}</span>
+                <md-button class="md-icon-button" ng-click="$ctrl.removeAliquotsExam(aliquot, exam)">
+                  <md-icon>highlight_off</md-icon>
+                </md-button>
+              </md-card>
+            </div>
           </div>
-        </div>
+        </md-card>
       </md-list-item>
     </md-list>
     <div layout="row" layout-align="start center">
