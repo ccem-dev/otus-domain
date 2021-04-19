@@ -13,9 +13,13 @@
                 cancelLabel: "@",
                 buttonText: "@",
                 dialogData: "=",
+                deleteData: "<",
+                deleteAction: '<',
                 createAction: "<",
                 updateAction: "<",
-                dialogTemplate: "<"
+                dialogTemplate: "<",
+                tableHeaders: "<",
+                tableRecords: "<"
             }
         })
         .controller('expansivePanelCtrl', Controller);

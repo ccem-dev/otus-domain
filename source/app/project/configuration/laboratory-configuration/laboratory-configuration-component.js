@@ -11,40 +11,37 @@
 
   Controller.$inject = [
     '$q',
-    '$mdToast',
-    '$mdDialog',
     'otusDomain.LoadingScreenService',
     'otusDomain.rest.configuration.ProjectConfigurationService'
   ];
 
-  function Controller($q, $mdToast, $mdDialog, LoadingScreenService, ProjectConfigurationService) {
+  function Controller($q, LoadingScreenService, ProjectConfigurationService) {
     var self = this;
+
     self.createTube = createTube;
-    self.editRecord = editRecord;
-    self.deleteRecord = deleteRecord;
+    self.updateTube = updateTube;
+    self.deleteTube = deleteTube;
+
+    self.createAliquot = createAliquot;
+    self.updateAliquot = updateAliquot;
+    self.deleteAliquot = deleteAliquot;
+
+    self.createMoment = createMoment;
+    self.updateMoment = updateMoment;
+    self.deleteMoment = deleteMoment;
+
+    self.createExam = createExam;
+    self.updateExam = updateExam;
+    self.deleteExam = deleteExam;
+
+    self.createGroup = createGroup;
+    self.updateGroup = updateGroup;
+    self.deleteGroup = deleteGroup;
     
     self.tubeHeaders = [
       { name: 'color', label: "Cor" },
       { name: 'type', label: "Tipo" },
       { name: 'label', label: "Label" }
-    ]    
-
-    self.tubeRecords = [
-      {
-        color: "#44B55D",
-        type: "Cryotube",
-        label: "Criotubo"
-      },
-      {
-        color: "#FF7400",
-        type: "Cryotube 2",
-        label: "Legenda 1"
-      },
-      {
-        color: "#6288C7",
-        type: "Tubo com nome grande pra ajudar a fazer regras pra quebrar linhas e/ou cortar o texto caso fique muito grande",
-        label: "Na label também que é pra tela quebrar mesmo e pressionar o dev a querer consertar esse layout logo"
-      }
     ]
 
     self.aliquotsHeaders = [
@@ -52,51 +49,14 @@
       { name: "type", label: "Tipo" }
     ]
 
-    self.aliquotsRecords = [
-      {
-        name: "Alíquota 1",
-        type: "Exame"
-      },
-      {
-        name: "Alíquota 2",
-        type: "Exame"
-      },
-      {
-        name: "Alíquota 3",
-        type: "Exame"
-      }
-    ]
-
     self.momentsHeaders = [
       { name: 'name', label: 'Nome' },
       { name: 'label', label: 'Label' }
     ]
 
-    self.momentsRecords = [
-      {
-        name: "Jejum",
-        label: "Label do primeiro momento"
-      },
-      {
-        name: "Pós-carga",
-        label: "Label do segundo momento"
-      }
-    ]
-
     self.examsHeaders = [
       { name: "name", label: "Nome" },
-      { name: "label", label: "Label"}
-    ]
-
-    self.examsRecords = [
-      {
-        name: "Coleta de sangue",
-        label: "Label do primeiro exame"
-      },
-      {
-        name: "Exame 2",
-        label: "Label do segundo exame"
-      }
+      { name: "label", label: "Label" }
     ]
 
     self.groupsHeaders = [
@@ -105,21 +65,70 @@
       { name: "moment", label: "Momento" }
     ]
 
-    self.groupsRecords = [
-    ]
+    self.tubeRecords = []
+    self.aliquotsRecords = []
+    self.momentsRecords = []
+    self.examsRecords = []
+    self.groupsRecords = []
 
-    function createTube() {
-      console.log("creating tube")
+    function createTube(data) {
+      self.tubeRecords.push(data)
     }
 
-    function editRecord(record) {
-      console.log("editing record")
-      console.log(record)
+    function updateTube(n, data) {
+      self.tubeRecords[n] = data
     }
 
-    function deleteRecord(record) {
-      console.log("deleting record")
-      console.log(record)
+    function deleteTube(data) {
+      self.tubeRecords.splice(self.tubeRecords.indexOf(data), 1)
+    }
+
+    function createAliquot(data) {
+      self.aliquotsRecords.push(data);
+    }
+
+    function updateAliquot(n, data) {
+      self.aliquotsRecords[n] = data
+    }
+
+    function deleteAliquot(data) {
+      self.aliquotsRecords.splice(self.aliquotsRecords.indexOf(data), 1)
+    }
+
+    function createMoment(data) {
+      self.momentsRecords.push(data);
+    }
+
+    function updateMoment(n, data) {
+      self.momentsRecords[n] = data
+    }
+
+    function deleteMoment(data) {
+      self.momentsRecords.splice(self.momentsRecords.indexOf(data), 1)
+    }
+
+    function createExam(data) {
+      self.examsRecords.push(data);
+    }
+
+    function updateExam(n, data) {
+      self.examsRecords[n] = data
+    }
+
+    function deleteExam(data) {
+      self.examsRecords.splice(self.examsRecords.indexOf(data), 1)
+    }
+
+    function createGroup(data) {
+      self.groupsRecords.push(data);
+    }
+
+    function updateGroup(n, data) {
+      self.groupsRecords[n] = data
+    }
+
+    function deleteGroup(data) {
+      self.groupsRecords.splice(self.groupsRecords.indexOf(data), 1)
     }
 
     // var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';

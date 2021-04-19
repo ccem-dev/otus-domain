@@ -23,7 +23,7 @@
                 </td>
             </tr>
 
-            <tr ng-if="$ctrl.records && $ctrl.records.length > 0" ng-repeat="record in $ctrl.records" layout-padding>
+            <tr ng-if="$ctrl.records && $ctrl.records.length > 0" ng-repeat="(n, record) in $ctrl.records" layout-padding>
                 <td ng-repeat="header in $ctrl.headers">
                     <span class="color-icon" ng-if="header.name === $ctrl.colorHeader">
                         <md-card ng-style="{'background-color': record[header.name]}"></md-card>
@@ -37,21 +37,28 @@
 
                 <td>
                     <dynamic-dialog
-                            button-icon="'edit'"
-                            button-class="'md-icon-button'"
-                            button-text="$ctrl.editButtonText"
-                            data="record"
-                            callback-functions="{
-                                update: $ctrl.updateAction
-                            }"
-                            template="$ctrl.dialogTemplate">
+                        button-icon="'edit'"
+                        button-class="'md-icon-button md-mini'"
+                        button-text=""
+                        data="record"
+                        callback-functions="{
+                            update: $ctrl.updateFactory(n)
+                        }"
+                        template="$ctrl.dialogTemplate">
                     </dynamic-dialog>
                 </td>
 
                 <td>
-                    <md-button class="md-icon-button md-mini md-warn" ng-click="$ctrl.delete(record)">
-                        <md-icon>delete</md-icon>
-                    </md-button>
+                    <dynamic-dialog
+                        button-icon="'delete'"
+                        button-class="'md-icon-button md-mini md-warn'"
+                        button-text=""
+                        data="$ctrl.deleteData"
+                        callback-functions="{
+                            confirm: $ctrl.deleteFactory(record)
+                        }"
+                        template="'app/project/configuration/laboratory-dialog-templates/confirm-dialog-template.html'">
+                    </dynamic-dialog>
                 </td>
             </tr>
         </tbody>

@@ -2,9 +2,11 @@
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-        <h2>{{ctrl.data ? "Editar tubo" : "Criar tubo"}}</h2>
+        <h2>{{ editing ? "Editar tubo" : "Criar tubo" }}</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="hide()">X</md-button>
+        <md-button class="md-icon-button" ng-click="hide()">
+          <md-icon>close</md-icon>
+        </md-button>
       </div>
     </md-toolbar>
     <md-dialog-content layout-align="center center" layout="column" style="padding: 15px;">
@@ -13,28 +15,28 @@
         <label class="md-subhead">
           Tipo
         </label>
-        <input ng-model="ctrl.data.type"/>
+        <input ng-model="data.type"/>
       </md-input-container>
       <md-input-container layout-fill="">
         <label class="md-subhead">
           Label
         </label>
-        <input ng-model="ctrl.data.label"/>
+        <input ng-model="data.label"/>
       </md-input-container>
       <div layout="row" layout-fill="">
         <md-input-container layout-fill="">
           <label class="md-subhead">
             Cor
           </label>
-          <input ng-model="ctrl.data.color"/>
+          <input ng-model="data.color"/>
         </md-input-container>
-        <div style="width: 20px; height: 30px; background: {{ctrl.data.color}}"></div>
+        <div style="width: 20px; height: 30px; background: {{data.color}}"></div>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
       <md-button ng-click="hide()">fechar</md-button>
-      <md-button ng-click="ctrl.cbFunctions.create()" class="md-raised md-primary" ng-if="!ctrl.data">Criar tubo</md-button>
-      <md-button ng-click="ctrl.cbFunctions.update()" class="md-raised md-primary" ng-if="ctrl.data">Editar tubo</md-button>
+      <md-button ng-click="cbFunctions.create(data); hide()" class="md-raised md-primary" ng-if="!editing">Criar tubo</md-button>
+      <md-button ng-click="cbFunctions.update(data); hide()" class="md-raised md-primary" ng-if="editing">Editar tubo</md-button>
     </md-dialog-actions>
   </form>
 </md-dialog>

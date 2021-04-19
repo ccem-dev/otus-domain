@@ -30,3 +30,19 @@ md-card {
   width: 100%;
   margin: 0;
 }
+
+.big-plus {
+    height: 10rem !important;
+    width: 10rem !important;
+}
+
+.big-plus md-icon {
+    font-size: 10em;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+responsive-table {
+  width: 100%;
+}

@@ -11,10 +11,11 @@
                 records: '<',
                 fillContainer: '<',
                 colorHeader: "@",
-                delete: "<",
                 editButtonText: "<",
                 dialogData: "=",
                 updateAction: "<",
+                deleteAction: "<",
+                deleteData: "<",
                 dialogTemplate: "<"
             }
         })
@@ -36,7 +37,8 @@
 
         /* Public Interface*/
         function onInit() {
-            console.info(self.records)
+            self.updateFactory = (n) => (record) => self.updateAction(n, record)
+            self.deleteFactory = (record) => () => self.deleteAction(record)
         }
     }
 }());
