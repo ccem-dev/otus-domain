@@ -14,18 +14,21 @@
   .padding-10 {
     padding: 10px;
   }
+  .margin-left-every span:nth-child(n) {
+    margin-right: 10px;
+  }
 </style>
 <md-card ng-repeat="lab in $ctrl.configurationList" layout-padding="" layout-fill="">
   <md-card-content>
-    <div class="tube-color-div padding-10 bottom-5">
+    <div class="tube-color-div padding-10 bottom-5 margin-left-every" layout="row">
       <span class="md-subhead">Tubo: <strong>{{lab.tube.label}}</strong></span>
       <span class="md-subhead">Momento: <strong>{{lab.moment.label}}</strong></span>
-      <span class="md-subhead">Cor:</span><span style="background-color: {{lab.tube.color}}"></span><span class="md-subhead">{{lab.tube.color}}</span>
+      <span class="md-subhead">Cor:</span><div style="width: 10px; height: 20px; background-color: {{lab.tube.color}}"></div><span class="md-subhead">{{lab.tube.color}}</span>
     </div>
     <div layout="row">
       <span flex="5"></span>
       <div layout="column" layout-fill="">
-        <div class="exam-color-div padding-10 bottom-5" ng-repeat="exam in lab.tube.exams" layout="row">
+        <div class="exam-color-div padding-10 bottom-5 margin-left-every" ng-repeat="exam in lab.tube.exams" layout="row">
           <span class="md-subhead">Exame: <strong>{{exam.label}}</strong></span>
         </div>
       </div>
@@ -34,14 +37,14 @@
       <span flex="10"></span>
       <div layout="column" layout-fill="">
         <div class="bottom-5" ng-repeat="aliquot in lab.tube.aliquots" layout="column">
-          <div layout="row" class="aliquot-color-div padding-10 bottom-5">
+          <div layout="row" class="aliquot-color-div padding-10 bottom-5 margin-left-every">
             <span class="md-subhead">Aliquota: <strong>{{aliquot.label}}</strong></span>
             <span class="md-subhead">Tipo: <strong>{{aliquot.type}}</strong></span>
           </div>
           <div layout="row">
             <span flex="5"></span>
             <div layout="column" layout-fill="">
-              <div class="exam-color-div padding-10 bottom-5" ng-repeat="exam in lab.tube.exams" layout="row">
+              <div class="exam-color-div padding-10 bottom-5 margin-left-every" ng-repeat="exam in lab.tube.exams" layout="row">
                 <span class="md-subhead">Exame: <strong>{{exam.label}}</strong></span>
               </div>
             </div>

@@ -30,8 +30,6 @@
                         return _httpError()
                     }
                     _http = res;
-
-                    console.info(res);
                     defer.resolve(res)
                 });
             return defer.promise;

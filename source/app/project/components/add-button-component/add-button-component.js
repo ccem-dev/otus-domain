@@ -25,7 +25,6 @@
     var self = this;
 
     self.$onInit = function () {
-       console.info(self.actionValue);
     }
   }
 }());

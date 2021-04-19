@@ -1,0 +1,36 @@
+<md-dialog flex="100" style="max-width: 500px; max-height: 700px; margin-left: auto; margin-right: auto">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+        <h2>{{ctrl.data ? "Editar exame" : "Criar exame"}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="hide()">X</md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content layout-align="center center" layout="column" style="padding: 15px;">
+      <span style="height: 10px"></span>
+      <md-input-container layout-fill="">
+        <label class="md-subhead">
+          Nome
+        </label>
+        <input ng-model="ctrl.data.name"/>
+      </md-input-container>
+      <md-input-container layout-fill="">
+        <label class="md-subhead">
+          Tipo
+        </label>
+        <md-input-container layout-fill="">
+          <label class="md-subhead">
+            Label
+          </label>
+          <input ng-model="ctrl.data.label"/>
+        </md-input-container>
+      </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="hide()">fechar</md-button>
+      <md-button ng-click="ctrl.cbFunctions.create()" class="md-raised md-primary" ng-if="!ctrl.data">Criar exame</md-button>
+      <md-button ng-click="ctrl.cbFunctions.update()" class="md-raised md-primary" ng-if="ctrl.data">Editar exame</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

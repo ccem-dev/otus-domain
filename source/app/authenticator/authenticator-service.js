@@ -25,9 +25,8 @@
                 onLoad: 'login-required',
                 flow: 'implicit',
                 redirectUri: uri
-            })
-                .success((res) => self.keycloak)
-                .error(error => error)
+            }).success((res) => self.keycloak)
+            .error(error => error)
         }
 
         function getKeycloak() {
