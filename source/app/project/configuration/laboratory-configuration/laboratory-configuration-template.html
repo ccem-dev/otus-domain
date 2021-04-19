@@ -6,8 +6,10 @@
 
         <expansive-panel
             label="Tubos/Materiais biológicos"
-            confirm-label="Criar tubo"
-            confirm-action="$ctrl.createTube"
+            button-text="'Criar tubo'"
+            dialog-data=""
+            create-action="$ctrl.createTube"
+            dialog-template="'app/project/configuration/laboratory-dialog-templates/tube-management-template.html'"
             ng-if="$ctrl.tubeRecords && $ctrl.tubeRecords.length > 0"
         >
             <responsive-table

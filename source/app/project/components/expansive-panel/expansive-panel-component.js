@@ -11,9 +11,11 @@
                 label: "@",
                 open: "<",
                 cancelLabel: "@",
-                cancelAction: "<",
-                confirmLabel: "@",
-                confirmAction: "<"
+                buttonText: "@",
+                dialogData: "=",
+                createAction: "<",
+                updateAction: "<",
+                dialogTemplate: "<"
             }
         })
         .controller('expansivePanelCtrl', Controller);
