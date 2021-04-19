@@ -12,11 +12,18 @@
 
         self.choose = choose;
         self.initialChoose = initialChoose;
+        self.chooseFirst = chooseFirst;
 
         function initialChoose() {
             if (!ProjectContext.hasProject()) {
                 choose();
             }
+        }
+
+        function chooseFirst() {
+            ProjectContext.loadProjects(function(projects){
+                ProjectContext.setProject(projects[0])
+            })
         }
 
         function choose() {

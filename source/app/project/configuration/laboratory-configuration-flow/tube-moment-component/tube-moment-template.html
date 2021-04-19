@@ -1,0 +1,24 @@
+<md-card layout-padding="" layout-fill="">
+  <md-card-title>
+    <md-card-title-text >Tubo e momento</md-card-title-text>
+  </md-card-title>
+  <md-card-content layout="row" layout-padding="">
+    <md-input-container layout-fill="">
+      <label>Tubo</label>
+      <md-select ng-model="$ctrl.selectedTube" placeholder="Selecione um tubo">
+        <md-option ng-repeat="tube in $ctrl.tubes" value="{{tube}}">
+          {{tube.label}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container layout-fill="">
+      <label>Momento</label>
+      <md-select ng-model="$ctrl.selectedMoment" placeholder="Selecione um momento">
+        <md-option ng-repeat="moment in $ctrl.moments" value="{{moment}}">
+          {{moment.label}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+  </md-card-content>
+
+</md-card>

@@ -22,13 +22,17 @@
         self.installerReady = installerReady;
 
         function initialize() {
+            const defer = $q.defer();
             $http.get('./volumes/project.json')
                 .then(res =>{
                     if(res.status == 404) {
+                        defer.reject('error');
                         return _httpError()
                     }
                     _http = res;
+                    defer.resolve(res)
                 });
+            return defer.promise;
         }
 
         function getProjects() {

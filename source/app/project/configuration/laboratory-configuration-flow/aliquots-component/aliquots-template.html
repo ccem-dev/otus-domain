@@ -1,0 +1,32 @@
+<md-card layout-padding="" layout-fill="">
+  <md-card-title>
+    <md-card-title-text>Aliquotas</md-card-title-text>
+  </md-card-title>
+  <md-card-content layout-padding="">
+    <select-input-component placeholder="'Selecione uma aliquota'"
+                            label-text="'Aliquota'"
+                            data="$ctrl.filteredAliquots"
+                            field="'label'"
+                            model="$ctrl.selectedAliquot">
+    </select-input-component>
+    <div layout="row" layout-align="start center">
+      <add-button-component
+              button-text="'Aliquota'"
+              button-class="'md-raised md-primary'"
+              action="$ctrl.addAliquot">
+
+      </add-button-component>
+    </div>
+    <md-list ng-if="$ctrl.selectedAliquots.length">
+      <span class="md-subhead">Aliquotas (tubo)</span>
+      <md-list-item ng-repeat="aliquot in $ctrl.selectedAliquots">
+        <md-card layout-padding="" layout-fill="" layout="row" layout-align="space-between center">
+            <span>{{aliquot.label}}</span>
+            <md-button class="md-icon-button" ng-click="$ctrl.removeAliquot(aliquot)">
+              <md-icon>highlight_off</md-icon>
+            </md-button>
+        </md-card>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>
