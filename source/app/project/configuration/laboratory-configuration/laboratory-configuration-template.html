@@ -6,7 +6,7 @@
 
         <expansive-panel
             label="Tubos/Materiais biológicos"
-            button-text="'Criar tubo'"
+            button-text="Criar tubo"
             dialog-data=""
             create-action="$ctrl.createTube"
             dialog-template="'app/project/configuration/laboratory-dialog-templates/tube-management-template.html'"
@@ -16,8 +16,9 @@
                 headers="$ctrl.tubeHeaders"
                 records="$ctrl.tubeRecords"
                 color-header="color"
-                edit="$ctrl.editRecord"
                 delete="$ctrl.deleteRecord"
+                update-action="$ctrl.editRecord"
+                dialog-template="'app/project/configuration/laboratory-dialog-templates/tube-management-template.html'"
             ></responsive-table>
 
             <span ng-if="!$ctrl.tubeRecords || $ctrl.tubeRecords.length === 0">

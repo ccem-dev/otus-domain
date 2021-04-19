@@ -12,7 +12,10 @@
                 fillContainer: '<',
                 colorHeader: "@",
                 delete: "<",
-                edit: "<"
+                editButtonText: "<",
+                dialogData: "=",
+                updateAction: "<",
+                dialogTemplate: "<"
             }
         })
         .controller('responsiveTableCtrl', Controller);
@@ -33,7 +36,7 @@
 
         /* Public Interface*/
         function onInit() {
-
+            console.info(self.records)
         }
     }
 }());

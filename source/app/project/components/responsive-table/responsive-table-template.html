@@ -36,9 +36,16 @@
                 </td>
 
                 <td>
-                    <md-button class="md-icon-button md-mini" ng-click="$ctrl.edit(record)">
-                        <md-icon>edit</md-icon>
-                    </md-button>
+                    <dynamic-dialog
+                            button-icon="'edit'"
+                            button-class="'md-icon-button'"
+                            button-text="$ctrl.editButtonText"
+                            data="record"
+                            callback-functions="{
+                                update: $ctrl.updateAction
+                            }"
+                            template="$ctrl.dialogTemplate">
+                    </dynamic-dialog>
                 </td>
 
                 <td>
