@@ -31,6 +31,7 @@
     self.openDatasourceManager = openDatasourceManager;
     self.openFollowUpConfiguration = openFollowUpConfiguration;
     self.openLocationPoint = openLocationPoint;
+    self.openLaboratoryConfiguration = openLaboratoryConfiguration;
 
     function getSelectedSystemArea() {
       return DashboardStateService.currentState;
@@ -86,6 +87,11 @@
 
     function openFollowUpConfiguration() {
       DashboardStateService.goToFollowUpConfiguration();
+      close();
+    }
+
+    function openLaboratoryConfiguration() {
+      DashboardStateService.goToLaboratoryConfiguration();
       close();
     }
 

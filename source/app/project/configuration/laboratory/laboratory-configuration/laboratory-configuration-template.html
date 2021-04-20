@@ -1,0 +1,103 @@
+<div layout="row" layout-align="center center" flex>
+    <div layout-padding layout="column" flex="80" flex-xs="100">
+        <md-subheader hide-xs class="md-primary" flex="95">
+            Laboratório
+        </md-subheader>
+
+        <expansive-panel
+            label="Tubos/Materiais biológicos"
+            button-text="Criar tubo"
+            delete-data="{
+                title: 'Remover tubo',
+                message: 'Isso removerá o tubo permanentemente. Você tem certeza?',
+                buttonText: 'Remover tubo'
+            }"
+            create-action="$ctrl.createTube"
+            update-action="$ctrl.updateTube"
+            delete-action="$ctrl.deleteTube"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/tube-management-template.html'"
+            table-headers="$ctrl.tubeHeaders"
+            table-records="$ctrl.tubeRecords"
+        ></expansive-panel>
+        <expansive-panel
+            label="Alíquotas"
+            button-text="Criar alíquota"
+            delete-data="{
+                title: 'Remover alíquota',
+                message: 'Isso removerá a alíquota permanentemente. Você tem certeza?',
+                buttonText: 'Remover alíquota'
+            }"
+            create-action="$ctrl.createAliquot"
+            update-action="$ctrl.updateAliquot"
+            delete-action="$ctrl.deleteAliquot"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/aliquot-management-template.html'"
+            table-headers="$ctrl.aliquotsHeaders"
+            table-records="$ctrl.aliquotsRecords"
+            ng-if="$ctrl.tubeRecords && $ctrl.tubeRecords.length > 0"
+        ></expansive-panel>
+
+        <expansive-panel
+            label="Momentos"
+            button-text="Criar momento"
+            delete-data="{
+                title: 'Remover momento',
+                message: 'Isso removerá o momento permanentemente. Você tem certeza?',
+                buttonText: 'Remover momento'
+            }"
+            create-action="$ctrl.createMoment"
+            update-action="$ctrl.updateMoment"
+            delete-action="$ctrl.deleteMoment"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/moment-management-template.html'"
+            table-headers="$ctrl.momentsHeaders"
+            table-records="$ctrl.momentsRecords"
+            ng-if="$ctrl.aliquotsRecords && $ctrl.aliquotsRecords.length > 0"
+        ></expansive-panel>
+
+        <expansive-panel
+            label="Exames"
+            button-text="Criar exame"
+            delete-data="{
+                title: 'Remover exame',
+                message: 'Isso removerá o exame permanentemente. Você tem certeza?',
+                buttonText: 'Remover exame'
+            }"
+            create-action="$ctrl.createExam"
+            update-action="$ctrl.updateExam"
+            delete-action="$ctrl.deleteExam"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/exam-management-template.html'"
+            table-headers="$ctrl.examsHeaders"
+            table-records="$ctrl.examsRecords"
+            ng-if="$ctrl.momentsRecords && $ctrl.momentsRecords.length > 0"
+        ></expansive-panel>
+
+        <expansive-panel
+            label="Grupos"
+            button-text="Criar grupo"
+            delete-data="{
+                title: 'Remover grupo',
+                message: 'Isso removerá o grupo permanentemente. Você tem certeza?',
+                buttonText: 'Remover grupo'
+            }"
+            create-action="$ctrl.createGroup"
+            update-action="$ctrl.updateGroup"
+            delete-action="$ctrl.deleteGroup"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/group-management-template.html'"
+            table-headers="$ctrl.groupsHeaders"
+            table-records="$ctrl.groupsRecords"
+            ng-if="$ctrl.examsRecords && $ctrl.examsRecords.length > 0"
+        ></expansive-panel>
+
+        <div
+            layout="row"
+            layout-sm="column"
+            layout-align="center center"
+            layout-wrap
+            ng-if="$ctrl.groupsRecords && $ctrl.groupsRecords.length > 0"
+        >
+            <md-button class="md-raised md-primary">
+                <md-icon>settings</md-icon>
+                Configurar laboratório
+            </md-button>
+        </div>
+    </div>
+</div>

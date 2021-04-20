@@ -5,7 +5,7 @@
       .module('otusDomain.dashboard')
       .component('tubeMoment', {
         controller: 'tubeMomentCtrl as $ctrl',
-        templateUrl: 'app/project/configuration/laboratory-configuration-flow/tube-moment-component/tube-moment-template.html',
+        templateUrl: 'app/project/configuration/laboratory/laboratory-configuration-flow/tube-moment-component/tube-moment-template.html',
         bindings:{
           selectedTube: '=',
           selectedMoment: '='

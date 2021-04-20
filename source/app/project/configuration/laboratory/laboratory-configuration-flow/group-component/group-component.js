@@ -5,7 +5,7 @@
     .module('otusDomain.dashboard')
     .component('groupComponent', {
       controller: 'groupCtrl as $ctrl',
-      templateUrl: 'app/project/configuration/laboratory-configuration-flow/group-component/group-template.html',
+      templateUrl: 'app/project/configuration/laboratory/laboratory-configuration-flow/group-component/group-template.html',
       bindings:{
         tubesMoments: '='
       }

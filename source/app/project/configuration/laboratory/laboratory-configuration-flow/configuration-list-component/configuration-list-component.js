@@ -5,7 +5,7 @@
     .module('otusDomain.dashboard')
     .component('laboratoryConfigurationList', {
       controller: 'laboratoryConfigurationListCtrl as $ctrl',
-      templateUrl: 'app/project/configuration/laboratory-configuration-flow/configuration-list-component/configuration-list-template.html',
+      templateUrl: 'app/project/configuration/laboratory/laboratory-configuration-flow/configuration-list-component/configuration-list-template.html',
       bindings:{
       }
     })

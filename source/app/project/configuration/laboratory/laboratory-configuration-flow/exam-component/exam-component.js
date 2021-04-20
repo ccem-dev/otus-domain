@@ -5,7 +5,7 @@
     .module('otusDomain.dashboard')
     .component('examComponent', {
       controller: 'examCtrl as $ctrl',
-      templateUrl: 'app/project/configuration/laboratory-configuration-flow/exam-component/exam-template.html',
+      templateUrl: 'app/project/configuration/laboratory/laboratory-configuration-flow/exam-component/exam-template.html',
       bindings:{
         selectedExams: '='
       }

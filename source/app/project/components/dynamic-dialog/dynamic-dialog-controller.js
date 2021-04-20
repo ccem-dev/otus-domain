@@ -45,10 +45,9 @@
       data,
       callbackFunctions
     ) {
-      var ctrl = this;
-      ctrl.data = data;
-      ctrl.cbFunctions = callbackFunctions;
-      self.hide = hide;
+      $scope.data = data || {};
+      $scope.editing = !!data && Object.keys(data).length > 0;
+      $scope.cbFunctions = callbackFunctions;
       $scope.cancel = cancel;
       $scope.hide = hide;
 
