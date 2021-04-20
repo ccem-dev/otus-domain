@@ -23,7 +23,7 @@
         </label>
         <md-select ng-model="$ctrl.data.type">
           <md-option ng-repeat="type in ['exam', 'storage']"
-                     value="{{ type }}"
+                     ng-value="type"
                      ng-selected="$ctrl.data.type === type">
             {{ type }}
           </md-option>
