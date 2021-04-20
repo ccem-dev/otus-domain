@@ -27,7 +27,8 @@
         "start": "gulp browser-sync --api-url $API_URL",
         "karma": "karma",
         "build": "gulp compress",
-        "production": "npm install && npm test && npm run build && npm prune --production"
+        "pre-production": "rm -rf package-lock.json dist target node_modules",
+        "production": "npm run pre-production && npm install && npm test && npm run build && npm prune --production"
     },
     "dependencies": {
         "alasql": "^0.4.3",

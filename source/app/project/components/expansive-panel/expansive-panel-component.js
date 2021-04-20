@@ -12,7 +12,7 @@
                 open: "<",
                 cancelLabel: "@",
                 buttonText: "@",
-                dialogData: "=",
+                dialogData: "<",
                 deleteData: "<",
                 deleteAction: '<',
                 createAction: "<",

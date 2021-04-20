@@ -29,7 +29,7 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .color-icon md-card {

@@ -42,45 +42,44 @@
       { name: 'color', label: "Cor" },
       { name: 'type', label: "Tipo" },
       { name: 'label', label: "Label" }
-    ]
+    ];
 
     self.aliquotsHeaders = [
       { name: "name", label: "Nome" },
       { name: "type", label: "Tipo" }
-    ]
+    ];
 
     self.momentsHeaders = [
       { name: 'name', label: 'Nome' },
       { name: 'label', label: 'Label' }
-    ]
+    ];
 
     self.examsHeaders = [
       { name: "name", label: "Nome" },
       { name: "label", label: "Label" }
-    ]
+    ];
 
     self.groupsHeaders = [
       { name: "name", label: "Nome do grupo" },
-      { name: "tube", label: "Tubo" },
-      { name: "moment", label: "Momento" }
-    ]
+      { name: "type", label: "Tipo" }
+    ];
 
-    self.tubeRecords = []
-    self.aliquotsRecords = []
-    self.momentsRecords = []
-    self.examsRecords = []
-    self.groupsRecords = []
+    self.tubeRecords = [];
+    self.aliquotsRecords = [];
+    self.momentsRecords = [];
+    self.examsRecords = [];
+    self.groupsRecords = [];
 
     function createTube(data) {
-      self.tubeRecords.push(data)
+      self.tubeRecords.push(data);
     }
 
     function updateTube(n, data) {
-      self.tubeRecords[n] = data
+      self.tubeRecords[n] = data;
     }
 
     function deleteTube(data) {
-      self.tubeRecords.splice(self.tubeRecords.indexOf(data), 1)
+      self.tubeRecords.splice(self.tubeRecords.indexOf(data), 1);
     }
 
     function createAliquot(data) {
@@ -88,11 +87,11 @@
     }
 
     function updateAliquot(n, data) {
-      self.aliquotsRecords[n] = data
+      self.aliquotsRecords[n] = data;
     }
 
     function deleteAliquot(data) {
-      self.aliquotsRecords.splice(self.aliquotsRecords.indexOf(data), 1)
+      self.aliquotsRecords.splice(self.aliquotsRecords.indexOf(data), 1);
     }
 
     function createMoment(data) {
@@ -100,11 +99,11 @@
     }
 
     function updateMoment(n, data) {
-      self.momentsRecords[n] = data
+      self.momentsRecords[n] = data;
     }
 
     function deleteMoment(data) {
-      self.momentsRecords.splice(self.momentsRecords.indexOf(data), 1)
+      self.momentsRecords.splice(self.momentsRecords.indexOf(data), 1);
     }
 
     function createExam(data) {
@@ -112,11 +111,11 @@
     }
 
     function updateExam(n, data) {
-      self.examsRecords[n] = data
+      self.examsRecords[n] = data;
     }
 
     function deleteExam(data) {
-      self.examsRecords.splice(self.examsRecords.indexOf(data), 1)
+      self.examsRecords.splice(self.examsRecords.indexOf(data), 1);
     }
 
     function createGroup(data) {
@@ -124,11 +123,11 @@
     }
 
     function updateGroup(n, data) {
-      self.groupsRecords[n] = data
+      self.groupsRecords[n] = data;
     }
 
     function deleteGroup(data) {
-      self.groupsRecords.splice(self.groupsRecords.indexOf(data), 1)
+      self.groupsRecords.splice(self.groupsRecords.indexOf(data), 1);
     }
 
     // var ERROR_MESSAGE = 'Ocorreu algum problema, tente novamente mais tarde';
