@@ -26,8 +26,17 @@
 
     function Controller() {
         var self = this;
-        self.panelOpen = self.open || true;
+        self.panelOpen = false;
+
+        self.$onInit = onInit;
+
         self.togglePanel = togglePanel;
+
+        function onInit() {
+            if(!self.tableRecords || self.tableRecords.length === 0) {
+                self.panelOpen = true;
+            }
+        }
 
         function togglePanel() {
             self.panelOpen = !self.panelOpen;

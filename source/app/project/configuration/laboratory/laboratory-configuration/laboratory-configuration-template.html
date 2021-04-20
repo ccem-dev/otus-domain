@@ -1,5 +1,3 @@
-<link rel="stylesheet" type="text/css" href="app/project/configuration/laboratory-configuration/laboratory-configuration-styles.css">
-
 <div layout="row" layout-align="center center" flex>
     <div layout-padding layout="column" flex="80" flex-xs="100">
         <md-subheader hide-xs class="md-primary" flex="95">
@@ -17,11 +15,10 @@
             create-action="$ctrl.createTube"
             update-action="$ctrl.updateTube"
             delete-action="$ctrl.deleteTube"
-            dialog-template="'app/project/configuration/laboratory-dialog-templates/tube-management-template.html'"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/tube-management-template.html'"
             table-headers="$ctrl.tubeHeaders"
             table-records="$ctrl.tubeRecords"
         ></expansive-panel>
-
         <expansive-panel
             label="Alíquotas"
             button-text="Criar alíquota"
@@ -33,7 +30,7 @@
             create-action="$ctrl.createAliquot"
             update-action="$ctrl.updateAliquot"
             delete-action="$ctrl.deleteAliquot"
-            dialog-template="'app/project/configuration/laboratory-dialog-templates/aliquot-management-template.html'"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/aliquot-management-template.html'"
             table-headers="$ctrl.aliquotsHeaders"
             table-records="$ctrl.aliquotsRecords"
             ng-if="$ctrl.tubeRecords && $ctrl.tubeRecords.length > 0"
@@ -50,7 +47,7 @@
             create-action="$ctrl.createMoment"
             update-action="$ctrl.updateMoment"
             delete-action="$ctrl.deleteMoment"
-            dialog-template="'app/project/configuration/laboratory-dialog-templates/moment-management-template.html'"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/moment-management-template.html'"
             table-headers="$ctrl.momentsHeaders"
             table-records="$ctrl.momentsRecords"
             ng-if="$ctrl.aliquotsRecords && $ctrl.aliquotsRecords.length > 0"
@@ -67,7 +64,7 @@
             create-action="$ctrl.createExam"
             update-action="$ctrl.updateExam"
             delete-action="$ctrl.deleteExam"
-            dialog-template="'app/project/configuration/laboratory-dialog-templates/exam-management-template.html'"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/exam-management-template.html'"
             table-headers="$ctrl.examsHeaders"
             table-records="$ctrl.examsRecords"
             ng-if="$ctrl.momentsRecords && $ctrl.momentsRecords.length > 0"
@@ -84,7 +81,7 @@
             create-action="$ctrl.createGroup"
             update-action="$ctrl.updateGroup"
             delete-action="$ctrl.deleteGroup"
-            dialog-template="'app/project/configuration/laboratory-dialog-templates/group-management-template.html'"
+            dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/group-management-template.html'"
             table-headers="$ctrl.groupsHeaders"
             table-records="$ctrl.groupsRecords"
             ng-if="$ctrl.examsRecords && $ctrl.examsRecords.length > 0"

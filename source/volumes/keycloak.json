@@ -1,8 +1,8 @@
 {
-  "realm": "rnp-rute",
+  "realm": "publiweb",
   "auth-server-url": "http://localhost:8080/auth/",
   "ssl-required": "external",
-  "resource": "rnp-rute-frontend",
+  "resource": "publiweb-frontend",
   "public-client": true,
   "confidential-port": 0
 }

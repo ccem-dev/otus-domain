@@ -1,0 +1,32 @@
+<md-card layout-padding="" layout-fill="">
+  <md-card-title>
+    <md-card-title-text>Exames</md-card-title-text>
+  </md-card-title>
+  <md-card-content layout-padding="">
+    <select-input-component placeholder="'Selecione um exame'"
+                            label-text="'Exame'"
+                            data="$ctrl.filteredExams"
+                            field="'label'"
+                            model="$ctrl.selectedExam">
+    </select-input-component>
+    <div layout="row" layout-align="start center">
+      <add-button-component
+              button-text="'Exame'"
+              button-class="'md-raised md-primary'"
+              action="$ctrl.addExam">
+
+      </add-button-component>
+    </div>
+    <md-list ng-if="$ctrl.selectedExams.length">
+      <span class="md-subhead">Exames (tubo)</span>
+      <md-list-item ng-repeat="exam in $ctrl.selectedExams">
+        <md-card layout-padding="" layout-fill="" layout="row" layout-align="space-between center">
+            <span>{{exam.label}}</span>
+            <md-button class="md-icon-button" ng-click="$ctrl.removeExam(exam)">
+              <md-icon>highlight_off</md-icon>
+            </md-button>
+        </md-card>
+      </md-list-item>
+    </md-list>
+  </md-card-content>
+</md-card>

@@ -326,6 +326,7 @@
             controller: 'ResponseErrorMissingProjectController as controller'
           }
         }
+<<<<<<< HEAD
       })
       .state({
         name: 'laboratory_configuration',
@@ -354,6 +355,8 @@
             template: '<laboratory-configuration flex></laboratory-configuration>'
           }
         }
+      });
+=======
       }).state({
       name: 'laboratory_configuration_flow',
       url: '/project/laboratory-configuration-flow',
@@ -382,5 +385,6 @@
         }
       }
     });
+>>>>>>> 071252cb411db88e55fc8e71e0c9948df786cf74
   }
 }());
