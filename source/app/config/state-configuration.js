@@ -17,7 +17,8 @@
       'REPORT_MANAGER': 'report_manager',
       'LOCATION_POINT': 'location-point',
       'ERROR_MISSING_PROJECT': 'missing-project',
-      'LABORATORY_CONFIGURATION': 'laboratory_configuration'
+      'LABORATORY_CONFIGURATION': 'laboratory_configuration',
+      'GROUP_CONFIGURATION': 'group_configuration'
     });
 
   stateConfiguration.$inject = [
@@ -381,6 +382,26 @@
           template: '<laboratory-configuration-flow flex></laboratory-configuration-flow>'
         }
       }
-    });
+    })
+        .state({
+          name: 'group_configuration',
+          url: '/project/group_configuration',
+          resolve: {
+
+          },
+          views: {
+            'system-wrap': {
+              templateUrl: 'app/dashboard/template/main-dashboard-template.html',
+              controller: 'DashboardMenuController as dashboardMenu'
+            },
+            'dashboard-menu@group_configuration': {
+              templateUrl: 'app/dashboard/menu/dashboard-menu.html'
+            },
+            'system-content@group_configuration': {
+              template: '<group-configuration flex></group-configuration>'
+            }
+
+          }
+        });
   }
-}());
+}());1

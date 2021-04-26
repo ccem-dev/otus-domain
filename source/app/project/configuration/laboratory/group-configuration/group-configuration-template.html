@@ -1,0 +1,38 @@
+<div layout="row" layout-align="center center" flex>
+    <div layout-padding layout="column" flex="80" flex-xs="100">
+        <md-subheader hide-xs class="md-primary" flex="95">
+            Configuração de Grupo
+        </md-subheader>
+
+        <expansive-panel
+                label="Tubos"
+                button-text="Adicionar Tubo ao grupo"
+                delete-data="{
+                title: 'Remover tubo do grupo',
+                message: 'Deseja remover o tubo do grupo?',
+                buttonText: 'Remover Tubo'
+            }"
+                create-action="$ctrl.createTube"
+                update-action="$ctrl.updateTube"
+                delete-action="$ctrl.deleteTube"
+                dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/tube-management-template.html'"
+                table-headers="$ctrl.tubeHeaders"
+                table-records="$ctrl.tubeRecords"
+        ></expansive-panel>
+        <expansive-panel
+                label="Momentos"
+                button-text="Adicionar momentos ao grupo"
+                delete-data="{
+                title: 'Remover momento',
+                message: 'Deseja Remover o momento do grupo?',
+                buttonText: 'Remover momento'
+            }"
+                create-action="$ctrl.createMoment"
+                update-action="$ctrl.updateMoment"
+                delete-action="$ctrl.deleteMoment"
+                dialog-template="'app/project/configuration/laboratory/laboratory-dialog-templates/moment-management-template.html'"
+                table-headers="$ctrl.momentsHeaders"
+                table-records="$ctrl.momentsRecords"
+        ></expansive-panel>
+    </div>
+</div>

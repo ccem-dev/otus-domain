@@ -30,6 +30,7 @@
     self.goToLocationPoint = goToLocationPoint;
     self.goToErrorMissingProject = goToErrorMissingProject;
     self.goToLaboratoryConfiguration = goToLaboratoryConfiguration;
+    self.goToGroupConfiguration = goToGroupConfiguration;
     self.logout = logout;
 
     init();
@@ -103,6 +104,11 @@
     function goToLaboratoryConfiguration() {
       self.currentState = 'Configurações de laboratório';
       $state.go(APP_STATE.LABORATORY_CONFIGURATION);
+    }
+
+    function goToGroupConfiguration(){
+      self.currentState = 'Configuração de grupo';
+      $state.go(APP_STATE.GROUP_CONFIGURATION);
     }
 
     function logout() {

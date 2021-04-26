@@ -12,10 +12,11 @@
   Controller.$inject = [
     '$q',
     'otusDomain.LoadingScreenService',
-    'otusDomain.rest.configuration.ProjectConfigurationService'
+    'otusDomain.rest.configuration.ProjectConfigurationService',
+    'DashboardStateService'
   ];
 
-  function Controller($q, LoadingScreenService, ProjectConfigurationService) {
+  function Controller($q, LoadingScreenService, ProjectConfigurationService, DashboardStateService) {
     var self = this;
 
     self.createTube = createTube;
@@ -37,7 +38,9 @@
     self.createGroup = createGroup;
     self.updateGroup = updateGroup;
     self.deleteGroup = deleteGroup;
-    
+
+    self.goToGroupConfiguration = goToGroupConfiguration;
+
     self.tubeHeaders = [
       { name: 'color', label: "Cor" },
       { name: 'type', label: "Tipo" },
@@ -70,6 +73,10 @@
     self.momentsRecords = []
     self.examsRecords = []
     self.groupsRecords = []
+
+    function goToGroupConfiguration(){
+      DashboardStateService.goToGroupConfiguration();
+    }
 
     function createTube(data) {
       self.tubeRecords.push(data)
