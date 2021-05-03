@@ -1,0 +1,40 @@
+.responsive-table {
+    overflow: auto;
+    position: relative;
+    min-height: 15rem;
+    max-height: 30rem;
+}
+
+.responsive-table table {
+    position: relative;
+}
+
+.responsive-table th {
+    position: sticky;
+    background: #FFF;
+    top: 0;
+    z-index: 1;
+}
+
+.responsive-table thead tr {
+    text-align: left;
+}
+
+.responsive-table.fill {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+.color-icon {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.color-icon md-card {
+    width: 5px;
+    height: 18px;
+    margin: 0;
+    margin-right: 8px;
+}

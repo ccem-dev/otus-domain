@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href="app/project/components/responsive-table/responsive-table-styles.css">
+
+<md-card class="responsive-table" ng-class="$ctrl.fillContainer ? 'fill' : ''" flex>
+    <table layout-padding style="width: 100%;">
+        <colgroup>
+            <col span="1" ng-repeat="header in $ctrl.headers">
+            <col span="1" style="width: 75px;">
+            <col span="1" style="width: 75px;">
+        </colgroup>
+
+        <thead>
+            <tr layout-padding>
+                <th ng-repeat="header in $ctrl.headers">{{ header.label }}</th>
+                <th>Editar</th>
+                <th>Remover</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-if="!$ctrl.records || ($ctrl.records && $ctrl.records.length === 0)" layout-padding>
+                <td>
+                    Não há observações na tabela
+                </td>
+            </tr>
+
+            <tr ng-if="$ctrl.records && $ctrl.records.length > 0" ng-repeat="(n, record) in $ctrl.records" layout-padding>
+                <td ng-repeat="header in $ctrl.headers">
+                    <span class="color-icon" ng-if="header.name === $ctrl.colorHeader">
+                        <md-card ng-style="{'background-color': record[header.name]}"></md-card>
+                        {{ record[header.name] }}
+                    </span>
+                    
+                    <span ng-if="header.name !== $ctrl.colorHeader">
+                        {{ record[header.name] }}
+                    </span>
+                </td>
+
+                <td>
+                    <dynamic-dialog
+                        button-icon="'edit'"
+                        button-class="'md-icon-button md-mini'"
+                        button-text=""
+                        data="record"
+                        callback-functions="{
+                            update: $ctrl.updateFactory(n)
+                        }"
+                        template="$ctrl.dialogTemplate">
+                    </dynamic-dialog>
+                </td>
+
+                <td>
+                    <dynamic-dialog
+                        button-icon="'delete'"
+                        button-class="'md-icon-button md-mini md-warn'"
+                        button-text=""
+                        data="$ctrl.deleteData"
+                        callback-functions="{
+                            confirm: $ctrl.deleteFactory(record)
+                        }"
+                        template="'app/project/configuration/laboratory/laboratory-dialog-templates/confirm-dialog-template.html'">
+                    </dynamic-dialog>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</md-card>

@@ -1,0 +1,25 @@
+<md-dialog flex="100" style="max-width: 500px; max-height: 700px; margin-left: auto; margin-right: auto">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+                <h2>{{ data.title }}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="hide()">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content layout-align="center center" layout="column" style="padding: 15px;">
+            <h4>{{ data.message }}</h4>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="hide()">fechar</md-button>
+
+            <md-button ng-click="cbFunctions.confirm(); hide()" class="md-raised md-primary">
+                {{ data.buttonText }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

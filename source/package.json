@@ -1,6 +1,6 @@
 {
     "name": "otus-domain",
-    "version": "1.21.0",
+    "version": "1.22.0",
     "description": "The tool to control repositories and users Otus.",
     "keywords": [
         "otus",
@@ -27,7 +27,8 @@
         "start": "gulp browser-sync --api-url $API_URL",
         "karma": "karma",
         "build": "gulp compress",
-        "production": "npm install && npm test && npm run build && npm prune --production"
+        "pre-production": "rm -rf package-lock.json dist target node_modules",
+        "production": "npm run pre-production && npm install && npm test && npm run build && npm prune --production"
     },
     "dependencies": {
         "alasql": "^0.4.3",
@@ -54,7 +55,7 @@
         "ng-i18next": "1.0.5",
         "please-wait": "0.0.5",
         "require-dir": "^1.2.0",
-        "otus-client-js": "1.33.0",
+        "otus-client-js": "1.36.0",
         "otus-domain-client": "1.1.0",
         "otus-model-js": "1.40.0",
         "otus-validation-js": "1.1.0"

@@ -35,6 +35,7 @@
       var dsText = findTextInTheMiddleOfTags(text, "<otus-datasource>", "</otus-datasource>");
       var datasource = JSON.parse(dsText);
       datasource.template = text.replace("<otus-datasource>" + dsText + "</otus-datasource>", '');
+      datasource.objectType = 'ParticipantReport';
       return datasource;
     }
 
@@ -49,7 +50,8 @@
       dataSources: undefined,
       fieldCenter: undefined,
       label: undefined,
-      template: undefined
+      template: undefined,
+      objectType: 'ParticipantReport'
     });
 
     self.sendingDate = '';

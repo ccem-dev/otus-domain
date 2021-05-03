@@ -1,7 +1,7 @@
 {
   "projects": [{
-    "projectToken" : "token",
-    "projectRestUrl" : "http://localhost:51002/otus-rest/v01",
+    "projectToken" : "TOKEN",
+    "projectRestUrl" : "URL",
     "projectName" : "LOCAL"
   }],
   "installer": {

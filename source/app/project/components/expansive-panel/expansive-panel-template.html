@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href="app/project/components/expansive-panel/expansive-panel-styles.css">
+
+<md-card>
+    <md-card-title layout="row" layout-align="space-between center">
+        <span class="md-headline">{{ $ctrl.label }}</span>
+
+        <md-button class="md-icon-button" ng-click="$ctrl.togglePanel()">
+            <md-icon ng-class="$ctrl.panelOpen ? 'menu-icon open' : 'menu-icon'">
+                expand_more
+            </md-icon>
+        </md-button>
+    </md-card-title>
+
+    <div ng-show="$ctrl.panelOpen" class="expansive-content">
+        <md-card-content layout="row" layout-align="center center">            
+            <responsive-table
+                headers="$ctrl.tableHeaders"
+                records="$ctrl.tableRecords"
+                color-header="color"
+                delete-action="$ctrl.deleteAction"
+                delete-data="$ctrl.deleteData"
+                update-action="$ctrl.updateAction"
+                dialog-template="$ctrl.dialogTemplate"
+                ng-if="$ctrl.tableRecords && $ctrl.tableRecords.length > 0"
+            ></responsive-table>
+
+            <span
+                layout="column"
+                layout-align="center center"
+                ng-if="!$ctrl.tableRecords || $ctrl.tableRecords.length === 0"
+            >
+                <dynamic-dialog
+                    button-icon="'add_circle_outline'"
+                    button-class="'md-icon-button md-primary big-plus'"
+                    button-text="''"
+                    data="$ctrl.dialogData"
+                    callback-functions="{
+                        create: $ctrl.createAction,
+                        update: $ctrl.updateAction
+                    }"
+                    layout-fill="center center"
+                    template="$ctrl.dialogTemplate"
+                ></dynamic-dialog>
+
+                {{ $ctrl.buttonText }}
+            </span>
+        </md-card-content>
+        
+        <md-card-actions
+            layout="row"
+            layout-align="end center"
+            ng-if="$ctrl.tableRecords && $ctrl.tableRecords.length > 0"
+        >
+            <dynamic-dialog
+                    button-icon="'add_circle_outline'"
+                    button-class="'md-raised md-primary'"
+                    button-text="$ctrl.buttonText"
+                    data="$ctrl.dialogData"
+                    callback-functions="{
+                        create: $ctrl.createAction
+                    }"
+                    template="$ctrl.dialogTemplate"
+            ></dynamic-dialog>
+        </md-card-actions>
+    </div>
+</md-card>

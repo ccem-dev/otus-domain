@@ -1,0 +1,15 @@
+<md-card layout-padding="">
+  <md-card-title>
+    <md-card-title-text>Grupo</md-card-title-text>
+  </md-card-title>
+  <md-card-content layout="row" layout-padding="">
+    <md-input-container layout-fill="">
+      <label>Grupo</label>
+      <md-select ng-model="$ctrl.selectedGroup" ng-change="$ctrl.separateTubesMoment()" placeholder="Selecione um grupo">
+        <md-option ng-repeat="group in $ctrl.groups" ng-value="group">
+          {{group.type}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+  </md-card-content>
+</md-card>

@@ -1,0 +1,40 @@
+<md-dialog flex="100" style="max-width: 500px; max-height: 700px; margin-left: auto; margin-right: auto">
+  <form ng-cloak ng-submit="editing ? cbFunctions.update(data) : cbFunctions.create(data); hide()">
+    <md-toolbar>
+      <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+        <h2>{{ editing ? "Editar aliquota" : "Criar aliquota" }}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="hide()">
+          <md-icon>close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content layout-align="center center" layout="column" style="padding: 15px;">
+      <span style="height: 10px"></span>
+      <md-input-container layout-fill="">
+        <label class="md-subhead">
+          Nome
+        </label>
+        <input required ng-model="data.name"/>
+      </md-input-container>
+      <md-input-container layout-fill="">
+        <label class="md-subhead">
+          Tipo
+        </label>
+        <md-select required ng-model="data.type">
+          <md-option ng-repeat="type in ['exam', 'storage']"
+                     ng-value="type"
+                     ng-selected="data.type === type">
+            {{ type }}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="hide()">fechar</md-button>
+      <md-button type="submit" class="md-raised md-primary">
+        {{ editing ? "Editar alíquota" : "Criar alíquota" }}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
